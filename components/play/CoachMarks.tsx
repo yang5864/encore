@@ -23,7 +23,7 @@ export function CoachMarks({ onDone }: { onDone: () => void }) {
         <h3 className="t-title mt-1">{s.title}</h3>
         <p className="t-body text-ink-2 mt-2">{s.text}</p>
         <div className="flex gap-2 mt-6">
-          <Button variant="ghost" onClick={onDone} full={false} className="px-5">건너뛰기</Button>
+          <Button variant="ghost" onClick={onDone} full={false} className="px-5 shrink-0 whitespace-nowrap">건너뛰기</Button>
           <Button onClick={() => (i < STEPS.length - 1 ? setI(i + 1) : onDone())}>{i < STEPS.length - 1 ? "다음" : "시작하기"}</Button>
         </div>
       </div>

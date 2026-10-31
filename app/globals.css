@@ -42,35 +42,37 @@
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", Roboto, sans-serif;
 }
 
-html {
-  background: var(--bg);
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: transparent;
-}
+@layer base {
+  html {
+    background: var(--bg);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 1.45;
-  letter-spacing: -0.01em;
-  font-feature-settings: "tnum";
-  overscroll-behavior-y: none;
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    font-feature-settings: "tnum";
+    overscroll-behavior-y: none;
+  }
 
-* {
-  box-sizing: border-box;
-}
+  * {
+    box-sizing: border-box;
+  }
 
-button {
-  font: inherit;
-  letter-spacing: inherit;
-  color: inherit;
-}
+  button {
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+  }
 
-input {
-  font: inherit;
+  input {
+    font: inherit;
+  }
 }
 
 .shell {

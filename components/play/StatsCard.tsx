@@ -14,11 +14,10 @@ function delta(changes: Change[] | undefined, key: string) {
   return d;
 }
 
-export function StatsCard({ career }: { career: Career }) {
+export function StatsCard({ career, changes }: { career: Career; changes?: Change[] }) {
   const ovr = overall(career.stats, career.position);
   const cond = conditionOf(career);
   const band = reputationBand(career.reputation);
-  const changes = career.result?.changes;
   const ovrDelta = delta(changes, "ovr");
   return (
     <Card className="fade-up" style={{ animationDelay: "60ms" }}>
@@ -57,9 +56,9 @@ export function StatsCard({ career }: { career: Career }) {
       <div className="grid grid-cols-3 gap-2 mt-5">
         <Metric label="팬" value={<CountUp value={career.fans} format={fanText} />} d={delta(changes, "fans")} fmt={(n) => fanText(Math.abs(n))} />
         <Metric label="인기도" value={<CountUp value={Math.round(career.popularity)} />} d={delta(changes, "popularity")} />
-        <div className="rounded-2xl bg-[#f9fafb] p-3">
+        <div className="rounded-2xl bg-[#f9fafb] p-3 min-w-0">
           <p className="text-[12px] text-ink-3 font-semibold">평판</p>
-          <p className="t-num-md" style={{ color: band.color }}>{band.label}</p>
+          <p className="text-[18px] font-bold tracking-[-0.02em] whitespace-nowrap truncate" style={{ color: band.color }}>{band.label}</p>
           <ProgressBar value={reputationProgress(career.reputation)} color={band.color} height={4} className="mt-1.5" label="평판 진행" />
         </div>
       </div>
@@ -69,10 +68,10 @@ export function StatsCard({ career }: { career: Career }) {
 
 function Metric({ label, value, d, fmt = (n: number) => `${Math.round(Math.abs(n))}` }: { label: string; value: React.ReactNode; d: number | null; fmt?: (n: number) => string }) {
   return (
-    <div className="rounded-2xl bg-[#f9fafb] p-3">
+    <div className="rounded-2xl bg-[#f9fafb] p-3 min-w-0">
       <p className="text-[12px] text-ink-3 font-semibold">{label}</p>
-      <p className="t-num-md">{value}</p>
-      {d !== null ? <p className={`text-[11px] font-bold mt-0.5 ${d > 0 ? "text-up" : "text-down"}`}>{d > 0 ? "▲ " : "▼ "}{fmt(d)}</p> : <p className="text-[11px] text-ink-3 mt-0.5">변화 없음</p>}
+      <p className="text-[18px] font-bold tracking-[-0.02em] tabular-nums whitespace-nowrap truncate">{value}</p>
+      {d !== null ? <p className={`text-[11px] font-bold mt-0.5 whitespace-nowrap ${d > 0 ? "text-up" : "text-down"}`}>{d > 0 ? "▲ " : "▼ "}{fmt(d)}</p> : <p className="text-[11px] text-ink-3 mt-0.5">&nbsp;</p>}
     </div>
   );
 }

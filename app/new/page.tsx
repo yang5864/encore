@@ -176,7 +176,15 @@ export default function NewPage() {
       </FixedCta>
 
       {result?.result && (
-        <ResultSheet result={result.result} open onClose={() => router.replace("/play")} ctaLabel="플레이 시작" />
+        <ResultSheet
+          result={result.result}
+          open
+          onClose={() => {
+            saveCareer({ ...result, result: null });
+            router.replace("/play");
+          }}
+          ctaLabel="플레이 시작"
+        />
       )}
     </main>
   );

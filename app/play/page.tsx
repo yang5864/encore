@@ -18,7 +18,7 @@ import { Card } from "@/components/ui/Card";
 import { loadSettings, saveSettings } from "@/lib/storage";
 import { focusOptions } from "@/lib/game/focus";
 import { periodLabel } from "@/lib/game/format";
-import type { MilestoneId } from "@/lib/game/types";
+import type { MilestoneId, TurnResult } from "@/lib/game/types";
 
 export default function PlayPage() {
   const router = useRouter();
@@ -30,6 +30,7 @@ export default function PlayPage() {
   const [coach, setCoach] = useState(false);
   const [milestoneQueue, setMilestoneQueue] = useState<MilestoneId[]>([]);
   const [seenResultKey, setSeenResultKey] = useState<string | null>(null);
+  const [lastResult, setLastResult] = useState<TurnResult | null>(null);
 
   useEffect(() => {
     if (ready && !career) router.replace("/");
@@ -56,22 +57,31 @@ export default function PlayPage() {
     if (career?.result && resultKey !== seenResultKey) {
       setMilestoneQueue(career.result.milestones);
       setSeenResultKey(resultKey);
+      setLastResult(career.result);
     }
   }, [career, resultKey, seenResultKey]);
 
   const pendingMilestone = milestoneQueue[0] ?? null;
-  const showResult = !!career?.result && !pendingMilestone;
-  const showEvent = !!career?.pending && !career.result && !pendingMilestone;
+  const showResult = !!career?.result && !pendingMilestone && !coach;
+  const showEvent = !!career?.pending && !career.result && !pendingMilestone && !coach;
 
+  const [advancing, setAdvancing] = useState(false);
   const runAdvance = () => {
-    if (!career) return;
-    setProgress(10);
-    requestAnimationFrame(() => setProgress(100));
+    if (!career || advancing) return;
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const focusId = focusIdOf(focus);
+    if (reduce) {
+      advance(focusId);
+      return;
+    }
+    setAdvancing(true);
+    setProgress(8);
+    window.setTimeout(() => setProgress(100), 30);
     window.setTimeout(() => {
-      advance(focusIdOf(focus));
+      advance(focusId);
       setProgress(0);
-    }, reduce ? 0 : 800);
+      setAdvancing(false);
+    }, 800);
   };
 
   const ctaLabel = useMemo(() => {
@@ -95,7 +105,7 @@ export default function PlayPage() {
 
       <div className="flex flex-col gap-3">
         <ProfileCard career={career} onAgency={() => setAgencyOpen(true)} />
-        <StatsCard career={career} />
+        <StatsCard career={career} changes={lastResult?.changes} />
         {career.stage === "idol" || career.stage === "retired" ? <SettlementCard career={career} /> : null}
         {career.stage === "retired" ? (
           <Card className="fade-up">
@@ -128,20 +138,20 @@ export default function PlayPage() {
         )}
         <Button
           id="advance-cta"
-          disabled={progress > 0 || (!career.pending && career.stage !== "retired" && !focus.id)}
+          disabled={advancing || (!career.pending && career.stage !== "retired" && !focus.id)}
           onClick={() => {
             if (career.stage === "retired") router.push("/records");
             else if (career.pending) dismissResult();
             else runAdvance();
           }}
         >
-          {progress > 0 ? "진행 중…" : ctaLabel}
+          {advancing ? "진행 중…" : ctaLabel}
         </Button>
       </FixedCta>
 
       <MilestoneSheet career={career} id={pendingMilestone} open={!!pendingMilestone} onClose={() => setMilestoneQueue((q) => q.slice(1))} />
-      {career.result && <ResultSheet result={career.result} open={showResult} onClose={dismissResult} ctaLabel={career.pending ? "다음 선택 보기" : "확인"} />}
-      <EventSheet career={career} open={showEvent} onChoose={choose} />
+      {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} open={showResult} onClose={dismissResult} ctaLabel={career.pending ? "다음 선택 보기" : "확인"} />}
+      <EventSheet key={career.pending?.id ?? "none"} career={career} open={showEvent} onChoose={choose} />
       <AgencySheet
         career={career}
         open={agencyOpen}
