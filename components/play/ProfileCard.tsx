@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import { MilestoneBar } from "./MilestoneBar";
 import { agencyById, TIERS } from "@/lib/game/agencies";
-import { ageOf, periodLabel, STAGE_NAMES } from "@/lib/game/format";
+import { ageOf, careerPhase, periodLabel, STAGE_NAMES } from "@/lib/game/format";
 import { POSITIONS } from "@/lib/game/stats";
 import type { Career } from "@/lib/game/types";
 
@@ -22,7 +22,7 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
           <p className="t-cap">{periodLabel(career)} · {ageOf(career)}세</p>
           <h1 className="t-title truncate mt-0.5">{career.stage === "idol" && career.groupName ? `${career.groupName} ${career.name}` : career.name}</h1>
           <div className="flex flex-wrap items-center gap-1.5 mt-2">
-            <Chip tone={career.stage === "idol" ? "up" : career.stage === "trainee" ? "ok" : "neutral"}>{STAGE_NAMES[career.stage]}</Chip>
+            <Chip tone={career.stage === "idol" ? "up" : career.stage === "trainee" ? "ok" : "neutral"}>{careerPhase(career) === STAGE_NAMES[career.stage] ? STAGE_NAMES[career.stage] : `${STAGE_NAMES[career.stage]} · ${careerPhase(career)}`}</Chip>
             <Chip>{position}</Chip>
           </div>
         </div>

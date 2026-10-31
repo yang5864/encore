@@ -250,6 +250,23 @@ export const TRAINEE_EVENTS: GameEventDef[] = [
     ],
   },
   {
+    id: "predebut-single",
+    stage: "trainee",
+    kind: "story",
+    title: "프리 데뷔 싱글 제안",
+    text: "회사가 정식 데뷔 전에 프리 데뷔 싱글과 자체 콘텐츠로 팬덤을 먼저 만들자고 해요. 요즘 기획사들이 많이 쓰는 방식이에요. 노출이 늘지만 평가도 빨라져요.",
+    scene: "album",
+    public: true,
+    when: (c) => {
+      const a = agencyById(c.agencyId);
+      return !!a && overall(c.stats, c.position) >= a.threshold - 6;
+    },
+    choices: [
+      { id: "release", label: "프리 데뷔 싱글을 낸다", hint: "데뷔 전 팬덤과 인지도가 생겨요. 반응이 약하면 데뷔조 평가에 부담이 돼요", risk: "bold", chance: 0.6, success: { fans: 12000, popularity: 8, reputation: 4, trust: 6, vocal: 1, dance: 1 }, fail: { fans: 2500, popularity: 2, mental: -8, trust: -3 }, successText: "티저부터 반응이 왔어요. 데뷔 전인데 팬카페가 생겼어요.", failText: "조회수가 기대보다 낮았어요. 회사가 콘셉트를 다시 잡기로 했어요." },
+      { id: "content", label: "자체 콘텐츠만 먼저 연다", hint: "부담 없이 예비 팬을 모아요", risk: "safe", effects: { fans: 4000, variety: 2, reputation: 2 } },
+    ],
+  },
+  {
     id: "busking",
     stage: "trainee",
     kind: "story",

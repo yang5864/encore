@@ -59,3 +59,16 @@ export function conditionOf(c: Pick<Career, "health" | "mental">): Condition {
 export const STAGE_NAMES: Record<Career["stage"], string> = { free: "지망생", trainee: "연습생", idol: "아이돌", retired: "은퇴" };
 
 export const pct = (n: number) => `${Math.round(n)}%`;
+
+/** Lifecycle phase label, after the industry's usual 5-stage framing. */
+export function careerPhase(c: Pick<Career, "stage" | "turn" | "debutTurn" | "flags" | "contractEnd">): string {
+  if (c.stage === "free") return "지망생";
+  if (c.stage === "trainee") return c.flags.debutEval !== undefined ? "프리 데뷔" : "연습생";
+  if (c.stage === "retired") return "은퇴";
+  const since = c.debutTurn === null ? 0 : c.turn - c.debutTurn;
+  if (c.flags.renewed) return "2막";
+  if (since < 2) return "신인기";
+  if (since < 6) return "도약기";
+  if (since < 12) return "전성기";
+  return "재계약기";
+}

@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/Avatar";
 import { Button, FixedCta } from "@/components/ui/Button";
@@ -8,14 +8,15 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { ResultSheet } from "@/components/play/ResultSheet";
 import { cn } from "@/lib/cn";
 import { AGENCIES, TIERS, TIER_ORDER, auditionChance, chanceLabel } from "@/lib/game/agencies";
+import { generateCandidates, type Candidate } from "@/lib/game/candidates";
 import { createCareer } from "@/lib/game/create";
 import { applyToAgency } from "@/lib/game/engine";
-import { ALLOCATION_TOTAL, DEFAULT_ALLOCATION, POSITIONS, STAT_COLORS, STAT_KEYS, STAT_MAX, STAT_MIN, STAT_NAMES, overall, validateAllocation } from "@/lib/game/stats";
-import type { Career, Gender, Position, Stats, Tier } from "@/lib/game/types";
+import { POSITIONS, STAT_COLORS, STAT_KEYS, STAT_NAMES, overall } from "@/lib/game/stats";
+import type { Career, Gender, Tier } from "@/lib/game/types";
 import { GameError } from "@/lib/game/types";
 import { saveCareer } from "@/lib/storage";
 
-const STEPS = ["프로필", "포지션", "능력치", "첫 지원"];
+const STEPS = ["프로필", "스타일", "첫 지원"];
 const TONE: Record<string, "down" | "warn" | "neutral" | "ok" | "up"> = { "매우 낮음": "down", 낮음: "warn", 보통: "neutral", 높음: "ok", "매우 높음": "up" };
 
 export default function NewPage() {
@@ -24,26 +25,37 @@ export default function NewPage() {
   const [name, setName] = useState("");
   const [gender, setGender] = useState<Gender>("female");
   const [avatar, setAvatar] = useState(0);
-  const [position, setPosition] = useState<Position>("vocal");
-  const [stats, setStats] = useState<Stats>({ ...DEFAULT_ALLOCATION.vocal });
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [candidateId, setCandidateId] = useState<string | null>(null);
+  const [rerolls, setRerolls] = useState(0);
   const [tier, setTier] = useState<Tier>("mid");
   const [agencyId, setAgencyId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<Career | null>(null);
 
-  const total = STAT_KEYS.reduce((s, k) => s + stats[k], 0);
-  const remaining = ALLOCATION_TOTAL - total;
-  const allocationError = validateAllocation(stats);
-  const preview = useMemo(() => ({ stats, position }), [stats, position]);
+  useEffect(() => {
+    const list = generateCandidates(3);
+    setCandidates(list);
+    setCandidateId(list[0]?.id ?? null);
+  }, []);
+
+  const candidate = candidates.find((c) => c.id === candidateId) ?? null;
+
+  const reroll = () => {
+    const list = generateCandidates(3);
+    setCandidates(list);
+    setCandidateId(list[0]?.id ?? null);
+    setRerolls((n) => n + 1);
+  };
 
   const next = () => {
     setError(null);
     if (step === 0 && name.trim().length === 0) return setError("이름을 입력해주세요.");
-    if (step === 2 && allocationError) return setError(allocationError);
-    if (step === 3) {
-      if (!agencyId) return setError("지원할 기획사를 골라주세요.");
+    if (step === 1 && !candidate) return setError("스타일을 골라주세요.");
+    if (step === 2) {
+      if (!agencyId || !candidate) return setError("지원할 기획사를 골라주세요.");
       try {
-        const c = createCareer({ name, gender, avatar, position, stats });
+        const c = createCareer({ name, gender, avatar, position: candidate.position, stats: candidate.stats });
         const applied = applyToAgency(c, agencyId);
         saveCareer(applied);
         setResult(applied);
@@ -92,57 +104,59 @@ export default function NewPage() {
 
       {step === 1 && (
         <section className="fade-up mt-6">
-          <h1 className="t-title">주 포지션을 골라요</h1>
-          <p className="t-cap mt-2">OVR 계산의 가중치와 기본 능력 배분이 달라져요.</p>
-          <div className="flex flex-col gap-2 mt-6">
-            {POSITIONS.map((p) => (
-              <button key={p.id} onClick={() => { setPosition(p.id); setStats({ ...DEFAULT_ALLOCATION[p.id] }); }} className={cn("press text-left rounded-2xl border-2 p-4 bg-white", position === p.id ? "border-primary" : "border-transparent")}>
-                <div className="flex items-center justify-between">
-                  <span className="t-body font-bold">{p.name}</span>
-                  <span className="text-[11px] font-bold text-ink-3 tracking-wider">{p.en}</span>
-                </div>
-                <p className="text-[13px] text-ink-2 mt-0.5">{p.description}</p>
-              </button>
-            ))}
+          <p className="t-cap">{name.trim() || "연습생"} · 14세</p>
+          <h1 className="t-title mt-1">플레이 스타일을<br />골라 주세요</h1>
+          <p className="t-cap mt-2">세 후보 모두 능력치 합은 240이고, 분포만 달라요. 가장 높은 능력이 포지션을 정해요.</p>
+          <div className="flex flex-col gap-3 mt-5" key={rerolls}>
+            {candidates.map((c, i) => {
+              const selected = c.id === candidateId;
+              const position = POSITIONS.find((p) => p.id === c.position);
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setCandidateId(c.id)}
+                  className={cn("press fade-up w-full text-left rounded-[20px] border-2 bg-white p-5", selected ? "border-primary" : "border-transparent")}
+                  style={{ animationDelay: `${i * 70}ms` }}
+                  aria-pressed={selected}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="t-card">{c.name}</p>
+                      <p className="text-[13px] text-ink-2 mt-0.5">{c.summary}</p>
+                    </div>
+                    <span className={cn("shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center", selected ? "border-primary bg-primary text-white" : "border-[#d1d6db]")} aria-hidden>
+                      {selected ? "✓" : ""}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mt-3">
+                    <Chip tone="neutral" className="bg-ink text-white">{position?.name}</Chip>
+                    {c.top.map((k) => (
+                      <Chip key={k}>{STAT_NAMES[k]} {c.stats[k]}</Chip>
+                    ))}
+                    <Chip tone="up">OVR {overall(c.stats, c.position)}</Chip>
+                  </div>
+                  {selected && (
+                    <div className="mt-4 pt-4 border-t border-line flex flex-col gap-2.5 fade-up">
+                      {STAT_KEYS.map((k) => (
+                        <div key={k} className="flex items-center gap-3">
+                          <span className="w-14 text-[13px] font-semibold text-ink-2">{STAT_NAMES[k]}</span>
+                          <ProgressBar value={c.stats[k]} color={STAT_COLORS[k]} height={6} className="flex-1" label={STAT_NAMES[k]} />
+                          <span className="w-7 text-right text-[14px] font-bold tabular-nums">{c.stats[k]}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </button>
+              );
+            })}
           </div>
+          <button onClick={reroll} className="press mt-5 w-full h-12 rounded-xl text-[15px] font-bold text-ink-2">
+            다른 후보 보기
+          </button>
         </section>
       )}
 
       {step === 2 && (
-        <section className="fade-up mt-6">
-          <div className="flex items-end justify-between">
-            <div>
-              <h1 className="t-title">능력치를 나눠요</h1>
-              <p className="t-cap mt-2">총 {ALLOCATION_TOTAL}점 · 능력당 {STAT_MIN}~{STAT_MAX}</p>
-            </div>
-            <div className="text-right">
-              <p className="t-cap">OVR</p>
-              <p className="t-num text-primary">{overall(preview.stats, preview.position)}</p>
-            </div>
-          </div>
-          <div className={cn("mt-4 rounded-2xl px-4 py-3 text-[14px] font-bold", remaining === 0 ? "bg-ok-soft text-ok" : "bg-warn-soft text-warn")}>
-            {remaining === 0 ? "배분 완료" : remaining > 0 ? `${remaining}점 남았어요` : `${-remaining}점 초과했어요`}
-          </div>
-          <div className="flex flex-col gap-4 mt-5">
-            {STAT_KEYS.map((k) => (
-              <div key={k} className="bg-white rounded-2xl p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="t-body font-bold">{STAT_NAMES[k]}</span>
-                  <div className="flex items-center gap-2">
-                    <button aria-label={`${STAT_NAMES[k]} 감소`} onClick={() => setStats({ ...stats, [k]: Math.max(STAT_MIN, stats[k] - 1) })} className="press w-9 h-9 rounded-full bg-[#f2f4f6] font-bold">−</button>
-                    <span className="t-num-md w-8 text-center">{stats[k]}</span>
-                    <button aria-label={`${STAT_NAMES[k]} 증가`} onClick={() => setStats({ ...stats, [k]: Math.min(STAT_MAX, stats[k] + 1) })} className="press w-9 h-9 rounded-full bg-[#f2f4f6] font-bold">+</button>
-                  </div>
-                </div>
-                <input type="range" min={STAT_MIN} max={STAT_MAX} value={stats[k]} onChange={(e) => setStats({ ...stats, [k]: Number(e.target.value) })} className="w-full accent-[var(--primary)]" aria-label={STAT_NAMES[k]} />
-                <ProgressBar value={stats[k]} color={STAT_COLORS[k]} height={4} className="mt-1" />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {step === 3 && (
         <section className="fade-up mt-6">
           <h1 className="t-title">어디에 지원할까요?</h1>
           <p className="t-cap mt-2">대형은 문이 좁고 중소는 넓어요. 떨어져도 무소속으로 시작해 언제든 다시 지원할 수 있어요.</p>
@@ -153,8 +167,8 @@ export default function NewPage() {
           </div>
           <p className="t-cap mt-3">{TIERS[tier].description}</p>
           <div className="flex flex-col gap-2 mt-3">
-            {AGENCIES.filter((a) => a.tier === tier).map((a) => {
-              const label = chanceLabel(auditionChance(preview, a.id));
+            {candidate && AGENCIES.filter((a) => a.tier === tier).map((a) => {
+              const label = chanceLabel(auditionChance({ stats: candidate.stats, position: candidate.position }, a.id));
               return (
                 <button key={a.id} onClick={() => setAgencyId(a.id)} className={cn("press text-left rounded-2xl border-2 bg-white p-4 flex items-center gap-3", agencyId === a.id ? "border-primary" : "border-transparent")}>
                   <span className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center text-white text-[12px] font-extrabold" style={{ background: a.color }}>{a.name.slice(0, 2)}</span>
@@ -172,7 +186,7 @@ export default function NewPage() {
 
       <FixedCta>
         {error && <p className="mb-2 rounded-xl bg-down-soft text-down text-[13px] font-bold py-2.5 px-3">{error}</p>}
-        <Button onClick={next} disabled={step === 2 && !!allocationError}>{step === 3 ? "지원하기" : "다음"}</Button>
+        <Button onClick={next}>{step === 2 ? "지원하기" : step === 1 ? "이 스타일로 할게요" : "다음"}</Button>
       </FixedCta>
 
       {result?.result && (

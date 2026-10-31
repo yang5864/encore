@@ -51,7 +51,7 @@ export function makeAlbum(c: Career, concept: Concept): Album {
   // 음악방송 1위 (최대 3회)
   let wins = 0;
   if (melon !== null && melon <= 30 || sales >= 50000) {
-    const p = Math.max(0.08, Math.min(0.9, 0.08 + sales / 1000000 + (melon !== null ? Math.max(0, 40 - melon) / 120 : 0)));
+    const p = Math.max(0.08, Math.min(0.9, 0.08 + sales / 1200000 + (melon !== null ? Math.max(0, 40 - melon) / 90 : 0)));
     for (let i = 0; i < 3; i++) if (rng(c) < p) wins++;
     if (wins === 0 && rng(c) < 0.5) c.flags.candidate = c.turn + 1; // 다음 턴 시작 시 1위 후보 이벤트
   }

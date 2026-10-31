@@ -12,7 +12,7 @@ test("이벤트 id는 고유하고 45개 이상", () => {
 test("모든 선택지 힌트는 숫자 없는 문장", () => {
   for (const e of EVENTS) {
     if (e.id === "scout") continue;
-    assert.ok(e.choices.length >= 1 && e.choices.length <= 4, e.id);
+    assert.ok(e.choices.length >= 1 && e.choices.length <= 5, e.id);
     for (const ch of e.choices) {
       assert.ok(ch.hint.length > 5, `${e.id}/${ch.id} hint`);
       assert.ok(!/\d/.test(ch.hint), `${e.id}/${ch.id} hint has digits: ${ch.hint}`);

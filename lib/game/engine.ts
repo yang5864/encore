@@ -5,7 +5,7 @@ import { STAT_KEYS, STAT_NAMES, overall } from "./stats.ts";
 import { ageOf, conditionOf, isSecondHalf, MAX_TURN, periodLabel, yearOf } from "./format.ts";
 import { rng, between, pick } from "./rng.ts";
 import { applyEffects, addReputation, diff, log, snapshot, type Snapshot } from "./effects.ts";
-import { CONCEPTS, MAIN_STAT, focusLabel, lowestStat } from "./focus.ts";
+import { CONCEPTS, MAIN_STAT, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
 import { makeAlbum, albumSummary } from "./album.ts";
 import { yearEndAwards } from "./awards.ts";
 import { DEBUT_COST, TRAINEE_COST_PER_TURN, updateSettlement } from "./economy.ts";
@@ -33,7 +33,8 @@ function grow(c: Career, stat: StatKey, amount: number) {
   const agencyMul = c.stage === "trainee" ? (a?.training ?? 1) * (a?.stat === stat ? 1.1 : 1) : c.stage === "free" ? 0.6 : 0.5;
   const school = c.schoolId === "arts" && (stat === "dance" || stat === "visual") ? 1.15 : c.schoolId === "ged" ? 1.1 : 1;
   const headroom = Math.max(0.12, Math.min(1, (c.potential[stat] - c.stats[stat]) / 28));
-  const gain = amount * ageMultiplier(ageOf(c)) * agencyMul * school * headroom * (0.9 + rng(c) * 0.2);
+  const roleMul = MAIN_STAT[c.position] === stat ? 1.12 : 1; // 역할의 주력 능력은 조금 더 빨리 자란다
+  const gain = amount * ageMultiplier(ageOf(c)) * agencyMul * school * headroom * roleMul * (0.9 + rng(c) * 0.2);
   c.stats[stat] = Math.min(99, Math.round((c.stats[stat] + gain) * 10) / 10);
 }
 
@@ -172,6 +173,36 @@ export function advanceTurn(original: Career, focusId: string): Career {
       text = `${period}, 해외 투어와 쇼케이스를 돌았어요. 다음 앨범의 해외 반응이 기대돼요.`;
       scene = "tour";
       comments = buildReactions(c, "good");
+    } else if (kind === "solo") {
+      const solo = arg as SoloKind;
+      if (!SOLO_LABELS[solo]) throw new GameError("개인 활동을 골라주세요.");
+      if (c.debutTurn === null || c.turn - c.debutTurn < SOLO_UNLOCK_TURNS) throw new GameError("데뷔 3년 뒤부터 개인 활동을 할 수 있어요.");
+      const stat = soloStat(c, solo);
+      const p = soloChance(c, solo);
+      const success = rng(c) < p;
+      grow(c, stat, success ? 3 : 1.5);
+      c.health -= 8;
+      c.flags[`solo:${solo}`] = (c.flags[`solo:${solo}`] ?? 0) + (success ? 1 : 0);
+      const statName = STAT_NAMES[stat];
+      if (success) {
+        tone = "good";
+        if (solo === "acting") { c.popularity += 7; applyEffects(c, { fansMul: 1.1, reputation: 5, revenue: 6 }); headline = "드라마 흥행 — 연기돌로 인정"; text = `${period}, 출연한 작품이 화제가 됐어요. '연기 되는 아이돌' 수식어가 붙었어요.`; scene = "drama"; }
+        else if (solo === "solo") { c.popularity += 6; applyEffects(c, { fansMul: 1.1, reputation: 4, revenue: 9 }); headline = "솔로 앨범 성공"; text = `${period}, 내 이름으로 낸 앨범이 좋은 성적을 냈어요. ${statName} 실력이 빛났어요.`; scene = "songwriting"; }
+        else if (solo === "variety") { c.popularity += 9; applyEffects(c, { fansMul: 1.08, reputation: 4, revenue: 4 }); headline = "예능 캐릭터가 터졌다"; text = `${period}, 고정 예능과 개인 채널이 동시에 떴어요. 대중이 이름을 기억해요.`; scene = "variety"; }
+        else { c.popularity += 3; applyEffects(c, { reputation: 5, revenue: 8 }); headline = "프로듀싱 곡이 차트에 올랐다"; text = `${period}, 다른 가수에게 준 곡이 히트했어요. 작곡가 크레딧에 이름이 쌓여요.`; scene = "songwriting"; }
+        comments = buildReactions(c, "good");
+      } else {
+        tone = "bad";
+        c.mental -= 8;
+        c.popularity -= 2;
+        applyEffects(c, { revenue: 1 });
+        if (solo === "acting") { addReputation(c, -4); headline = "연기력 논란"; text = `${period}, 출연작에서 연기력 지적을 받았어요. 비주얼만으로는 배역을 끌고 가기 어려웠어요.`; scene = "drama"; }
+        else if (solo === "solo") { headline = "솔로 앨범 부진"; text = `${period}, 솔로 앨범 반응이 조용했어요. ${statName} 실력이 아직 솔로를 끌고 가기엔 부족했어요.`; scene = "songwriting"; }
+        else if (solo === "variety") { headline = "예능에서 묻혔다"; text = `${period}, 고정 예능에서 존재감이 없었어요. 예능 수치가 낮으면 분량이 안 나와요.`; scene = "variety"; }
+        else { headline = "곡이 채택되지 않았다"; text = `${period}, 보낸 데모가 채택되지 않았어요. 프로듀싱 실력을 더 쌓아야 해요.`; scene = "songwriting"; }
+        comments = buildReactions(c, "bad");
+      }
+      notes.push(`${SOLO_LABELS[solo].label}의 성공 가능성은 ${statName} 수치가 정해요.`);
     } else if (kind === "rest") {
       c.health += 35;
       c.mental += 30;
@@ -449,8 +480,22 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     headline = { army: "육군 입대", navy: "해군 입대", airforce: "공군 입대" }[branch] ?? "입대";
     text = `${turns * 6}개월 뒤 돌아와요. 다음 진행에서 복무 기간이 한 번에 지나가요.`;
     log(c, headline, text, "milestone");
+  } else if (op === "transfer") {
+    const mine = agencyById(c.agencyId)!;
+    const better = AGENCIES.filter((a) => a.id !== mine.id && (a.tier === "major" || a.tier === "mid"));
+    const a = pick(c, better);
+    c.agencyId = a.id;
+    c.contractEnd = c.turn + 6;
+    c.flags.renewed = 1;
+    c.flags.shareBonus = 1;
+    c.trust = 40;
+    headline = `${a.name}로 이적 · 팀 활동 유지`;
+    text = `${a.fullName}와 새 전속계약을 맺었어요. 상표권 합의로 그룹 활동은 그대로 이어가요.`;
+    tone = "good";
+    log(c, headline, text, "milestone");
   } else if (op === "renew") {
     c.contractEnd = c.turn + 6;
+    c.flags.renewed = 1;
     c.flags.shareBonus = 1;
     c.trust = Math.min(100, c.trust + 15);
     c.mental = Math.min(100, c.mental + 10);
@@ -460,6 +505,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     log(c, headline, text, "milestone");
   } else if (op === "independent") {
     c.contractEnd = c.turn + 6;
+    c.flags.renewed = 1;
     c.flags.independent = 1;
     headline = "독립 레이블 설립";
     text = "멤버들과 직접 회사를 세웠어요. 정산 몫은 크게 늘고 제작 지원은 줄어요.";

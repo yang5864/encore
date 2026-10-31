@@ -89,6 +89,7 @@ export const IDOL_EVENTS: GameEventDef[] = [
     choices: [
       { id: "renew", label: "재계약한다", hint: "정산 조건이 좋아지고 활동이 안정돼요", risk: "safe", op: "renew" },
       { id: "indie", label: "멤버들과 독립 레이블을 세운다", hint: "정산 몫이 크게 늘지만 제작 지원이 줄어요", risk: "bold", op: "independent" },
+      { id: "transfer", label: "다른 회사로 옮기되 팀 활동은 유지한다", hint: "상표권 합의로 그룹은 이어가요. 더 큰 회사면 지원이 늘어요", risk: "bold", op: "transfer" },
       { id: "solo", label: "솔로로 전향한다", hint: "그룹을 떠나 내 이름으로 활동해요. 팬덤 일부가 떠나요", risk: "bold", op: "solo" },
       { id: "disband", label: "그룹을 마무리한다", hint: "아름다운 마무리. 커리어가 끝나고 기록에 남아요", risk: "bold", op: "retire" },
     ],
@@ -362,6 +363,49 @@ export const IDOL_EVENTS: GameEventDef[] = [
     when: (c) => agencyById(c.agencyId)?.tier === "indie" && !c.flags.miracle && c.albums.length > 0,
     choices: [
       { id: "ride", label: "모든 스케줄을 비우고 활동을 재개한다", hint: "팬이 몇 배로 늘고 음악방송 정상을 노려요", risk: "bold", op: "rechart" },
+    ],
+  },
+  {
+    id: "unit",
+    stage: "idol",
+    kind: "story",
+    title: "유닛 활동 제안",
+    text: "도약기에 들어서며 회사가 유닛 활동을 제안했어요. 보컬 유닛, 퍼포먼스 유닛, 힙합 유닛 중 내 색이 드러나는 조합을 고를 수 있어요.",
+    scene: "songwriting",
+    public: true,
+    when: (c) => since(c) >= 3,
+    choices: [
+      { id: "vocal", label: "보컬 유닛", hint: "보컬이 오르고 음원 반응이 와요", risk: "safe", effects: { vocal: 3, popularity: 4, fansMul: 1.05, revenue: 3, reputation: 2 } },
+      { id: "perf", label: "퍼포먼스 유닛", hint: "댄스와 비주얼이 오르고 챌린지가 돌아요", risk: "safe", effects: { dance: 3, visual: 1, popularity: 4, fansMul: 1.05, revenue: 3, reputation: 2 } },
+      { id: "hiphop", label: "힙합 유닛", hint: "랩과 프로듀싱이 오르고 마니아 팬이 생겨요", risk: "safe", effects: { rap: 3, producing: 1, popularity: 3, fansMul: 1.05, revenue: 3, reputation: 2 } },
+    ],
+  },
+  {
+    id: "ambassador",
+    stage: "idol",
+    kind: "story",
+    title: "명품 브랜드 글로벌 앰버서더 제안",
+    text: "전성기에 접어들자 해외 명품 브랜드에서 글로벌 앰버서더 제안이 왔어요. 패션위크 참석과 캠페인 촬영이 포함돼요.",
+    scene: "advert",
+    public: true,
+    when: (c) => c.popularity >= 65 && since(c) >= 6,
+    choices: [
+      { id: "accept", label: "앰버서더가 된다", hint: "비주얼 이미지와 해외 인지도가 크게 오르고 수익이 커요", risk: "safe", effects: { visual: 2, popularity: 6, fansMul: 1.08, revenue: 15, reputation: 4 } },
+      { id: "decline", label: "국내 브랜드와 계속한다", hint: "안정적인 수익을 유지해요", risk: "safe", effects: { revenue: 5, reputation: 2 } },
+    ],
+  },
+  {
+    id: "radio",
+    stage: "idol",
+    kind: "story",
+    title: "라디오 DJ 제안",
+    text: "저녁 라디오 고정 DJ 제안이 왔어요. 매일 두 시간, 1년 계약이에요. 입담이 있으면 대중과 가까워지고, 아니면 금방 하차 이야기가 나와요.",
+    scene: "livestream",
+    public: true,
+    when: (c) => c.stats.variety >= 50 && since(c) >= 4,
+    choices: [
+      { id: "dj", label: "DJ를 맡는다", hint: "예능감이 자라고 대중 호감이 꾸준히 올라요. 스케줄이 빡빡해져요", risk: "safe", effects: { variety: 3, popularity: 5, reputation: 6, revenue: 3, health: -8 } },
+      { id: "guest", label: "게스트로만 출연한다", hint: "부담 없이 얼굴을 비춰요", risk: "safe", effects: { variety: 1, reputation: 2 } },
     ],
   },
   {
