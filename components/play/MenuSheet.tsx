@@ -100,7 +100,7 @@ export function MenuSheet({ career, open, onClose, onExport, onImport, onRetire,
         <Confirm title="정말 은퇴할까요?" text="마지막 앵콜 무대를 마치고 커리어가 기록에 남아요. 되돌릴 수 없어요." label="은퇴하기" onYes={() => { onRetire(); close(); }} onNo={() => setView("menu")} />
       )}
       {view === "confirmReset" && (
-        <Confirm title="새 커리어를 시작할까요?" text="진행 중인 커리어가 지워져요. 먼저 저장 파일을 내보내 두면 나중에 가져올 수 있어요." label="지우고 새로 시작" onYes={() => { onReset(); close(); }} onNo={() => setView("menu")} />
+        <Confirm title="새 커리어를 시작할까요?" text="진행 중인 인생가 지워져요. 먼저 저장 파일을 내보내 두면 나중에 가져올 수 있어요." label="지우고 새로 시작" onYes={() => { onReset(); close(); }} onNo={() => setView("menu")} />
       )}
     </Sheet>
   );

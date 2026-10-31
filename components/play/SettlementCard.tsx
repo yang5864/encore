@@ -24,10 +24,10 @@ export function SettlementCard({ career }: { career: Career }) {
       </div>
       <div className="mt-4">
         <div className="flex justify-between text-[13px] font-semibold text-ink-2 mb-1.5">
-          <span>투자비 회수</span>
+          <span>제작비 회수</span>
           <span>{s.unrecovered > 0 ? `${wonText(s.unrecovered)} 남음` : "회수 완료"}</span>
         </div>
-        <ProgressBar value={recovered} color={s.unrecovered > 0 ? "var(--warn)" : "var(--ok)"} height={8} label="투자비 회수" />
+        <ProgressBar value={recovered} color={s.unrecovered > 0 ? "var(--warn)" : "var(--ok)"} height={8} label="제작비 회수" />
       </div>
     </Card>
   );

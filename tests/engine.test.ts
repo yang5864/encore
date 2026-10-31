@@ -194,3 +194,13 @@ test("focusOptions: 무소속/연습생/아이돌마다 다르고 휴식은 상�
   i.popularity = 30;
   assert.ok(focusOptions(i).find((o) => o.id === "overseas")?.disabledReason);
 });
+
+test("능력치는 항상 정수다", () => {
+  let c = trainee(17);
+  c.schoolId = "general";
+  for (let i = 0; i < 20 && c.stage !== "retired"; i++) {
+    c = advanceTurn(c, c.stage === "idol" ? (c.lastReleaseTurn === c.turn ? "promo" : "comeback:fresh") : "train:vocal");
+    c = settle(c);
+    for (const v of Object.values(c.stats)) assert.ok(Number.isInteger(v), `${JSON.stringify(c.stats)}`);
+  }
+});

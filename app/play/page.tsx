@@ -88,7 +88,7 @@ export default function PlayPage() {
     if (!career) return "";
     if (career.stage === "retired") return "기록 보기";
     if (career.pending) return "선택 확인하기";
-    return `${periodLabel(career)} 진행`;
+    return `${periodLabel(career)} 진행하기`;
   }, [career]);
 
   if (!ready || !career) return <div className="shell" />;

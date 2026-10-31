@@ -46,7 +46,7 @@ export function StatsCard({ career, changes }: { career: Career; changes?: Chang
                 <span className="text-[13px] font-semibold text-ink-2">{STAT_NAMES[k]}</span>
                 <span className="text-[13px] font-bold tabular-nums">
                   {Math.round(career.stats[k])}
-                  {d !== null && <span className={`ml-1 text-[13px] ${d > 0 ? "text-up" : "text-down"}`}>{d > 0 ? "+" : ""}{Math.round(d * 10) / 10}</span>}
+                  {d !== null && <span className={`ml-1 text-[13px] ${d > 0 ? "text-up" : "text-down"}`}>{d > 0 ? "+" : ""}{Math.round(d)}</span>}
                 </span>
               </div>
               <ProgressBar value={career.stats[k]} color={STAT_COLORS[k]} height={6} label={STAT_NAMES[k]} />

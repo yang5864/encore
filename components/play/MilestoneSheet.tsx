@@ -11,7 +11,7 @@ export function MilestoneSheet({ career, id, open, onClose }: { career: Career; 
   return (
     <Sheet open={open} dismissible={false} tall>
       <div className="flex flex-col items-center text-center h-full justify-center pb-10">
-        <p className="t-cap text-primary pop-in">MILESTONE</p>
+        <p className="t-cap text-primary pop-in">새로운 기록</p>
         <h2 className="pop-in mt-3 text-[22px] font-extrabold tracking-[-0.03em] leading-tight" style={{ animationDelay: "80ms" }}>
           {m.title}
         </h2>

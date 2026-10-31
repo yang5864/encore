@@ -79,7 +79,7 @@ export function makeAlbum(c: Career, concept: Concept): Album {
   c.mental -= 6;
   if (prevSales > 0 && sales > prevSales * 4 && sales > 100000 && rng(c) < 0.5) c.flags.salesSpike = c.turn + 1;
   if (concept === "ballad" && c.stats.vocal < 45) c.flags.liveRisk = c.turn + 1;
-  for (const k of CONCEPTS.find((x) => x.id === concept)!.stats) c.stats[k] = Math.min(99, c.stats[k] + 1.5);
+  for (const k of CONCEPTS.find((x) => x.id === concept)!.stats) c.stats[k] = Math.min(99, c.stats[k] + (rng(c) < 0.5 ? 2 : 1));
   return album;
 }
 

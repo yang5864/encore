@@ -36,7 +36,10 @@ function grow(c: Career, stat: StatKey, amount: number) {
   const headroom = Math.max(0.12, Math.min(1, (c.potential[stat] - c.stats[stat]) / 28));
   const roleMul = MAIN_STAT[c.position] === stat ? 1.12 : 1; // 역할의 주력 능력은 조금 더 빨리 자란다
   const gain = amount * ageMultiplier(ageOf(c)) * agencyMul * school * headroom * roleMul * (0.9 + rng(c) * 0.2);
-  c.stats[stat] = Math.min(99, Math.round((c.stats[stat] + gain) * 10) / 10);
+  // 능력치는 정수만 쓴다: 소수 부분은 확률로 올림해 평균 성장량을 유지한다
+  const whole = Math.floor(gain);
+  const extra = rng(c) < gain - whole ? 1 : 0;
+  c.stats[stat] = Math.min(99, c.stats[stat] + whole + extra);
 }
 
 function popularityTarget(c: Career): number {
@@ -71,11 +74,11 @@ function finish(c: Career, before: Snapshot, headline: string, text: string, ton
   c.result = buildResult(c, before, headline, text, milestones.length ? "milestone" : tone, { ...opts, milestones });
 }
 
-// ─────────────────────────── 반기 진행 ───────────────────────────
+// ─────────────────────────── 시즌 진행 ───────────────────────────
 
 export function advanceTurn(original: Career, focusId: string): Career {
   const c = clone(original);
-  if (c.stage === "retired") throw new GameError("이미 완성된 커리어예요. 새 이야기를 시작해보세요.");
+  if (c.stage === "retired") throw new GameError("이미 완성된 인생예요. 새 이야기를 시작해보세요.");
   if (c.pending) throw new GameError("먼저 지금의 선택을 마쳐주세요.");
   c.result = null;
   const before = snapshot(c);
@@ -130,7 +133,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
     }
   } else if (c.stage === "idol") {
     if (kind === "comeback") {
-      if (c.lastReleaseTurn === c.turn) throw new GameError("이번 반기에 이미 앨범을 냈어요.");
+      if (c.lastReleaseTurn === c.turn) throw new GameError("이번 시즌에 이미 앨범을 냈어요.");
       const concept = arg as Concept;
       if (!CONCEPTS.some((x) => x.id === concept)) throw new GameError("콘셉트를 골라주세요.");
       const album = makeAlbum(c, concept);
@@ -315,7 +318,7 @@ function joinAgency(c: Career, agencyId: string) {
 
 export function resolveChoice(original: Career, choiceId: string, extra: { groupName?: string } = {}): Career {
   const c = clone(original);
-  if (c.stage === "retired") throw new GameError("이미 완성된 커리어예요.");
+  if (c.stage === "retired") throw new GameError("이미 완성된 인생예요.");
   const event = c.pending;
   if (!event) throw new GameError("지금은 결정할 선택이 없어요.");
   const choice = event.choices.find((x) => x.id === choiceId);
@@ -431,7 +434,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     for (const k of [MAIN_STAT[c.position]]) c.stats[k] = Math.min(99, c.stats[k] + 3);
   } else if (op === "weakfix") {
     const low = lowestStat(c);
-    c.stats[low] = Math.min(99, c.stats[low] + 2.5);
+    c.stats[low] = Math.min(99, c.stats[low] + 3);
     const second = STAT_KEYS.filter((k) => k !== low).reduce((m, k) => (c.stats[k] < c.stats[m] ? k : m));
     c.stats[second] = Math.min(99, c.stats[second] + 2);
   } else if (op === "awaken") {
@@ -479,7 +482,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
   } else if (op === "hiatus") {
     c.hiatusUntil = c.turn + 1;
     headline = "휴식기에 들어가요";
-    text = "회사가 활동 중단을 공식 발표했어요. 다음 반기는 쉬어요.";
+    text = "회사가 활동 중단을 공식 발표했어요. 다음 시즌은 쉬어요.";
   } else if (op === "scandal") {
     c.flags.scandalTurn = c.turn;
     c.hiatusUntil = c.turn + 1;
@@ -548,15 +551,17 @@ export function applyToAgency(original: Career, agencyId: string): Career {
   const c = clone(original);
   const a = agencyById(agencyId);
   if (!a) throw new GameError("기획사를 골라주세요.");
-  if (c.stage === "retired") throw new GameError("이미 완성된 커리어예요.");
+  if (c.stage === "retired") throw new GameError("이미 완성된 인생예요.");
   if (c.stage === "idol") throw new GameError("전속계약 중이에요. 재계약 시점에 열려요.");
   if (c.pending) throw new GameError("먼저 지금의 선택을 마쳐주세요.");
   if (c.agencyId === agencyId) throw new GameError("이미 소속된 회사예요.");
   const last = c.flags[`apply:${agencyId}`];
   if (last !== undefined && c.turn - last < 2) throw new GameError("같은 회사에는 1년 뒤 다시 지원할 수 있어요.");
+  if (c.flags.appliedTurn === c.turn) throw new GameError("기획사 지원은 시즌마다 한 번만 할 수 있어요. 다음 시즌에 다시 지원해주세요.");
   c.result = null;
   const before = snapshot(c);
   c.flags[`apply:${agencyId}`] = c.turn;
+  c.flags.appliedTurn = c.turn;
   const p = auditionChance(c, agencyId);
   const passed = rng(c) < p;
   if (passed) {
@@ -589,7 +594,7 @@ export function applyToAgency(original: Career, agencyId: string): Career {
 
 export function retire(original: Career, reason = "마지막 앵콜 무대를 마쳤어요."): Career {
   const c = original.result === null && original.pending === null ? original : clone(original);
-  if (c.stage === "retired") throw new GameError("이미 완성된 커리어예요.");
+  if (c.stage === "retired") throw new GameError("이미 완성된 인생예요.");
   const before = snapshot(c);
   const ending = endingFor(c);
   c.ending = ending;

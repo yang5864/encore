@@ -12,9 +12,10 @@ const TONE: Record<string, "down" | "warn" | "neutral" | "ok" | "up"> = { "매�
 export function AgencySheet({ career, open, onClose, onApply }: { career: Career; open: boolean; onClose: () => void; onApply: (id: string) => void }) {
   const [tier, setTier] = useState<Tier>("indie");
   const locked = career.stage === "idol";
+  const usedThisSeason = career.flags.appliedTurn === career.turn;
   const monthsLeft = career.contractEnd !== null ? Math.max(0, (career.contractEnd - career.turn) * 6) : 0;
   return (
-    <Sheet open={open} onOpenChange={(o) => !o && onClose()} title="기획사 지원" description={locked ? `전속계약 중이에요. 재계약 시점(${monthsLeft}개월 뒤)에 열려요` : "합격 가능성은 지금 실력 기준이에요. 같은 회사는 1년 뒤 다시 지원할 수 있어요"} tall>
+    <Sheet open={open} onOpenChange={(o) => !o && onClose()} title="기획사 지원" description={locked ? `전속계약 중이에요. 재계약 시점(${monthsLeft}개월 뒤)에 열려요` : usedThisSeason ? "이번 시즌에는 이미 지원했어요. 시즌을 진행하면 다시 지원할 수 있어요" : "지원은 시즌마다 한 번이에요. 합격 가능성은 지금 실력 기준이에요"} tall>
       <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-5 px-5 pb-1">
         {TIER_ORDER.map((t) => (
           <button key={t} onClick={() => setTier(t)} className={cn("press shrink-0 h-9 px-3.5 rounded-full text-[13px] font-bold", tier === t ? "bg-ink text-bg" : "bg-chip text-ink-2")}>
@@ -38,11 +39,11 @@ export function AgencySheet({ career, open, onClose, onApply }: { career: Career
                 {!locked && !mine && <Chip tone={TONE[label]} className="mt-1.5 h-6 px-2 text-[13px]">합격 가능성 {label}</Chip>}
               </div>
               <button
-                disabled={locked || mine || cooldown}
+                disabled={locked || mine || cooldown || usedThisSeason}
                 onClick={() => onApply(a.id)}
                 className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary text-white text-[13px] font-bold disabled:bg-chip disabled:text-ink-3"
               >
-                {mine ? "소속" : cooldown ? "대기" : "지원"}
+                {mine ? "소속" : usedThisSeason ? "지원 완료" : cooldown ? "대기" : "지원"}
               </button>
             </div>
           );

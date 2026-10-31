@@ -53,6 +53,8 @@ export function parseCareer(text: string): Career {
   if (typeof c.name !== "string" || typeof c.turn !== "number" || !Array.isArray(c.albums)) throw new GameError("저장 파일 내용이 손상됐어요.");
   // 이전 2.0 저장본 보완
   if (!c.metrics || typeof c.metrics !== "object") c.metrics = { instagram: 0, youtube: 0, spotify: 0 };
+  const stats = c.stats as Record<string, number>;
+  for (const k of Object.keys(stats)) stats[k] = Math.round(stats[k]);
   return c as unknown as Career;
 }
 

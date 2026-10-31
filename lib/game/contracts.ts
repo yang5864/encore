@@ -35,7 +35,7 @@ export function contractTerms(c: Career, event: ActiveEvent, choice: ChoiceDef):
       party: partyOf(a ?? null),
       rows: [
         { label: "계약 기간", value: "3년" },
-        { label: "훈련비", value: "회사 부담 (반기 1.5억원 상당)" },
+        { label: "훈련비", value: "회사 부담 (시즌당 1.5억원 상당)" },
         { label: "숙소 · 레슨", value: "제공" },
         { label: "데뷔 평가", value: "매년 월말평가 기준", accent: true },
       ],

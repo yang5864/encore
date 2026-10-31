@@ -69,6 +69,7 @@ test("기획사 지원: 합격이면 연습생, 불합격이면 무소속 유지
       assert.equal(signed.traineeContractEnd, 6);
       const declined = resolveChoice(next, "decline");
       assert.equal(declined.stage, "free");
+      assert.throws(() => applyToAgency(declined, "aomg"), /시즌마다 한 번/);
     } else {
       failed = true;
       assert.equal(next.agencyId, null);

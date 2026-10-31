@@ -64,7 +64,7 @@ export default function HomePage() {
           연습실에서<br />레전드까지
         </h1>
         <p className="t-body text-ink-2 mt-3 leading-relaxed">
-          반기마다 계획 하나를 고르면 6개월이 흘러요.<br />오디션, 데뷔, 음방 1위, 대상까지 도전해 보세요.
+          시즌마다 계획 하나를 고르면 6개월이 흘러요.<br />오디션, 데뷔, 음방 1위, 대상까지 도전해 보세요.
         </p>
       </Card>
 
@@ -98,7 +98,7 @@ export default function HomePage() {
               <Avatar index={career.avatar} size={40} name={career.name} />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="t-cap">{career.stage === "retired" ? "완성된 커리어" : "진행 중인 커리어"}</p>
+              <p className="t-cap">{career.stage === "retired" ? "완성된 인생" : "진행 중인 인생"}</p>
               <p className="t-card truncate">{career.groupName ? `${career.groupName} ${career.name}` : career.name}</p>
               <p className="text-[13px] text-ink-2 flex items-center gap-1.5 truncate">
                 {career.agencyId && <Logo id={agencyById(career.agencyId)?.logo} label={agencyById(career.agencyId)?.name ?? ""} color={agencyById(career.agencyId)?.color} size={16} rounded="full" />}

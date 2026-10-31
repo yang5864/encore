@@ -97,7 +97,7 @@ export function focusOptions(c: Career): FocusOption[] {
     { id: "overseas", label: "해외 활동", hint: "해외 팬이 크게 늘고 다음 앨범의 해외 차트 가능성이 열려요. 많이 지쳐요", risk: "bold", group: "group", disabledReason: c.popularity < 55 ? "인기도가 더 필요해요" : undefined },
     { id: "rest", label: "휴식기", hint: "컨디션을 크게 회복해요. 팬이 조금 줄어요", risk: "safe", group: "group" },
   ];
-  if (c.lastReleaseTurn === c.turn) options[0].disabledReason = "이번 반기에 이미 앨범을 냈어요";
+  if (c.lastReleaseTurn === c.turn) options[0].disabledReason = "이번 시즌에 이미 앨범을 냈어요";
   if (c.debutTurn !== null && c.turn - c.debutTurn >= SOLO_UNLOCK_TURNS) {
     for (const kind of ["solo", "acting", "variety", "producing"] as SoloKind[]) {
       const p = soloChance(c, kind);

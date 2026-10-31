@@ -24,7 +24,7 @@ function deltaText(ch: Change) {
   if (ch.fmt === "won") return `${d > 0 ? "+" : "-"}${wonText(Math.abs(d))}`;
   if (ch.fmt === "count") return `${d > 0 ? "+" : "-"}${countText(Math.abs(d))}`;
   if (ch.fmt === "rep") return `${d > 0 ? "+" : ""}${Math.round(d)}`;
-  return `${d > 0 ? "+" : ""}${Math.round(d * 10) / 10}`;
+  return `${d > 0 ? "+" : ""}${Math.round(d)}`;
 }
 
 export function pickTop(changes: Change[], n = 3): Change[] {

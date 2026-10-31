@@ -16,7 +16,7 @@ export function addReputation(c: Career, delta: number) {
 
 export function applyEffects(c: Career, e: Effects | undefined) {
   if (!e) return;
-  for (const k of STAT_KEYS) if (e[k]) c.stats[k] = clampStat(c.stats[k] + e[k]!);
+  for (const k of STAT_KEYS) if (e[k]) c.stats[k] = clampStat(Math.round(c.stats[k] + e[k]!));
   if (e.health) c.health = Math.max(0, Math.min(100, c.health + e.health));
   if (e.mental) c.mental = Math.max(0, Math.min(100, c.mental + e.mental));
   if (e.trust) c.trust = Math.max(0, Math.min(100, c.trust + e.trust));
@@ -73,7 +73,7 @@ export function diff(before: Snapshot, after: Snapshot, showMoney: boolean): Cha
   push("instagram", "인스타 팔로워", before.instagram, after.instagram, "count");
   push("youtube", "유튜브 구독자", before.youtube, after.youtube, "count");
   push("spotify", "스포티파이 리스너", before.spotify, after.spotify, "count");
-  for (const k of STAT_KEYS) push(k, STAT_NAMES[k], Math.round(before.stats[k] * 10) / 10, Math.round(after.stats[k] * 10) / 10, "int");
+  for (const k of STAT_KEYS) push(k, STAT_NAMES[k], Math.round(before.stats[k]), Math.round(after.stats[k]), "int");
   push("condition", "컨디션", before.condition, after.condition, "int");
   return out;
 }

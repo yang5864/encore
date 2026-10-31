@@ -59,7 +59,7 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
 
   return (
     <Card className="fade-up" style={{ animationDelay: "180ms" }} id="focus-card">
-      <CardTitle sub={`${periodLabel(career)} 계획을 하나 골라요`}>이번 반기 집중</CardTitle>
+      <CardTitle sub={`${periodLabel(career)} 무엇을 할지 하나만 골라요`}>이번 시즌 계획</CardTitle>
       {soloOptions.length > 0 && <p className="text-[13px] font-bold text-ink-3 mb-2">그룹 활동</p>}
       <div className="flex flex-col gap-2">{groupOptions.map(renderOption)}</div>
       {soloOptions.length > 0 && (
