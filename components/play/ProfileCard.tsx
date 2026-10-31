@@ -23,7 +23,7 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
           <p className="t-cap">{periodLabel(career)} · {ageOf(career)}세</p>
           <h1 className="t-title truncate mt-0.5">{career.stage === "idol" && career.groupName ? `${career.groupName} ${career.name}` : career.name}</h1>
           <div className="flex flex-wrap items-center gap-1.5 mt-2">
-            <Chip tone={career.stage === "idol" ? "up" : career.stage === "trainee" ? "ok" : "neutral"}>{careerPhase(career) === STAGE_NAMES[career.stage] ? STAGE_NAMES[career.stage] : `${STAGE_NAMES[career.stage]} · ${careerPhase(career)}`}</Chip>
+            <Chip tone={career.stage === "idol" ? "info" : career.stage === "trainee" ? "ok" : "neutral"}>{careerPhase(career) === STAGE_NAMES[career.stage] ? STAGE_NAMES[career.stage] : `${STAGE_NAMES[career.stage]} · ${careerPhase(career)}`}</Chip>
             <Chip>{position}</Chip>
           </div>
         </div>

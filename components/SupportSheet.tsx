@@ -24,7 +24,7 @@ export function SupportSheet({ open, onClose }: { open: boolean; onClose: () => 
       <div className="rounded-2xl bg-sub p-4 flex items-center gap-3">
         <Logo id="tossbank" label="토스뱅크" size={44} />
         <div className="min-w-0 flex-1">
-          <p className="t-cap">{BANK} · 예금주 양*현</p>
+          <p className="t-cap">{BANK}</p>
           <p className="text-[22px] font-extrabold tracking-[-0.02em] tabular-nums whitespace-nowrap">{ACCOUNT}</p>
         </div>
       </div>

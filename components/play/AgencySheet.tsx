@@ -7,7 +7,7 @@ import { cn } from "@/lib/cn";
 import { AGENCIES, TIERS, TIER_ORDER, auditionChance, chanceLabel } from "@/lib/game/agencies";
 import type { Career, Tier } from "@/lib/game/types";
 
-const TONE: Record<string, "danger" | "warn" | "neutral" | "ok" | "up"> = { "매우 낮음": "danger", 낮음: "warn", 보통: "neutral", 높음: "ok", "매우 높음": "up" };
+const TONE: Record<string, "danger" | "warn" | "neutral" | "ok" | "info"> = { "매우 낮음": "danger", 낮음: "warn", 보통: "neutral", 높음: "ok", "매우 높음": "info" };
 
 export function AgencySheet({ career, open, onClose, onApply }: { career: Career; open: boolean; onClose: () => void; onApply: (id: string) => void }) {
   const [tier, setTier] = useState<Tier>("indie");

@@ -18,7 +18,7 @@ import { GameError } from "@/lib/game/types";
 import { saveCareer } from "@/lib/storage";
 
 const STEPS = ["프로필", "스타일", "첫 지원"];
-const TONE: Record<string, "danger" | "warn" | "neutral" | "ok" | "up"> = { "매우 낮음": "danger", 낮음: "warn", 보통: "neutral", 높음: "ok", "매우 높음": "up" };
+const TONE: Record<string, "danger" | "warn" | "neutral" | "ok" | "info"> = { "매우 낮음": "danger", 낮음: "warn", 보통: "neutral", 높음: "ok", "매우 높음": "info" };
 
 export default function NewPage() {
   const router = useRouter();
@@ -134,7 +134,7 @@ export default function NewPage() {
                     {c.top.map((k) => (
                       <Chip key={k}>{STAT_NAMES[k]} {c.stats[k]}</Chip>
                     ))}
-                    <Chip tone="up">OVR {overall(c.stats, c.position)}</Chip>
+                    <Chip tone="info">OVR {overall(c.stats, c.position)}</Chip>
                   </div>
                   {selected && (
                     <div className="mt-4 pt-4 border-t border-line flex flex-col gap-2.5 fade-up">

@@ -13,7 +13,7 @@ export type FocusOption = {
   /** "group" | "solo" — idol options are shown in two sections */
   group?: "group" | "solo";
   /** 개인 활동 성공 가능성 라벨 */
-  readiness?: { label: string; tone: "danger" | "warn" | "ok" | "up" };
+  readiness?: { label: string; tone: "danger" | "warn" | "ok" | "info" };
 };
 
 export type SoloKind = "acting" | "solo" | "variety" | "producing";
@@ -35,11 +35,11 @@ export function soloChance(c: Pick<Career, "position" | "stats">, kind: SoloKind
   return Math.max(0.05, Math.min(0.95, (stat - 30) / 60 + helper));
 }
 
-export function readinessOf(p: number): { label: string; tone: "danger" | "warn" | "ok" | "up" } {
+export function readinessOf(p: number): { label: string; tone: "danger" | "warn" | "ok" | "info" } {
   if (p < 0.3) return { label: "성공 어려움", tone: "danger" };
   if (p < 0.5) return { label: "도전적", tone: "warn" };
   if (p < 0.75) return { label: "해볼 만함", tone: "ok" };
-  return { label: "재능 있음", tone: "up" };
+  return { label: "재능 있음", tone: "info" };
 }
 
 export const SOLO_LABELS: Record<SoloKind, { label: string; hint: string }> = {
