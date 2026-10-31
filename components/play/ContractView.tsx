@@ -85,7 +85,7 @@ export function ContractView({ career, event, choice, onSign, onDecline }: Props
       <div className="mt-5">
         {saved ? (
           <>
-            <p className="t-cap mb-2">{playing ? "저장된 서명을 넣고 있어요" : "계약하기를 누르면 저장된 서명이 자동으로 들어가요"}</p>
+            <p className="t-cap mb-2">{playing ? "서명 중이에요" : "저장된 서명이에요. 계약하기를 누르면 서명이 들어가요"}</p>
             <SignatureReplay signature={saved} play={playing} onDone={playing ? finish : undefined} />
           </>
         ) : (

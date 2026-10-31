@@ -93,34 +93,129 @@ export function SignaturePad({ onChange }: { onChange: (sig: Signature | null) =
   );
 }
 
-/** Replays a stored signature with a drawing animation. Calls onDone when finished. */
+/**
+ * Replays a stored signature like a real pen: a faint preview sits in the box,
+ * and on play the ink is drawn with a speed profile — fast on straight runs,
+ * slowing into sharp turns, pausing briefly between strokes.
+ */
 export function SignatureReplay({ signature, play, onDone }: { signature: Signature; play: boolean; onDone?: () => void }) {
   const paths = useMemo(() => signature.strokes.map(toPath), [signature]);
   const refs = useRef<(SVGPathElement | null)[]>([]);
   const [lengths, setLengths] = useState<number[]>([]);
+  const [drawn, setDrawn] = useState<number[]>([]);
+  const doneRef = useRef(false);
 
   useEffect(() => {
     setLengths(refs.current.map((p) => (p ? p.getTotalLength() : 0)));
   }, [paths]);
 
-  const total = lengths.reduce((a, b) => a + b, 0);
-  const duration = Math.min(1.8, Math.max(0.8, total / 400));
-  useEffect(() => {
-    if (!play || !onDone) return;
-    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const id = window.setTimeout(onDone, reduce ? 50 : duration * 1000 + 250);
-    return () => window.clearTimeout(id);
-  }, [play, duration, onDone]);
+  // Pen timeline: per-segment durations from length and turning angle.
+  const timeline = useMemo(() => {
+    const V = 520; // px/s on a straight run (viewBox units)
+    const LIFT = 0.12; // seconds between strokes
+    const strokes = signature.strokes.map((pts, si) => {
+      const P = pts.map(([x, y]) => [x * W, y * H] as const);
+      const segs: { len: number; dur: number }[] = [];
+      let total = 0;
+      for (let i = 1; i < P.length; i++) {
+        const dx = P[i][0] - P[i - 1][0];
+        const dy = P[i][1] - P[i - 1][1];
+        const len = Math.hypot(dx, dy);
+        let turn = 0;
+        if (i >= 2) {
+          const px = P[i - 1][0] - P[i - 2][0];
+          const py = P[i - 1][1] - P[i - 2][1];
+          const a = Math.atan2(dy, dx) - Math.atan2(py, px);
+          turn = Math.abs(Math.atan2(Math.sin(a), Math.cos(a))); // 0..π
+        }
+        // slow down into corners, ease out of the stroke start
+        const corner = 1 - Math.min(0.8, (turn / Math.PI) * 1.4);
+        const ramp = Math.min(1, 0.35 + total / 40);
+        const speed = V * corner * ramp;
+        segs.push({ len, dur: len / Math.max(60, speed) });
+        total += len;
+      }
+      const dur = segs.reduce((a, b) => a + b.dur, 0);
+      return { segs, dur: Math.max(0.15, dur), lift: si === 0 ? 0 : LIFT };
+    });
+    const totalDur = strokes.reduce((a, s) => a + s.dur + s.lift, 0);
+    return { strokes, totalDur };
+  }, [signature]);
 
-  let offset = 0;
+  useEffect(() => {
+    if (!play) {
+      setDrawn([]);
+      doneRef.current = false;
+      return;
+    }
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      setDrawn(lengths.map((l) => l));
+      onDone?.();
+      return;
+    }
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      let t = (now - start) / 1000;
+      const out: number[] = [];
+      for (let si = 0; si < timeline.strokes.length; si++) {
+        const st = timeline.strokes[si];
+        const len = lengths[si] ?? 0;
+        if (t <= st.lift) {
+          out.push(0);
+          t = -1;
+          continue;
+        }
+        t -= st.lift;
+        if (t < 0) {
+          out.push(0);
+          continue;
+        }
+        if (t >= st.dur) {
+          out.push(len);
+          t -= st.dur;
+          continue;
+        }
+        // map elapsed time inside the stroke to arc length through the segment table
+        let elapsed = t;
+        let arc = 0;
+        for (const seg of st.segs) {
+          if (elapsed >= seg.dur) {
+            elapsed -= seg.dur;
+            arc += seg.len;
+          } else {
+            arc += seg.len * (elapsed / seg.dur);
+            break;
+          }
+        }
+        const segTotal = st.segs.reduce((a, b) => a + b.len, 0) || 1;
+        out.push((arc / segTotal) * len);
+        t = -1;
+      }
+      setDrawn(out);
+      const finished = now - start >= timeline.totalDur * 1000;
+      if (!finished) raf = requestAnimationFrame(tick);
+      else if (!doneRef.current) {
+        doneRef.current = true;
+        setDrawn(lengths.map((l) => l));
+        window.setTimeout(() => onDone?.(), 250);
+      }
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [play, lengths, timeline, onDone]);
+
   return (
     <div className="rounded-2xl border-2 border-dashed border-line bg-sub overflow-hidden">
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full block" style={{ aspectRatio: `${W} / ${H}` }} aria-label="저장된 서명" role="img">
+        {/* faint preview of the saved signature */}
+        {paths.map((d, i) => (
+          <path key={`ghost-${i}`} d={d} fill="none" stroke="var(--text-3)" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" style={{ opacity: play ? 0.18 : 0.32 }} />
+        ))}
+        {/* live ink */}
         {paths.map((d, i) => {
           const len = lengths[i] ?? 0;
-          const delay = total ? (offset / total) * duration : 0;
-          const dur = total ? (len / total) * duration : 0;
-          offset += len;
           return (
             <path
               key={i}
@@ -130,18 +225,10 @@ export function SignatureReplay({ signature, play, onDone }: { signature: Signat
               d={d}
               fill="none"
               stroke="var(--primary)"
-              strokeWidth={3}
+              strokeWidth={3.2}
               strokeLinecap="round"
               strokeLinejoin="round"
-              style={
-                lengths.length
-                  ? {
-                      strokeDasharray: len,
-                      strokeDashoffset: play ? 0 : len,
-                      transition: play ? `stroke-dashoffset ${dur}s linear ${delay}s` : "none",
-                    }
-                  : { opacity: 0 }
-              }
+              style={lengths.length ? { strokeDasharray: len, strokeDashoffset: len - (drawn[i] ?? 0) } : { opacity: 0 }}
             />
           );
         })}
