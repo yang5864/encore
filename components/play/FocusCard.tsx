@@ -24,7 +24,7 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
           onClick={() => onChange({ id: o.id, stat: value.stat ?? STAT_KEYS[0], concept: value.concept ?? CONCEPTS[0].id })}
           className={cn(
             "press w-full text-left rounded-2xl border-2 p-4 transition-colors",
-            selected ? "border-primary bg-primary-soft/50" : "border-transparent bg-[#f9fafb]",
+            selected ? "border-primary bg-primary-soft/50" : "border-transparent bg-sub",
             disabled && "opacity-45",
           )}
         >
@@ -37,7 +37,7 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
         {selected && o.picker === "stat" && (
           <div className="flex flex-wrap gap-1.5 mt-2 px-1">
             {STAT_KEYS.map((k) => (
-              <button key={k} onClick={() => onChange({ ...value, stat: k })} className={cn("press h-9 px-3 rounded-full text-[13px] font-bold", value.stat === k ? "bg-ink text-white" : "bg-[#f2f4f6] text-ink-2")}>
+              <button key={k} onClick={() => onChange({ ...value, stat: k })} className={cn("press h-9 px-3 rounded-full text-[13px] font-bold", value.stat === k ? "bg-ink text-bg" : "bg-chip text-ink-2")}>
                 {STAT_NAMES[k]}
               </button>
             ))}
@@ -46,9 +46,9 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
         {selected && o.picker === "concept" && (
           <div className="grid grid-cols-2 gap-1.5 mt-2 px-1">
             {CONCEPTS.map((x) => (
-              <button key={x.id} onClick={() => onChange({ ...value, concept: x.id })} className={cn("press text-left rounded-xl p-3", value.concept === x.id ? "bg-ink text-white" : "bg-[#f2f4f6]")}>
+              <button key={x.id} onClick={() => onChange({ ...value, concept: x.id })} className={cn("press text-left rounded-xl p-3", value.concept === x.id ? "bg-ink text-bg" : "bg-chip")}>
                 <p className="text-[14px] font-bold">{x.name}</p>
-                <p className={cn("text-[12px] mt-0.5", value.concept === x.id ? "text-white/70" : "text-ink-3")}>{x.description}</p>
+                <p className={cn("text-[12px] mt-0.5", value.concept === x.id ? "text-bg/70" : "text-ink-3")}>{x.description}</p>
               </button>
             ))}
           </div>

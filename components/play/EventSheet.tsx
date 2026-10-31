@@ -34,7 +34,7 @@ export function EventSheet({ career, open, onChoose }: { career: Career; open: b
               key={ch.id}
               disabled={!!locked}
               onClick={() => setSelected(ch.id)}
-              className={cn("press fade-up w-full text-left rounded-2xl border-2 p-4", active ? "border-primary bg-primary-soft/50" : "border-transparent bg-[#f9fafb]", locked && "opacity-45")}
+              className={cn("press fade-up w-full text-left rounded-2xl border-2 p-4", active ? "border-primary bg-primary-soft/50" : "border-transparent bg-sub", locked && "opacity-45")}
               style={{ animationDelay: `${i * 60}ms` }}
             >
               <div className="flex items-center justify-between gap-2">
@@ -56,7 +56,7 @@ export function EventSheet({ career, open, onChoose }: { career: Career; open: b
             onChange={(e) => setGroupName(e.target.value)}
             maxLength={20}
             placeholder="예: LUMINA"
-            className="w-full h-14 rounded-2xl bg-[#f2f4f6] px-4 text-[17px] font-bold outline-none focus:ring-2 focus:ring-primary"
+            className="w-full h-14 rounded-2xl bg-chip px-4 text-[17px] font-bold outline-none focus:ring-2 focus:ring-primary"
           />
           <p className="text-[12px] text-ink-3 mt-1.5">1~20자 · 글자와 숫자</p>
         </div>

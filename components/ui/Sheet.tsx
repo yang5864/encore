@@ -21,12 +21,12 @@ export function Sheet({ open, onOpenChange, title, description, tall, dismissibl
         <Drawer.Overlay className="fixed inset-0 z-50 bg-black/40" />
         <Drawer.Content
           className={cn(
-            "fixed left-0 right-0 bottom-0 z-50 mx-auto max-w-[480px] rounded-t-[24px] bg-white outline-none flex flex-col",
+            "fixed left-0 right-0 bottom-0 z-50 mx-auto max-w-[480px] rounded-t-[24px] bg-card outline-none flex flex-col",
             tall ? "h-[92dvh]" : "max-h-[88dvh]",
           )}
         >
           <div className="pt-2.5 pb-1 flex justify-center shrink-0">
-            <div aria-hidden className="h-1 w-10 rounded-full bg-[#d1d6db]" />
+            <div aria-hidden className="h-1 w-10 rounded-full bg-line" />
           </div>
           <div className="px-5 pt-2 shrink-0">
             {title ? <Drawer.Title className="t-title">{title}</Drawer.Title> : <Drawer.Title className="sr-only">시트</Drawer.Title>}

@@ -10,7 +10,7 @@ export function Chip({ tone = "neutral", children, className }: { tone?: "up" | 
         tone === "down" && "bg-down-soft text-down",
         tone === "warn" && "bg-warn-soft text-warn",
         tone === "ok" && "bg-ok-soft text-ok",
-        tone === "neutral" && "bg-[#f2f4f6] text-ink-2",
+        tone === "neutral" && "bg-chip text-ink-2",
         className,
       )}
     >

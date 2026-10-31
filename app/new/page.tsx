@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/Avatar";
 import { Button, FixedCta } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
+import { Logo } from "@/components/Logo";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { ResultSheet } from "@/components/play/ResultSheet";
 import { cn } from "@/lib/cn";
@@ -70,7 +71,7 @@ export default function NewPage() {
   return (
     <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
-        <button onClick={() => (step ? setStep(step - 1) : router.back())} aria-label="뒤로" className="press w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[20px]">‹</button>
+        <button onClick={() => (step ? setStep(step - 1) : router.back())} aria-label="뒤로" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[20px]">‹</button>
         <div className="flex-1">
           <ProgressBar value={((step + 1) / STEPS.length) * 100} height={4} label="진행" />
         </div>
@@ -82,11 +83,11 @@ export default function NewPage() {
           <h1 className="t-title">어떤 아이돌로<br />시작할까요?</h1>
           <p className="t-cap mt-2">14살, 아직 소속사가 없는 지망생이에요.</p>
           <label className="t-cap block mt-8 mb-1.5" htmlFor="name">활동명</label>
-          <input id="name" value={name} onChange={(e) => setName(e.target.value)} maxLength={12} placeholder="예: 하린" className="w-full h-14 rounded-2xl bg-white px-4 text-[17px] font-bold outline-none focus:ring-2 focus:ring-primary" />
+          <input id="name" value={name} onChange={(e) => setName(e.target.value)} maxLength={12} placeholder="예: 하린" className="w-full h-14 rounded-2xl bg-card px-4 text-[17px] font-bold outline-none focus:ring-2 focus:ring-primary" />
           <p className="t-cap mt-6 mb-2">성별</p>
           <div className="grid grid-cols-2 gap-2">
             {(["female", "male"] as Gender[]).map((g) => (
-              <button key={g} onClick={() => { setGender(g); setAvatar(g === "female" ? 0 : 3); }} className={cn("press h-14 rounded-2xl font-bold border-2", gender === g ? "border-primary bg-primary-soft/60 text-primary" : "border-transparent bg-white")}>
+              <button key={g} onClick={() => { setGender(g); setAvatar(g === "female" ? 0 : 3); }} className={cn("press h-14 rounded-2xl font-bold border-2", gender === g ? "border-primary bg-primary-soft/60 text-primary" : "border-transparent bg-card")}>
                 {g === "female" ? "여성" : "남성"}
               </button>
             ))}
@@ -94,7 +95,7 @@ export default function NewPage() {
           <p className="t-cap mt-6 mb-2">캐릭터</p>
           <div className="grid grid-cols-3 gap-2">
             {(gender === "female" ? [0, 1, 2] : [3, 4, 5]).map((i) => (
-              <button key={i} onClick={() => setAvatar(i)} className={cn("press rounded-2xl border-2 bg-white flex items-end justify-center pt-3 overflow-hidden h-[112px]", avatar === i ? "border-primary" : "border-transparent")}>
+              <button key={i} onClick={() => setAvatar(i)} className={cn("press rounded-2xl border-2 bg-card flex items-end justify-center pt-3 overflow-hidden h-[112px]", avatar === i ? "border-primary" : "border-transparent")}>
                 <Avatar index={i} size={72} />
               </button>
             ))}
@@ -115,7 +116,7 @@ export default function NewPage() {
                 <button
                   key={c.id}
                   onClick={() => setCandidateId(c.id)}
-                  className={cn("press fade-up w-full text-left rounded-[20px] border-2 bg-white p-5", selected ? "border-primary" : "border-transparent")}
+                  className={cn("press fade-up w-full text-left rounded-[20px] border-2 bg-card p-5", selected ? "border-primary" : "border-transparent")}
                   style={{ animationDelay: `${i * 70}ms` }}
                   aria-pressed={selected}
                 >
@@ -124,12 +125,12 @@ export default function NewPage() {
                       <p className="t-card">{c.name}</p>
                       <p className="text-[13px] text-ink-2 mt-0.5">{c.summary}</p>
                     </div>
-                    <span className={cn("shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center", selected ? "border-primary bg-primary text-white" : "border-[#d1d6db]")} aria-hidden>
+                    <span className={cn("shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center", selected ? "border-primary bg-primary text-white" : "border-line")} aria-hidden>
                       {selected ? "✓" : ""}
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-1.5 mt-3">
-                    <Chip tone="neutral" className="bg-ink text-white">{position?.name}</Chip>
+                    <Chip tone="neutral" className="bg-ink text-bg">{position?.name}</Chip>
                     {c.top.map((k) => (
                       <Chip key={k}>{STAT_NAMES[k]} {c.stats[k]}</Chip>
                     ))}
@@ -162,7 +163,7 @@ export default function NewPage() {
           <p className="t-cap mt-2">대형은 문이 좁고 중소는 넓어요. 떨어져도 무소속으로 시작해 언제든 다시 지원할 수 있어요.</p>
           <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-5 px-5 mt-5">
             {TIER_ORDER.map((t) => (
-              <button key={t} onClick={() => setTier(t)} className={cn("press shrink-0 h-9 px-3.5 rounded-full text-[13px] font-bold", tier === t ? "bg-ink text-white" : "bg-white text-ink-2")}>{TIERS[t].short}</button>
+              <button key={t} onClick={() => setTier(t)} className={cn("press shrink-0 h-9 px-3.5 rounded-full text-[13px] font-bold", tier === t ? "bg-ink text-bg" : "bg-card text-ink-2")}>{TIERS[t].short}</button>
             ))}
           </div>
           <p className="t-cap mt-3">{TIERS[tier].description}</p>
@@ -170,8 +171,8 @@ export default function NewPage() {
             {candidate && AGENCIES.filter((a) => a.tier === tier).map((a) => {
               const label = chanceLabel(auditionChance({ stats: candidate.stats, position: candidate.position }, a.id));
               return (
-                <button key={a.id} onClick={() => setAgencyId(a.id)} className={cn("press text-left rounded-2xl border-2 bg-white p-4 flex items-center gap-3", agencyId === a.id ? "border-primary" : "border-transparent")}>
-                  <span className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center text-white text-[12px] font-extrabold" style={{ background: a.color }}>{a.name.slice(0, 2)}</span>
+                <button key={a.id} onClick={() => setAgencyId(a.id)} className={cn("press text-left rounded-2xl border-2 bg-card p-4 flex items-center gap-3", agencyId === a.id ? "border-primary" : "border-transparent")}>
+                  <Logo id={a.logo} label={a.name} color={a.color} size={44} />
                   <div className="min-w-0 flex-1">
                     <p className="t-body font-bold truncate">{a.name}</p>
                     <p className="text-[12px] text-ink-3 truncate">{a.strength}</p>

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
+import { TabBar } from "@/components/TabBar";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const STEPS = [
   { title: "1. 캐릭터를 만들어요", text: "활동명, 성별, 캐릭터, 주 포지션을 정하고 능력치 240점을 나눠요. 마지막에 첫 지원 기획사를 골라 오디션을 봐요. 대형은 합격이 어렵고 중소는 쉬워요. 떨어져도 무소속으로 시작해 언제든 다시 지원할 수 있어요." },
@@ -25,12 +27,24 @@ const NOTES = [
 
 export default function GuidePage() {
   return (
-    <main className="shell pt-3">
+    <main className="shell pt-3 pb-[120px]">
       <header className="flex items-center h-12 gap-3">
-        <Link href="/" aria-label="홈" className="press w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[20px]">‹</Link>
-        <h1 className="t-card">게임 가이드</h1>
+        <Link href="/" aria-label="홈" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[20px]">‹</Link>
+        <h1 className="t-card">전체 · 게임 가이드</h1>
       </header>
       <div className="flex flex-col gap-3 mt-4">
+        <Card><ThemeToggle /></Card>
+        <Card className="!p-2">
+          {[
+            { href: "/records", t: "명예의 전당", s: "은퇴한 커리어 순위" },
+            { href: "/support", t: "후원하기", s: "커피 한 잔이 다음 업데이트가 돼요" },
+          ].map((m) => (
+            <Link key={m.href} href={m.href} className="press flex items-center justify-between gap-3 px-3 py-3.5 rounded-2xl">
+              <div><p className="t-body font-bold">{m.t}</p><p className="text-[12px] text-ink-3">{m.s}</p></div>
+              <span className="text-ink-3">›</span>
+            </Link>
+          ))}
+        </Card>
         {STEPS.map((s) => (
           <Card key={s.title}>
             <h2 className="t-card">{s.title}</h2>
@@ -49,6 +63,7 @@ export default function GuidePage() {
           ENCORE는 가상의 커리어 시뮬레이션이에요. 실제 기획사·학교·시상식 명칭은 배경으로만 쓰이며 수치와 확률은 게임 규칙이에요. 실제 인물이나 사건을 특정하지 않아요. DAWN·MONO·ORBIT은 가상 회사예요.
         </p>
       </div>
+      <TabBar />
     </main>
   );
 }

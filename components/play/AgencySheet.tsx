@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Sheet } from "@/components/ui/Sheet";
 import { Chip } from "@/components/ui/Chip";
+import { Logo } from "@/components/Logo";
 import { cn } from "@/lib/cn";
 import { AGENCIES, TIERS, TIER_ORDER, auditionChance, chanceLabel } from "@/lib/game/agencies";
 import type { Career, Tier } from "@/lib/game/types";
@@ -16,7 +17,7 @@ export function AgencySheet({ career, open, onClose, onApply }: { career: Career
     <Sheet open={open} onOpenChange={(o) => !o && onClose()} title="기획사 지원" description={locked ? `전속계약 중이에요. 재계약 시점(${monthsLeft}개월 뒤)에 열려요` : "합격 가능성은 지금 실력 기준이에요. 같은 회사는 1년 뒤 다시 지원할 수 있어요"} tall>
       <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-5 px-5 pb-1">
         {TIER_ORDER.map((t) => (
-          <button key={t} onClick={() => setTier(t)} className={cn("press shrink-0 h-9 px-3.5 rounded-full text-[13px] font-bold", tier === t ? "bg-ink text-white" : "bg-[#f2f4f6] text-ink-2")}>
+          <button key={t} onClick={() => setTier(t)} className={cn("press shrink-0 h-9 px-3.5 rounded-full text-[13px] font-bold", tier === t ? "bg-ink text-bg" : "bg-chip text-ink-2")}>
             {TIERS[t].short}
           </button>
         ))}
@@ -29,10 +30,8 @@ export function AgencySheet({ career, open, onClose, onApply }: { career: Career
           const cooldown = career.flags[`apply:${a.id}`] !== undefined && career.turn - career.flags[`apply:${a.id}`] < 2;
           const mine = career.agencyId === a.id;
           return (
-            <div key={a.id} className="fade-up rounded-2xl bg-[#f9fafb] p-4 flex items-center gap-3" style={{ animationDelay: `${i * 50}ms` }}>
-              <span className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center text-white text-[12px] font-extrabold" style={{ background: a.color }}>
-                {a.name.slice(0, 2)}
-              </span>
+            <div key={a.id} className="fade-up rounded-2xl bg-sub p-4 flex items-center gap-3" style={{ animationDelay: `${i * 50}ms` }}>
+              <Logo id={a.logo} label={a.name} color={a.color} size={44} />
               <div className="min-w-0 flex-1">
                 <p className="t-body font-bold truncate">{a.name}</p>
                 <p className="text-[12px] text-ink-3 truncate">{a.strength}</p>
@@ -41,7 +40,7 @@ export function AgencySheet({ career, open, onClose, onApply }: { career: Career
               <button
                 disabled={locked || mine || cooldown}
                 onClick={() => onApply(a.id)}
-                className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary text-white text-[14px] font-bold disabled:bg-[#e5e8eb] disabled:text-ink-3"
+                className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary text-white text-[14px] font-bold disabled:bg-chip disabled:text-ink-3"
               >
                 {mine ? "소속" : cooldown ? "대기" : "지원"}
               </button>

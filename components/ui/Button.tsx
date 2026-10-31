@@ -21,7 +21,7 @@ export function Button({ variant = "primary", size = "lg", full = true, classNam
         full && "w-full",
         variant === "primary" && "bg-primary text-white active:bg-primary-press",
         variant === "secondary" && "bg-primary-soft text-primary",
-        variant === "ghost" && "bg-[#f2f4f6] text-ink-2",
+        variant === "ghost" && "bg-chip text-ink-2",
         variant === "danger" && "bg-down-soft text-down",
         className,
       )}
@@ -37,7 +37,7 @@ export function FixedCta({ children }: { children: ReactNode }) {
     <div className="fixed left-0 right-0 bottom-0 z-40 pointer-events-none">
       <div
         className="mx-auto max-w-[480px] px-5 pb-[calc(env(safe-area-inset-bottom)+16px)] pt-3 pointer-events-auto"
-        style={{ background: "linear-gradient(to top, var(--bg) 70%, rgba(242,244,246,0))" }}
+        style={{ background: "linear-gradient(to top, var(--bg) 70%, transparent)" }}
       >
         {children}
       </div>

@@ -66,7 +66,7 @@ export function ResultSheet({ result, open, onClose, ctaLabel = "확인" }: { re
       )}
 
       {result.notes.length > 0 && (
-        <ul className="mt-4 rounded-2xl bg-[#f9fafb] p-4 flex flex-col gap-1.5">
+        <ul className="mt-4 rounded-2xl bg-sub p-4 flex flex-col gap-1.5">
           {result.notes.map((n, i) => (
             <li key={i} className="text-[13px] text-ink-2 leading-relaxed">· {n}</li>
           ))}
@@ -74,14 +74,14 @@ export function ResultSheet({ result, open, onClose, ctaLabel = "확인" }: { re
       )}
 
       {(rest.length > 0 || result.comments.length > 0) && (
-        <button onClick={() => setMore((m) => !m)} className="press mt-4 w-full h-11 rounded-xl bg-[#f2f4f6] text-ink-2 text-[14px] font-bold">
+        <button onClick={() => setMore((m) => !m)} className="press mt-4 w-full h-11 rounded-xl bg-chip text-ink-2 text-[14px] font-bold">
           {more ? "접기" : "자세히 보기"}
         </button>
       )}
       {more && (
         <div className="mt-3 fade-up">
           {rest.length > 0 && (
-            <div className="rounded-2xl bg-[#f9fafb] p-4 flex flex-col gap-2">
+            <div className="rounded-2xl bg-sub p-4 flex flex-col gap-2">
               {rest.map((ch) => (
                 <div key={ch.key} className="flex items-center justify-between text-[14px]">
                   <span className="text-ink-2 font-semibold">{ch.label}</span>
@@ -97,7 +97,7 @@ export function ResultSheet({ result, open, onClose, ctaLabel = "확인" }: { re
               <p className="t-cap mb-2">커뮤니티 반응 · 게임 속 가상 댓글</p>
               <div className="flex flex-col gap-2">
                 {result.comments.map((cm, i) => (
-                  <div key={i} className="rounded-2xl bg-[#f9fafb] p-3.5">
+                  <div key={i} className="rounded-2xl bg-sub p-3.5">
                     <p className="text-[12px] font-bold text-ink-3">{cm.author}</p>
                     <p className="text-[14px] mt-0.5">{cm.text}</p>
                     <p className="text-[12px] text-ink-3 mt-1">♡ {likeText(cm.likes)}</p>

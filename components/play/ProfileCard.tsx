@@ -3,6 +3,7 @@ import { Avatar } from "@/components/Avatar";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import { MilestoneBar } from "./MilestoneBar";
+import { Logo } from "@/components/Logo";
 import { agencyById, TIERS } from "@/lib/game/agencies";
 import { ageOf, careerPhase, periodLabel, STAGE_NAMES } from "@/lib/game/format";
 import { POSITIONS } from "@/lib/game/stats";
@@ -15,7 +16,7 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
   return (
     <Card className="fade-up">
       <div className="flex items-center gap-4">
-        <div className="w-[72px] h-[90px] rounded-2xl bg-[#f2f4f6] flex items-end justify-center overflow-hidden">
+        <div className="w-[72px] h-[90px] rounded-2xl bg-chip flex items-end justify-center overflow-hidden">
           <Avatar index={career.avatar} size={64} name={career.name} />
         </div>
         <div className="min-w-0 flex-1">
@@ -28,14 +29,14 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
         </div>
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl bg-[#f9fafb] px-4 py-3">
+      <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl bg-sub px-4 py-3">
         <div className="min-w-0">
           <p className="t-cap">소속</p>
-          <p className="t-body font-bold truncate">
+          <p className="t-body font-bold truncate flex items-center gap-1.5">
             {a ? (
               <>
-                <span className="inline-block w-2 h-2 rounded-full mr-1.5 align-middle" style={{ background: a.color }} />
-                {a.name} <span className="text-ink-3 font-medium">· {TIERS[a.tier].short}</span>
+                <Logo id={a.logo} label={a.name} color={a.color} size={20} rounded="full" />
+                <span className="truncate">{a.name} <span className="text-ink-3 font-medium">· {TIERS[a.tier].short}</span></span>
               </>
             ) : (
               "무소속 지망생"

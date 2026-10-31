@@ -98,7 +98,7 @@ export default function PlayPage() {
       <div className="top-progress" style={{ width: `${progress}%`, opacity: progress ? 1 : 0 }} />
       <header className="flex items-center justify-between h-12 mb-2">
         <Link href="/" className="font-extrabold text-[18px] tracking-tight">encore<span className="text-primary">.</span></Link>
-        <button onClick={() => setMenuOpen(true)} aria-label="메뉴" className="press w-10 h-10 rounded-xl bg-white flex items-center justify-center">
+        <button onClick={() => setMenuOpen(true)} aria-label="메뉴" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center">
           <span className="block w-4 h-[2px] bg-ink rounded-full shadow-[0_5px_0_var(--text),0_-5px_0_var(--text)]" />
         </button>
       </header>

@@ -3,6 +3,8 @@
 :root {
   --bg: #f2f4f6;
   --card: #ffffff;
+  --sub: #f7f8fa;
+  --chip: #eef0f3;
   --primary: #3182f6;
   --primary-press: #1b64da;
   --primary-soft: #e8f3ff;
@@ -19,12 +21,50 @@
   --ok-soft: #e6f9ee;
   --radius: 20px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --sheet-bg: #ffffff;
+  --scheme: light;
+}
+
+/* 토스 앱 다크 테마 토큰: 시스템이 다크이거나 사용자가 다크를 고른 경우 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17171c;
+    --card: #202027;
+    --sub: #2a2a31;
+    --chip: #33333b;
+    --primary-soft: rgba(49, 130, 246, 0.18);
+    --text: #f2f4f6;
+    --text-2: #b0b8c1;
+    --text-3: #8b95a1;
+    --line: #2e2e36;
+    --up: #4593fc;
+    --down-soft: rgba(240, 68, 82, 0.18);
+    --warn-soft: rgba(255, 149, 0, 0.18);
+    --ok-soft: rgba(4, 199, 90, 0.18);
+    --scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17171c;
+  --card: #202027;
+  --sub: #2a2a31;
+  --chip: #33333b;
+  --primary-soft: rgba(49, 130, 246, 0.18);
+  --text: #f2f4f6;
+  --text-2: #b0b8c1;
+  --text-3: #8b95a1;
+  --line: #2e2e36;
+  --up: #4593fc;
+  --down-soft: rgba(240, 68, 82, 0.18);
+  --warn-soft: rgba(255, 149, 0, 0.18);
+  --ok-soft: rgba(4, 199, 90, 0.18);
+  --scheme: dark;
 }
 
 @theme inline {
   --color-bg: var(--bg);
   --color-card: var(--card);
+  --color-sub: var(--sub);
+  --color-chip: var(--chip);
   --color-primary: var(--primary);
   --color-primary-press: var(--primary-press);
   --color-primary-soft: var(--primary-soft);
@@ -45,6 +85,7 @@
 @layer base {
   html {
     background: var(--bg);
+    color-scheme: var(--scheme);
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
   }
@@ -72,6 +113,10 @@
 
   input {
     font: inherit;
+    color: inherit;
+  }
+  input::placeholder {
+    color: var(--text-3);
   }
 }
 
@@ -102,7 +147,7 @@
 .press:active { transform: scale(0.97); }
 
 .bar-track {
-  background: #eef0f3;
+  background: var(--chip);
   border-radius: 999px;
   overflow: hidden;
   width: 100%;
@@ -127,6 +172,14 @@
 @keyframes pop-in {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
+}
+
+.float {
+  animation: float 3.2s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 .top-progress {
