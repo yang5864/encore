@@ -22,7 +22,7 @@ export function Button({ variant = "primary", size = "lg", full = true, classNam
         variant === "primary" && "bg-primary text-white active:bg-primary-press",
         variant === "secondary" && "bg-primary-soft text-primary",
         variant === "ghost" && "bg-chip text-ink-2",
-        variant === "danger" && "bg-down-soft text-down",
+        variant === "danger" && "bg-danger-soft text-danger",
         className,
       )}
     >

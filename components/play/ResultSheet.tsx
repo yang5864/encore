@@ -43,7 +43,7 @@ export function ResultSheet({ result, open, onClose, ctaLabel = "확인" }: { re
   const [more, setMore] = useState(false);
   const top = pickTop(result.changes);
   const rest = result.changes.filter((c) => !top.includes(c));
-  const toneColor = result.tone === "bad" ? "text-down" : result.tone === "good" || result.tone === "milestone" ? "text-primary" : "text-ink";
+  const toneColor = result.tone === "bad" ? "text-danger" : result.tone === "good" || result.tone === "milestone" ? "text-primary" : "text-ink";
   return (
     <Sheet open={open} onOpenChange={(o) => !o && onClose()}>
       {result.scene && (

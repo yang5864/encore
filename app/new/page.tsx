@@ -18,7 +18,7 @@ import { GameError } from "@/lib/game/types";
 import { saveCareer } from "@/lib/storage";
 
 const STEPS = ["프로필", "스타일", "첫 지원"];
-const TONE: Record<string, "down" | "warn" | "neutral" | "ok" | "up"> = { "매우 낮음": "down", 낮음: "warn", 보통: "neutral", 높음: "ok", "매우 높음": "up" };
+const TONE: Record<string, "danger" | "warn" | "neutral" | "ok" | "up"> = { "매우 낮음": "danger", 낮음: "warn", 보통: "neutral", 높음: "ok", "매우 높음": "up" };
 
 export default function NewPage() {
   const router = useRouter();
@@ -186,7 +186,7 @@ export default function NewPage() {
       )}
 
       <FixedCta>
-        {error && <p className="mb-2 rounded-xl bg-down-soft text-down text-[13px] font-bold py-2.5 px-3">{error}</p>}
+        {error && <p className="mb-2 rounded-xl bg-danger-soft text-danger text-[13px] font-bold py-2.5 px-3">{error}</p>}
         <Button onClick={next}>{step === 2 ? "지원하기" : step === 1 ? "이 스타일로 할게요" : "다음"}</Button>
       </FixedCta>
 

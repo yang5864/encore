@@ -54,7 +54,7 @@ test("개인 활동은 데뷔 3년 뒤에 열리고 성공은 주력 수치에 �
   const c = idol({ vocal: 70, dance: 50, rap: 40, visual: 50, variety: 25, producing: 40 });
   const solo = focusOptions(c).filter((o) => o.group === "solo");
   assert.equal(solo.length, 4);
-  assert.equal(solo.find((o) => o.id === "solo:variety")?.readiness?.tone, "down");
+  assert.equal(solo.find((o) => o.id === "solo:variety")?.readiness?.tone, "danger");
   assert.ok(soloChance(c, "variety") < 0.3);
   assert.ok(soloChance(c, "solo") > 0.6);
 

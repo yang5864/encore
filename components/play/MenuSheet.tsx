@@ -109,7 +109,7 @@ export function MenuSheet({ career, open, onClose, onExport, onImport, onRetire,
 function MenuItem({ label, sub, onClick, danger }: { label: string; sub: string; onClick: () => void; danger?: boolean }) {
   return (
     <button onClick={onClick} className="press w-full text-left rounded-2xl bg-sub p-4">
-      <p className={`t-body font-bold ${danger ? "text-down" : ""}`}>{label}</p>
+      <p className={`t-body font-bold ${danger ? "text-danger" : ""}`}>{label}</p>
       <p className="text-[13px] text-ink-3 mt-0.5">{sub}</p>
     </button>
   );

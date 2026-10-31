@@ -132,7 +132,7 @@ export default function PlayPage() {
 
       <FixedCta>
         {error && (
-          <button onClick={clearError} className="mb-2 w-full rounded-xl bg-down-soft text-down text-[13px] font-bold py-2.5 px-3 text-left">
+          <button onClick={clearError} className="mb-2 w-full rounded-xl bg-danger-soft text-danger text-[13px] font-bold py-2.5 px-3 text-left">
             {error}
           </button>
         )}
