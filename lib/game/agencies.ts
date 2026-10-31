@@ -26,7 +26,7 @@ export type Agency = {
 export const TIERS: Record<Tier, { name: string; short: string; description: string; base: number }> = {
   major: { name: "대형 기획사", short: "대형", description: "들어가기 어렵지만 데뷔하면 세계가 무대", base: 0.12 },
   mid: { name: "중견 기획사", short: "중견", description: "탄탄한 시스템과 현실적인 데뷔 기회", base: 0.45 },
-  indie: { name: "중소 기획사", short: "중소", description: "문은 넓고, 가끔 기적이 숨어 있어요", base: 0.78 },
+  indie: { name: "중소 · 부티크 레이블", short: "중소", description: "문은 넓고, 가끔 기적이 숨어 있어요", base: 0.78 },
   global: { name: "해외 기획사", short: "해외", description: "국경을 넘는 활동, 국내 인지도는 천천히", base: 0.4 },
 };
 
@@ -37,11 +37,11 @@ export const AGENCIES: Agency[] = [
   { id: "yg", name: "YG", fullName: "YG Entertainment", tier: "major", color: "#373737", strength: "랩 · 스타성", stat: "rap", training: 1.25, reach: 1.7, threshold: 62, share: 0.3, budget: 1.4, logo: "yg" },
   { id: "starship", name: "STARSHIP", fullName: "Starship Entertainment", tier: "mid", color: "#4c6378", strength: "비주얼 · 퍼포먼스", stat: "visual", training: 1.15, reach: 1.3, threshold: 56, share: 0.35, budget: 1.1, logo: "starship" },
   { id: "cube", name: "CUBE", fullName: "Cube Entertainment", tier: "mid", color: "#c0574f", strength: "프로듀싱 · 개성", stat: "producing", training: 1.12, reach: 1.25, threshold: 55, share: 0.35, budget: 1.0, logo: "cube" },
-  { id: "kq", name: "KQ", fullName: "KQ Entertainment", tier: "mid", color: "#7a5c99", strength: "퍼포먼스 · 월드투어", stat: "dance", training: 1.12, reach: 1.3, threshold: 55, share: 0.35, budget: 1.0, logo: null },
+  { id: "kq", name: "KQ", fullName: "KQ Entertainment", tier: "mid", color: "#1f1f1f", strength: "퍼포먼스 · 월드투어", stat: "dance", training: 1.12, reach: 1.3, threshold: 55, share: 0.35, budget: 1.0, logo: "kq" },
   { id: "rbw", name: "RBW", fullName: "RBW", tier: "mid", color: "#5b8a72", strength: "보컬 · 자체 제작", stat: "vocal", training: 1.1, reach: 1.2, threshold: 54, share: 0.35, budget: 0.95, logo: "rbw" },
-  { id: "dawn", name: "DAWN", fullName: "새벽뮤직 (가상)", tier: "indie", color: "#8d7b68", strength: "보컬 · 감성", stat: "vocal", training: 1.0, reach: 0.9, threshold: 50, share: 0.45, budget: 0.6, logo: null },
-  { id: "mono", name: "MONO", fullName: "모노 엔터테인먼트 (가상)", tier: "indie", color: "#6b7684", strength: "랩 · 힙합", stat: "rap", training: 1.0, reach: 0.85, threshold: 49, share: 0.45, budget: 0.6, logo: null },
-  { id: "orbit", name: "ORBIT", fullName: "오르빗 컴퍼니 (가상)", tier: "indie", color: "#4f7fc2", strength: "댄스 · 챌린지", stat: "dance", training: 1.02, reach: 0.95, threshold: 50, share: 0.45, budget: 0.65, logo: null },
+  { id: "dawn", name: "DAWN", fullName: "DAWN Entertainment", tier: "indie", color: "#2b2b2b", strength: "보컬 · 감성", stat: "vocal", training: 1.0, reach: 0.9, threshold: 50, share: 0.45, budget: 0.6, logo: "dawn" },
+  { id: "aomg", name: "AOMG", fullName: "AOMG", tier: "indie", color: "#1a1a1a", strength: "힙합 · 아티스트 자율", stat: "rap", training: 1.05, reach: 0.95, threshold: 50, share: 0.45, budget: 0.65, logo: "aomg" },
+  { id: "blacklabel", name: "THE BLACK LABEL", fullName: "THE BLACK LABEL", tier: "indie", color: "#000000", strength: "프로듀싱 · 힙합 R&B", stat: "producing", training: 1.08, reach: 1.0, threshold: 51, share: 0.45, budget: 0.7, logo: "blacklabel" },
   { id: "avex", name: "avex", fullName: "avex (일본)", tier: "global", color: "#2d2d2d", strength: "일본 활동 · 투어", stat: "variety", training: 1.1, reach: 1.3, threshold: 56, share: 0.35, budget: 1.1, logo: "avex" },
   { id: "88rising", name: "88rising", fullName: "88rising (미국)", tier: "global", color: "#d44f2a", strength: "힙합 · 미국 시장", stat: "rap", training: 1.08, reach: 1.45, threshold: 57, share: 0.35, budget: 1.0, logo: "88rising" },
   { id: "sony", name: "Sony Music", fullName: "Sony Music (글로벌)", tier: "global", color: "#1f1f1f", strength: "프로듀싱 · 글로벌 유통", stat: "producing", training: 1.1, reach: 1.5, threshold: 58, share: 0.35, budget: 1.2, logo: "sony" },

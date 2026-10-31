@@ -59,7 +59,7 @@ export default function GuidePage() {
           </ul>
         </Card>
         <p className="text-[13px] text-ink-3 leading-relaxed pb-6">
-          ENCORE는 가상의 커리어 시뮬레이션이에요. 실제 기획사·학교·시상식 명칭은 배경으로만 쓰이며 수치와 확률은 게임 규칙이에요. 실제 인물이나 사건을 특정하지 않아요. DAWN·MONO·ORBIT은 가상 회사예요.
+          ENCORE는 가상의 커리어 시뮬레이션이에요. 실제 기획사·학교·시상식 명칭은 배경으로만 쓰이며 수치와 확률은 게임 규칙이에요. 실제 인물이나 사건을 특정하지 않아요.
         </p>
       </div>
     </main>

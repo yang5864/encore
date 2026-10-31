@@ -141,7 +141,7 @@ export default function HomePage() {
       {/* 기획사 로고 스트립 */}
       <Card className="mt-3 fade-up" style={{ animationDelay: "260ms" }}>
         <h2 className="t-card">지원할 수 있는 기획사</h2>
-        <p className="t-cap mt-1">대형 4곳 · 중견 4곳 · 중소 3곳 · 해외 3곳</p>
+        <p className="t-cap mt-1">대형 4곳 · 중견 4곳 · 중소·레이블 3곳 · 해외 3곳</p>
         <div className="mt-3 flex gap-2 overflow-x-auto no-scrollbar -mx-5 px-5">
           {AGENCIES.map((a) => (
             <div key={a.id} className="shrink-0 flex flex-col items-center gap-1.5 w-16">
@@ -172,7 +172,7 @@ export default function HomePage() {
       <footer className="mt-8 text-[13px] text-ink-3 leading-relaxed">
         <p className="font-bold text-ink-2">ENCORE</p>
         <p className="mt-1">나만의 아이돌 인생, 앵콜.</p>
-        <p className="mt-3">실제 기획사·학교·플랫폼 명칭과 로고의 권리는 각 권리자에게 있으며 가상 게임의 배경으로만 쓰여요. 수치와 확률은 게임 규칙이에요. DAWN·MONO·ORBIT은 가상 회사예요.</p>
+        <p className="mt-3">실제 기획사·학교·플랫폼 명칭과 로고의 권리는 각 권리자에게 있으며 가상 게임의 배경으로만 쓰여요. 수치와 확률은 게임 규칙이에요.</p>
         <p className="mt-2">© 2026 ENCORE</p>
       </footer>
 
