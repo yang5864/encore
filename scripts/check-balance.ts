@@ -8,7 +8,7 @@ import { conditionOf, reputationLabel } from "../lib/game/format.ts";
 import type { Career } from "../lib/game/types.ts";
 
 const positions = ["vocal", "dance", "rap", "visual", "allround", "producer"] as const;
-const rows: { agency: string; seed: number; ovr22: number; pop22: number; fans22: number; debutAge: number | null; rep22: number; settled: number; ovr26: number; pop26: number; wins: number; events: number; ig22: number; yt22: number; sp22: number; sales22: number; firstSales: number }[] = [];
+const rows: { agency: string; seed: number; ovr22: number; pop22: number; fans22: number; debutAge: number | null; rep22: number; settled: number; ovr26: number; pop26: number; wins: number; events: number; ig22: number; yt22: number; sp22: number; sales22: number; firstSales: number; settleLag: number | null }[] = [];
 
 for (const a of AGENCIES) {
   for (let seed = 1; seed <= 6; seed++) {
@@ -37,7 +37,7 @@ for (const a of AGENCIES) {
       }
       if (c.turn === 16) { ovr22 = overall(c.stats, c.position); pop22 = Math.round(c.popularity); fans22 = c.fans; rep22 = Math.round(c.reputation); ig22 = c.metrics.instagram; yt22 = c.metrics.youtube; sp22 = c.metrics.spotify; sales22 = c.albums.length ? c.albums[c.albums.length - 1].sales : 0; }
     }
-    rows.push({ agency: a.id, seed, ovr22, pop22, fans22, debutAge: c.debutTurn === null ? null : 14 + Math.floor(c.debutTurn / 2), rep22, settled: c.money.settled, ovr26: overall(c.stats, c.position), pop26: Math.round(c.popularity), wins: c.musicWins, events, ig22, yt22, sp22, sales22, firstSales: c.albums[0]?.sales ?? 0 });
+    rows.push({ agency: a.id, seed, ovr22, pop22, fans22, debutAge: c.debutTurn === null ? null : 14 + Math.floor(c.debutTurn / 2), rep22, settled: c.money.settled, ovr26: overall(c.stats, c.position), pop26: Math.round(c.popularity), wins: c.musicWins, events, ig22, yt22, sp22, sales22, firstSales: c.albums[0]?.sales ?? 0, settleLag: c.money.firstSettledTurn !== null && c.debutTurn !== null ? c.money.firstSettledTurn - c.debutTurn : null });
   }
 }
 
@@ -51,8 +51,11 @@ console.log(`데뷔 나이 중앙값 ${median(debuted.map((r) => r.debutAge!))} 
 console.log(`22세 인기도 중앙값 ${median(rows.map((r) => r.pop22))} · 팬 중앙값 ${median(rows.map((r) => r.fans22))} · 평판 중앙값 ${median(rows.map((r) => r.rep22))} (${reputationLabel(median(rows.map((r) => r.rep22)))})`);
 console.log(`26세 인기도 중앙값 ${median(rows.map((r) => r.pop26))} · 첫 정산 받은 비율 ${Math.round((rows.filter((r) => r.settled > 0).length / rows.length) * 100)}% · 음방 1위 평균 ${mean(rows.map((r) => r.wins)).toFixed(1)} · 턴당 이벤트 ${(mean(rows.map((r) => r.events)) / 24).toFixed(2)}`);
 console.log(`22세 인스타 중앙값 ${median(rows.map((r) => r.ig22)).toLocaleString()} · 유튜브 ${median(rows.map((r) => r.yt22)).toLocaleString()} · 스포티파이 ${median(rows.map((r) => r.sp22)).toLocaleString()} · 최근 초동 ${median(rows.map((r) => r.sales22)).toLocaleString()}`);
+const lags = rows.filter((r) => r.settleLag !== null).map((r) => r.settleLag!);
+console.log(`첫 정산까지 데뷔 후 시즌 수: 중앙값 ${median(lags)} (= ${median(lags) * 6}개월) · 26세까지 정산 못 받은 비율 ${Math.round(((rows.length - lags.length) / rows.length) * 100)}%`);
 for (const tier of ["major", "mid", "indie", "global"]) {
   const ids = AGENCIES.filter((a) => a.tier === tier).map((a) => a.id);
   const rs = rows.filter((r) => ids.includes(r.agency));
-  console.log(`  ${tier}: OVR22 ${median(rs.map((r) => r.ovr22))} · 데뷔 초동 ${median(rs.map((r) => r.firstSales)).toLocaleString()} · 22세 초동 ${median(rs.map((r) => r.sales22)).toLocaleString()} · 팬 ${median(rs.map((r) => r.fans22)).toLocaleString()} · 인스타 ${median(rs.map((r) => r.ig22)).toLocaleString()} · 인기26 ${median(rs.map((r) => r.pop26))} · 정산 ${median(rs.map((r) => r.settled)).toFixed(1)}억`);
+  const tl = rs.filter((r) => r.settleLag !== null).map((r) => r.settleLag!);
+  console.log(`  ${tier}: 첫 정산 ${tl.length ? median(tl) * 6 + "개월" : "없음"} · OVR22 ${median(rs.map((r) => r.ovr22))} · 데뷔 초동 ${median(rs.map((r) => r.firstSales)).toLocaleString()} · 22세 초동 ${median(rs.map((r) => r.sales22)).toLocaleString()} · 팬 ${median(rs.map((r) => r.fans22)).toLocaleString()} · 인스타 ${median(rs.map((r) => r.ig22)).toLocaleString()} · 인기26 ${median(rs.map((r) => r.pop26))} · 정산 ${median(rs.map((r) => r.settled)).toFixed(1)}억`);
 }

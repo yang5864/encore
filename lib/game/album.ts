@@ -18,10 +18,12 @@ export function albumQuality(c: Career, concept: Concept): number {
   return Math.round(Math.max(10, Math.min(100, base * (0.85 + condition / 600) + match + rng(c) * 8)));
 }
 
+/** 컴백 제작비(억). 티어에 따라 규모가 다르다: 대형 30~50억, 중견 10~20억, 중소 3~6억. */
 export function albumCost(c: Career, quality: number): number {
   const a = agencyById(c.agencyId);
-  const budget = (a?.budget ?? 0.6) * (c.flags.independent ? 0.6 : 1);
-  return Math.round((8 + 22 * (quality / 100)) * budget * 10) / 10;
+  const tierMul = a?.tier === "major" ? 2.0 : a?.tier === "global" ? 1.3 : a?.tier === "mid" ? 1.0 : 0.5;
+  const budget = (a?.budget ?? 0.6) * tierMul * (c.flags.independent ? 0.6 : 1);
+  return Math.round((4 + 16 * (quality / 100)) * budget * 10) / 10;
 }
 
 /** Creates the album, applies sales/charts/fans/money. Returns the album. */
@@ -57,7 +59,8 @@ export function makeAlbum(c: Career, concept: Concept): Album {
     if (wins === 0 && rng(c) < 0.5) c.flags.candidate = c.turn + 1; // 다음 턴 시작 시 1위 후보 이벤트
   }
 
-  const revenue = Math.round(sales * 0.00025 * 10) / 10; // 억: 장당 약 1.5만원 × 누적 판매 배수 × 유통 후 회사 몫
+  // 억: 장당 1.5만원 × 총판 배수 2.2 × 유통·제작 공제 후 회사 몫 40% ≈ 장당 1.3만원
+  const revenue = Math.round(sales * 0.000132 * 10) / 10;
   const index = c.albums.length;
   const name = `${ALBUM_TITLES[index % ALBUM_TITLES.length]}${index >= ALBUM_TITLES.length ? ` ${Math.floor(index / ALBUM_TITLES.length) + 1}` : ""}`;
   const album: Album = { id: `${c.id}-${index}`, turn: c.turn, name, concept, quality, sales, melon, billboard, wins, cost, revenue };

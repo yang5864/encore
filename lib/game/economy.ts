@@ -2,7 +2,7 @@ import type { Career } from "./types.ts";
 import { agencyById } from "./agencies.ts";
 
 export const TRAINEE_COST_PER_TURN = 1.5; // 억
-export const DEBUT_COST = 20; // 억 × agency.budget
+export const DEBUT_COST = 35; // 억 × agency.budget — 데뷔 앨범·MV·쇼케이스·마케팅. 대형 신인 기준 50억 안팎
 export const MEMBERS_SHARE = 0.2; // 5인조 가정
 
 export type Settlement = { revenue: number; invested: number; unrecovered: number; profit: number; mine: number; share: number };
