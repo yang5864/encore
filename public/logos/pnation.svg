@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#000"/>
+  <g fill="#fff">
+    <!-- big P: outer frame -->
+    <path d="M40 48 H168 V112 H68 V152 H40 Z M58 66 V94 H150 V66 Z" fill-rule="evenodd"/>
+    <!-- small p -->
+    <text x="70" y="92" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="30">P</text>
+    <!-- NATION -->
+    <text x="72" y="150" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="33" letter-spacing="-1">NATION</text>
+  </g>
+</svg>

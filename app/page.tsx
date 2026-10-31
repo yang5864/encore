@@ -141,7 +141,7 @@ export default function HomePage() {
       {/* 기획사 로고 스트립 */}
       <Card className="mt-3 fade-up" style={{ animationDelay: "260ms" }}>
         <h2 className="t-card">지원할 수 있는 기획사</h2>
-        <p className="t-cap mt-1">대형 4곳 · 중견 4곳 · 중소·레이블 3곳 · 해외 3곳</p>
+        <p className="t-cap mt-1">2026 종합 순위 순 · 대형 4 · 중견 5 · 레이블 4 · 해외 3</p>
         <div className="mt-3 flex gap-2 overflow-x-auto no-scrollbar -mx-5 px-5">
           {AGENCIES.map((a) => (
             <div key={a.id} className="shrink-0 flex flex-col items-center gap-1.5 w-16">

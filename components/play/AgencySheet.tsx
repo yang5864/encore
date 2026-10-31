@@ -34,7 +34,7 @@ export function AgencySheet({ career, open, onClose, onApply }: { career: Career
               <Logo id={a.logo} label={a.name} color={a.color} size={44} />
               <div className="min-w-0 flex-1">
                 <p className="t-body font-bold truncate">{a.name}</p>
-                <p className="text-[13px] text-ink-3 truncate">{a.strength}</p>
+                <p className="text-[13px] text-ink-3 truncate">{a.rank ? `2026 기획사 순위 ${a.rank}위 · ` : ""}{a.strength}</p>
                 {!locked && !mine && <Chip tone={TONE[label]} className="mt-1.5 h-6 px-2 text-[13px]">합격 가능성 {label}</Chip>}
               </div>
               <button

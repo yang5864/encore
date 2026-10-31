@@ -175,7 +175,7 @@ export default function NewPage() {
                   <Logo id={a.logo} label={a.name} color={a.color} size={44} />
                   <div className="min-w-0 flex-1">
                     <p className="t-body font-bold truncate">{a.name}</p>
-                    <p className="text-[13px] text-ink-3 truncate">{a.strength}</p>
+                    <p className="text-[13px] text-ink-3 truncate">{a.rank ? `2026 기획사 순위 ${a.rank}위 · ` : ""}{a.strength}</p>
                   </div>
                   <Chip tone={TONE[label]}>{label}</Chip>
                 </button>

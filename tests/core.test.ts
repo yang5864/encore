@@ -35,7 +35,7 @@ test("오디션 확률: 대형은 낮고 중소는 높다, 0.03~0.95로 제한",
   assert.equal(auditionChance(strong, "dawn"), 0.95);
   assert.equal(chanceLabel(0.1), "매우 낮음");
   assert.equal(chanceLabel(0.85), "매우 높음");
-  assert.equal(AGENCIES.length, 14);
+  assert.equal(AGENCIES.length, 16);
 });
 
 test("createCareer는 무소속 지망생으로 시작하고 입력을 검증한다", () => {

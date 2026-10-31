@@ -17,6 +17,8 @@ export const LOGOS: Record<string, LogoMeta> = {
   aomg: { full: true, tint: "#ffffff" },
   blacklabel: { full: true, tint: "#000000" },
   rbw: { full: true, tint: "#011e6e" },
+  fnc: { full: true, tint: "#e0352b", ext: "svg" },
+  pnation: { full: true, tint: "#000000", ext: "svg" },
   avex: { full: true, tint: "#004cad" },
   "88rising": { full: true, tint: "#ffffff" },
   sony: { full: false, tint: "#d7000f" },
