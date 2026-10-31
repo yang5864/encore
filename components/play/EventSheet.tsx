@@ -1,0 +1,80 @@
+"use client";
+import { useState } from "react";
+import { Sheet } from "@/components/ui/Sheet";
+import { Button } from "@/components/ui/Button";
+import { Chip } from "@/components/ui/Chip";
+import { cn } from "@/lib/cn";
+import { choiceLock } from "@/lib/game/engine";
+import { scenePath } from "@/lib/game/events/index";
+import type { Career } from "@/lib/game/types";
+
+export function EventSheet({ career, open, onChoose }: { career: Career; open: boolean; onChoose: (choiceId: string, extra?: { groupName?: string }) => void }) {
+  const event = career.pending;
+  const [selected, setSelected] = useState<string | null>(null);
+  const [groupName, setGroupName] = useState("");
+  if (!event) return null;
+  const choice = event.choices.find((c) => c.id === selected) ?? null;
+  const needsName = choice?.op === "debut";
+  const canSubmit = !!choice && (!needsName || groupName.trim().length > 0);
+
+  return (
+    <Sheet open={open} dismissible={false} tall>
+      <div className="-mx-5 -mt-3">
+        <img src={scenePath(event.scene)} alt="" className="w-full aspect-[16/10] object-cover" loading="eager" />
+      </div>
+      <h2 className="t-title mt-4">{event.title}</h2>
+      <p className="t-body text-ink-2 mt-2">{event.text}</p>
+
+      <div className="flex flex-col gap-2 mt-5">
+        {event.choices.map((ch, i) => {
+          const locked = choiceLock(career, ch);
+          const active = selected === ch.id;
+          return (
+            <button
+              key={ch.id}
+              disabled={!!locked}
+              onClick={() => setSelected(ch.id)}
+              className={cn("press fade-up w-full text-left rounded-2xl border-2 p-4", active ? "border-primary bg-primary-soft/50" : "border-transparent bg-[#f9fafb]", locked && "opacity-45")}
+              style={{ animationDelay: `${i * 60}ms` }}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="t-body font-bold">{ch.label}</span>
+                <Chip tone={ch.risk === "bold" ? "warn" : "ok"}>{ch.risk === "bold" ? "도전" : "안정"}</Chip>
+              </div>
+              <p className="text-[13px] text-ink-2 mt-1">{locked ?? ch.hint}</p>
+            </button>
+          );
+        })}
+      </div>
+
+      {needsName && (
+        <div className="mt-4 fade-up">
+          <label className="t-cap block mb-1.5" htmlFor="group-name">그룹 이름</label>
+          <input
+            id="group-name"
+            value={groupName}
+            onChange={(e) => setGroupName(e.target.value)}
+            maxLength={20}
+            placeholder="예: LUMINA"
+            className="w-full h-14 rounded-2xl bg-[#f2f4f6] px-4 text-[17px] font-bold outline-none focus:ring-2 focus:ring-primary"
+          />
+          <p className="text-[12px] text-ink-3 mt-1.5">1~20자 · 글자와 숫자</p>
+        </div>
+      )}
+
+      <div className="mt-6">
+        <Button
+          disabled={!canSubmit}
+          onClick={() => {
+            if (!choice) return;
+            onChoose(choice.id, needsName ? { groupName } : undefined);
+            setSelected(null);
+            setGroupName("");
+          }}
+        >
+          {choice ? "이 선택으로 진행" : "선택지를 골라주세요"}
+        </Button>
+      </div>
+    </Sheet>
+  );
+}

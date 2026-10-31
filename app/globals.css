@@ -1,26 +1,161 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f2f4f6;
+  --card: #ffffff;
+  --primary: #3182f6;
+  --primary-press: #1b64da;
+  --primary-soft: #e8f3ff;
+  --text: #191f28;
+  --text-2: #6b7684;
+  --text-3: #8b95a1;
+  --line: #e5e8eb;
+  --up: #3182f6;
+  --down: #f04452;
+  --down-soft: #ffeeef;
+  --warn: #ff9500;
+  --warn-soft: #fff4e5;
+  --ok: #04c75a;
+  --ok-soft: #e6f9ee;
+  --radius: 20px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --sheet-bg: #ffffff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-primary-press: var(--primary-press);
+  --color-primary-soft: var(--primary-soft);
+  --color-ink: var(--text);
+  --color-ink-2: var(--text-2);
+  --color-ink-3: var(--text-3);
+  --color-line: var(--line);
+  --color-up: var(--up);
+  --color-down: var(--down);
+  --color-down-soft: var(--down-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", Roboto, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  font-feature-settings: "tnum";
+  overscroll-behavior-y: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+input {
+  font: inherit;
+}
+
+.shell {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: 0 20px;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
+}
+
+.t-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; }
+.t-card { font-size: 17px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.35; }
+.t-body { font-size: 15px; font-weight: 500; }
+.t-cap { font-size: 13px; font-weight: 500; color: var(--text-2); }
+.t-num { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.t-num-md { font-size: 20px; font-weight: 700; letter-spacing: -0.015em; font-variant-numeric: tabular-nums; }
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.press {
+  transition: transform 160ms var(--ease), background-color 160ms var(--ease), opacity 160ms var(--ease);
+}
+.press:active { transform: scale(0.97); }
+
+.bar-track {
+  background: #eef0f3;
+  border-radius: 999px;
+  overflow: hidden;
+  width: 100%;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 700ms var(--ease), background-color 300ms var(--ease);
+}
+
+.fade-up {
+  animation: fade-up 420ms var(--ease) both;
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pop-in {
+  animation: pop-in 480ms var(--ease) both;
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.top-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--primary);
+  z-index: 60;
+  transition: width 800ms linear, opacity 200ms;
+}
+
+.sprite {
+  display: inline-block;
+  background-image: url("/sprites.webp");
+  background-size: 600% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+[data-vaul-drawer] {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
