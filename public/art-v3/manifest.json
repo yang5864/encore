@@ -1,0 +1,1934 @@
+{
+  "version": "art-v3",
+  "createdDate": "2026-10-31",
+  "generationMode": "built-in image_gen",
+  "canonicalImageCount": 92,
+  "integrationPerformedByThisTask": false,
+  "backgrounds": {
+    "advert": {
+      "url": "/art-v3/backgrounds/advert.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2319333,
+      "sha256": "d11633aca26c78b34661f29937078ff1db928e60fbe6da587e3ff5101dd9fc2e"
+    },
+    "album": {
+      "url": "/art-v3/backgrounds/album.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2209118,
+      "sha256": "d252322dba9cf8c2a84f72b0ec5ec133dd46871133399e5209e237bdcb28c073"
+    },
+    "audition": {
+      "url": "/art-v3/backgrounds/audition.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2108638,
+      "sha256": "61ed9916634e6fc3b1e0fb649389aad998b03f842c68983d1980c229530b8606"
+    },
+    "awards": {
+      "url": "/art-v3/backgrounds/awards.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2282455,
+      "sha256": "59cbf9e740b9f9ccac43ae84b780c251252456feaa5200a5b33f30d6d8623b9f"
+    },
+    "birthday": {
+      "url": "/art-v3/backgrounds/birthday.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2264966,
+      "sha256": "d990759bd0d93dc55746134c85d5670e9a8798b05cc4474d58ccec2e9fbfe408"
+    },
+    "challenge": {
+      "url": "/art-v3/backgrounds/challenge.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1933733,
+      "sha256": "758f5ad7c96d1262c9696790e8f91c11ab265f02975edb4fe12f6f928cdb92f1"
+    },
+    "clinic": {
+      "url": "/art-v3/backgrounds/clinic.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1941713,
+      "sha256": "b1cdd25742aaabe739b8094f3836d3ecffdaed0994c98882694d752d1b32630a"
+    },
+    "coachella": {
+      "url": "/art-v3/backgrounds/coachella.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2907491,
+      "sha256": "2df55cbf52dc544387f0320d44be05d4239d89f6d549f63a298146006995b000"
+    },
+    "contract": {
+      "url": "/art-v3/backgrounds/contract.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2280022,
+      "sha256": "5fa71eafcec13e66e3f80349371e606c2573dcf6a59f6cd52eb02a5b4d8bd9dd"
+    },
+    "dance": {
+      "url": "/art-v3/backgrounds/dance.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2282542,
+      "sha256": "a38aef073dc9bfc3c150739d67f22f796f0bc90e37045c03023571ab70c918d4"
+    },
+    "debut": {
+      "url": "/art-v3/backgrounds/debut.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2709293,
+      "sha256": "62ab41b61093f4ca09aa63c2a8ea06e88a0b9bd82e7af7eba8b4e71dfb85581d"
+    },
+    "donation": {
+      "url": "/art-v3/backgrounds/donation.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2407997,
+      "sha256": "6f4d42112b75adb623473bebb2e6a00f82f61caa42395d6414a0f9d1c97f7870"
+    },
+    "dorm": {
+      "url": "/art-v3/backgrounds/dorm.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2376047,
+      "sha256": "2f4c12866f5e04e94b25e354f1551bf4ab43abeded5d8530491685a028053abe"
+    },
+    "drama": {
+      "url": "/art-v3/backgrounds/drama.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2338316,
+      "sha256": "9f82d813949960e7fdb134256676a1fed55c7404e5b3246ab6b35fe477193802"
+    },
+    "family": {
+      "url": "/art-v3/backgrounds/family.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2214693,
+      "sha256": "bfa33caeab48270c11325fe28332c146f60177b41d596b6959890b24c67c1b0c"
+    },
+    "fansign": {
+      "url": "/art-v3/backgrounds/fansign.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2527946,
+      "sha256": "86a460e0cc2f0592c57896ce98fd782d96c6fa67c787c02a7d73da3c80757fea"
+    },
+    "festival": {
+      "url": "/art-v3/backgrounds/festival.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2773972,
+      "sha256": "3efbf4ee2cd6a4f7341bbfb29af6912258062b374066eb7dd83f8bc4e9bd5574"
+    },
+    "livestream": {
+      "url": "/art-v3/backgrounds/livestream.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2538122,
+      "sha256": "fa275ea0b7a04bc4187c410e5aa6480c7a7561bb617489600b986efeea2f56aa"
+    },
+    "mc": {
+      "url": "/art-v3/backgrounds/mc.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2250368,
+      "sha256": "d2c7ffa932e1d8bb646bddd8e905f5639f66ad8bcb8c5858a6dc90f4d2d6980e"
+    },
+    "military-concert": {
+      "url": "/art-v3/backgrounds/military-concert.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2629834,
+      "sha256": "9ca0cd0f4fe47e832b63d30fbe79dd85392914e63b1e27a3f1d7eb4a1d544396"
+    },
+    "military": {
+      "url": "/art-v3/backgrounds/military.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2669568,
+      "sha256": "730fec7db9fb3998e922d0d1f2bab4b56a4d6d4a042608749726197b4a99e1af"
+    },
+    "press": {
+      "url": "/art-v3/backgrounds/press.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2232413,
+      "sha256": "15b3b51a7f1cd0116bfe804aeaf6ab406ee08ebb9b4e194aa14957fa1549930f"
+    },
+    "rest": {
+      "url": "/art-v3/backgrounds/rest.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2403349,
+      "sha256": "2ebf5823a5de365041b82a16987eace8742721f43f98cdd4296aecfd6e44468f"
+    },
+    "retirement": {
+      "url": "/art-v3/backgrounds/retirement.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2803571,
+      "sha256": "4423dafb06dc5b00cc39ce35d87cbe0a48681392aa4710948609d91e3bf8808e"
+    },
+    "school": {
+      "url": "/art-v3/backgrounds/school.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2796374,
+      "sha256": "137decb145a3b50390334c2ce1208fdfcc45234c5b56da5105ff33335b339c4d"
+    },
+    "songwriting": {
+      "url": "/art-v3/backgrounds/songwriting.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2426918,
+      "sha256": "5c9f4778baff996c74847a8670e978405d0dafcc7af0f9566ab94b35c6d2ffbe"
+    },
+    "survival": {
+      "url": "/art-v3/backgrounds/survival.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2633653,
+      "sha256": "75f9480411ef37ab3f4dc610c296f616d76745ef1c824b4570e41812d18ca944"
+    },
+    "tour": {
+      "url": "/art-v3/backgrounds/tour.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3006239,
+      "sha256": "4c22377d2f42c1036085e9839cc6c93890c40829aee69c62b34a2839ccefc02d"
+    },
+    "variety": {
+      "url": "/art-v3/backgrounds/variety.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2328305,
+      "sha256": "42ba38321afb59a0ab1a8b522e7968713131a480f890cd8538c58f44d1a31bb7"
+    },
+    "vocal": {
+      "url": "/art-v3/backgrounds/vocal.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2173030,
+      "sha256": "2f150dd0a5861af0ae45ca58bc2d78df478fb163c5fe355d54781f344387a375"
+    },
+    "wedding": {
+      "url": "/art-v3/backgrounds/wedding.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2980452,
+      "sha256": "137b368599f119813bd193bf9c2e56dc9b944be1967e2258443c6c830edd6bdd"
+    },
+    "youtube": {
+      "url": "/art-v3/backgrounds/youtube.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2431945,
+      "sha256": "b655b39530a3847479b9fb98e8712368b940cdb2a70ba3b54847231ad7a141bb"
+    }
+  },
+  "characters": {
+    "0": {
+      "frames": {
+        "idle-01": {
+          "url": "/art-v3/characters/avatar-0/idle-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 774492,
+          "sha256": "196dc67f4164ba5433d81be3e545cf6193229bed8d7c9528a915a7d310914731",
+          "alphaBounds": [
+            283,
+            114,
+            967,
+            1166
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.929825
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "idle-02": {
+          "url": "/art-v3/characters/avatar-0/idle-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 784136,
+          "sha256": "24b316cb0ed57666e3a14c6af95da11e029436760614c81ec2a6cea80b445d88",
+          "alphaBounds": [
+            283,
+            121,
+            967,
+            1165
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.929027
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "sing-01": {
+          "url": "/art-v3/characters/avatar-0/sing-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 791760,
+          "sha256": "a7498a325aad34f1a73c064c99dd92222d8a344e952243c72bc344f8c5027459",
+          "alphaBounds": [
+            280,
+            114,
+            969,
+            1164
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.92823
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "sing-02": {
+          "url": "/art-v3/characters/avatar-0/sing-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 775407,
+          "sha256": "8e5847ed46167e83575ab3e1278b3a5bca46e6704f478f31ba072023dbd15dc1",
+          "alphaBounds": [
+            284,
+            116,
+            970,
+            1163
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.927432
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 0
+        },
+        "dance-01": {
+          "url": "/art-v3/characters/avatar-0/dance-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 804719,
+          "sha256": "ab8f4105e9484465d0cca3965342543b0ca740e4a7b223bca62cb79affd76606",
+          "alphaBounds": [
+            293,
+            119,
+            988,
+            1164
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.92823
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "dance-02": {
+          "url": "/art-v3/characters/avatar-0/dance-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 796947,
+          "sha256": "848d55d8829faed59491a773305594d9d9a8db4271b83d5d5f6255f433d43c89",
+          "alphaBounds": [
+            286,
+            115,
+            961,
+            1164
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.92823
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      },
+      "animations": {
+        "idle": {
+          "frameKeys": [
+            "idle-01",
+            "idle-02"
+          ],
+          "frameDurationMs": 450,
+          "loop": true
+        },
+        "sing": {
+          "frameKeys": [
+            "sing-01",
+            "sing-02"
+          ],
+          "frameDurationMs": 250,
+          "loop": true
+        },
+        "dance": {
+          "frameKeys": [
+            "dance-01",
+            "dance-02"
+          ],
+          "frameDurationMs": 280,
+          "loop": true
+        }
+      }
+    },
+    "1": {
+      "frames": {
+        "idle-01": {
+          "url": "/art-v3/characters/avatar-1/idle-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 795423,
+          "sha256": "691695ddfad0782dc1683cb1d72dc8dfac8048979572029651755acc639e43fd",
+          "alphaBounds": [
+            280,
+            100,
+            960,
+            1194
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.952153
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 0
+        },
+        "idle-02": {
+          "url": "/art-v3/characters/avatar-1/idle-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 817885,
+          "sha256": "301d53d4ee19c0fd61e4f84853ca48abacc4e6bfdd5918f755a490d6102e04bd",
+          "alphaBounds": [
+            280,
+            96,
+            962,
+            1194
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.952153
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "sing-01": {
+          "url": "/art-v3/characters/avatar-1/sing-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 809290,
+          "sha256": "6d5fdee88188a99119a9158482a4ac8b2e54234400f4cf5fa69681393881ee8c",
+          "alphaBounds": [
+            277,
+            100,
+            964,
+            1194
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.952153
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "sing-02": {
+          "url": "/art-v3/characters/avatar-1/sing-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 801205,
+          "sha256": "11da1046701c3dc86ba0386b5be345c86e076a82b5678a046d544473716af20d",
+          "alphaBounds": [
+            279,
+            100,
+            961,
+            1194
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.952153
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 0
+        },
+        "dance-01": {
+          "url": "/art-v3/characters/avatar-1/dance-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 857535,
+          "sha256": "09afdbc604fe1b07eef6233dd2446c3e43f468c8dbcac5f7dd5a8871b67bd7a8",
+          "alphaBounds": [
+            294,
+            107,
+            981,
+            1191
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.949761
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "dance-02": {
+          "url": "/art-v3/characters/avatar-1/dance-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 816788,
+          "sha256": "7bf81091aa5499040cf46863d728895e388e5aa404076cb098e50da192b421f8",
+          "alphaBounds": [
+            307,
+            109,
+            991,
+            1185
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.944976
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      },
+      "animations": {
+        "idle": {
+          "frameKeys": [
+            "idle-01",
+            "idle-02"
+          ],
+          "frameDurationMs": 450,
+          "loop": true
+        },
+        "sing": {
+          "frameKeys": [
+            "sing-01",
+            "sing-02"
+          ],
+          "frameDurationMs": 250,
+          "loop": true
+        },
+        "dance": {
+          "frameKeys": [
+            "dance-01",
+            "dance-02"
+          ],
+          "frameDurationMs": 280,
+          "loop": true
+        }
+      }
+    },
+    "2": {
+      "frames": {
+        "idle-01": {
+          "url": "/art-v3/characters/avatar-2/idle-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 822875,
+          "sha256": "937cffb87643482085fbcef4874469e7a91b98301a01d65470edf6ad44642b7b",
+          "alphaBounds": [
+            265,
+            182,
+            988,
+            1149
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.916268
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 0
+        },
+        "idle-02": {
+          "url": "/art-v3/characters/avatar-2/idle-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 828266,
+          "sha256": "238a2623c8ce504bf056ddbd35d765c2d42fecf799b0895bec1f3d896b568bd5",
+          "alphaBounds": [
+            264,
+            182,
+            990,
+            1151
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.917863
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "sing-01": {
+          "url": "/art-v3/characters/avatar-2/sing-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 854343,
+          "sha256": "7c12f61b93f5d8a3c0d3f8a35c225aca83f3fd68d1681b5bb830d3019826d611",
+          "alphaBounds": [
+            265,
+            183,
+            989,
+            1149
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.916268
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "sing-02": {
+          "url": "/art-v3/characters/avatar-2/sing-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 854963,
+          "sha256": "84b01da3f528eade5e828ff5cb9c1fb0911e150e544d2dcdfcdac92a6858c12d",
+          "alphaBounds": [
+            265,
+            183,
+            989,
+            1150
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.917065
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "dance-01": {
+          "url": "/art-v3/characters/avatar-2/dance-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 879519,
+          "sha256": "929612b593383508e3f9aa75a779550add977f49cdcc32eb2bbcc3255de91603",
+          "alphaBounds": [
+            268,
+            182,
+            996,
+            1148
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.91547
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "dance-02": {
+          "url": "/art-v3/characters/avatar-2/dance-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 878120,
+          "sha256": "1eaffe8c4156cf886955a5663e7d4c9971e7161dbf0575b936663fd0fbb6615e",
+          "alphaBounds": [
+            272,
+            181,
+            992,
+            1148
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.91547
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      },
+      "animations": {
+        "idle": {
+          "frameKeys": [
+            "idle-01",
+            "idle-02"
+          ],
+          "frameDurationMs": 450,
+          "loop": true
+        },
+        "sing": {
+          "frameKeys": [
+            "sing-01",
+            "sing-02"
+          ],
+          "frameDurationMs": 250,
+          "loop": true
+        },
+        "dance": {
+          "frameKeys": [
+            "dance-01",
+            "dance-02"
+          ],
+          "frameDurationMs": 280,
+          "loop": true
+        }
+      }
+    },
+    "3": {
+      "frames": {
+        "idle-01": {
+          "url": "/art-v3/characters/avatar-3/idle-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 738076,
+          "sha256": "b1a04ffc770100aa74978ef102a76fe078a4f53998dcc3bf1c142388085121cb",
+          "alphaBounds": [
+            290,
+            114,
+            964,
+            1170
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.933014
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "idle-02": {
+          "url": "/art-v3/characters/avatar-3/idle-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 762937,
+          "sha256": "9520a003c8b39eff6931713d4bbe809c91de62d4abc87320b5439b7c1e80b42a",
+          "alphaBounds": [
+            288,
+            113,
+            958,
+            1172
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.934609
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "sing-01": {
+          "url": "/art-v3/characters/avatar-3/sing-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 736008,
+          "sha256": "1b5bb2adaf928ccce1b5d15c48f5f260669ae2f30fd7d074d91d2011fe520d36",
+          "alphaBounds": [
+            291,
+            114,
+            959,
+            1171
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.933812
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 0
+        },
+        "sing-02": {
+          "url": "/art-v3/characters/avatar-3/sing-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 743986,
+          "sha256": "0f56feb91c182637b6ba27a80f409f67ec1ade489dce5b1496555e6a44e8b613",
+          "alphaBounds": [
+            293,
+            113,
+            959,
+            1171
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.933812
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "dance-01": {
+          "url": "/art-v3/characters/avatar-3/dance-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 755317,
+          "sha256": "b69352d6592153373ddc44c52cf8f26f23feeaa8c99cfef8be868f9288f44752",
+          "alphaBounds": [
+            294,
+            113,
+            958,
+            1170
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.933014
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 0
+        },
+        "dance-02": {
+          "url": "/art-v3/characters/avatar-3/dance-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 768834,
+          "sha256": "514b4a470bda09ecd9cdced94639245b1ae418aaac68293dbd98aa20bb9adecd",
+          "alphaBounds": [
+            311,
+            117,
+            968,
+            1170
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.933014
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 0
+        }
+      },
+      "animations": {
+        "idle": {
+          "frameKeys": [
+            "idle-01",
+            "idle-02"
+          ],
+          "frameDurationMs": 450,
+          "loop": true
+        },
+        "sing": {
+          "frameKeys": [
+            "sing-01",
+            "sing-02"
+          ],
+          "frameDurationMs": 250,
+          "loop": true
+        },
+        "dance": {
+          "frameKeys": [
+            "dance-01",
+            "dance-02"
+          ],
+          "frameDurationMs": 280,
+          "loop": true
+        }
+      }
+    },
+    "4": {
+      "frames": {
+        "idle-01": {
+          "url": "/art-v3/characters/avatar-4/idle-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 835602,
+          "sha256": "b33b2579921506060f1f63d735edea2bc73e7bb0233158a0ed86474f05f2551c",
+          "alphaBounds": [
+            272,
+            89,
+            965,
+            1173
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.935407
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "idle-02": {
+          "url": "/art-v3/characters/avatar-4/idle-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 832876,
+          "sha256": "e49189a1a7a8b3b350e670e6ae9334da0b6bd4e9123b47061b6eaf7e2d84c74a",
+          "alphaBounds": [
+            271,
+            89,
+            964,
+            1172
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.934609
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "sing-01": {
+          "url": "/art-v3/characters/avatar-4/sing-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 863448,
+          "sha256": "8f605267b8f2f4c123e4a6ea3868ce1bbd845ee117a5c81a7d1260b109510959",
+          "alphaBounds": [
+            271,
+            88,
+            967,
+            1174
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.936204
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "sing-02": {
+          "url": "/art-v3/characters/avatar-4/sing-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 889743,
+          "sha256": "5c8cea85ee292c9eb9d4adfd84501f9dbde90f775cc9eb021f07318227d5f8ba",
+          "alphaBounds": [
+            270,
+            87,
+            981,
+            1174
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.936204
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "dance-01": {
+          "url": "/art-v3/characters/avatar-4/dance-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 902827,
+          "sha256": "be9f377cedbbc1b761ee9a2dfdabd6330b59a307fee8e04ede33630f0eadf6bb",
+          "alphaBounds": [
+            260,
+            93,
+            971,
+            1174
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.936204
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "dance-02": {
+          "url": "/art-v3/characters/avatar-4/dance-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 934666,
+          "sha256": "154cbe169ab3542709c88a43ce581cb75be1be995b4fe22c946425d86594e60e",
+          "alphaBounds": [
+            262,
+            94,
+            983,
+            1175
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.937002
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      },
+      "animations": {
+        "idle": {
+          "frameKeys": [
+            "idle-01",
+            "idle-02"
+          ],
+          "frameDurationMs": 450,
+          "loop": true
+        },
+        "sing": {
+          "frameKeys": [
+            "sing-01",
+            "sing-02"
+          ],
+          "frameDurationMs": 250,
+          "loop": true
+        },
+        "dance": {
+          "frameKeys": [
+            "dance-01",
+            "dance-02"
+          ],
+          "frameDurationMs": 280,
+          "loop": true
+        }
+      }
+    },
+    "5": {
+      "frames": {
+        "idle-01": {
+          "url": "/art-v3/characters/avatar-5/idle-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 828270,
+          "sha256": "ef5b42dd12c963d2bef25984ec76a3371cbf6ec256d14a76879efcfebb2d7eb5",
+          "alphaBounds": [
+            266,
+            90,
+            986,
+            1177
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.938596
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "idle-02": {
+          "url": "/art-v3/characters/avatar-5/idle-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 830682,
+          "sha256": "016ef49af5f174c50c6c82c613755f1a8486f8a7019cc236a74b394c71430255",
+          "alphaBounds": [
+            264,
+            85,
+            987,
+            1177
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.938596
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "sing-01": {
+          "url": "/art-v3/characters/avatar-5/sing-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 880769,
+          "sha256": "6c82c70102ae425f738374aade7e35aa1b1f71e5e70aad826f8513be96cca161",
+          "alphaBounds": [
+            264,
+            88,
+            987,
+            1176
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.937799
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "sing-02": {
+          "url": "/art-v3/characters/avatar-5/sing-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 903237,
+          "sha256": "27e5ed323e91582ba6f83a5ac1e541bbcdb13ae6f23998dedf7f06a54852d815",
+          "alphaBounds": [
+            263,
+            86,
+            999,
+            1177
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.938596
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "dance-01": {
+          "url": "/art-v3/characters/avatar-5/dance-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 870136,
+          "sha256": "4f34d5a728f7345d435a25a7329c079ea04a3a7e28c93cc4fe1295b73782609f",
+          "alphaBounds": [
+            259,
+            82,
+            989,
+            1179
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.940191
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        "dance-02": {
+          "url": "/art-v3/characters/avatar-5/dance-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 889143,
+          "sha256": "d4084f1e6a7b750b2fc2505922a511140cf6b6b68a287b352bc166cc42891cd9",
+          "alphaBounds": [
+            264,
+            84,
+            992,
+            1184
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.944179
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      },
+      "animations": {
+        "idle": {
+          "frameKeys": [
+            "idle-01",
+            "idle-02"
+          ],
+          "frameDurationMs": 450,
+          "loop": true
+        },
+        "sing": {
+          "frameKeys": [
+            "sing-01",
+            "sing-02"
+          ],
+          "frameDurationMs": 250,
+          "loop": true
+        },
+        "dance": {
+          "frameKeys": [
+            "dance-01",
+            "dance-02"
+          ],
+          "frameDurationMs": 280,
+          "loop": true
+        }
+      }
+    }
+  },
+  "items": {
+    "studio-microphone": {
+      "label": "홈 레코딩 마이크",
+      "variants": [
+        {
+          "url": "/art-v3/items/studio-microphone-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 974651,
+          "sha256": "75279274f8f8b1dd599b2dc29c23cfbc8e84f992f88588a309b0a1042c989bab",
+          "alphaBounds": [
+            250,
+            93,
+            987,
+            1173
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.935407
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        {
+          "url": "/art-v3/items/studio-microphone-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1118241,
+          "sha256": "6787f7faa6f7dd2d9c751afc01887e02d2783b536446a70565b08f4a840d0e2a",
+          "alphaBounds": [
+            224,
+            67,
+            1072,
+            1184
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.944179
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      ]
+    },
+    "headphones": {
+      "label": "스튜디오 헤드폰",
+      "variants": [
+        {
+          "url": "/art-v3/items/headphones-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 980003,
+          "sha256": "e4a73476994b4e0e6d2f3d7cd1f92f0341096ced694e6d9eaa1d968adc6ad0fe",
+          "alphaBounds": [
+            153,
+            100,
+            1085,
+            1150
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.917065
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        {
+          "url": "/art-v3/items/headphones-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1176875,
+          "sha256": "32386aaeb7b2c0597a39307c13f6356d78adb5c872160c3807d8b270279297c1",
+          "alphaBounds": [
+            213,
+            75,
+            1069,
+            1174
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.936204
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      ]
+    },
+    "in-ear-monitor": {
+      "label": "무대용 인이어 모니터",
+      "variants": [
+        {
+          "url": "/art-v3/items/in-ear-monitor-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1337345,
+          "sha256": "d96f0cae5336b8d4ee79372ad843bea66ab9c6298a08b862e5b2a7d728104ea1",
+          "alphaBounds": [
+            75,
+            221,
+            1186,
+            1079
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.860447
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        {
+          "url": "/art-v3/items/in-ear-monitor-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1392715,
+          "sha256": "7e39819b77995813aacf061ac33cd8da0c43ca7e77e7591c8035f5f5d9d40213",
+          "alphaBounds": [
+            135,
+            101,
+            1184,
+            1116
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.889952
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      ]
+    },
+    "midi-keyboard": {
+      "label": "작곡용 MIDI 키보드",
+      "variants": [
+        {
+          "url": "/art-v3/items/midi-keyboard-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1090836,
+          "sha256": "29c129b0c2423a7b50f424966454a0c5f1f8d69c94b3c97687e66016e1916f95",
+          "alphaBounds": [
+            21,
+            282,
+            1240,
+            1034
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.824561
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 2
+        },
+        {
+          "url": "/art-v3/items/midi-keyboard-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 925883,
+          "sha256": "1967f0beec74228c2695d1ba2c9d55c32cf10d48c7e196de9b0deb9ad4eae7b4",
+          "alphaBounds": [
+            39,
+            322,
+            1221,
+            1067
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.850877
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      ]
+    },
+    "audio-interface": {
+      "label": "오디오 인터페이스",
+      "variants": [
+        {
+          "url": "/art-v3/items/audio-interface-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 932947,
+          "sha256": "3b98f549eb574d946e55f122e23bec6479374680a0581560362da1009810ee22",
+          "alphaBounds": [
+            61,
+            298,
+            1204,
+            965
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.769537
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        {
+          "url": "/art-v3/items/audio-interface-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1038260,
+          "sha256": "328d45930cffa5f46f3a703e6091ae0791ff7e926f2d58b9692dfa666777facf",
+          "alphaBounds": [
+            63,
+            271,
+            1226,
+            1121
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.893939
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      ]
+    },
+    "dance-sneakers": {
+      "label": "안무 연습화",
+      "variants": [
+        {
+          "url": "/art-v3/items/dance-sneakers-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1291226,
+          "sha256": "c169878957c0f1cfbf6a7fe609da03485342cce54544c2248cb03becfc8b7185",
+          "alphaBounds": [
+            35,
+            148,
+            1232,
+            1140
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.909091
+          },
+          "cornerAlpha": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 2
+        },
+        {
+          "url": "/art-v3/items/dance-sneakers-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1082527,
+          "sha256": "68b1430e27c231d7f0d328714f90d7188143dd615f2b465b28d00e4ff7dd61d9",
+          "alphaBounds": [
+            49,
+            272,
+            1211,
+            1063
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.847687
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      ]
+    },
+    "full-length-mirror": {
+      "label": "전신 연습 거울",
+      "variants": [
+        {
+          "url": "/art-v3/items/full-length-mirror-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 643791,
+          "sha256": "1a1ec5ba3688d49107fbb8be02bf6f8c39036fe9fa9c01430082c88d35939b80",
+          "alphaBounds": [
+            362,
+            60,
+            927,
+            1209
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.964115
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        {
+          "url": "/art-v3/items/full-length-mirror-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 588096,
+          "sha256": "70288e8500e04afb773e3efb9e58e52bf38213c5e6f10266fe207f807efd5525",
+          "alphaBounds": [
+            342,
+            46,
+            936,
+            1206
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.961722
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      ]
+    },
+    "ring-light": {
+      "label": "라이브 촬영 조명",
+      "variants": [
+        {
+          "url": "/art-v3/items/ring-light-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 842557,
+          "sha256": "ac37d75f0e61166f8967c130717e6882385da02302169c55803a37e7fe905234",
+          "alphaBounds": [
+            264,
+            54,
+            1079,
+            1184
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.944179
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        {
+          "url": "/art-v3/items/ring-light-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 785375,
+          "sha256": "037d46313c807a00d309a54c351174ca512754546b2a40c62d1c0d4ef656f7b2",
+          "alphaBounds": [
+            285,
+            78,
+            969,
+            1196
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.953748
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 0
+        }
+      ]
+    },
+    "vlog-camera": {
+      "label": "브이로그 카메라",
+      "variants": [
+        {
+          "url": "/art-v3/items/vlog-camera-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1087265,
+          "sha256": "8eb7c2e961719c28c4d9cf98bc1abd143392e91e96d9a06083ec93f00733328e",
+          "alphaBounds": [
+            60,
+            202,
+            1213,
+            1045
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.833333
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        {
+          "url": "/art-v3/items/vlog-camera-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1218612,
+          "sha256": "a7cd84435def9aa1b5dbaba2043eb41d5264f6d87f6ec26a838ab0ef019cbee5",
+          "alphaBounds": [
+            136,
+            144,
+            1147,
+            1180
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.940989
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      ]
+    },
+    "vocal-booth": {
+      "label": "개인 보컬 부스",
+      "variants": [
+        {
+          "url": "/art-v3/items/vocal-booth-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1303009,
+          "sha256": "2db072e37585e0266a1eb0e4bc48b2b648c1c629b985ff5f4b2ad624b9b1ecea",
+          "alphaBounds": [
+            213,
+            74,
+            1065,
+            1186
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.945774
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        {
+          "url": "/art-v3/items/vocal-booth-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1384831,
+          "sha256": "5ecf1084af656f8cf303a968eee8599554070d9b291811cac7cbd61278dacbf7",
+          "alphaBounds": [
+            163,
+            70,
+            1142,
+            1183
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.943381
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      ]
+    },
+    "practice-room-pass": {
+      "label": "연습실 장기 이용권",
+      "variants": [
+        {
+          "url": "/art-v3/items/practice-room-pass-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1098191,
+          "sha256": "c0d6d847b6cb7b35c39384cb189ac868d67018162dfabde72585195b6d4f412c",
+          "alphaBounds": [
+            114,
+            56,
+            1159,
+            1157
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.922648
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        },
+        {
+          "url": "/art-v3/items/practice-room-pass-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 968484,
+          "sha256": "3a8e05e1874c80a62078ca3745714e7c479d4fa5fabee4a87d55cbaae13688f5",
+          "alphaBounds": [
+            77,
+            161,
+            1176,
+            1096
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.874003
+          },
+          "cornerAlpha": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      ]
+    },
+    "songwriter-notebook": {
+      "label": "작곡 노트",
+      "variants": [
+        {
+          "url": "/art-v3/items/songwriter-notebook-01.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1356259,
+          "sha256": "5c0478964ef110b651df48cd982ba5c1e5327062f13e516a264dd5691cf19f95",
+          "alphaBounds": [
+            84,
+            149,
+            1215,
+            1078
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.859649
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 0
+        },
+        {
+          "url": "/art-v3/items/songwriter-notebook-02.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1336180,
+          "sha256": "e583df72e8057dc20c2e2f578dc9ddde07ff0a4db7ae1f65e2985a39fa320d90",
+          "alphaBounds": [
+            76,
+            64,
+            1186,
+            1157
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.922648
+          },
+          "cornerAlpha": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "edgeMaxAlpha": 1
+        }
+      ]
+    }
+  },
+  "aliases": {
+    "items/wireless-in-ear-01.png": "items/in-ear-monitor-01.png",
+    "items/wireless-in-ear-02.png": "items/in-ear-monitor-02.png"
+  },
+  "placementSuggestion": {
+    "footAnchorOnBackground": {
+      "x": 0.5,
+      "y": 0.86
+    },
+    "characterHeightRelativeToBackground": 0.53
+  },
+  "notes": [
+    "The animation and placement values are metadata suggestions; no renderer or game code was changed by this task.",
+    "One full character per file. Do not use sprite-sheet cropping or 600% background scaling.",
+    "Frame footAnchor derives from visible alpha bounds. Align feet when connecting independent frames.",
+    "Some generated edge pixels retain alpha 1 or 2 out of 255. The original generated pixels are preserved."
+  ]
+}

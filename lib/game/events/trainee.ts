@@ -27,7 +27,7 @@ export const TRAINEE_EVENTS: GameEventDef[] = [
     scene: "audition",
     when: (c) => c.turn >= 1,
     choices: [
-      { id: "go", label: "내일 오디션에 간다", hint: "중소 기획사 연습생이 될 가능성이 높아요", risk: "bold", op: "freecast" },
+      { id: "go", label: "내일 오디션에 간다", hint: "중소 기획사 연습생이 될 가능성이 높아요", risk: "bold", op: "freecast", sign: true },
       { id: "wait", label: "원하는 회사에 직접 지원하겠다고 거절한다", hint: "마음이 단단해지고 연습에 집중해요", risk: "safe", effects: { mental: 6, vocal: 1, dance: 1 } },
     ],
   },
@@ -54,7 +54,7 @@ export const TRAINEE_EVENTS: GameEventDef[] = [
     text: "이번 월말평가에서 최상위 평가를 받았어요. 회사가 데뷔조 합류를 제안해요. 수락하면 바로 데뷔 준비에 들어가요.",
     scene: "debut",
     choices: [
-      { id: "accept", label: "데뷔조에 합류한다", hint: "그룹 이름을 정하고 데뷔 앨범을 준비해요", risk: "bold", op: "debut" },
+      { id: "accept", label: "데뷔조에 합류한다", hint: "그룹 이름을 정하고 전속계약을 맺어요", risk: "bold", op: "debut", sign: true },
       { id: "wait", label: "한 번 더 준비한다", hint: "실력을 더 다듬고 다음 평가에서 다시 제안받아요", risk: "safe", effects: { mental: 4, trust: 3 }, op: "debut:wait" },
     ],
   },
@@ -91,7 +91,7 @@ export const TRAINEE_EVENTS: GameEventDef[] = [
     text: "표준계약서 기준 최대 연습생 기간이 끝났어요. 회사와 평가 자료를 함께 봤어요. 다음을 정해야 해요.",
     scene: "contract",
     choices: [
-      { id: "renew", label: "새 연습생 계약에 합의한다", hint: "다음 몇 년 안에 데뷔를 목표로 다시 준비해요", risk: "safe", op: "trainee:renew" },
+      { id: "renew", label: "새 연습생 계약에 합의한다", hint: "다음 몇 년 안에 데뷔를 목표로 다시 준비해요", risk: "safe", op: "trainee:renew", sign: true },
       { id: "leave", label: "계약을 마치고 다른 회사를 찾는다", hint: "무소속이 되고 훈련비를 개인이 갚지는 않아요. 홈에서 다른 회사에 지원할 수 있어요", risk: "bold", op: "trainee:leave" },
     ],
   },

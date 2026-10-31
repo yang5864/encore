@@ -345,7 +345,19 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
   }
 
   // 운영 훅
-  if (op === "freecast") {
+  if (op.startsWith("join:")) {
+    const a = agencyById(op.slice(5))!;
+    const prev = agencyById(c.agencyId);
+    joinAgency(c, a.id);
+    headline = `${a.name} 연습생 계약 완료`;
+    text = prev ? `${prev.name}와 합의 종료하고 ${a.fullName}의 연습생이 됐어요. 신뢰는 처음부터 쌓아요.` : `${a.fullName}의 연습생이 됐어요. ${TIERS[a.tier].description}.`;
+    tone = "good";
+    log(c, headline, text, "milestone");
+  } else if (op === "decline") {
+    headline = "계약을 거절했어요";
+    text = c.agencyId ? "지금 회사에서 계속 준비해요." : "무소속으로 남아 다른 회사를 노려요.";
+    log(c, headline, text, "system");
+  } else if (op === "freecast") {
     const a = pick(c, AGENCIES.filter((x) => x.tier === "indie"));
     joinAgency(c, a.id);
     headline = `${a.name} 연습생이 됐어요`;
@@ -549,10 +561,19 @@ export function applyToAgency(original: Career, agencyId: string): Career {
   const passed = rng(c) < p;
   if (passed) {
     const prev = agencyById(c.agencyId);
-    joinAgency(c, agencyId);
     const headline = `${a.name} 오디션 합격`;
-    const text = prev ? `${prev.name}와 합의 종료하고 ${a.fullName}의 연습생이 됐어요. 신뢰는 처음부터 쌓아요.` : `${a.fullName}의 연습생이 됐어요. ${TIERS[a.tier].description}.`;
-    log(c, headline, text, "milestone");
+    const text = prev ? `${prev.name}와 합의 종료 조건으로 ${a.fullName}에서 연습생 계약서를 보내왔어요.` : `${a.fullName}에서 연습생 계약서를 보내왔어요. ${TIERS[a.tier].description}.`;
+    log(c, headline, "합격 통보와 함께 계약서가 도착했어요.", "milestone");
+    c.pending = {
+      id: "trainee-offer",
+      title: `${a.name} 연습생 계약 제안`,
+      text: `${a.fullName}가 ${c.name} 연습생과 계약하고 싶어해요. 조건을 확인하고 서명해주세요.`,
+      scene: "contract",
+      choices: [
+        { id: "sign", label: "계약하기", hint: "연습생이 되어 회사 트레이닝을 받아요", risk: "safe", op: `join:${agencyId}`, sign: true },
+        { id: "decline", label: "거절하기", hint: prev ? "지금 회사에 남아요" : "무소속으로 남아 다른 회사를 노려요", risk: "bold", op: "decline" },
+      ],
+    };
     finish(c, before, headline, text, "good", { scene: "audition" });
   } else {
     c.mental = Math.max(0, c.mental - 6);

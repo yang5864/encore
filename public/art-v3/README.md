@@ -2,7 +2,7 @@
 
 2026-10-31 · 이미지 전용 작업 · built-in image_gen 사용
 
-이 폴더에는 앱 코드·게임 규칙·가격·상점 로직·배포 설정의 변경이 없습니다. 기존 `/scenes/*.webp`와 `/sprites.webp`도 보존했습니다. 현재 앱의 이미지 경로 연결 및 애니메이션 재생 코드는 적용하지 않았습니다.
+이 폴더에는 앱 코드·게임 규칙·가격·상점 로직·배포 설정의 변경이 없습니다. 기존 `/scenes/*.webp`와 `/sprites.webp`도 보존했습니다. 이번 작업에서는 앱의 이미지 경로 연결 및 애니메이션 재생 코드를 추가하지 않았습니다.
 
 ## 구성
 
@@ -68,5 +68,5 @@
 
 ## 제작 기록
 
-최종 프롬프트와 원본 참고 이미지 경로는 BACKGROUNDS-A.md, BACKGROUNDS-B.md, CHARACTERS.md, CHARACTERS-A.md, CHARACTERS-B.md, ITEMS.md에 분담별로 기록합니다. 앱 코드 검증 대신 에셋의 파일 존재·PNG 손상 여부·실제 크기·투명도·가장자리 잘림을 확인합니다.
+최종 프롬프트와 원본 참고 이미지 경로는 [BACKGROUNDS-A.md](BACKGROUNDS-A.md), [BACKGROUNDS-B.md](BACKGROUNDS-B.md), [CHARACTERS.md](CHARACTERS.md), [CHARACTERS-A.md](CHARACTERS-A.md), [CHARACTERS-B.md](CHARACTERS-B.md), [CHARACTERS-C-DANCE.md](CHARACTERS-C-DANCE.md), [ITEMS.md](ITEMS.md)에 분담별로 기록합니다. 앱 코드 검증 대신 에셋의 파일 존재·PNG 손상 여부·실제 크기·투명도·가장자리 잘림을 확인합니다.
 

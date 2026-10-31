@@ -6,14 +6,13 @@ import { Card } from "@/components/ui/Card";
 import { agencyById } from "@/lib/game/agencies";
 import { fanText } from "@/lib/game/format";
 import { loadRecords, type CareerRecord } from "@/lib/storage";
-import { TabBar } from "@/components/TabBar";
 import { Logo } from "@/components/Logo";
 
 export default function RecordsPage() {
   const [records, setRecords] = useState<CareerRecord[]>([]);
   useEffect(() => setRecords(loadRecords()), []);
   return (
-    <main className="shell pt-3 pb-[120px]">
+    <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
         <Link href="/" aria-label="홈" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[20px]">‹</Link>
         <h1 className="t-card">내 기록 · 명예의 전당</h1>
@@ -43,7 +42,6 @@ export default function RecordsPage() {
           </Card>
         ))}
       </div>
-      <TabBar />
     </main>
   );
 }

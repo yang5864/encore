@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
-import { TabBar } from "@/components/TabBar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const STEPS = [
@@ -27,7 +26,7 @@ const NOTES = [
 
 export default function GuidePage() {
   return (
-    <main className="shell pt-3 pb-[120px]">
+    <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
         <Link href="/" aria-label="홈" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[20px]">‹</Link>
         <h1 className="t-card">전체 · 게임 가이드</h1>
@@ -63,7 +62,6 @@ export default function GuidePage() {
           ENCORE는 가상의 커리어 시뮬레이션이에요. 실제 기획사·학교·시상식 명칭은 배경으로만 쓰이며 수치와 확률은 게임 규칙이에요. 실제 인물이나 사건을 특정하지 않아요. DAWN·MONO·ORBIT은 가상 회사예요.
         </p>
       </div>
-      <TabBar />
     </main>
   );
 }

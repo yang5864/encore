@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/Logo";
-import { TabBar } from "@/components/TabBar";
 
 const BANK = "토스뱅크";
 const ACCOUNT = "1002-7412-8069";
@@ -28,9 +28,10 @@ export default function SupportPage() {
   const tossLink = `supertoss://send?amount=${amount}&bank=${encodeURIComponent(BANK)}&accountNo=${ACCOUNT_DIGITS}&origin=qr`;
 
   return (
-    <main className="shell pt-3 pb-[120px]">
-      <header className="flex items-center justify-between h-12">
-        <span className="font-extrabold text-[18px] tracking-tight">encore<span className="text-primary">.</span></span>
+    <main className="shell pt-3">
+      <header className="flex items-center h-12 gap-3">
+        <Link href="/" aria-label="홈" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[20px]">‹</Link>
+        <h1 className="t-card">후원하기</h1>
       </header>
 
       <section className="mt-6 fade-up">
@@ -90,7 +91,6 @@ export default function SupportPage() {
       </Card>
 
       <p className="mt-6 text-[12px] text-ink-3 leading-relaxed">후원은 자발적인 선물이며 게임 내 혜택과 교환되지 않아요. 환불은 어려우니 금액을 한 번 더 확인해주세요.</p>
-      <TabBar />
     </main>
   );
 }

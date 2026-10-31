@@ -4,7 +4,7 @@ import { createCareer } from "../lib/game/create.ts";
 import { auditionChance, chanceLabel, AGENCIES } from "../lib/game/agencies.ts";
 import { DEFAULT_ALLOCATION, overall, validateAllocation, STAT_KEYS } from "../lib/game/stats.ts";
 import { fanText, wonText, reputationLabel, reputationProgress, conditionOf, ageOf, periodLabel } from "../lib/game/format.ts";
-import { applyToAgency } from "../lib/game/engine.ts";
+import { applyToAgency, resolveChoice } from "../lib/game/engine.ts";
 
 const base = { name: "하린", gender: "female" as const, avatar: 0, position: "vocal" as const, stats: DEFAULT_ALLOCATION.vocal };
 
@@ -58,11 +58,17 @@ test("기획사 지원: 합격이면 연습생, 불합격이면 무소속 유지
     const next = applyToAgency(c, "dawn");
     assert.equal(c.stage, "free", "원본은 바뀌지 않는다");
     assert.ok(next.result);
-    if (next.stage === "trainee") {
+    if (next.pending?.id === "trainee-offer") {
       passed = true;
-      assert.equal(next.agencyId, "dawn");
-      assert.equal(next.traineeContractEnd, 6);
+      assert.equal(next.stage, "free", "서명 전에는 아직 무소속");
       assert.equal(next.result?.tone, "good");
+      assert.ok(next.pending.choices[0].sign);
+      const signed = resolveChoice(next, "sign");
+      assert.equal(signed.stage, "trainee");
+      assert.equal(signed.agencyId, "dawn");
+      assert.equal(signed.traineeContractEnd, 6);
+      const declined = resolveChoice(next, "decline");
+      assert.equal(declined.stage, "free");
     } else {
       failed = true;
       assert.equal(next.agencyId, null);

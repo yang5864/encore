@@ -85,7 +85,7 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
         text: `${a.fullName} 캐스팅 디렉터가 조용히 연락해왔어요. 지금 회사보다 큰 곳이에요. 오디션 없이 바로 연습생으로 받겠대요. 지금 회사와는 합의 종료가 가능해요.`,
         scene: def.scene,
         choices: [
-          { id: "move", label: `${a.name}로 옮긴다`, hint: "더 큰 무대와 빠른 성장. 신뢰는 처음부터 다시 쌓아요", risk: "bold", op: `scout:${a.id}` },
+          { id: "move", label: `${a.name}로 옮긴다`, hint: "더 큰 무대와 빠른 성장. 신뢰는 처음부터 다시 쌓아요", risk: "bold", op: `scout:${a.id}`, sign: true },
           { id: "stay", label: "지금 회사에 남는다", hint: "의리를 지켜 신뢰가 크게 올라요", risk: "safe", effects: { trust: 12, mental: 4 } },
         ],
       };

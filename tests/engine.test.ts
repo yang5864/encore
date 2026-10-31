@@ -148,6 +148,7 @@ test("소속이 생기면 지원 팝업은 뜨지 않고 직접 지원만 가능
   const t = trainee(8);
   const applied = applyToAgency(t, "jyp");
   assert.ok(applied.result?.headline.includes("JYP"));
+  if (applied.pending?.id === "trainee-offer") assert.equal(applied.agencyId, "starship", "서명 전에는 기존 소속 유지");
   assert.throws(() => applyToAgency(idol(), "jyp"), /전속계약/);
 });
 

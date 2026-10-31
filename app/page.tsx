@@ -6,7 +6,6 @@ import { Avatar } from "@/components/Avatar";
 import { Button, FixedCta } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Logo } from "@/components/Logo";
-import { TabBar } from "@/components/TabBar";
 import { AGENCIES, agencyById } from "@/lib/game/agencies";
 import { ageOf, fanText, periodLabel, STAGE_NAMES } from "@/lib/game/format";
 import { milestoneStep } from "@/lib/game/milestones";
@@ -41,7 +40,7 @@ export default function HomePage() {
   const heroStep = step !== null && step > 0 ? step - 1 : showcase;
 
   return (
-    <main className="shell pt-3 pb-[120px]">
+    <main className="shell pt-3">
       <header className="flex items-center justify-between h-12">
         <div>
           <p className="font-extrabold text-[18px] tracking-tight leading-none">encore<span className="text-primary">.</span></p>
@@ -182,8 +181,6 @@ export default function HomePage() {
           {career && career.stage !== "retired" ? "이어서 플레이하기" : "새로운 인생 시작하기"}
         </Button>
       </FixedCta>
-      <div className="h-16" />
-      <TabBar />
     </main>
   );
 }

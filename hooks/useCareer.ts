@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import type { Career } from "@/lib/game/types";
+import type { Career, Signature } from "@/lib/game/types";
 import { GameError } from "@/lib/game/types";
 import { advanceTurn, resolveChoice, applyToAgency, retireCareer } from "@/lib/game/engine";
 import { addRecord, clearCareer, exportJSON, importJSON, loadCareer, saveCareer } from "@/lib/storage";
@@ -47,7 +47,12 @@ export function useCareer() {
     clearError: () => setError(null),
     commit,
     advance: (focusId: string) => run((c) => advanceTurn(c, focusId)),
-    choose: (choiceId: string, extra?: { groupName?: string }) => run((c) => resolveChoice(c, choiceId, extra)),
+    choose: (choiceId: string, extra?: { groupName?: string; signature?: Signature }) =>
+      run((c) => {
+        const next = resolveChoice(c, choiceId, { groupName: extra?.groupName });
+        if (extra?.signature && !next.signature) next.signature = extra.signature;
+        return next;
+      }),
     apply: (agencyId: string) => run((c) => applyToAgency(c, agencyId)),
     retire: () => run((c) => retireCareer(c)),
     dismissResult: () => run((c) => ({ ...c, result: null })),

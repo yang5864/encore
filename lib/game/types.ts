@@ -38,6 +38,8 @@ export type ChoiceDef = {
   requires?: Requirement;
   /** engine operation hook, e.g. "debut", "school:arts", "military:army" */
   op?: string;
+  /** opens the contract sheet with signature before resolving */
+  sign?: boolean;
 };
 
 export type EventKind = "story" | "scheduled" | "state" | "hidden";
@@ -115,6 +117,8 @@ export type Money = {
 
 export type MilestoneId = "debut" | "firstWin" | "firstSettlement" | "daesang" | "legend";
 export type PublicMetrics = { instagram: number; youtube: number; spotify: number };
+/** Hand-drawn signature, strokes of normalized [x, y] points in 0..1. */
+export type Signature = { strokes: [number, number][][]; signedAt: number };
 
 export type Career = {
   v: 2;
@@ -153,6 +157,7 @@ export type Career = {
   peakPopularity: number;
   money: Money;
   metrics: PublicMetrics;
+  signature?: Signature | null;
   warnings: number;
   scoutCount: number;
   lowPopularityTurns: number;
