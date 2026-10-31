@@ -23,7 +23,7 @@ export function SettlementCard({ career }: { career: Career }) {
         </div>
       </div>
       <div className="mt-4">
-        <div className="flex justify-between text-[12px] font-semibold text-ink-2 mb-1.5">
+        <div className="flex justify-between text-[13px] font-semibold text-ink-2 mb-1.5">
           <span>투자비 회수</span>
           <span>{s.unrecovered > 0 ? `${wonText(s.unrecovered)} 남음` : "회수 완료"}</span>
         </div>

@@ -30,13 +30,13 @@ export default function SupportPage() {
   return (
     <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
-        <Link href="/" aria-label="홈" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[20px]">‹</Link>
+        <Link href="/" aria-label="홈" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[22px]">‹</Link>
         <h1 className="t-card">후원하기</h1>
       </header>
 
       <section className="mt-6 fade-up">
         <p className="t-cap text-primary font-bold">후원</p>
-        <h1 className="text-[28px] font-extrabold tracking-[-0.03em] leading-[1.25] mt-2">
+        <h1 className="text-[22px] font-extrabold tracking-[-0.03em] leading-[1.25] mt-2">
           커피 한 잔이<br />다음 업데이트가 돼요
         </h1>
         <p className="t-body text-ink-2 mt-3">ENCORE는 광고 없이 혼자 만들고 있어요. 후원금은 서버 비용과 새 이벤트·일러스트 제작에 써요.</p>
@@ -47,10 +47,10 @@ export default function SupportPage() {
           <Logo id="tossbank" label="토스" size={44} rounded="full" />
           <div className="min-w-0 flex-1">
             <p className="t-cap">{BANK}</p>
-            <p className="text-[20px] font-extrabold tracking-[-0.02em] tabular-nums whitespace-nowrap">{ACCOUNT}</p>
-            <p className="text-[12px] text-ink-3">예금주 양*현</p>
+            <p className="text-[22px] font-extrabold tracking-[-0.02em] tabular-nums whitespace-nowrap">{ACCOUNT}</p>
+            <p className="text-[13px] text-ink-3">예금주 양*현</p>
           </div>
-          <button onClick={copy} className="press shrink-0 h-10 px-3.5 rounded-xl bg-chip text-ink text-[14px] font-bold">
+          <button onClick={copy} className="press shrink-0 h-10 px-3.5 rounded-xl bg-chip text-ink text-[13px] font-bold">
             {copied ? "복사됨" : "복사"}
           </button>
         </div>
@@ -60,7 +60,7 @@ export default function SupportPage() {
         <p className="t-card">얼마를 보낼까요?</p>
         <div className="grid grid-cols-4 gap-2 mt-3">
           {PRESETS.map((v) => (
-            <button key={v} onClick={() => setAmount(v)} className={`press h-11 rounded-xl text-[14px] font-bold ${amount === v ? "bg-ink text-bg" : "bg-chip text-ink-2"}`}>
+            <button key={v} onClick={() => setAmount(v)} className={`press h-11 rounded-xl text-[13px] font-bold ${amount === v ? "bg-ink text-bg" : "bg-chip text-ink-2"}`}>
               {v.toLocaleString("ko-KR")}원
             </button>
           ))}
@@ -68,7 +68,7 @@ export default function SupportPage() {
         <a href={tossLink} className="block mt-4">
           <Button>토스로 {amount.toLocaleString("ko-KR")}원 보내기</Button>
         </a>
-        <p className="text-[12px] text-ink-3 mt-2 text-center">토스 앱이 설치된 휴대폰에서 열려요. 안 열리면 위 계좌를 복사해서 보내주세요.</p>
+        <p className="text-[13px] text-ink-3 mt-2 text-center">토스 앱이 설치된 휴대폰에서 열려요. 안 열리면 위 계좌를 복사해서 보내주세요.</p>
       </Card>
 
       <Card className="mt-3 fade-up" style={{ animationDelay: "200ms" }}>
@@ -81,8 +81,8 @@ export default function SupportPage() {
           ].map(([t, s]) => (
             <li key={t} className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-[14px] font-bold">{t}</p>
-                <p className="text-[12px] text-ink-3">{s}</p>
+                <p className="text-[13px] font-bold">{t}</p>
+                <p className="text-[13px] text-ink-3">{s}</p>
               </div>
               <span className="text-ink-3">›</span>
             </li>
@@ -90,7 +90,7 @@ export default function SupportPage() {
         </ul>
       </Card>
 
-      <p className="mt-6 text-[12px] text-ink-3 leading-relaxed">후원은 자발적인 선물이며 게임 내 혜택과 교환되지 않아요. 환불은 어려우니 금액을 한 번 더 확인해주세요.</p>
+      <p className="mt-6 text-[13px] text-ink-3 leading-relaxed">후원은 자발적인 선물이며 게임 내 혜택과 교환되지 않아요. 환불은 어려우니 금액을 한 번 더 확인해주세요.</p>
     </main>
   );
 }

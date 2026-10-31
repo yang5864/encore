@@ -47,8 +47,8 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
           <div className="grid grid-cols-2 gap-1.5 mt-2 px-1">
             {CONCEPTS.map((x) => (
               <button key={x.id} onClick={() => onChange({ ...value, concept: x.id })} className={cn("press text-left rounded-xl p-3", value.concept === x.id ? "bg-ink text-bg" : "bg-chip")}>
-                <p className="text-[14px] font-bold">{x.name}</p>
-                <p className={cn("text-[12px] mt-0.5", value.concept === x.id ? "text-bg/70" : "text-ink-3")}>{x.description}</p>
+                <p className="text-[13px] font-bold">{x.name}</p>
+                <p className={cn("text-[13px] mt-0.5", value.concept === x.id ? "text-bg/70" : "text-ink-3")}>{x.description}</p>
               </button>
             ))}
           </div>
@@ -60,12 +60,12 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
   return (
     <Card className="fade-up" style={{ animationDelay: "180ms" }} id="focus-card">
       <CardTitle sub={`${periodLabel(career)} 계획을 하나 골라요`}>이번 반기 집중</CardTitle>
-      {soloOptions.length > 0 && <p className="text-[12px] font-bold text-ink-3 mb-2">그룹 활동</p>}
+      {soloOptions.length > 0 && <p className="text-[13px] font-bold text-ink-3 mb-2">그룹 활동</p>}
       <div className="flex flex-col gap-2">{groupOptions.map(renderOption)}</div>
       {soloOptions.length > 0 && (
         <>
-          <p className="text-[12px] font-bold text-ink-3 mt-5 mb-1">개인 활동</p>
-          <p className="text-[12px] text-ink-3 mb-2">성공 가능성은 해당 능력치가 정해요. 낮은 능력으로 밀어붙이면 묻혀요.</p>
+          <p className="text-[13px] font-bold text-ink-3 mt-5 mb-1">개인 활동</p>
+          <p className="text-[13px] text-ink-3 mb-2">성공 가능성은 해당 능력치가 정해요. 낮은 능력으로 밀어붙이면 묻혀요.</p>
           <div className="flex flex-col gap-2">{soloOptions.map(renderOption)}</div>
         </>
       )}

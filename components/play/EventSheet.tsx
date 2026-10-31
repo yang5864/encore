@@ -94,7 +94,7 @@ export function EventSheet({ career, open, onChoose }: Props) {
           {needsName && (
             <div className="mt-4 fade-up">
               <label className="t-cap block mb-1.5" htmlFor="group-name">그룹 이름</label>
-              <input id="group-name" value={groupName} onChange={(e) => setGroupName(e.target.value)} maxLength={20} placeholder="예: LUMINA" className="w-full h-14 rounded-2xl bg-chip px-4 text-[17px] font-bold outline-none focus:ring-2 focus:ring-primary" />
+              <input id="group-name" value={groupName} onChange={(e) => setGroupName(e.target.value)} maxLength={20} placeholder="예: LUMINA" className="w-full h-14 rounded-2xl bg-chip px-4 text-[16px] font-bold outline-none focus:ring-2 focus:ring-primary" />
             </div>
           )}
 

@@ -43,8 +43,8 @@ export default function HomePage() {
     <main className="shell pt-3">
       <header className="flex items-center justify-between h-12">
         <div>
-          <p className="font-extrabold text-[18px] tracking-tight leading-none">encore<span className="text-primary">.</span></p>
-          <p className="text-[11px] text-ink-3 mt-1">연습생부터 레전드까지</p>
+          <p className="font-extrabold text-[16px] tracking-tight leading-none">encore<span className="text-primary">.</span></p>
+          <p className="text-[13px] text-ink-3 mt-1">연습생부터 레전드까지</p>
         </div>
         <div className="flex items-center gap-1">
           <Link href="/support" aria-label="후원" className="press w-10 h-10 rounded-xl flex items-center justify-center text-ink-2">
@@ -59,7 +59,7 @@ export default function HomePage() {
       {/* 히어로 */}
       <Card className="mt-3 fade-up !p-6">
         <p className="t-cap">14살, 소속사 없는 지망생에서 시작해요</p>
-        <h1 className="text-[32px] font-extrabold tracking-[-0.03em] leading-[1.15] mt-2">
+        <h1 className="text-[22px] font-extrabold tracking-[-0.03em] leading-[1.15] mt-2">
           연습실에서<br />레전드까지
         </h1>
         <p className="t-body text-ink-2 mt-3 leading-relaxed">
@@ -82,7 +82,7 @@ export default function HomePage() {
             {STEPS.map((label, i) => (
               <div key={label} className="flex flex-col items-center w-12">
                 <span className={cn("w-4 h-4 rounded-full border-[3px] transition-colors duration-500", i <= heroStep ? "bg-primary border-primary" : "bg-card border-chip", i === heroStep && "shadow-[0_0_0_5px_rgba(49,130,246,0.25)]")} />
-                <span className={cn("text-[12px] mt-2 whitespace-nowrap", i === heroStep ? "font-bold text-ink" : "text-ink-3")}>{label}</span>
+                <span className={cn("text-[13px] mt-2 whitespace-nowrap", i === heroStep ? "font-bold text-ink" : "text-ink-3")}>{label}</span>
               </div>
             ))}
           </div>
@@ -104,7 +104,7 @@ export default function HomePage() {
                 <span className="truncate">{periodLabel(career)} · {ageOf(career)}세 · {STAGE_NAMES[career.stage]} · OVR {overall(career.stats, career.position)}</span>
               </p>
             </div>
-            <button onClick={() => router.push("/play")} className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary-soft text-primary text-[14px] font-bold">
+            <button onClick={() => router.push("/play")} className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary-soft text-primary text-[13px] font-bold">
               {career.stage === "retired" ? "결과" : "이어하기"}
             </button>
           </div>
@@ -129,7 +129,7 @@ export default function HomePage() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="t-body font-bold truncate">{r.groupName ? `${r.groupName} ${r.name}` : r.name}</p>
-                  <p className="text-[12px] text-ink-3 truncate">{r.ending} · {agencyById(r.agency)?.name ?? "무소속"} · 팬 {fanText(r.fans)}</p>
+                  <p className="text-[13px] text-ink-3 truncate">{r.ending} · {agencyById(r.agency)?.name ?? "무소속"} · 팬 {fanText(r.fans)}</p>
                 </div>
                 <span className="text-[13px] font-bold text-ink-2 whitespace-nowrap">🏆 {r.awards} · OVR {r.ovr}</span>
               </div>
@@ -146,7 +146,7 @@ export default function HomePage() {
           {AGENCIES.map((a) => (
             <div key={a.id} className="shrink-0 flex flex-col items-center gap-1.5 w-16">
               <Logo id={a.logo} label={a.name} color={a.color} size={48} rounded="full" />
-              <span className="text-[11px] text-ink-2 font-semibold truncate w-full text-center">{a.name}</span>
+              <span className="text-[13px] text-ink-2 font-semibold truncate w-full text-center">{a.name}</span>
             </div>
           ))}
         </div>
@@ -162,14 +162,14 @@ export default function HomePage() {
           <Link key={m.href} href={m.href} className="press flex items-center justify-between gap-3 px-3 py-3.5 rounded-2xl">
             <div className="min-w-0">
               <p className="t-body font-bold">{m.t}</p>
-              <p className="text-[12px] text-ink-3">{m.s}</p>
+              <p className="text-[13px] text-ink-3">{m.s}</p>
             </div>
             <span className="text-ink-3">›</span>
           </Link>
         ))}
       </Card>
 
-      <footer className="mt-8 text-[12px] text-ink-3 leading-relaxed">
+      <footer className="mt-8 text-[13px] text-ink-3 leading-relaxed">
         <p className="font-bold text-ink-2">ENCORE</p>
         <p className="mt-1">나만의 아이돌 인생, 앵콜.</p>
         <p className="mt-3">실제 기획사·학교·플랫폼 명칭과 로고의 권리는 각 권리자에게 있으며 가상 게임의 배경으로만 쓰여요. 수치와 확률은 게임 규칙이에요. DAWN·MONO·ORBIT은 가상 회사예요.</p>

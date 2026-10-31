@@ -14,7 +14,7 @@ export default function RecordsPage() {
   return (
     <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
-        <Link href="/" aria-label="홈" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[20px]">‹</Link>
+        <Link href="/" aria-label="홈" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[22px]">‹</Link>
         <h1 className="t-card">내 기록 · 명예의 전당</h1>
       </header>
       <p className="t-cap mt-2">은퇴한 커리어가 점수순으로 쌓여요. 이 기기에만 저장돼요.</p>
@@ -26,17 +26,17 @@ export default function RecordsPage() {
         )}
         {records.map((r, i) => (
           <Card key={r.id} className="fade-up flex items-center gap-3 !p-4" style={{ animationDelay: `${Math.min(i, 8) * 40}ms` }}>
-            <span className="w-7 text-center font-extrabold text-primary text-[17px]">{i + 1}</span>
+            <span className="w-7 text-center font-extrabold text-primary text-[16px]">{i + 1}</span>
             <div className="w-12 h-[60px] rounded-xl bg-chip flex items-end justify-center overflow-hidden">
               <Avatar index={r.avatar} size={40} name={r.name} />
             </div>
             <div className="min-w-0 flex-1">
               <p className="t-body font-bold truncate">{r.groupName ? `${r.groupName} ${r.name}` : r.name}</p>
-              <p className="text-[12px] text-ink-3 truncate flex items-center gap-1">{r.agency && <Logo id={agencyById(r.agency)?.logo} label={agencyById(r.agency)?.name ?? ""} color={agencyById(r.agency)?.color} size={14} rounded="full" />}<span className="truncate">{r.ending} · {agencyById(r.agency)?.name ?? "무소속"} · {r.age}세 은퇴</span></p>
-              <p className="text-[12px] text-ink-2 mt-0.5">팬 {fanText(r.fans)} · 음방 1위 {r.wins}회 · 수상 {r.awards}회 · 앨범 {r.albums}장</p>
+              <p className="text-[13px] text-ink-3 truncate flex items-center gap-1">{r.agency && <Logo id={agencyById(r.agency)?.logo} label={agencyById(r.agency)?.name ?? ""} color={agencyById(r.agency)?.color} size={14} rounded="full" />}<span className="truncate">{r.ending} · {agencyById(r.agency)?.name ?? "무소속"} · {r.age}세 은퇴</span></p>
+              <p className="text-[13px] text-ink-2 mt-0.5">팬 {fanText(r.fans)} · 음방 1위 {r.wins}회 · 수상 {r.awards}회 · 앨범 {r.albums}장</p>
             </div>
             <div className="text-right">
-              <p className="text-[11px] text-ink-3 font-bold">OVR</p>
+              <p className="text-[13px] text-ink-3 font-bold">OVR</p>
               <p className="t-num-md">{r.ovr}</p>
             </div>
           </Card>

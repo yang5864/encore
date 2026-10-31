@@ -34,13 +34,13 @@ export function AgencySheet({ career, open, onClose, onApply }: { career: Career
               <Logo id={a.logo} label={a.name} color={a.color} size={44} />
               <div className="min-w-0 flex-1">
                 <p className="t-body font-bold truncate">{a.name}</p>
-                <p className="text-[12px] text-ink-3 truncate">{a.strength}</p>
-                {!locked && !mine && <Chip tone={TONE[label]} className="mt-1.5 h-6 px-2 text-[12px]">합격 가능성 {label}</Chip>}
+                <p className="text-[13px] text-ink-3 truncate">{a.strength}</p>
+                {!locked && !mine && <Chip tone={TONE[label]} className="mt-1.5 h-6 px-2 text-[13px]">합격 가능성 {label}</Chip>}
               </div>
               <button
                 disabled={locked || mine || cooldown}
                 onClick={() => onApply(a.id)}
-                className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary text-white text-[14px] font-bold disabled:bg-chip disabled:text-ink-3"
+                className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary text-white text-[13px] font-bold disabled:bg-chip disabled:text-ink-3"
               >
                 {mine ? "소속" : cooldown ? "대기" : "지원"}
               </button>

@@ -44,9 +44,9 @@ export function StatsCard({ career, changes }: { career: Career; changes?: Chang
             <div key={k}>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[13px] font-semibold text-ink-2">{STAT_NAMES[k]}</span>
-                <span className="text-[14px] font-bold tabular-nums">
+                <span className="text-[13px] font-bold tabular-nums">
                   {Math.round(career.stats[k])}
-                  {d !== null && <span className={`ml-1 text-[11px] ${d > 0 ? "text-up" : "text-down"}`}>{d > 0 ? "+" : ""}{Math.round(d * 10) / 10}</span>}
+                  {d !== null && <span className={`ml-1 text-[13px] ${d > 0 ? "text-up" : "text-down"}`}>{d > 0 ? "+" : ""}{Math.round(d * 10) / 10}</span>}
                 </span>
               </div>
               <ProgressBar value={career.stats[k]} color={STAT_COLORS[k]} height={6} label={STAT_NAMES[k]} />
@@ -59,15 +59,15 @@ export function StatsCard({ career, changes }: { career: Career; changes?: Chang
         <Metric label="코어 팬덤" value={<CountUp value={career.fans} format={fanText} />} d={delta(changes, "fans")} fmt={(n) => fanText(Math.abs(n))} />
         <Metric label="인기도" value={<CountUp value={Math.round(career.popularity)} />} d={delta(changes, "popularity")} />
         <div className="rounded-2xl bg-sub p-3 min-w-0">
-          <p className="text-[12px] text-ink-3 font-semibold">평판</p>
-          <p className="text-[18px] font-bold tracking-[-0.02em] whitespace-nowrap truncate" style={{ color: band.color }}>{band.label}</p>
+          <p className="text-[13px] text-ink-3 font-semibold">평판</p>
+          <p className="text-[16px] font-bold tracking-[-0.02em] whitespace-nowrap truncate" style={{ color: band.color }}>{band.label}</p>
           <ProgressBar value={reputationProgress(career.reputation)} color={band.color} height={4} className="mt-1.5" label="평판 진행" />
         </div>
       </div>
 
       {(career.stage === "idol" || career.stage === "retired" || (career.metrics?.instagram ?? 0) > 0) && (
         <div className="mt-3 rounded-2xl bg-sub p-3.5">
-          <p className="text-[12px] text-ink-3 font-semibold mb-2">SNS · 스트리밍</p>
+          <p className="text-[13px] text-ink-3 font-semibold mb-2">SNS · 스트리밍</p>
           <div className="flex flex-col gap-2">
             <Row logo="instagram" label="인스타 팔로워" sub="개인 계정" value={career.metrics?.instagram ?? 0} d={delta(changes, "instagram")} />
             {career.stage !== "free" && career.stage !== "trainee" && <Row logo="youtube" label="유튜브 구독자" sub="그룹 채널" value={career.metrics?.youtube ?? 0} d={delta(changes, "youtube")} />}
@@ -82,9 +82,9 @@ export function StatsCard({ career, changes }: { career: Career; changes?: Chang
 function Metric({ label, value, d, fmt = (n: number) => `${Math.round(Math.abs(n))}` }: { label: string; value: React.ReactNode; d: number | null; fmt?: (n: number) => string }) {
   return (
     <div className="rounded-2xl bg-sub p-3 min-w-0">
-      <p className="text-[12px] text-ink-3 font-semibold">{label}</p>
-      <p className="text-[18px] font-bold tracking-[-0.02em] tabular-nums whitespace-nowrap truncate">{value}</p>
-      {d !== null ? <p className={`text-[11px] font-bold mt-0.5 whitespace-nowrap ${d > 0 ? "text-up" : "text-down"}`}>{d > 0 ? "▲ " : "▼ "}{fmt(d)}</p> : <p className="text-[11px] text-ink-3 mt-0.5">&nbsp;</p>}
+      <p className="text-[13px] text-ink-3 font-semibold">{label}</p>
+      <p className="text-[16px] font-bold tracking-[-0.02em] tabular-nums whitespace-nowrap truncate">{value}</p>
+      {d !== null ? <p className={`text-[13px] font-bold mt-0.5 whitespace-nowrap ${d > 0 ? "text-up" : "text-down"}`}>{d > 0 ? "▲ " : "▼ "}{fmt(d)}</p> : <p className="text-[13px] text-ink-3 mt-0.5">&nbsp;</p>}
     </div>
   );
 }
@@ -94,12 +94,12 @@ function Row({ logo, label, sub, value, d }: { logo: string; label: string; sub:
     <div className="flex items-center gap-3">
       <Logo id={logo} ext="svg" label={label} size={34} rounded="full" />
       <div className="min-w-0 flex-1">
-        <p className="text-[14px] font-semibold">{label}</p>
-        <p className="text-[11px] text-ink-3">{sub}</p>
+        <p className="text-[13px] font-semibold">{label}</p>
+        <p className="text-[13px] text-ink-3">{sub}</p>
       </div>
       <div className="text-right shrink-0">
         <p className="text-[16px] font-bold tabular-nums"><CountUp value={value} format={countText} /></p>
-        {d !== null && <p className={`text-[11px] font-bold ${d > 0 ? "text-up" : "text-down"}`}>{d > 0 ? "▲ " : "▼ "}{countText(Math.abs(d))}</p>}
+        {d !== null && <p className={`text-[13px] font-bold ${d > 0 ? "text-up" : "text-down"}`}>{d > 0 ? "▲ " : "▼ "}{countText(Math.abs(d))}</p>}
       </div>
     </div>
   );

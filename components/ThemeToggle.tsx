@@ -40,7 +40,7 @@ export function ThemeToggle({ className }: { className?: string }) {
     <div className={cn("flex flex-col gap-3", className)}>
       <div>
         <p className="t-body font-bold">화면 테마</p>
-        <p className="text-[12px] text-ink-3">기본은 기기 설정을 따라요</p>
+        <p className="text-[13px] text-ink-3">기본은 기기 설정을 따라요</p>
       </div>
       <div className="grid grid-cols-3 bg-chip rounded-xl p-1" role="radiogroup" aria-label="화면 테마">
         {OPTIONS.map((o) => (

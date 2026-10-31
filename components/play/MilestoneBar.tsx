@@ -15,10 +15,10 @@ export function MilestoneBar({ career, compact = false }: { career: Pick<Career,
           const current = i === step;
           return (
             <div key={label} className="flex-1 flex flex-col items-center gap-1.5 min-w-0">
-              <div className="w-full h-1.5 rounded-full bg-[#eef0f3] overflow-hidden">
+              <div className="w-full h-1.5 rounded-full bg-chip overflow-hidden">
                 <div className={cn("bar-fill h-full", done ? "bg-primary" : current ? "bg-primary/40" : "bg-transparent")} style={{ width: done ? "100%" : current ? "50%" : "0%" }} />
               </div>
-              {!compact && <span className={cn("text-[11px] font-bold whitespace-nowrap", done ? "text-primary" : current ? "text-ink" : "text-ink-3")}>{label}</span>}
+              {!compact && <span className={cn("text-[13px] font-bold whitespace-nowrap", done ? "text-primary" : current ? "text-ink" : "text-ink-3")}>{label}</span>}
             </div>
           );
         })}

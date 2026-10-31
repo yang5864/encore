@@ -42,10 +42,10 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
               "무소속 지망생"
             )}
           </p>
-          {career.stage === "idol" && monthsLeft !== null && <p className="text-[12px] text-ink-3 mt-0.5">전속계약 {monthsLeft}개월 남음</p>}
-          {career.stage === "trainee" && career.traineeContractEnd !== null && <p className="text-[12px] text-ink-3 mt-0.5">연습생 계약 {Math.max(0, (career.traineeContractEnd - career.turn) * 6)}개월 남음</p>}
+          {career.stage === "idol" && monthsLeft !== null && <p className="text-[13px] text-ink-3 mt-0.5">전속계약 {monthsLeft}개월 남음</p>}
+          {career.stage === "trainee" && career.traineeContractEnd !== null && <p className="text-[13px] text-ink-3 mt-0.5">연습생 계약 {Math.max(0, (career.traineeContractEnd - career.turn) * 6)}개월 남음</p>}
         </div>
-        <button onClick={onAgency} className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary-soft text-primary text-[14px] font-bold">
+        <button onClick={onAgency} className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary-soft text-primary text-[13px] font-bold">
           {career.stage === "free" ? "기획사 지원" : career.stage === "idol" ? "기획사 보기" : "기획사 지원"}
         </button>
       </div>

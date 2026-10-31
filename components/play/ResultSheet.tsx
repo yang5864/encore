@@ -74,7 +74,7 @@ export function ResultSheet({ result, open, onClose, ctaLabel = "확인" }: { re
       )}
 
       {(rest.length > 0 || result.comments.length > 0) && (
-        <button onClick={() => setMore((m) => !m)} className="press mt-4 w-full h-11 rounded-xl bg-chip text-ink-2 text-[14px] font-bold">
+        <button onClick={() => setMore((m) => !m)} className="press mt-4 w-full h-11 rounded-xl bg-chip text-ink-2 text-[13px] font-bold">
           {more ? "접기" : "자세히 보기"}
         </button>
       )}
@@ -83,7 +83,7 @@ export function ResultSheet({ result, open, onClose, ctaLabel = "확인" }: { re
           {rest.length > 0 && (
             <div className="rounded-2xl bg-sub p-4 flex flex-col gap-2">
               {rest.map((ch) => (
-                <div key={ch.key} className="flex items-center justify-between text-[14px]">
+                <div key={ch.key} className="flex items-center justify-between text-[13px]">
                   <span className="text-ink-2 font-semibold">{ch.label}</span>
                   <span className="font-bold tabular-nums">
                     <span className="text-ink-3 font-medium">{fmt(ch, ch.before)}</span> → {fmt(ch, ch.after)} <span className={ch.after > ch.before ? "text-up" : "text-down"}>({deltaText(ch)})</span>
@@ -98,9 +98,9 @@ export function ResultSheet({ result, open, onClose, ctaLabel = "확인" }: { re
               <div className="flex flex-col gap-2">
                 {result.comments.map((cm, i) => (
                   <div key={i} className="rounded-2xl bg-sub p-3.5">
-                    <p className="text-[12px] font-bold text-ink-3">{cm.author}</p>
-                    <p className="text-[14px] mt-0.5">{cm.text}</p>
-                    <p className="text-[12px] text-ink-3 mt-1">♡ {likeText(cm.likes)}</p>
+                    <p className="text-[13px] font-bold text-ink-3">{cm.author}</p>
+                    <p className="text-[13px] mt-0.5">{cm.text}</p>
+                    <p className="text-[13px] text-ink-3 mt-1">♡ {likeText(cm.likes)}</p>
                   </div>
                 ))}
               </div>

@@ -15,8 +15,8 @@ export function Button({ variant = "primary", size = "lg", full = true, classNam
       {...rest}
       className={cn(
         "press inline-flex items-center justify-center font-bold rounded-2xl disabled:opacity-40 disabled:pointer-events-none",
-        size === "lg" && "h-14 text-[17px]",
-        size === "md" && "h-12 text-[15px] rounded-xl px-4",
+        size === "lg" && "h-14 text-[16px]",
+        size === "md" && "h-12 text-[16px] rounded-xl px-4",
         size === "sm" && "h-9 text-[13px] rounded-lg px-3",
         full && "w-full",
         variant === "primary" && "bg-primary text-white active:bg-primary-press",

@@ -71,7 +71,7 @@ export default function NewPage() {
   return (
     <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
-        <button onClick={() => (step ? setStep(step - 1) : router.back())} aria-label="뒤로" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[20px]">‹</button>
+        <button onClick={() => (step ? setStep(step - 1) : router.back())} aria-label="뒤로" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[22px]">‹</button>
         <div className="flex-1">
           <ProgressBar value={((step + 1) / STEPS.length) * 100} height={4} label="진행" />
         </div>
@@ -83,7 +83,7 @@ export default function NewPage() {
           <h1 className="t-title">어떤 아이돌로<br />시작할까요?</h1>
           <p className="t-cap mt-2">14살, 아직 소속사가 없는 지망생이에요.</p>
           <label className="t-cap block mt-8 mb-1.5" htmlFor="name">활동명</label>
-          <input id="name" value={name} onChange={(e) => setName(e.target.value)} maxLength={12} placeholder="예: 하린" className="w-full h-14 rounded-2xl bg-card px-4 text-[17px] font-bold outline-none focus:ring-2 focus:ring-primary" />
+          <input id="name" value={name} onChange={(e) => setName(e.target.value)} maxLength={12} placeholder="예: 하린" className="w-full h-14 rounded-2xl bg-card px-4 text-[16px] font-bold outline-none focus:ring-2 focus:ring-primary" />
           <p className="t-cap mt-6 mb-2">성별</p>
           <div className="grid grid-cols-2 gap-2">
             {(["female", "male"] as Gender[]).map((g) => (
@@ -142,7 +142,7 @@ export default function NewPage() {
                         <div key={k} className="flex items-center gap-3">
                           <span className="w-14 text-[13px] font-semibold text-ink-2">{STAT_NAMES[k]}</span>
                           <ProgressBar value={c.stats[k]} color={STAT_COLORS[k]} height={6} className="flex-1" label={STAT_NAMES[k]} />
-                          <span className="w-7 text-right text-[14px] font-bold tabular-nums">{c.stats[k]}</span>
+                          <span className="w-7 text-right text-[13px] font-bold tabular-nums">{c.stats[k]}</span>
                         </div>
                       ))}
                     </div>
@@ -151,7 +151,7 @@ export default function NewPage() {
               );
             })}
           </div>
-          <button onClick={reroll} className="press mt-5 w-full h-12 rounded-xl text-[15px] font-bold text-ink-2">
+          <button onClick={reroll} className="press mt-5 w-full h-12 rounded-xl text-[16px] font-bold text-ink-2">
             다른 후보 보기
           </button>
         </section>
@@ -175,7 +175,7 @@ export default function NewPage() {
                   <Logo id={a.logo} label={a.name} color={a.color} size={44} />
                   <div className="min-w-0 flex-1">
                     <p className="t-body font-bold truncate">{a.name}</p>
-                    <p className="text-[12px] text-ink-3 truncate">{a.strength}</p>
+                    <p className="text-[13px] text-ink-3 truncate">{a.strength}</p>
                   </div>
                   <Chip tone={TONE[label]}>{label}</Chip>
                 </button>

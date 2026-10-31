@@ -84,7 +84,7 @@ export function SignaturePad({ onChange }: { onChange: (sig: Signature | null) =
         </svg>
       </div>
       <div className="flex items-center justify-between mt-2">
-        <p className="text-[12px] text-ink-3">직접 서명한 뒤 계약을 확정하세요</p>
+        <p className="text-[13px] text-ink-3">직접 서명한 뒤 계약을 확정하세요</p>
         <button type="button" onClick={() => setStrokes([])} className="press h-9 px-3 rounded-lg bg-chip text-[13px] font-bold text-ink-2">
           지우고 다시 서명
         </button>

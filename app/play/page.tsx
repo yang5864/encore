@@ -97,7 +97,7 @@ export default function PlayPage() {
     <main className="shell pt-3">
       <div className="top-progress" style={{ width: `${progress}%`, opacity: progress ? 1 : 0 }} />
       <header className="flex items-center justify-between h-12 mb-2">
-        <Link href="/" className="font-extrabold text-[18px] tracking-tight">encore<span className="text-primary">.</span></Link>
+        <Link href="/" className="font-extrabold text-[16px] tracking-tight">encore<span className="text-primary">.</span></Link>
         <button onClick={() => setMenuOpen(true)} aria-label="메뉴" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center">
           <span className="block w-4 h-[2px] bg-ink rounded-full shadow-[0_5px_0_var(--text),0_-5px_0_var(--text)]" />
         </button>
@@ -121,8 +121,8 @@ export default function PlayPage() {
             <p className="t-cap mb-2">최근 기록</p>
             {career.history.slice(0, 3).map((h, i) => (
               <div key={i} className={`py-2.5 ${i ? "border-t border-line" : ""}`}>
-                <p className="text-[12px] text-ink-3">{periodLabel({ turn: h.turn })}</p>
-                <p className="text-[14px] font-bold mt-0.5">{h.title}</p>
+                <p className="text-[13px] text-ink-3">{periodLabel({ turn: h.turn })}</p>
+                <p className="text-[13px] font-bold mt-0.5">{h.title}</p>
               </div>
             ))}
             <button onClick={() => setMenuOpen(true)} className="press mt-2 text-[13px] font-bold text-primary">전체 기록 보기</button>

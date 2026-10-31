@@ -28,11 +28,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko" suppressHydrationWarning>
       <head>
         <Script id="encore-theme" strategy="beforeInteractive">{THEME_SCRIPT}</Script>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-          crossOrigin="anonymous"
-        />
       </head>
       <body className="antialiased">{children}</body>
     </html>

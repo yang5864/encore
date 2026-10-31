@@ -42,8 +42,8 @@ export function ContractView({ career, event, choice, onSign, onDecline }: Props
       <div className="mt-5 flex flex-col">
         {terms.rows.map((r) => (
           <div key={r.label} className="flex items-center justify-between py-3 border-b border-line last:border-0">
-            <span className="text-[15px] text-ink-2">{r.label}</span>
-            <span className={`text-[15px] font-bold text-right ${r.accent ? "text-primary" : ""}`}>{r.value}</span>
+            <span className="text-[16px] text-ink-2">{r.label}</span>
+            <span className={`text-[16px] font-bold text-right ${r.accent ? "text-primary" : ""}`}>{r.value}</span>
           </div>
         ))}
       </div>
@@ -54,7 +54,7 @@ export function ContractView({ career, event, choice, onSign, onDecline }: Props
             <Logo id={terms.party.logo} label={terms.party.name} color={terms.party.color} size={40} rounded="full" />
             <div className="min-w-0">
               <p className="t-body font-bold truncate">{terms.party.name}</p>
-              <p className="text-[12px] text-ink-3 truncate">{terms.party.sub}</p>
+              <p className="text-[13px] text-ink-3 truncate">{terms.party.sub}</p>
             </div>
           </div>
           {terms.notes.length > 0 && (
@@ -76,9 +76,9 @@ export function ContractView({ career, event, choice, onSign, onDecline }: Props
             onChange={(e) => setGroupName(e.target.value)}
             maxLength={20}
             placeholder="예: LUMINA"
-            className="w-full h-14 rounded-2xl bg-chip px-4 text-[17px] font-bold outline-none focus:ring-2 focus:ring-primary"
+            className="w-full h-14 rounded-2xl bg-chip px-4 text-[16px] font-bold outline-none focus:ring-2 focus:ring-primary"
           />
-          <p className="text-[12px] text-ink-3 mt-1.5">1~20자 · 글자와 숫자</p>
+          <p className="text-[13px] text-ink-3 mt-1.5">1~20자 · 글자와 숫자</p>
         </div>
       )}
 
