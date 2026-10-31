@@ -51,6 +51,8 @@ export function parseCareer(text: string): Career {
   if (c.v !== 2) throw new GameError("ENCORE 2.0 저장 파일만 가져올 수 있어요.");
   for (const k of REQUIRED) if (!(k in c)) throw new GameError(`저장 파일에 ${k} 항목이 없어요.`);
   if (typeof c.name !== "string" || typeof c.turn !== "number" || !Array.isArray(c.albums)) throw new GameError("저장 파일 내용이 손상됐어요.");
+  // 이전 2.0 저장본 보완
+  if (!c.metrics || typeof c.metrics !== "object") c.metrics = { instagram: 0, youtube: 0, spotify: 0 };
   return c as unknown as Career;
 }
 

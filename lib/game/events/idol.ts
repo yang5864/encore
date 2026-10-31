@@ -233,7 +233,7 @@ export const IDOL_EVENTS: GameEventDef[] = [
     scene: "tour",
     public: true,
     repeatable: true,
-    when: (c) => c.fans >= 200000,
+    when: (c) => c.fans >= 500000,
     choices: [
       { id: "arena", label: "아레나 투어", hint: "꾸준한 수익과 해외 팬이 늘어요", risk: "safe", effects: { fansMul: 1.15, revenue: 40, popularity: 4, health: -12, reputation: 3 } },
       { id: "dome", label: "돔 투어", hint: "매진되면 레전드 기록, 못 채우면 평판이 깎여요", risk: "bold", requires: { popularity: 60 }, chance: 0.55, success: { fansMul: 1.3, revenue: 150, popularity: 8, reputation: 6, health: -18 }, fail: { fansMul: 1.05, revenue: 60, reputation: -6, health: -18 }, successText: "돔 전석 매진. 응원봉 바다가 끝없이 이어졌어요.", failText: "일부 공연이 빈자리가 보였어요. '무리한 규모' 기사가 났어요.", op: "tour:dome" },

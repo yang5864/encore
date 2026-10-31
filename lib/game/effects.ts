@@ -39,6 +39,9 @@ export type Snapshot = {
   reputation: number;
   condition: number;
   settled: number;
+  instagram: number;
+  youtube: number;
+  spotify: number;
 };
 
 export function snapshot(c: Career): Snapshot {
@@ -50,6 +53,9 @@ export function snapshot(c: Career): Snapshot {
     reputation: Math.round(c.reputation),
     condition: conditionOf(c).value,
     settled: c.money.settled,
+    instagram: c.metrics?.instagram ?? 0,
+    youtube: c.metrics?.youtube ?? 0,
+    spotify: c.metrics?.spotify ?? 0,
   };
 }
 
@@ -64,6 +70,9 @@ export function diff(before: Snapshot, after: Snapshot, showMoney: boolean): Cha
   push("popularity", "인기도", before.popularity, after.popularity, "int");
   push("reputation", "평판", before.reputation, after.reputation, "rep");
   if (showMoney) push("settled", "정산금", before.settled, after.settled, "won");
+  push("instagram", "인스타 팔로워", before.instagram, after.instagram, "count");
+  push("youtube", "유튜브 구독자", before.youtube, after.youtube, "count");
+  push("spotify", "스포티파이 리스너", before.spotify, after.spotify, "count");
   for (const k of STAT_KEYS) push(k, STAT_NAMES[k], Math.round(before.stats[k] * 10) / 10, Math.round(after.stats[k] * 10) / 10, "int");
   push("condition", "컨디션", before.condition, after.condition, "int");
   return out;

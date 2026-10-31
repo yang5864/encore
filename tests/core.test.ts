@@ -88,3 +88,26 @@ test("표시 포맷", () => {
   assert.equal(conditionOf({ health: 80, mental: 20 }).level, "danger");
   assert.equal(conditionOf({ health: 60, mental: 70 }).level, "good");
 });
+
+import { metricTargets, countText } from "../lib/game/metrics.ts";
+import { importJSON, exportJSON } from "../lib/storage.ts";
+
+test("공개 지표는 실제 규모에 맞고, 옛 저장본에도 보완된다", () => {
+  const c = createCareer(base, 1);
+  c.stage = "idol";
+  c.fans = 350000;
+  c.popularity = 45;
+  const rookie = metricTargets(c);
+  assert.ok(rookie.instagram > 1_000_000 && rookie.instagram < 3_000_000, `${rookie.instagram}`);
+  assert.ok(rookie.spotify > 1_000_000 && rookie.spotify < 4_000_000, `${rookie.spotify}`);
+  c.fans = 1800000;
+  c.popularity = 75;
+  const top = metricTargets(c);
+  assert.ok(top.instagram > 8_000_000 && top.instagram < 20_000_000, `${top.instagram}`);
+  assert.ok(top.youtube > 5_000_000 && top.youtube < 20_000_000, `${top.youtube}`);
+  assert.equal(countText(14_872_731), "1,487만");
+  assert.equal(countText(12000), "1.2만");
+  const legacy = JSON.parse(exportJSON(createCareer(base, 2)));
+  delete legacy.metrics;
+  assert.deepEqual(importJSON(JSON.stringify(legacy)).metrics, { instagram: 0, youtube: 0, spotify: 0 });
+});

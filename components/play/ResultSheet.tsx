@@ -6,20 +6,23 @@ import { Chip } from "@/components/ui/Chip";
 import { fanText, reputationLabel, wonText } from "@/lib/game/format";
 import { scenePath } from "@/lib/game/events/index";
 import { likeText } from "@/lib/game/reactions";
+import { countText } from "@/lib/game/metrics";
 import type { Change, TurnResult } from "@/lib/game/types";
 
-const PRIORITY = ["fans", "popularity", "ovr", "reputation", "settled", "condition"];
+const PRIORITY = ["fans", "popularity", "instagram", "ovr", "reputation", "settled", "spotify", "youtube", "condition"];
 
 function fmt(ch: Change, v: number) {
   if (ch.fmt === "fans") return fanText(v);
   if (ch.fmt === "won") return wonText(v);
   if (ch.fmt === "rep") return reputationLabel(v);
+  if (ch.fmt === "count") return countText(v);
   return `${Math.round(v)}`;
 }
 function deltaText(ch: Change) {
   const d = ch.after - ch.before;
   if (ch.fmt === "fans") return `${d > 0 ? "+" : "-"}${fanText(Math.abs(d))}`;
   if (ch.fmt === "won") return `${d > 0 ? "+" : "-"}${wonText(Math.abs(d))}`;
+  if (ch.fmt === "count") return `${d > 0 ? "+" : "-"}${countText(Math.abs(d))}`;
   if (ch.fmt === "rep") return `${d > 0 ? "+" : ""}${Math.round(d)}`;
   return `${d > 0 ? "+" : ""}${Math.round(d * 10) / 10}`;
 }

@@ -12,13 +12,14 @@ import { DEBUT_COST, TRAINEE_COST_PER_TURN, updateSettlement } from "./economy.t
 import { checkMilestones } from "./milestones.ts";
 import { endingFor } from "./endings.ts";
 import { buildReactions } from "./reactions.ts";
+import { updateMetrics } from "./metrics.ts";
 import { debutEvaluation, scheduleEvent, activate } from "./schedule.ts";
 import { eventById } from "./events/index.ts";
 
 export { focusOptions } from "./focus.ts";
 export { createCareer } from "./create.ts";
 
-const DEBUT_FANS: Record<string, number> = { major: 60000, mid: 15000, indie: 3000, global: 20000 };
+const DEBUT_FANS: Record<string, number> = { major: 350000, mid: 70000, indie: 5000, global: 50000 };
 export const GROUP_NAME_PATTERN = /^[\p{L}\p{N} _·!-]{1,20}$/u;
 
 const clone = (c: Career): Career => structuredClone(c);
@@ -39,7 +40,8 @@ function grow(c: Career, stat: StatKey, amount: number) {
 }
 
 function popularityTarget(c: Career): number {
-  const base = 10.5 * Math.log10(c.fans + 1) + Math.max(0, c.reputation) * 0.1;
+  // 코어 팬덤 5천 → 약 27, 35만 → 약 46, 150만 → 약 52, 500만 → 약 56 (+평판·차트 보정)
+  const base = 8.3 * Math.log10(c.fans + 1) + Math.max(0, c.reputation) * 0.12;
   const recent = c.albums.filter((a) => c.turn - a.turn <= 2);
   const chart = Math.min(10, recent.reduce((s, a) => s + (a.melon !== null ? Math.max(0, 30 - a.melon) / 5 : 0) + (a.billboard !== null ? 5 : 0), 0));
   const t = (base + chart) * (c.stage === "idol" ? 1 : 0.5);
@@ -62,6 +64,7 @@ function buildResult(c: Career, before: Snapshot, headline: string, text: string
 
 function finish(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[] } = {}) {
   updateSettlement(c);
+  updateMetrics(c);
   c.peakPopularity = Math.max(c.peakPopularity, Math.round(c.popularity));
   const milestones = checkMilestones(c);
   if (milestones.includes("firstSettlement")) log(c, "첫 정산", "투자비를 모두 회수했어요. 이제 번 돈이 내 몫으로 들어와요.", "milestone");

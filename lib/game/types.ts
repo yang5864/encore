@@ -67,7 +67,7 @@ export type ActiveEvent = {
   choices: ChoiceDef[];
 };
 
-export type ChangeFormat = "int" | "fans" | "won" | "rep" | "pct";
+export type ChangeFormat = "int" | "fans" | "won" | "rep" | "pct" | "count";
 export type Change = { key: string; label: string; before: number; after: number; fmt: ChangeFormat };
 export type Comment = { author: string; text: string; likes: number };
 export type Tone = "good" | "bad" | "neutral" | "milestone";
@@ -114,6 +114,7 @@ export type Money = {
 };
 
 export type MilestoneId = "debut" | "firstWin" | "firstSettlement" | "daesang" | "legend";
+export type PublicMetrics = { instagram: number; youtube: number; spotify: number };
 
 export type Career = {
   v: 2;
@@ -151,6 +152,7 @@ export type Career = {
   peakBillboard: number | null;
   peakPopularity: number;
   money: Money;
+  metrics: PublicMetrics;
   warnings: number;
   scoutCount: number;
   lowPopularityTurns: number;

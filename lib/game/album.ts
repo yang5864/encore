@@ -32,26 +32,27 @@ export function makeAlbum(c: Career, concept: Concept): Album {
   const cost = albumCost(c, quality);
   const hype = 0.85 + rng(c) * 0.45;
   const prevSales = c.albums.length ? c.albums[c.albums.length - 1].sales : 0;
-  const sales = Math.min(4000000, Math.round((c.fans * 0.45 + Math.pow(quality, 1.9) * 3) * hype * Math.sqrt(reach)));
+  // 초동 ≈ 코어 팬덤의 0.8~1.2배(중복 구매 포함) + 대중 유입. 톱 그룹 상한 450만장.
+  const sales = Math.min(4500000, Math.round((c.fans * 0.85 + Math.pow(quality, 1.7) * 4 + c.popularity * 300) * hype * Math.pow(reach, 0.35)));
 
   const popularity = c.popularity;
-  const chartScore = quality * 0.5 + Math.log10(c.fans + 100) * 9 + popularity * 0.25 + (concept === "fresh" ? 3 : 0) + rng(c) * 12;
+  const chartScore = quality * 0.5 + Math.log10(c.fans + 100) * 7.5 + popularity * 0.25 + (concept === "fresh" ? 3 : 0) + rng(c) * 12;
   const melon = chartScore >= 78 ? Math.max(1, Math.round(100 - (chartScore - 78) * 5.5)) : null;
 
   let billboard: number | null = null;
-  if (popularity >= 70 && c.fans >= 500000) {
+  if (popularity >= 70 && c.fans >= 1500000) {
     const globalBoost = c.flags.globalBoost !== undefined && c.turn - c.flags.globalBoost <= 2 ? 6 : 0;
     const globalScore = quality * 0.5 + Math.log10(c.fans) * 8 + reach * 4 + globalBoost + rng(c) * 12;
     if (globalScore >= 95) {
       billboard = Math.max(1, Math.min(100, Math.round(100 - (globalScore - 95) * 4)));
-      if (billboard > 1 && c.fans >= 3000000 && quality >= 85 && rng(c) < 0.35) billboard = 1;
+      if (billboard > 1 && c.fans >= 4000000 && quality >= 85 && rng(c) < 0.35) billboard = 1;
     }
   }
 
   // 음악방송 1위 (최대 3회)
   let wins = 0;
-  if (melon !== null && melon <= 30 || sales >= 50000) {
-    const p = Math.max(0.08, Math.min(0.9, 0.08 + sales / 1200000 + (melon !== null ? Math.max(0, 40 - melon) / 90 : 0)));
+  if (melon !== null && melon <= 30 || sales >= 150000) {
+    const p = Math.max(0.08, Math.min(0.9, 0.08 + sales / 2500000 + (melon !== null ? Math.max(0, 40 - melon) / 90 : 0)));
     for (let i = 0; i < 3; i++) if (rng(c) < p) wins++;
     if (wins === 0 && rng(c) < 0.5) c.flags.candidate = c.turn + 1; // 다음 턴 시작 시 1위 후보 이벤트
   }
@@ -68,8 +69,9 @@ export function makeAlbum(c: Career, concept: Concept): Album {
   c.peakMelon = melon === null ? c.peakMelon : Math.min(c.peakMelon ?? 101, melon);
   c.peakBillboard = billboard === null ? c.peakBillboard : Math.min(c.peakBillboard ?? 101, billboard);
 
-  const damp = 1 / (1 + c.fans / 1000000);
-  const gained = Math.round((sales * 0.35 * (1 + wins * 0.12) + (melon !== null ? (101 - melon) * 250 : 0) + (billboard !== null ? 200000 : 0)) * Math.sqrt(reach) * damp);
+  // 팬덤 성장: 신인기엔 활동마다 크게, 300만 이상부터는 완만하게 (실제 톱 그룹 초동 성장 곡선)
+  const damp = 1 / (1 + c.fans / 2000000);
+  const gained = Math.round((sales * 0.16 * (1 + wins * 0.1) + (melon !== null ? (101 - melon) * 400 : 0) + (billboard !== null ? 250000 : 0)) * Math.pow(reach, 0.35) * damp);
   c.fans += gained;
   c.popularity += (melon !== null ? 4 : 1) + wins * 1 + (billboard !== null ? 4 : 0);
   c.reputation += 2;
