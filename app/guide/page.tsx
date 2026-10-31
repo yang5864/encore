@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { SupportTrigger } from "@/components/SupportSheet";
 
 const STEPS = [
   { title: "1. 캐릭터를 만들어요", text: "활동명, 성별, 캐릭터, 주 포지션을 정하고 능력치 240점을 나눠요. 마지막에 첫 지원 기획사를 골라 오디션을 봐요. 대형은 합격이 어렵고 중소는 쉬워요. 떨어져도 무소속으로 시작해 언제든 다시 지원할 수 있어요." },
@@ -34,15 +35,14 @@ export default function GuidePage() {
       <div className="flex flex-col gap-3 mt-4">
         <Card><ThemeToggle /></Card>
         <Card className="!p-2">
-          {[
-            { href: "/records", t: "명예의 전당", s: "은퇴한 커리어 순위" },
-            { href: "/support", t: "후원하기", s: "커피 한 잔이 다음 업데이트가 돼요" },
-          ].map((m) => (
-            <Link key={m.href} href={m.href} className="press flex items-center justify-between gap-3 px-3 py-3.5 rounded-2xl">
-              <div><p className="t-body font-bold">{m.t}</p><p className="text-[13px] text-ink-3">{m.s}</p></div>
-              <span className="text-ink-3">›</span>
-            </Link>
-          ))}
+          <Link href="/records" className="press flex items-center justify-between gap-3 px-3 py-3.5 rounded-2xl">
+            <div><p className="t-body font-bold">명예의 전당</p><p className="text-[13px] text-ink-3">은퇴한 커리어 순위</p></div>
+            <span className="text-ink-3">›</span>
+          </Link>
+          <SupportTrigger className="press w-full flex items-center justify-between gap-3 px-3 py-3.5 rounded-2xl text-left">
+            <div><p className="t-body font-bold">후원하기</p><p className="text-[13px] text-ink-3">커피 한 잔이 다음 업데이트가 돼요</p></div>
+            <span className="text-ink-3">›</span>
+          </SupportTrigger>
         </Card>
         {STEPS.map((s) => (
           <Card key={s.title}>

@@ -17,38 +17,38 @@
 
 | 이벤트 키 | 상황 | 의상 | 동작 01 → 02 |
 | --- | --- | --- | --- |
-| audition | 단정한 오디션 복장 | Neat smart-casual audition outfit in the original character accent color, plain white top, tailored trousers or modest knee-length skirt, clean sneakers. | A polite modest bow holding a small blank audition folder in both hands. → A very slightly deeper polite bow, same hands and folder position. |
-| school | 교복과 수업 | Modest Korean school uniform, navy blazer with original-color trim, white shirt, ribbon or tie and plaid knee-length skirt or tailored trousers, loafers. | Holding an open notebook at chest level and a pencil, studying attentively. → Small pencil-writing movement and a gentle blink while holding the same notebook. |
-| dance | 연습복과 안무 연습 | Comfortable loose tracksuit in original accent colors, plain white T-shirt, athletic sneakers, no revealing styling. | A small dance practice step with weight on the left foot and elbows bent. → Matching dance step with weight on the right foot and arms shifting subtly. |
-| vocal | 보컬 레슨 | Comfortable original-color zip-up training jacket and plain trousers, studio headphones around the neck. | Holding a handheld microphone near the mouth with one hand and singing. → Mouth shape changes and the free hand lifts a little, same microphone and foot placement. |
-| songwriting | 작곡과 데모 작업 | Cozy original-color knit cardigan, plain shirt and comfortable trousers, relaxed studio outfit. | Holding a small songwriting notebook in the left hand and writing with a pencil in the right hand. → Small pencil movement and a thoughtful head tilt, same notebook and outfit. |
-| survival | 경연 프로그램 | Coordinated original-color contestant tracksuit with a completely blank small chest patch and clean sneakers. | Singing into a handheld microphone with a determined expression and free hand near the heart. → Slightly wider singing mouth and free hand reaching forward a little, feet stay in place. |
-| album | 앨범 녹음 | Original-color casual recording hoodie and comfortable trousers, large over-ear studio headphones worn correctly. | Singing into a handheld studio microphone, eyes focused and free hand keeping rhythm. → Different singing mouth shape and tiny rhythm gesture, same microphone and headphones. |
-| debut | 데뷔 무대 | Polished modest debut stage outfit: original-color cropped-length jacket over a fully covering white top, elegant knee-length stage skirt or fitted stage trousers, neat boots and small metallic accents. | A confident first-stage greeting, one hand holding a microphone and the free hand waving. → Small continuation of the greeting wave and a bright smile, same stance and outfit. |
-| advert | 광고 촬영 | Elegant original-color smart-casual jacket, cream shirt and tailored skirt or trousers, clean premium styling. | Presenting one small unbranded cosmetic bottle at chest height, the other palm open beneath it, soft camera smile. → Turning the same bottle slightly and tilting the head a little while maintaining the product pose. |
-| challenge | 챌린지 촬영 | Trendy modest original-color sporty streetwear jacket, loose T-shirt, relaxed trousers and dance sneakers. | A clear short dance challenge pose, hands forming a small heart at chest height, weight slightly left. → Hands open from the heart into a small point gesture, weight slightly right, same outfit. |
-| drama | 드라마 촬영 | Modest contemporary drama costume: original-color light coat over a cream knit top and tailored trousers or knee-length skirt. | Holding a small open script booklet and practicing an earnest emotional line, one hand gestures gently. → Tiny script-hand movement and a slightly changed speaking expression, same costume and framing. |
-| fansign | 팬사인회 | Soft original-color fan-meeting cardigan with a white collared top and neat trousers or knee-length skirt. | Holding a small blank album booklet in the left hand and signing it with a marker in the right, warm smile. → Marker tip moves a little across the same album booklet and eyes glance toward an unseen fan; no fan is drawn. |
-| livestream | 라이브 방송 | Cozy original-color oversized sweatshirt and comfortable trousers, a small headset microphone, casual indoor styling. | Looking toward the viewer and making a small one-hand greeting wave, relaxed smile. → The greeting hand moves slightly and the mouth changes as if speaking to the camera. |
-| mc | 음악방송 진행 | Elegant modest original-color formal blazer over a cream shirt, ribbon or tie, tailored skirt or trousers and dress shoes. | Holding a handheld microphone and a small blank cue-card booklet, speaking brightly to camera. → Small cue-card movement and a different speaking mouth shape, microphone stays near the mouth. |
-| variety | 직업 체험 예능 | Original-color casual shirt, light beige work apron and comfortable trousers, clean sneakers. | Wearing the apron and holding a small empty serving tray with both hands, playful surprised expression. → Tray tilts only slightly while the face changes to a cheerful smile, no food spills or extra people. |
-| youtube | 유튜브 브이로그 | Casual original-color bomber jacket and plain cream T-shirt, comfortable trousers, tiny crossbody camera pouch. | Holding one compact unbranded vlogging camera on a short grip with a friendly speaking smile. → Camera grip shifts a little and the free hand makes a small introduction gesture toward the viewer. |
-| awards | 시상식 수상 | Elegant modest adult formalwear: full-coverage original-color evening dress with tasteful sleeves or a dark suit with original-color pocket square; small dress shoes. | Holding one simple unbranded gold star trophy with both hands, proud grateful smile. → Trophy rises a little and the head nods gently in thanks, same formalwear. |
-| coachella | 해외 야외 페스티벌 | Modest adult festival stage styling: original-color denim jacket, fully covering light top, loose stage trousers, short boots, subtle silver accents. | Singing into a handheld microphone with one arm extended outward to the audience. → Small microphone-hand change and free arm rising slightly, same feet placement and stage outfit. |
-| festival | 대학축제 공연 | Bright modest original-color varsity-style stage jacket, white top, sporty skirt or loose trousers and sneakers. | Holding a microphone and encouraging a singalong with the free hand raised at shoulder height. → Free hand makes a small upward beat and the singing mouth changes, same outfit. |
-| military-concert | 위문공연 | Modest original-color performance jacket with cream trim, fully covered top, comfortable stage trousers or knee-length skirt and boots. No real insignia. | Holding a microphone and making a warm energetic greeting wave toward unseen audience. → A small continuation of the wave and a changed singing expression, no audience or soldiers drawn. |
-| tour | 월드투어 무대 | Polished original-color concert stage suit or coordinated modest stage dress, subtle sparkle trim, comfortable performance boots, no logos. | Singing into a handheld microphone with the other hand over the heart, moved by the crowd. → Free hand opens gently toward the audience and mouth changes, same pose scale and costume. |
-| press | 공식 입장 발표 | Restrained adult press-meeting outfit: dark navy or charcoal formal suit with a very small original-color accent, modest shoes. | Both hands clasped politely in front, serious respectful expression, looking forward. → A small respectful bow and softened serious expression, hands remain clasped. |
-| retirement | 마지막 인사 | Warm elegant adult farewell outfit: original-color tailored coat or formal cardigan with cream shirt and dress trousers or knee-length skirt. | Holding a small bouquet of pastel flowers in one arm and giving a gentle farewell wave. → Wave moves a little and eyes soften as if emotional, same bouquet and outfit. |
-| contract | 계약과 재계약 | Neat original-color business-casual blazer, white shirt, tailored trousers or knee-length skirt and clean dress shoes. | Holding a blank contract folder and signing with a pen, thoughtful composed expression. → Small pen movement and a slight nod, same folder and formal-casual outfit. |
-| birthday | 생일과 데뷔 기념일 | Festive original-color soft cardigan and comfortable smart-casual bottoms, a small simple pastel party hat without text. | Clapping softly with palms a little apart at chest level, delighted smile. → Palms move closer together for the next clap and eyes smile, same party hat and outfit. |
-| clinic | 진료와 회복 | Comfortable loose original-color recovery sweatshirt, plain sweatpants and soft sneakers, a small clean ankle support visible. | Standing calmly with one hand resting near the other forearm, reassured gentle expression. → A tiny reassuring nod and relaxed breathing posture, same support and clothing. |
-| donation | 기부와 봉사 | Practical original-color sweatshirt under a beige volunteer apron, comfortable trousers, clean work gloves and sneakers. | Holding a small plain cardboard donation box with both gloved hands at waist level, warm smile. → Box shifts a little as if carefully handing it forward, no other person or background. |
-| dorm | 숙소에서의 대화 | Soft original-color home cardigan or hoodie, comfortable loose trousers and indoor slippers, modest full-coverage homewear. | Holding a small plain warm drink mug with both hands, listening with a gentle smile. → Tiny mug movement and an attentive nod, same homewear and feet placement. |
-| family | 가족과 진로 이야기 | Modest original-color casual knit sweater, cream shirt collar, comfortable trousers or knee-length skirt and indoor slippers. | Holding a small blank notebook close to the chest, speaking earnestly to unseen family. → A small open-palm explanation gesture and changed speaking expression, notebook held in the other hand. |
-| military | 군 복무 | Adult unisex Korean-inspired generic woodland camouflage fatigues, plain olive cap with no badges or insignia, dark combat boots. Keep original hair visible and original distinctive hair accessory subtly at the cap edge. No weapons. | Standing respectfully and giving a neat military salute with the right hand near the cap. → Tiny continuation of the salute with a gentle nod, same uniform, no weapons or other people. |
-| rest | 휴식과 마음 정리 | Cozy full-coverage original-color pajama top and matching loose pajama trousers, soft indoor slippers. | Standing in a relaxed restful pose with eyes softly closed and arms resting naturally. → Small breathing posture change and eyes gently opening, same pajamas and foot placement. |
-| wedding | 결혼 발표 | Adult character in modest wedding formalwear: ivory long-sleeved wedding dress with original-color ribbon accents for avatars 0-2, ivory and dark formal suit with original-color boutonniere for avatars 3-5. Preserve face, hair and accessory. | Avatars 0-2 hold a small pastel bouquet with both hands; avatars 3-5 place one hand over the heart and the other relaxed. Warm sincere smile. → A small grateful nod and very slight hand/bouquet movement, same adult wedding outfit. No partner or guests. |
+| audition | 오디션 | 단정한 셔츠·재킷 | 지원서 들고 인사 → 고개 숙이기 |
+| school | 학교 | 교복·로퍼 | 노트 보기 → 연필 쓰기 |
+| dance | 댄스 연습 | 트레이닝복·운동화 | 왼쪽 스텝 → 오른쪽 스텝 |
+| vocal | 보컬 레슨 | 연습복·헤드폰 | 노래하기 → 손으로 박자 맞추기 |
+| songwriting | 작곡 | 편한 카디건 | 작곡 노트 쓰기 → 생각하며 고개 기울이기 |
+| survival | 오디션 경연 | 참가자 트레이닝복 | 마이크 잡기 → 손 뻗으며 노래하기 |
+| album | 앨범 녹음 | 후드·스튜디오 헤드폰 | 녹음하기 → 리듬 타기 |
+| debut | 데뷔 | 컬러 포인트 무대복 | 마이크 들고 인사 → 손 흔들기 |
+| advert | 광고 | 깔끔한 재킷 | 제품 소개 → 제품 살짝 돌리기 |
+| challenge | 챌린지 | 스포티한 스트리트웨어 | 손 하트 → 포인트 안무 |
+| drama | 드라마 | 니트·가벼운 코트 | 대본 읽기 → 대사 연기 |
+| fansign | 팬사인회 | 부드러운 카디건 | 앨범에 사인 → 시선 바꾸기 |
+| livestream | 라이브 방송 | 편한 맨투맨·헤드셋 | 손 인사 → 카메라에 말하기 |
+| mc | 음악방송 MC | 단정한 정장 | 큐카드·마이크 → 진행 멘트 |
+| variety | 직업 체험 예능 | 앞치마·편한 복장 | 쟁반 들고 놀라기 → 웃기 |
+| youtube | 유튜브 | 캐주얼 재킷·카메라 파우치 | 브이로그 촬영 → 소개 손짓 |
+| awards | 시상식 | 드레스·정장 | 트로피 들기 → 감사 인사 |
+| coachella | 해외 페스티벌 | 데님 재킷·부츠 | 관객 향해 노래 → 팔 올리기 |
+| festival | 대학축제 | 바시티 재킷 | 떼창 유도 → 손으로 박자 |
+| military-concert | 위문공연 | 무대 재킷·부츠 | 밝은 인사 → 노래하기 |
+| tour | 월드투어 | 콘서트 무대복 | 가슴에 손 → 관객 향해 손 펴기 |
+| press | 공식 입장 | 차분한 정장 | 손 모으기 → 정중한 인사 |
+| retirement | 은퇴 | 정갈한 코트·카디건 | 꽃다발·손 인사 → 마지막 인사 |
+| contract | 계약·재계약 | 비즈니스 캐주얼 | 계약서 사인 → 고개 끄덕이기 |
+| birthday | 생일·기념일 | 파티 모자·카디건 | 박수 준비 → 박수 |
+| clinic | 진료·회복 | 편한 회복복·보호대 | 안정된 자세 → 작은 끄덕임 |
+| donation | 기부·봉사 | 앞치마·장갑 | 기부 상자 들기 → 내밀기 |
+| dorm | 숙소 | 편한 홈웨어·슬리퍼 | 머그컵 들기 → 듣고 끄덕이기 |
+| family | 가족과 대화 | 캐주얼 니트 | 노트 안고 말하기 → 설명 손짓 |
+| military | 군 복무 | 군복·군모·전투화 | 경례 → 작은 끄덕임 |
+| rest | 휴식 | 파자마·슬리퍼 | 눈 감고 쉬기 → 눈 뜨기 |
+| wedding | 결혼 발표 | 웨딩드레스·정장 | 꽃다발·가슴에 손 → 감사 인사 |
 
 ## 배경 위에서 사용하는 방법
 

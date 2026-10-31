@@ -6,6 +6,7 @@ import { Avatar } from "@/components/Avatar";
 import { Button, FixedCta } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Logo } from "@/components/Logo";
+import { SupportTrigger } from "@/components/SupportSheet";
 import { AGENCIES, agencyById } from "@/lib/game/agencies";
 import { ageOf, fanText, periodLabel, STAGE_NAMES } from "@/lib/game/format";
 import { milestoneStep } from "@/lib/game/milestones";
@@ -47,9 +48,9 @@ export default function HomePage() {
           <p className="text-[13px] text-ink-3 mt-1">연습생부터 레전드까지</p>
         </div>
         <div className="flex items-center gap-1">
-          <Link href="/support" aria-label="후원" className="press w-10 h-10 rounded-xl flex items-center justify-center text-ink-2">
+          <SupportTrigger className="press w-10 h-10 rounded-xl flex items-center justify-center text-ink-2" aria-label="후원">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M12 21s-7-4.6-9.3-8.6C.6 8.9 2.6 5 6.3 5c2 0 3.4 1.1 4.2 2.4h3C14.3 6.1 15.7 5 17.7 5c3.7 0 5.7 3.9 3.6 7.4C19 16.4 12 21 12 21z" /></svg>
-          </Link>
+          </SupportTrigger>
           <Link href="/guide" aria-label="가이드" className="press w-10 h-10 rounded-xl flex items-center justify-center text-ink-2">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 15.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm1.3-5.2c-.6.4-.8.7-.8 1.4h-2c0-1.4.6-2.1 1.5-2.7.7-.5 1-.8 1-1.4 0-.7-.5-1.1-1.2-1.1-.8 0-1.3.5-1.4 1.3H8.4c.1-1.9 1.5-3.1 3.5-3.1 2 0 3.3 1.1 3.3 2.8 0 1.2-.6 1.9-1.9 2.8z" /></svg>
           </Link>
@@ -157,7 +158,6 @@ export default function HomePage() {
         {[
           { href: "/guide", t: "게임 가이드", s: "진행 방법과 현실 고증 노트" },
           { href: "/records", t: "명예의 전당", s: "은퇴한 커리어 순위" },
-          { href: "/support", t: "후원하기", s: "커피 한 잔이 다음 업데이트가 돼요" },
         ].map((m) => (
           <Link key={m.href} href={m.href} className="press flex items-center justify-between gap-3 px-3 py-3.5 rounded-2xl">
             <div className="min-w-0">
@@ -167,6 +167,13 @@ export default function HomePage() {
             <span className="text-ink-3">›</span>
           </Link>
         ))}
+        <SupportTrigger className="press w-full flex items-center justify-between gap-3 px-3 py-3.5 rounded-2xl text-left">
+          <div className="min-w-0">
+            <p className="t-body font-bold">후원하기</p>
+            <p className="text-[13px] text-ink-3">커피 한 잔이 다음 업데이트가 돼요</p>
+          </div>
+          <span className="text-ink-3">›</span>
+        </SupportTrigger>
       </Card>
 
       <footer className="mt-8 text-[13px] text-ink-3 leading-relaxed">
