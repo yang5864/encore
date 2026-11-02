@@ -193,6 +193,9 @@ export default function NewPage() {
       {result?.result && (
         <ResultSheet
           result={result.result}
+          avatar={result.avatar}
+          gender={result.gender}
+          name={result.name}
           open
           onClose={() => {
             saveCareer({ ...result, result: null });

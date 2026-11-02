@@ -34,3 +34,8 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+## 제작 이미지 적용
+
+완성된 이벤트·캐릭터·활동 장비 이미지의 적용 범위, 대체 동작, 모바일 검증 결과는 [이미지 적용 기록](docs/art-integration/README.md)을 참고하세요. 추가 제작 후 `npm run art:catalog`로 카탈로그를 갱신합니다.

@@ -221,13 +221,19 @@
   transition: width 800ms linear, opacity 200ms;
 }
 
-.sprite {
+.avatar-art {
+  position: relative;
   display: inline-block;
-  background-image: url("/sprites.webp");
-  background-size: 600% 100%;
-  background-repeat: no-repeat;
-  image-rendering: pixelated;
 }
+
+.event-art { position: relative; aspect-ratio: 3 / 2; overflow: hidden; isolation: isolate; background: var(--sub); }
+.art-frame { position: absolute; display: block; aspect-ratio: 1; left: 50%; top: var(--art-foot-y, 86%); pointer-events: none; }
+.avatar-art .art-frame { top: 96%; }
+.art-frame-next { visibility: hidden; }
+.art-frame-first.art-animated { animation: art-first 1.2s steps(1, end) infinite; }
+.art-frame-next.art-animated { visibility: visible; animation: art-next 1.2s steps(1, end) infinite; }
+@keyframes art-first { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes art-next { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
@@ -237,6 +243,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .art-frame-first.art-animated { animation: none; opacity: 1; }
+  .art-frame-next.art-animated { animation: none; visibility: hidden; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

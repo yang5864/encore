@@ -150,7 +150,7 @@ export default function PlayPage() {
       </FixedCta>
 
       <MilestoneSheet career={career} id={pendingMilestone} open={!!pendingMilestone} onClose={() => setMilestoneQueue((q) => q.slice(1))} />
-      {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} open={showResult} onClose={dismissResult} ctaLabel={career.pending ? "다음 선택 보기" : "확인"} />}
+      {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} avatar={career.avatar} gender={career.gender} name={career.name} open={showResult} onClose={dismissResult} ctaLabel={career.pending ? "다음 선택 보기" : "확인"} />}
       <EventSheet key={career.pending?.id ?? "none"} career={career} open={showEvent} onChoose={choose} />
       <AgencySheet
         career={career}

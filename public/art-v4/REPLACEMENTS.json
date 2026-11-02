@@ -1,0 +1,15 @@
+{
+  "replacements": [
+    {
+      "avatar": 4,
+      "scene": "military",
+      "frame": "02",
+      "reference": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/characters/avatar-4/military/01.png",
+      "prompt": "Use case: identity-preserve. Repair an animation frame for avatar-4, the blond male idol with gold star hairclip, in generic camouflage military uniform and olive cap. Use this CLEAN frame 01 as the edit target. Preserve absolutely the same single character, face identity, hairstyle, star clip, uniform, colors, proportions, centered full-body framing, transparent padding, boots and foot positions. Change only the next salute motion: a tiny grateful nod with eyes gently closed and smiling, right hand remains saluting. Critical delivery requirement: background must be genuinely completely transparent alpha-zero everywhere away from the character. NO white, gray, red or colored halo, NO mist, aura, smoke, texture, vignette, ring, canvas edge colors or translucent background veil. Only the exact isolated character, with clean transparent empty margins. No other person, floor, text, logo, crop or sprite sheet.",
+      "outputPath": "public/art-v4/characters/avatar-4/military/02.png",
+      "sourcePath": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-13b91411-88a9-4980-bbc0-f9300d2bda2b.png",
+      "replacesArchivedPath": "art-archive/v4-transparency-fixes/avatar-4/military/02-before.png",
+      "reason": "Removed semi-transparent noisy white/gray/red perimeter."
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
 import { cn } from "@/lib/cn";
 import { choiceLock } from "@/lib/game/engine";
-import { scenePath } from "@/lib/game/events/index";
+import { EventArt } from "@/components/EventArt";
 import type { Career, Signature } from "@/lib/game/types";
 import { ContractView } from "./ContractView";
 
@@ -61,7 +61,7 @@ export function EventSheet({ career, open, onChoose }: Props) {
       ) : (
         <>
           <div className="-mx-5 -mt-3">
-            <img src={scenePath(event.scene)} alt="" className="w-full aspect-[16/10] object-cover" loading="eager" />
+            <EventArt scene={event.scene} avatar={career.avatar} gender={career.gender} name={career.name} />
           </div>
           <h2 className="t-title mt-4">{event.title}</h2>
           <p className="t-body text-ink-2 mt-2">{event.text}</p>

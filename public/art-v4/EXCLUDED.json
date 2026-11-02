@@ -1,0 +1,65 @@
+{
+  "reason": "Correct event-specific gender eligibility; archived originals are excluded from active assets and missing-image generation.",
+  "excludedAssets": [
+    {
+      "originalPath": "public/art-v4/characters/avatar-0/military/01.png",
+      "archivedPath": "art-archive/v4-invalid-gender/avatar-0/military/01.png",
+      "reason": "Female avatar is not eligible for the male military-service event."
+    },
+    {
+      "originalPath": "public/art-v4/characters/avatar-1/military/01.png",
+      "archivedPath": "art-archive/v4-invalid-gender/avatar-1/military/01.png",
+      "reason": "Female avatar is not eligible for the male military-service event."
+    }
+  ],
+  "notApplicable": [
+    {
+      "scene": "military",
+      "avatar": 0,
+      "frames": [
+        "01",
+        "02"
+      ]
+    },
+    {
+      "scene": "military",
+      "avatar": 1,
+      "frames": [
+        "01",
+        "02"
+      ]
+    },
+    {
+      "scene": "military",
+      "avatar": 2,
+      "frames": [
+        "01",
+        "02"
+      ]
+    },
+    {
+      "scene": "military-concert",
+      "avatar": 3,
+      "frames": [
+        "01",
+        "02"
+      ]
+    },
+    {
+      "scene": "military-concert",
+      "avatar": 4,
+      "frames": [
+        "01",
+        "02"
+      ]
+    },
+    {
+      "scene": "military-concert",
+      "avatar": 5,
+      "frames": [
+        "01",
+        "02"
+      ]
+    }
+  ]
+}

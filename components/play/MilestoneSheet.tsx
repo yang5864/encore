@@ -2,6 +2,7 @@
 import { Sheet } from "@/components/ui/Sheet";
 import { Button } from "@/components/ui/Button";
 import { MilestoneBar } from "./MilestoneBar";
+import { EventArt } from "@/components/EventArt";
 import { MILESTONES } from "@/lib/game/milestones";
 import type { Career, MilestoneId } from "@/lib/game/types";
 
@@ -11,6 +12,7 @@ export function MilestoneSheet({ career, id, open, onClose }: { career: Career; 
   return (
     <Sheet open={open} dismissible={false} tall>
       <div className="flex flex-col items-center text-center h-full justify-center pb-10">
+        <EventArt scene={id === "debut" ? "debut" : id === "legend" ? "tour" : id === "firstSettlement" ? "contract" : "awards"} avatar={career.avatar} gender={career.gender} name={career.name} className="w-full rounded-2xl mb-5" />
         <p className="t-cap text-primary pop-in">새로운 기록</p>
         <h2 className="pop-in mt-3 text-[22px] font-extrabold tracking-[-0.03em] leading-tight" style={{ animationDelay: "80ms" }}>
           {m.title}

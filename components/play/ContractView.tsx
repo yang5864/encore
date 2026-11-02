@@ -2,6 +2,7 @@
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/Logo";
+import { EventArt } from "@/components/EventArt";
 import { SignaturePad, SignatureReplay } from "./Signature";
 import { contractTerms } from "@/lib/game/contracts";
 import type { ActiveEvent, Career, ChoiceDef, Signature } from "@/lib/game/types";
@@ -36,6 +37,7 @@ export function ContractView({ career, event, choice, onSign, onDecline }: Props
 
   return (
     <div className="fade-up">
+      <EventArt scene="contract" avatar={career.avatar} gender={career.gender} name={career.name} className="rounded-2xl mb-4" />
       <h2 className="t-title">{terms.title}</h2>
       <p className="t-body text-ink-2 mt-2">{terms.text}</p>
 

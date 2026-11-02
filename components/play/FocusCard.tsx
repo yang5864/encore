@@ -1,4 +1,6 @@
 "use client";
+import Image from "next/image";
+import { equipmentPath } from "@/lib/art";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import { cn } from "@/lib/cn";
@@ -17,6 +19,7 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
   const renderOption = (o: FocusOption) => {
     const selected = value.id === o.id;
     const disabled = !!o.disabledReason;
+    const equipment = equipmentPath(o.id, value.stat ?? "vocal", career.turn);
     return (
       <div key={o.id}>
         <button
@@ -29,7 +32,8 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
           )}
         >
           <div className="flex items-center justify-between gap-2">
-            <span className="t-body font-bold">{o.label}</span>
+            {equipment && <Image src={equipment} alt="" width={44} height={44} sizes="44px" className="shrink-0 object-contain" />}
+            <span className="t-body font-bold flex-1">{o.label}</span>
             {o.readiness ? <Chip tone={o.readiness.tone}>{o.readiness.label}</Chip> : <Chip tone={o.risk === "bold" ? "warn" : "ok"}>{o.risk === "bold" ? "도전" : "안정"}</Chip>}
           </div>
           <p className="text-[13px] text-ink-2 mt-1">{o.disabledReason ?? o.hint}</p>

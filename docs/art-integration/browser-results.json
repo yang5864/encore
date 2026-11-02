@@ -1,0 +1,19 @@
+{
+  "viewportWidths": [
+    390,
+    320
+  ],
+  "checks": [
+    "new character picker (both genders)",
+    "profile and activity equipment",
+    "two loaded animated event frames",
+    "milestone -> result transition",
+    "contract signature screen",
+    "male military costume",
+    "reduced motion",
+    "no horizontal overflow",
+    "missing album frames fallback"
+  ],
+  "pageErrors": [],
+  "httpFailures": []
+}
