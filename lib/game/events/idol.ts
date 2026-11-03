@@ -73,9 +73,9 @@ export const IDOL_EVENTS: GameEventDef[] = [
     scene: "military",
     when: (c) => c.gender === "male" && ageOf(c) >= 27 && !c.flags.militaryDone,
     choices: [
-      { id: "army", label: "육군", hint: "복무 기간이 가장 짧아요", risk: "safe", op: "military:army" },
-      { id: "navy", label: "해군", hint: "조금 더 길어요", risk: "safe", op: "military:navy" },
-      { id: "airforce", label: "공군", hint: "가장 길지만 군악대 공연 기회가 있어요", risk: "safe", op: "military:airforce" },
+      { id: "army", label: "육군 · 18개월", hint: "복무 기간이 가장 짧아요", risk: "safe", op: "military:army" },
+      { id: "navy", label: "해군 · 20개월", hint: "조금 더 길어요. 전역 뒤 남는 달은 복귀 준비에 써요", risk: "safe", op: "military:navy" },
+      { id: "airforce", label: "공군 · 21개월", hint: "가장 길지만 군악대 공연 기회가 있어요", risk: "safe", op: "military:airforce" },
     ],
   },
   {

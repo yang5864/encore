@@ -248,3 +248,17 @@ test("컨디션이 위험이면 휴식만 고를 수 있다", async () => {
   assert.ok(focusOptions(t).find((o) => o.id === "rest")?.disabledReason === undefined);
   assert.throws(() => advanceTurn(t, "train:all"), /위험/);
 });
+
+test("복무 기간은 육군 18 · 해군 20 · 공군 21개월이고 남는 달은 복귀 준비로 설명한다", () => {
+  for (const [branch, months, turns] of [["army", 18, 3], ["navy", 20, 4], ["airforce", 21, 4]] as const) {
+    const c = idol(2);
+    c.gender = "male"; c.turn = 31; c.contractEnd = 40;
+    c.pending = { id: "military", title: "", text: "", scene: "military", choices: [{ id: branch, label: "", hint: "", risk: "safe", op: `military:${branch}` }] };
+    const n = resolveChoice(c, branch);
+    assert.equal(n.militaryUntil, 31 + turns);
+    assert.match(n.result!.text, new RegExp(`${months}개월 복무`));
+    const back = advanceTurn(n, "promo");
+    assert.match(back.result!.text, new RegExp(`${months}개월의 복무`));
+    if (turns * 6 > months) assert.match(back.result!.text, /복귀를 준비/);
+  }
+});

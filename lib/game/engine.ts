@@ -28,6 +28,9 @@ export const APPLY_PER_SEASON = 3;
 /** 지망생·연습생 시절 포텐이 터질 확률(시즌당). 19세까지 약 16시즌이면 커리어당 약 21%. */
 export const BURST_CHANCE = 0.015;
 
+/** 현역 복무 기간(개월): 육군·해병 18, 해군 20, 공군 21 */
+export const MILITARY_MONTHS: Record<string, number> = { army: 18, navy: 20, airforce: 21 };
+
 const DEBUT_FANS: Record<string, number> = { major: 350000, mid: 70000, indie: 5000, global: 50000 };
 export const GROUP_NAME_PATTERN = /^[\p{L}\p{N} _·!-]{1,20}$/u;
 
@@ -104,7 +107,8 @@ export function advanceTurn(original: Career, focusId: string): Career {
 
   // 군 복무: 한 번에 건너뛴다
   if (c.militaryUntil > c.turn) {
-    const months = (c.militaryUntil - c.turn) * 6;
+    const months = c.flags.militaryMonths ?? (c.militaryUntil - c.turn) * 6;
+    const prep = (c.militaryUntil - c.turn) * 6 - months;
     c.turn = c.militaryUntil;
     c.fans = Math.round(c.fans * 0.9);
     c.popularity = Math.max(0, c.popularity - 8);
@@ -113,7 +117,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
     for (const k of STAT_KEYS) c.stats[k] = Math.max(0, c.stats[k] - 1);
     log(c, "전역", `${months}개월의 복무를 마치고 돌아왔어요. 팬들이 기다리고 있었어요.`, "milestone");
     c.pending = scheduleEvent(c);
-    finish(c, before, "전역했어요", `${months}개월의 복무를 마쳤어요. 팬들이 기다리고 있었어요. 다시 무대로 돌아갈 시간이에요.`, "good", { scene: "military" });
+    finish(c, before, "전역했어요", `${months}개월의 복무를 마쳤어요.${prep > 0 ? ` 남은 ${prep}개월은 몸을 만들며 복귀를 준비했어요.` : ""} 팬들이 기다리고 있었어요. 다시 무대로 돌아갈 시간이에요.`, "good", { scene: "military" });
     return c;
   }
 
@@ -622,11 +626,13 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     log(c, headline, text, "system");
   } else if (op.startsWith("military:")) {
     const branch = op.slice(9);
-    const turns = branch === "army" ? 3 : 4;
+    const months = MILITARY_MONTHS[branch] ?? 18;
+    const turns = Math.ceil(months / 6); // 시즌은 6개월 단위라 남는 달은 복귀 준비에 쓴다
     c.militaryUntil = c.turn + turns;
     c.flags.militaryDone = 1;
+    c.flags.militaryMonths = months;
     headline = { army: "육군 입대", navy: "해군 입대", airforce: "공군 입대" }[branch] ?? "입대";
-    text = `${turns * 6}개월 뒤 돌아와요. 다음 진행에서 복무 기간이 한 번에 지나가요.`;
+    text = `${months}개월 복무 뒤 돌아와요.${turns * 6 > months ? ` 전역 후 남는 ${turns * 6 - months}개월은 복귀 준비에 써요.` : ""} 다음 진행에서 복무 기간이 한 번에 지나가요.`;
     log(c, headline, text, "milestone");
   } else if (op.startsWith("move:")) {
     const a = agencyById(op.slice(5))!;
