@@ -164,10 +164,10 @@ export default function NewPage() {
           <p className="t-cap mt-2">대형은 문이 좁고 중소는 넓어요. 떨어져도 무소속으로 시작해 언제든 다시 지원할 수 있어요.</p>
           <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-5 px-5 mt-5">
             {TIER_ORDER.map((t) => (
-              <button key={t} onClick={() => setTier(t)} className={cn("press shrink-0 h-9 px-3.5 rounded-full text-[13px] font-bold", tier === t ? "bg-ink text-bg" : "bg-card text-ink-2")}>{TIERS[t].short} <span className={cn("font-medium", tier === t ? "opacity-70" : "text-ink-3")}>· {TIERS[t].difficulty}</span></button>
+              <button key={t} onClick={() => setTier(t)} className={cn("press shrink-0 h-9 px-3.5 rounded-full text-[13px] font-bold", tier === t ? "bg-ink text-bg" : "bg-card text-ink-2")}>{TIERS[t].short}</button>
             ))}
           </div>
-          <p className="t-cap mt-3">{TIERS[tier].description} · 난이도 {TIERS[tier].difficulty}</p>
+          <p className="t-cap mt-3">{TIERS[tier].description}</p>
           <div className="flex flex-col gap-2 mt-3">
             {candidate && AGENCIES.filter((a) => a.tier === tier).map((a) => {
               const label = chanceLabel(auditionChance({ stats: candidate.stats, position: candidate.position }, a.id));
