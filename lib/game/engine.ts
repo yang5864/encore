@@ -17,6 +17,7 @@ import { updateMetrics } from "./metrics.ts";
 import { debutEvaluation, scheduleEvent, activate } from "./schedule.ts";
 import { eventById } from "./events/index.ts";
 import { bankruptcyRisk } from "./renewal.ts";
+import { decodeEta, etaLabel, setDebutEta } from "./debut.ts";
 import { boughtThisSeason, itemById, priceOf, shopOffers, walletOf } from "./shop.ts";
 
 export { focusOptions } from "./focus.ts";
@@ -285,6 +286,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
     const a = agencyById(c.agencyId)!;
     const ovr = overall(c.stats, c.position);
     if (evaluation === "offer") { c.flags.debutEval = c.turn; c.flags.debutEvalKind = 1; }
+    else if (evaluation === "cut") { c.flags.debutEval = c.turn; c.flags.debutEvalKind = 4; }
     else if (evaluation === "miss") { c.flags.debutEval = c.turn; c.flags.debutEvalKind = 2; notes.push(`데뷔 평가: 기준 OVR ${a.threshold}에 근접했어요.`); }
     else if (evaluation === "warn") { c.flags.debutEval = c.turn; c.flags.debutEvalKind = 3; c.warnings += 1; notes.push(`데뷔 평가 경고 ${c.warnings}회: OVR ${ovr}, 기준 ${a.threshold}`); }
     else notes.push(`데뷔 평가 피드백: OVR ${ovr}, 데뷔조 기준 ${a.threshold}. ${a.stat === MAIN_STAT[c.position] ? "회사 강점과 포지션이 잘 맞아요." : `${STAT_NAMES[a.stat]}을(를) 보강하면 빨라져요.`}`);
@@ -356,6 +358,10 @@ function joinAgency(c: Career, agencyId: string) {
   c.warnings = 0;
   c.money.invested = 0;
   c.flags.debutDeferredUntil = 0;
+  delete c.flags.debutEta;
+  delete c.flags.promisedDebut;
+  delete c.flags.cutEta;
+  c.lineup = null;
 }
 
 export function resolveChoice(original: Career, choiceId: string, extra: { groupName?: string; albumName?: string } = {}): Career {
@@ -410,10 +416,17 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     tone = "good";
     log(c, headline, text, "milestone");
   } else if (op.startsWith("scout:")) {
-    const a = agencyById(op.slice(6))!;
+    const [, agencyId, etaCode] = op.split(":");
+    const a = agencyById(agencyId)!;
     const wasFree = c.stage === "free";
     joinAgency(c, a.id);
     c.scoutCount += 1;
+    const eta = decodeEta(etaCode);
+    if (eta !== undefined) {
+      setDebutEta(c, eta);
+      if (eta !== null && eta <= 1) c.flags.promisedDebut = 1;
+      notes.push(`${a.name}가 약속한 데뷔 시점: ${etaLabel(eta)}`);
+    }
     headline = wasFree ? `${a.name} 캐스팅 계약` : `${a.name}로 이적했어요`;
     text = wasFree ? `오디션 없이 ${a.fullName}의 연습생이 됐어요. ${TIERS[a.tier].description}.` : `${a.fullName}의 연습생으로 새로 시작해요. 신뢰는 처음부터 쌓아요.`;
     tone = "good";
@@ -438,6 +451,13 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     tone = "milestone";
     log(c, headline, text, "milestone");
     c.pending = debutConceptEvent();
+  } else if (op === "debut:cut") {
+    const eta = c.flags.cutEta === -1 ? null : c.flags.cutEta ?? 2;
+    setDebutEta(c, eta);
+    delete c.flags.cutEta;
+    headline = "회사에 남아 다음 데뷔를 기다려요";
+    text = `${etaLabel(eta)}. 다음 팀을 준비하며 연습을 이어가요.`;
+    log(c, "데뷔조 탈락", text, "system");
   } else if (op === "debut:wait") {
     c.flags.debutDeferredUntil = c.turn + 2;
     headline = "데뷔를 미뤘어요";

@@ -149,3 +149,43 @@ test("상점: 시즌마다 3개 진열, 하나만 사면 능력치가 오른다"
   const poor = idol(2);
   assert.throws(() => buyItem(poor, offers[0].id), /부족/);
 });
+
+function readyTrainee(seed: number): Career {
+  const c = createCareer(base, seed);
+  Object.assign(c, { stage: "trainee", agencyId: "sm", agencyJoinedTurn: 2, traineeContractEnd: 20, turn: 5, trust: 60, schoolId: "general" });
+  c.stats = { vocal: 85, dance: 75, rap: 55, visual: 70, variety: 60, producing: 55 };
+  c.flags.burst = 1;
+  return c;
+}
+
+test("데뷔 제안에 그룹 구성과 내 역할이 나온다", () => {
+  for (let seed = 1; seed < 80; seed++) {
+    const n = advanceTurn(readyTrainee(seed), "train:all");
+    if (n.pending?.id !== "debut-offer") continue;
+    assert.ok(n.lineup);
+    assert.ok(n.lineup.members >= 4 && n.lineup.members <= 7);
+    assert.ok(n.lineup.parts.includes("메인보컬"));
+    assert.match(n.pending.text, /인조/);
+    return;
+  }
+  assert.fail("데뷔 제안이 오지 않았다");
+});
+
+test("간혹 데뷔조에서 밀리고, 데뷔 시점과 이적 선택지가 나온다", () => {
+  let cuts = 0;
+  for (let seed = 1; seed < 120; seed++) {
+    const n = advanceTurn(readyTrainee(seed), "train:all");
+    if (n.pending?.id !== "debut-cut") continue;
+    cuts++;
+    assert.match(n.pending.text, /바로 데뷔 가능|최소 \d년 뒤 데뷔|데뷔 일정 미정/);
+    const wait = resolveChoice(n, "wait");
+    assert.ok(wait.flags.debutEta !== undefined && wait.flags.debutEta > wait.turn);
+    const move = n.pending.choices.find((x) => x.op?.startsWith("scout:"));
+    if (move) {
+      const moved = resolveChoice(n, move.id);
+      assert.notEqual(moved.agencyId, "sm");
+      assert.match(move.label, /바로 데뷔 가능|최소 \d년 뒤 데뷔|데뷔 일정 미정/);
+    }
+  }
+  assert.ok(cuts >= 10 && cuts <= 70, `탈락 ${cuts}/119`);
+});

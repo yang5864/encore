@@ -2,6 +2,7 @@ import type { ActiveEvent, Career, ChoiceDef } from "./types.ts";
 import { agencyById, AGENCIES, TIERS, type Agency } from "./agencies.ts";
 import { DEBUT_COST, memberShare } from "./economy.ts";
 import { wonText } from "./format.ts";
+import { decodeEta, etaLabel, lineupRoles } from "./debut.ts";
 
 export type ContractRow = { label: string; value: string; accent?: boolean };
 export type ContractTerms = {
@@ -24,7 +25,7 @@ function partyOf(a: Agency | null): ContractTerms["party"] {
 export function contractTerms(c: Career, event: ActiveEvent, choice: ChoiceDef): ContractTerms {
   const op = choice.op ?? "";
   const mine = agencyById(c.agencyId);
-  const targetId = op.startsWith("join:") ? op.slice(5) : op.startsWith("scout:") ? op.slice(6) : null;
+  const targetId = op.startsWith("join:") ? op.slice(5) : op.startsWith("scout:") ? op.split(":")[1] : null;
   const target = targetId ? agencyById(targetId) : null;
 
   if (op.startsWith("join:") || op.startsWith("scout:") || op === "freecast") {
@@ -37,7 +38,10 @@ export function contractTerms(c: Career, event: ActiveEvent, choice: ChoiceDef):
         { label: "계약 기간", value: "3년" },
         { label: "훈련비", value: "회사 부담 (시즌당 1.5억원 상당)" },
         { label: "숙소 · 레슨", value: "제공" },
-        { label: "데뷔 평가", value: "매년 월말평가 기준", accent: true },
+        (() => {
+          const eta = op.startsWith("scout:") ? decodeEta(op.split(":")[2]) : undefined;
+          return eta !== undefined ? { label: "데뷔 예정", value: etaLabel(eta), accent: true } : { label: "데뷔 평가", value: "매년 월말평가 기준", accent: true };
+        })(),
       ],
       notes: ["데뷔 후 수익에서 직접비를 회수할지는 별도 합의 사항이에요.", "계약 중 다른 회사 지원은 합의 종료 후 가능해요."],
       needsGroupName: false,
@@ -66,6 +70,12 @@ export function contractTerms(c: Career, event: ActiveEvent, choice: ChoiceDef):
       party: partyOf(a),
       rows: [
         { label: "계약 기간", value: "7년", accent: true },
+        ...(c.lineup
+          ? [
+              { label: "그룹 구성", value: `${c.lineup.members}인조` },
+              { label: "내 역할", value: lineupRoles(c.lineup).join(" · "), accent: true },
+            ]
+          : []),
         { label: "데뷔 제작비", value: `${eok(DEBUT_COST * a.budget)} 회사 선투자` },
         { label: "정산", value: `회수 후 순이익의 ${share}% 중 멤버 몫` },
         { label: "활동 범위", value: "음반 · 공연 · 방송 · 광고" },

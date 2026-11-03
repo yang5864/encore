@@ -7,6 +7,7 @@ import { Logo } from "@/components/Logo";
 import { agencyById, TIERS } from "@/lib/game/agencies";
 import { ageOf, careerPhase, displayName, periodLabel, STAGE_NAMES } from "@/lib/game/format";
 import { POSITIONS } from "@/lib/game/stats";
+import { lineupRoles } from "@/lib/game/debut";
 import type { Career } from "@/lib/game/types";
 
 export function ProfileCard({ career, onAgency }: { career: Career; onAgency: () => void }) {
@@ -24,7 +25,11 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
           <h1 className="t-title truncate mt-0.5">{displayName(career)}</h1>
           <div className="flex flex-wrap items-center gap-1.5 mt-2">
             <Chip tone={career.stage === "idol" ? "info" : career.stage === "trainee" ? "ok" : "neutral"}>{careerPhase(career) === STAGE_NAMES[career.stage] ? STAGE_NAMES[career.stage] : `${STAGE_NAMES[career.stage]} · ${careerPhase(career)}`}</Chip>
-            <Chip>{position}</Chip>
+            {career.stage !== "free" && career.stage !== "trainee" && career.lineup && !career.flags.solo ? (
+              lineupRoles(career.lineup).slice(0, 3).map((r) => <Chip key={r}>{r}</Chip>)
+            ) : (
+              <Chip>{position}</Chip>
+            )}
           </div>
         </div>
       </div>

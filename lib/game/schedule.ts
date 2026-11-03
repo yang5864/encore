@@ -3,10 +3,11 @@ import { EVENTS, eventById } from "./events/index.ts";
 import { AGENCIES, agencyById, auditionChance, tierRank } from "./agencies.ts";
 import { ageOf, isSecondHalf } from "./format.ts";
 import { renewalEvent } from "./renewal.ts";
+import { cutChance, debutCutEvent, lineupText, makeLineup, rivalOfferEvent } from "./debut.ts";
 import { overall } from "./stats.ts";
 import { rng } from "./rng.ts";
 
-export const SCOUT_CHANCE = 0.04;
+export const SCOUT_CHANCE = 0.06;
 export const MIRACLE_CHANCE = 0.02;
 export const STORY_CHANCE = 0.7;
 export const REPEAT_GAP = 4;
@@ -32,14 +33,20 @@ function take(c: Career, id: string): ActiveEvent {
   return activate(def);
 }
 
-export function debutEvaluation(c: Career): "offer" | "miss" | "warn" | "feedback" | null {
+export function debutEvaluation(c: Career): "offer" | "cut" | "miss" | "warn" | "feedback" | null {
   if (c.stage !== "trainee" || c.agencyJoinedTurn === null) return null;
   const since = c.turn - c.agencyJoinedTurn;
-  if (since < 2 || since % 2 !== 0) return null;
-  if ((c.flags.debutDeferredUntil ?? 0) > c.turn) return null;
   const a = agencyById(c.agencyId)!;
   const ovr = overall(c.stats, c.position);
-  if (ovr >= a.threshold && c.trust >= 30) return "offer";
+  // 약속받은 데뷔 시점이 있으면 그때부터 매 시즌 평가한다
+  if (c.flags.debutEta !== undefined) {
+    if (c.turn < c.flags.debutEta || (c.flags.debutDeferredUntil ?? 0) > c.turn) return null;
+    if (ovr >= a.threshold - (c.flags.promisedDebut ? 3 : 0) && c.trust >= 20) return rng(c) < cutChance(c) ? "cut" : "offer";
+    return since % 2 === 0 ? (ovr >= a.threshold - 8 ? "miss" : "feedback") : null;
+  }
+  if (since < 2 || since % 2 !== 0) return null;
+  if ((c.flags.debutDeferredUntil ?? 0) > c.turn) return null;
+  if (ovr >= a.threshold && c.trust >= 30) return rng(c) < cutChance(c) ? "cut" : "offer";
   if (ovr >= a.threshold - 8 && rng(c) < 0.4) return "miss";
   if (ovr < a.threshold - 15 && since >= 4) return "warn";
   return "feedback";
@@ -66,7 +73,14 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
   if (c.stage === "trainee" && c.warnings >= 2) return take(c, "trainee-dismiss");
   if (c.flags.debutEval === c.turn) {
     const kind = c.flags.debutEvalKind;
-    if (kind === 1) return take(c, "debut-offer");
+    if (kind === 1) {
+      const lineup = makeLineup(c);
+      c.lineup = lineup;
+      const e = take(c, "debut-offer");
+      e.text = `${e.text} 데뷔조 구성: ${lineupText(lineup)}.`;
+      return e;
+    }
+    if (kind === 4) return debutCutEvent(c);
     if (kind === 2) return take(c, "debut-miss");
     if (kind === 3) return take(c, "warning");
   }
@@ -87,23 +101,11 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
     const def = eventById(id)!;
     if (eligible(def, c) && rng(c) < MIRACLE_CHANCE) return take(c, id);
   }
-  if (c.stage === "trainee" && c.scoutCount < 2 && c.hiatusUntil <= c.turn && rng(c) < SCOUT_CHANCE) {
-    const mine = agencyById(c.agencyId)!;
-    const candidates = AGENCIES.filter((a) => tierRank(a.tier) > tierRank(mine.tier));
-    if (candidates.length) {
-      const a = candidates[Math.floor(rng(c) * candidates.length)];
-      const def = eventById("scout")!;
+  if (c.stage === "trainee" && c.scoutCount < 3 && c.hiatusUntil <= c.turn && rng(c) < SCOUT_CHANCE + Math.max(0, overall(c.stats, c.position) - 50) / 400) {
+    const offer = rivalOfferEvent(c);
+    if (offer) {
       c.seen.scout = c.turn;
-      return {
-        id: "scout",
-        title: `${a.name} 스카우트 제의`,
-        text: `${a.fullName} 캐스팅 디렉터가 조용히 연락해왔어요. 지금 회사보다 큰 곳이에요. 오디션 없이 바로 연습생으로 받겠대요. 지금 회사와는 합의 종료가 가능해요.`,
-        scene: def.scene,
-        choices: [
-          { id: "move", label: `${a.name}로 옮긴다`, hint: "더 큰 무대와 빠른 성장. 신뢰는 처음부터 다시 쌓아요", risk: "bold", op: `scout:${a.id}`, sign: true },
-          { id: "stay", label: "지금 회사에 남는다", hint: "의리를 지켜 신뢰가 크게 올라요", risk: "safe", effects: { trust: 12, mental: 4 } },
-        ],
-      };
+      return offer;
     }
   }
 

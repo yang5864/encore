@@ -121,6 +121,8 @@ export type Money = {
 
 export type MilestoneId = "debut" | "firstWin" | "firstSettlement" | "daesang" | "legend";
 export type PublicMetrics = { instagram: number; youtube: number; spotify: number };
+/** 데뷔조 구성과 내 역할 */
+export type Lineup = { members: number; leader: boolean; center: boolean; maknae: boolean; parts: string[] };
 /** Hand-drawn signature, strokes of normalized [x, y] points in 0..1. */
 export type Signature = { strokes: [number, number][][]; signedAt: number };
 
@@ -164,6 +166,8 @@ export type Career = {
   signature?: Signature | null;
   /** 상점에서 산 아이템 id */
   items?: string[];
+  /** 데뷔 제안 때 정해지는 그룹 내 역할 */
+  lineup?: Lineup | null;
   warnings: number;
   scoutCount: number;
   lowPopularityTurns: number;
