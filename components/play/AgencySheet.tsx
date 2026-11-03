@@ -22,11 +22,11 @@ export function AgencySheet({ career, open, onClose, onApply }: { career: Career
       <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-5 px-5 pb-1">
         {TIER_ORDER.map((t) => (
           <button key={t} onClick={() => setTier(t)} className={cn("press shrink-0 h-9 px-3.5 rounded-full text-[13px] font-bold", tier === t ? "bg-ink text-bg" : "bg-chip text-ink-2")}>
-            {TIERS[t].short}
+            {TIERS[t].short} <span className={cn("font-medium", tier === t ? "opacity-70" : "text-ink-3")}>· {TIERS[t].difficulty}</span>
           </button>
         ))}
       </div>
-      <p className="t-cap mt-3">{TIERS[tier].description}</p>
+      <p className="t-cap mt-3">{TIERS[tier].description} · 난이도 {TIERS[tier].difficulty}</p>
       <div className="flex flex-col gap-2 mt-3">
         {AGENCIES.filter((a) => a.tier === tier).map((a, i) => {
           const p = auditionChance(career, a.id);

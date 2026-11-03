@@ -97,6 +97,8 @@ export type Album = {
   melon: number | null;
   billboard: number | null;
   wins: number;
+  /** 1위한 음악방송 이름 */
+  shows?: string[];
   cost: number;
   revenue: number;
 };
@@ -168,6 +170,8 @@ export type Career = {
   items?: string[];
   /** 데뷔 제안 때 정해지는 그룹 내 역할 */
   lineup?: Lineup | null;
+  /** 데뷔 앨범 준비: 콘셉트 → 쇼케이스 → 음악방송 데뷔 무대 순서로 정한 뒤 발매한다 */
+  debutPlan?: { concept: Concept; albumName: string } | null;
   warnings: number;
   scoutCount: number;
   lowPopularityTurns: number;

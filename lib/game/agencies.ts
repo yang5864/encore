@@ -25,11 +25,11 @@ export type Agency = {
   rank?: number;
 };
 
-export const TIERS: Record<Tier, { name: string; short: string; description: string; base: number }> = {
-  major: { name: "대형 기획사", short: "대형", description: "들어가기 어렵지만 데뷔하면 세계가 무대", base: 0.12 },
-  mid: { name: "중견 기획사", short: "중견", description: "탄탄한 시스템과 현실적인 데뷔 기회", base: 0.45 },
-  indie: { name: "중소 · 부티크 레이블", short: "중소", description: "문은 넓고, 가끔 기적이 숨어 있어요", base: 0.78 },
-  global: { name: "해외 기획사", short: "해외", description: "국경을 넘는 활동, 국내 인지도는 천천히", base: 0.4 },
+export const TIERS: Record<Tier, { name: string; short: string; description: string; base: number; difficulty: "쉬움" | "보통" | "어려움" }> = {
+  major: { name: "대형 기획사", short: "대형", description: "들어가기 어렵지만 데뷔하면 세계가 무대", base: 0.12, difficulty: "쉬움" },
+  mid: { name: "중견 기획사", short: "중견", description: "탄탄한 시스템과 현실적인 데뷔 기회", base: 0.45, difficulty: "보통" },
+  indie: { name: "중소 · 부티크 레이블", short: "중소", description: "문은 넓고, 가끔 기적이 숨어 있어요", base: 0.78, difficulty: "어려움" },
+  global: { name: "해외 기획사", short: "해외", description: "국경을 넘는 활동, 국내 인지도는 천천히", base: 0.4, difficulty: "보통" },
 };
 
 export const AGENCIES: Agency[] = [

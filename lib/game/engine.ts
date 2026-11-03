@@ -6,7 +6,7 @@ import { ageOf, conditionOf, eraScale, isSecondHalf, MAX_TURN, periodLabel, year
 import { rng, between, pick } from "./rng.ts";
 import { applyEffects, addReputation, diff, log, snapshot, type Snapshot } from "./effects.ts";
 import { CONCEPTS, MAIN_STAT, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
-import { makeAlbum, albumSummary, ALBUM_NAME_PATTERN } from "./album.ts";
+import { makeAlbum, albumSummary, addShowWin, winBase, ALBUM_NAME_PATTERN } from "./album.ts";
 import type { Award } from "./types.ts";
 import { yearEndAwards } from "./awards.ts";
 import { DEBUT_COST, TRAINEE_COST_PER_TURN, updateSettlement } from "./economy.ts";
@@ -55,7 +55,7 @@ function popularityTarget(c: Career): number {
   // 코어 팬덤 5천 → 약 27, 35만 → 약 46, 150만 → 약 52, 500만 → 약 56 (+평판·차트 보정)
   const base = 8.3 * Math.log10(c.fans / eraScale(yearOf(c)) + 1) + Math.max(0, c.reputation) * 0.12;
   const recent = c.albums.filter((a) => c.turn - a.turn <= 2);
-  const chart = Math.min(10, recent.reduce((s, a) => s + (a.melon !== null ? Math.max(0, 30 - a.melon) / 5 : 0) + (a.billboard !== null ? 5 : 0), 0));
+  const chart = Math.min(18, recent.reduce((s, a) => s + (a.melon !== null ? Math.max(0, 50 - a.melon) / 4 : 0) + a.wins * 1 + (a.billboard !== null ? 5 : 0), 0));
   const t = (base + chart) * (c.stage === "idol" ? 1 : 0.5);
   return Math.max(0, Math.min(100, t));
 }
@@ -350,6 +350,22 @@ function writeOffIfBankrupt(c: Career) {
   delete c.flags.bankruptTurn;
 }
 
+function debutStageEvent(): ActiveEvent {
+  return {
+    id: "debut-stage",
+    title: "음악방송 데뷔 무대",
+    text: "첫 음악방송 무대예요. 신인은 대부분 1위 후보에도 오르지 못하지만, 데뷔 무대 하나로 이름을 알리기도 해요. 어디에 가장 신경 쓸까요?",
+    scene: "mc",
+    public: true,
+    choices: [
+      { id: "vocal", label: "흔들림 없는 라이브", hint: "보컬이 좋을수록 '라이브 잘하는 신인'으로 화제가 돼요", risk: "safe", op: "debutstage:vocal" },
+      { id: "dance", label: "칼군무 퍼포먼스", hint: "댄스가 좋을수록 직캠이 퍼져요", risk: "safe", op: "debutstage:dance" },
+      { id: "visual", label: "엔딩 요정 · 카메라 워킹", hint: "비주얼이 좋을수록 엔딩 캡처가 돌아요", risk: "safe", op: "debutstage:visual" },
+      { id: "variety", label: "무대 밖 매력 · 인터뷰", hint: "예능감이 좋을수록 대기실 영상이 인기를 끌어요", risk: "safe", op: "debutstage:variety" },
+    ],
+  };
+}
+
 function joinAgency(c: Career, agencyId: string) {
   c.agencyId = agencyId;
   c.agencyJoinedTurn = c.turn;
@@ -463,6 +479,34 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     c.flags.debutDeferredUntil = c.turn + 2;
     headline = "데뷔를 미뤘어요";
     text = "한 번 더 준비하기로 했어요. 다음 평가에서 다시 제안받아요.";
+  } else if (op.startsWith("comeback:") && event.id === "debut-concept") {
+    // 데뷔 앨범은 바로 내지 않고 쇼케이스 → 음악방송 데뷔 무대를 거친 뒤 발매한다
+    const chosen = (extra.albumName ?? "").trim();
+    if (chosen && !ALBUM_NAME_PATTERN.test(chosen)) throw new GameError("앨범 이름은 1~20자로 입력해주세요.");
+    c.debutPlan = { concept: op.slice(9) as Concept, albumName: chosen };
+    headline = `데뷔 콘셉트: ${CONCEPTS.find((x) => x.id === op.slice(9))?.name ?? ""}`;
+    text = "타이틀곡과 콘셉트가 정해졌어요. 이제 데뷔 쇼케이스를 준비해요.";
+    c.pending = activate(eventById("showcase")!);
+    c.seen.showcase = c.turn;
+  } else if (op.startsWith("showcase:")) {
+    headline = op === "showcase:open" ? "무료 공개 쇼케이스" : "팬 초청 유료 쇼케이스";
+    text = "쇼케이스를 마쳤어요. 이번 주 음악방송에서 데뷔 무대를 가져요.";
+    c.pending = debutStageEvent();
+  } else if (op.startsWith("debutstage:")) {
+    const stat = op.slice(11) as StatKey;
+    const plan = c.debutPlan ?? { concept: "fresh" as Concept, albumName: "" };
+    // 신경 쓴 부분이 내 강점이면 1위 가능성이 조금 오른다. 그래도 신인 1위는 드물다
+    c.flags.stageBonus = Math.max(0, (c.stats[stat] - 55) / 100);
+    const album = makeAlbum(c, plan.concept, plan.albumName);
+    c.debutPlan = null;
+    headline = `데뷔 앨범 ${album.name}`;
+    text = `${STAT_NAMES[stat]}에 힘준 데뷔 무대를 마쳤어요. ${albumSummary(album)}`;
+    tone = album.wins > 0 || (album.melon !== null && album.melon <= 10) ? "good" : "neutral";
+    notes.push(album.wins > 0 ? `신인이 데뷔 활동에서 1위를 했어요. 정말 드문 일이에요.` : album.melon !== null ? `데뷔곡이 멜론 ${album.melon}위에 올랐어요.` : "데뷔곡은 아직 차트에 오르지 못했어요. 대부분의 신인이 그래요.");
+    if (c.flags.albumViral === c.turn) { tone = "good"; notes.push("타이틀곡이 숏폼에서 터졌어요. 예상보다 훨씬 많은 사람이 들었어요."); }
+    if (c.flags.albumFlop === c.turn) { tone = "bad"; notes.push("데뷔 앨범 반응이 차가웠어요."); }
+    log(c, headline, albumSummary(album), "release");
+    if (album.wins > 0) log(c, `음악방송 1위 ${album.wins}회`, `${album.shows?.join(" · ")} 1위 트로피를 들었어요.`, "award");
   } else if (op.startsWith("comeback:")) {
     const chosen = (extra.albumName ?? "").trim();
     if (chosen && !ALBUM_NAME_PATTERN.test(chosen)) throw new GameError("앨범 이름은 1~20자로 입력해주세요.");
@@ -517,8 +561,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
   } else if (op === "rechart") {
     const album = c.albums[c.albums.length - 1];
     album.melon = 1;
-    album.wins += 2;
-    c.musicWins += 2;
+    addShowWin(c, album, rng(c));
+    addShowWin(c, album, rng(c));
     c.peakMelon = 1;
     c.fans = Math.round(c.fans * between(c, 2.5, 3));
     c.popularity = Math.min(100, c.popularity + 20);
@@ -531,16 +575,15 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     log(c, headline, text, "award");
   } else if (op.startsWith("musicshow:")) {
     const album = c.albums[c.albums.length - 1];
-    const base = Math.max(0.15, Math.min(0.9, 0.3 + album.sales / 300000 + (album.melon !== null ? Math.max(0, 40 - album.melon) / 60 : 0)));
-    const p = op === "musicshow:push" ? Math.min(0.95, base + 0.25) : base;
+    const base = Math.min(0.7, winBase(c, album.melon, album.sales) * 1.2);
+    const p = op === "musicshow:push" ? Math.min(0.75, base + 0.1) : base;
     if (op === "musicshow:push" && rng(c) < 0.3) { addReputation(c, -2); notes.push("일부 커뮤니티에서 과한 총공이라는 말이 나왔어요."); }
-    if (rng(c) < p) {
-      album.wins += 1;
-      c.musicWins += 1;
+    const show = rng(c) < p ? addShowWin(c, album, rng(c)) : null;
+    if (show) {
       applyEffects(c, { fansMul: 1.08 });
       c.popularity += 3;
-      headline = "음악방송 1위!";
-      text = `${album.name}(으)로 1위 트로피를 들었어요. 앵콜 무대에서 팬들이 떼창을 했어요.`;
+      headline = `${show} 1위!`;
+      text = `${album.name}(으)로 ${show} 1위 트로피를 들었어요. 앵콜 무대에서 팬들이 떼창을 했어요.`;
       tone = "good";
       log(c, headline, text, "award");
     } else {

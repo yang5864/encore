@@ -6,6 +6,37 @@ import { eraScale, yearOf } from "./format.ts";
 
 const ALBUM_TITLES = ["FIRST LIGHT", "BLOOM", "NEON HOUR", "AFTERGLOW", "ORBIT", "MIDNIGHT CALL", "WAVE", "HEARTLINE", "SUPERNOVA", "ENCORE", "PRISM", "DAYBREAK", "GRAVITY", "PARADE", "LANTERN"];
 
+/** 대중적인 주간 음악방송 6개. 케이블 순위 프로그램이 신인에게 상대적으로 열려 있다. */
+export const MUSIC_SHOWS: { name: string; ease: number }[] = [
+  { name: "더쇼", ease: 1.6 },
+  { name: "쇼챔피언", ease: 1.5 },
+  { name: "엠카운트다운", ease: 1.0 },
+  { name: "뮤직뱅크", ease: 0.9 },
+  { name: "쇼! 음악중심", ease: 0.85 },
+  { name: "인기가요", ease: 0.8 },
+];
+
+/** 이번 활동의 1위 기본 확률. 음원 순위·판매량·인기도가 함께 받쳐줘야 한다. */
+export function winBase(c: Career, melon: number | null, sales: number): number {
+  const era = eraScale(yearOf(c));
+  const chart = melon === null ? 0.01 : melon <= 5 ? 0.55 : melon <= 10 ? 0.4 : melon <= 30 ? 0.2 : melon <= 60 ? 0.08 : 0.03;
+  const rookie = c.albums.length === 0 ? 0.3 : c.albums.length === 1 ? 0.6 : 1; // 신인은 팬덤이 작아 투표·음원 점수가 약하다
+  const p = (chart + Math.min(0.25, sales / era / 2000000 * 0.25) + Math.max(-0.05, (c.popularity - 55) / 200)) * rookie * (1 + (c.flags.stageBonus ?? 0));
+  return Math.max(0.005, Math.min(0.85, p));
+}
+
+/** 아직 1위 못 한 방송 중 하나를 골라 1위를 더한다. 모두 했으면 null. */
+export function addShowWin(c: Career, album: Album, pick: number): string | null {
+  const won = new Set(album.shows ?? []);
+  const left = MUSIC_SHOWS.filter((s) => !won.has(s.name));
+  if (!left.length) return null;
+  const show = left[Math.floor(pick * left.length)].name;
+  album.shows = [...(album.shows ?? []), show];
+  album.wins = album.shows.length;
+  c.musicWins += 1;
+  return show;
+}
+
 export function albumQuality(c: Career, concept: Concept): number {
   const s = c.stats;
   const base =
@@ -56,7 +87,8 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string): Alb
 
   const popularity = c.popularity;
   const chartScore = quality * 0.5 + Math.log10(c.fans / era + 100) * 7.5 + popularity * 0.25 + (concept === "fresh" ? 3 : 0) + rng(c) * 12 + (viral ? 18 : flop ? -15 : 0);
-  const melon = chartScore >= 78 ? Math.max(1, Math.round(100 - (chartScore - 78) * 5.5)) : null;
+  // 멜론 TOP100: 진입 자체가 쉽지 않고, 1위는 팬덤·인기·완성도가 모두 받쳐야 한다
+  const melon = chartScore >= 86 ? Math.max(1, Math.round(100 - (chartScore - 86) * 5)) : null;
 
   let billboard: number | null = null;
   if (popularity >= 70 && c.fans / era >= 1500000) {
@@ -68,20 +100,19 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string): Alb
     }
   }
 
-  // 음악방송 1위 (최대 3회)
-  let wins = 0;
-  if (melon !== null && melon <= 30 || sales / era >= 150000) {
-    const p = Math.max(0.08, Math.min(0.9, 0.08 + sales / era / 2500000 + (melon !== null ? Math.max(0, 40 - melon) / 90 : 0)));
-    for (let i = 0; i < 3; i++) if (rng(c) < p) wins++;
-    if (wins === 0 && rng(c) < 0.5) c.flags.candidate = c.turn + 1; // 다음 턴 시작 시 1위 후보 이벤트
-  }
+  // 음악방송 1위: 6개 방송을 각각 따로 겨룬다 (방송마다 최대 1회)
+  const base = winBase(c, melon, sales);
+  const shows = MUSIC_SHOWS.filter((s) => rng(c) < Math.min(0.9, base * s.ease)).map((s) => s.name);
+  const wins = shows.length;
+  if (wins === 0 && base >= 0.1 && rng(c) < 0.5) c.flags.candidate = c.turn + 1; // 다음 턴 시작 시 1위 후보 이벤트
+  delete c.flags.stageBonus;
 
   // 억: 장당 1.5만원 × 총판 배수 2.2 × 유통·제작 공제 후 회사 몫 40% ≈ 장당 1.3만원
   const revenue = Math.round(sales * 0.000132 * 10) / 10;
   const index = c.albums.length;
   const trimmed = (customName ?? "").trim();
   const name = trimmed ? trimmed : suggestAlbumName(c);
-  const album: Album = { id: `${c.id}-${index}`, turn: c.turn, name, concept, quality, sales, melon, billboard, wins, cost, revenue };
+  const album: Album = { id: `${c.id}-${index}`, turn: c.turn, name, concept, quality, sales, melon, billboard, wins, shows, cost, revenue };
   c.albums.push(album);
   c.lastReleaseTurn = c.turn;
   c.money.invested += cost;
@@ -108,7 +139,7 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string): Alb
 export function albumSummary(a: Album): string {
   const parts = [`초동 ${a.sales.toLocaleString("ko-KR")}장`];
   parts.push(a.melon !== null ? `멜론 최고 ${a.melon}위` : "멜론 차트 밖");
-  if (a.wins) parts.push(`음방 1위 ${a.wins}회`);
+  if (a.wins) parts.push(`음방 1위 ${a.wins}회${a.shows?.length ? ` (${a.shows.join(" · ")})` : ""}`);
   if (a.billboard !== null) parts.push(`빌보드 Hot 100 ${a.billboard}위`);
   return parts.join(" · ");
 }

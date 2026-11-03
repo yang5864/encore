@@ -12,13 +12,13 @@ export const IDOL_EVENTS: GameEventDef[] = [
     stage: "idol",
     kind: "scheduled",
     title: "데뷔 쇼케이스",
-    text: "데뷔 앨범 발매일, 첫 쇼케이스예요. 무료 공개 쇼케이스로 크게 알릴지, 팬 초청 유료 쇼케이스로 첫 팬덤을 단단히 할지 정해요.",
+    text: "데뷔 앨범 발매 당일, 첫 쇼케이스예요. 무료 공개 쇼케이스로 크게 알릴지, 팬 초청 유료 쇼케이스로 첫 팬덤을 단단히 할지 정해요.",
     scene: "debut",
     public: true,
-    when: (c) => since(c) === 1 && !c.seen.showcase,
+    when: () => false, // 데뷔 콘셉트를 고른 직후 엔진이 이어서 띄운다
     choices: [
-      { id: "open", label: "무료 공개 쇼케이스", hint: "대중 인지도가 오르고 새 팬이 많이 들어와요", risk: "bold", effects: { fansMul: 1.25, popularity: 6, reputation: 4, health: -6 } },
-      { id: "fan", label: "팬 초청 유료 쇼케이스", hint: "첫 수익이 생기고 팬덤 결속이 단단해져요", risk: "safe", effects: { fansMul: 1.1, revenue: 1.5, reputation: 3, mental: 6 } },
+      { id: "open", label: "무료 공개 쇼케이스", hint: "대중 인지도가 오르고 새 팬이 많이 들어와요", risk: "bold", effects: { fansMul: 1.25, popularity: 6, reputation: 4, health: -6 }, op: "showcase:open" },
+      { id: "fan", label: "팬 초청 유료 쇼케이스", hint: "첫 수익이 생기고 팬덤 결속이 단단해져요", risk: "safe", effects: { fansMul: 1.1, revenue: 1.5, reputation: 3, mental: 6 }, op: "showcase:fan" },
     ],
   },
   {

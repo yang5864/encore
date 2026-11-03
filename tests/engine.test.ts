@@ -128,8 +128,15 @@ test("데뷔 평가는 소속 후 2턴마다, 기준 OVR을 넘으면 제안", (
   assert.equal(debuted.stage, "idol");
   assert.equal(debuted.pending?.id, "debut-concept");
   assert.ok(debuted.milestones.includes("debut"));
-  const released = resolveChoice(debuted, "fresh");
+  const planned = resolveChoice(debuted, "fresh");
+  assert.equal(planned.albums.length, 0, "콘셉트만 정하고 아직 발매하지 않는다");
+  assert.equal(planned.pending?.id, "showcase");
+  const showcased = resolveChoice(planned, "open");
+  assert.equal(showcased.pending?.id, "debut-stage");
+  const released = resolveChoice(showcased, "dance");
   assert.equal(released.albums.length, 1);
+  assert.equal(released.pending, null);
+  assert.ok(released.albums[0].wins <= 6);
   assert.ok(released.money.invested > 5, "데뷔 제작비와 앨범 제작비가 억 단위로 쌓인다 (2007년 시대 보정 포함)");
 });
 

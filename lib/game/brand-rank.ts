@@ -64,10 +64,29 @@ export function popularityToRealIndex(popularity: number, rows: RealEntry[]): nu
   return Math.round(floor * Math.pow(top / floor, Math.pow(t, 1.6)));
 }
 
+type RankInput = Pick<Career, "popularity" | "name" | "groupName" | "stage"> & Partial<Pick<Career, "albums" | "turn">>;
+
+/**
+ * 브랜드 평판은 인기도에 최근 1년 활동 성과를 더해 매긴다.
+ * 멜론 상위권·음방 1위·빌보드는 화제성으로 바로 반영돼 순위가 다른 지표와 같이 움직인다.
+ */
+export function brandPower(c: RankInput): number {
+  if (!c.albums?.length || c.turn === undefined) return c.popularity;
+  let buzz = 0;
+  for (const a of c.albums) {
+    if (c.turn - a.turn > 2) continue;
+    const fresh = c.turn - a.turn <= 1 ? 1 : 0.5;
+    const melon = a.melon === null ? 0 : a.melon <= 5 ? 18 : a.melon <= 10 ? 14 : a.melon <= 30 ? 9 : a.melon <= 60 ? 5 : 2;
+    buzz = Math.max(buzz, (melon + Math.min(9, a.wins * 1.5) + (a.billboard !== null ? 8 : 0)) * fresh);
+  }
+  return Math.min(100, c.popularity + buzz);
+}
+
 const myName = (c: Pick<Career, "name" | "groupName" | "stage">) => displayName(c);
 
 /** 그 시즌의 전체 순위(나 포함). 2023년 이후는 실제 월간 자료, 그 전은 게임 추정표. */
-export function rankingFor(c: Pick<Career, "popularity" | "name" | "groupName" | "stage">, year: number, secondHalf: boolean): Ranking {
+export function rankingFor(input: RankInput, year: number, secondHalf: boolean): Ranking {
+  const c = { ...input, popularity: brandPower(input) };
   const month = realMonthFor(year, secondHalf);
   let entries: RankedEntry[];
   let source: RankingSource;
@@ -98,7 +117,7 @@ const sourceKey = (r: Ranking) => (r.source.kind === "real" ? r.source.month : r
  * 같은 자료를 쓰는 시즌은 건너뛰고 자료가 바뀐 가장 가까운 이전 시점과 비교한다.
  * 내 변동은 지난 시즌 인기도(prevPopularity)로 계산한다.
  */
-export function rankChanges(c: Pick<Career, "popularity" | "name" | "groupName" | "stage">, year: number, secondHalf: boolean, prevPopularity?: number): Map<string, number | null> {
+export function rankChanges(c: RankInput, year: number, secondHalf: boolean, prevPopularity?: number): Map<string, number | null> {
   const now = rankingFor(c, year, secondHalf);
   let y = year;
   let h = secondHalf;
@@ -107,7 +126,7 @@ export function rankChanges(c: Pick<Career, "popularity" | "name" | "groupName" 
     if (h) h = false;
     else { y -= 1; h = true; }
     if (y < 2006) break;
-    const r = rankingFor({ ...c, popularity: prevPopularity ?? c.popularity }, y, h);
+    const r = rankingFor({ ...c, popularity: prevPopularity ?? c.popularity, turn: c.turn === undefined ? undefined : c.turn - 1, albums: c.albums?.filter((a) => c.turn === undefined || a.turn < c.turn) }, y, h);
     if (sourceKey(r) !== sourceKey(now)) { prev = r; break; }
   }
   const out = new Map<string, number | null>();
