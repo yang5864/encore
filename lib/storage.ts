@@ -112,7 +112,7 @@ export function toRecord(c: Career, now = Date.now()): CareerRecord {
     awards: c.awards.length,
     wins: c.musicWins,
     albums: c.albums.length,
-    age: 14 + Math.floor(c.turn / 2),
+    age: 12 + Math.floor(c.turn / 2),
     retiredAt: now,
   };
 }

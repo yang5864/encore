@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useCareer } from "@/hooks/useCareer";
 import { Button, FixedCta } from "@/components/ui/Button";
 import { ProfileCard } from "@/components/play/ProfileCard";
+import { RankCard } from "@/components/play/RankCard";
+import { Fireworks } from "@/components/Fireworks";
 import { StatsCard } from "@/components/play/StatsCard";
 import { SettlementCard } from "@/components/play/SettlementCard";
 import { FocusCard, focusIdOf, type FocusSelection } from "@/components/play/FocusCard";
@@ -31,6 +33,7 @@ export default function PlayPage() {
   const [milestoneQueue, setMilestoneQueue] = useState<MilestoneId[]>([]);
   const [seenResultKey, setSeenResultKey] = useState<string | null>(null);
   const [lastResult, setLastResult] = useState<TurnResult | null>(null);
+  const [fireworks, setFireworks] = useState(false);
 
   useEffect(() => {
     if (ready && !career) router.replace("/");
@@ -58,6 +61,7 @@ export default function PlayPage() {
       setMilestoneQueue(career.result.milestones);
       setSeenResultKey(resultKey);
       setLastResult(career.result);
+      if ((career.result.awards?.length ?? 0) > 0 || career.result.milestones.some((m) => m === "daesang" || m === "legend" || m === "firstWin")) setFireworks(true);
     }
   }, [career, resultKey, seenResultKey]);
 
@@ -105,6 +109,7 @@ export default function PlayPage() {
 
       <div className="flex flex-col gap-3">
         <ProfileCard career={career} onAgency={() => setAgencyOpen(true)} />
+        {career.stage === "idol" && <RankCard career={career} />}
         <StatsCard career={career} changes={lastResult?.changes} />
         {career.stage === "idol" || career.stage === "retired" ? <SettlementCard career={career} /> : null}
         {career.stage === "retired" ? (
@@ -173,6 +178,7 @@ export default function PlayPage() {
           router.replace("/");
         }}
       />
+      {fireworks && <Fireworks onDone={() => setFireworks(false)} />}
       {coach && (
         <CoachMarks
           onDone={() => {

@@ -1,4 +1,5 @@
 import type { Career } from "./types.ts";
+import { eraScale, yearOf } from "./format.ts";
 
 /**
  * 공개 지표 모델. 실제 2024~2026 K-POP 규모를 기준으로 맞췄다.
@@ -14,20 +15,23 @@ export const EMPTY_METRICS: Metrics = { instagram: 0, youtube: 0, spotify: 0 };
 export const METRIC_CAPS: Metrics = { instagram: 100_000_000, youtube: 90_000_000, spotify: 80_000_000 };
 
 export function metricTargets(c: Pick<Career, "fans" | "popularity" | "stage" | "albums" | "turn" | "peakBillboard" | "flags">): Metrics {
+  const year = yearOf(c);
+  const era = eraScale(year);
+  // 플랫폼이 존재하기 전에는 0: 유튜브 2009년부터, 인스타그램 2012년부터, 스포티파이 국내 2021년부터
   const fans = Math.max(0, c.fans);
   const pop = Math.max(0, c.popularity);
   if (c.stage === "free" || c.stage === "trainee") {
     // 프리 데뷔 계정: 작은 팬덤의 1.5배 정도, 유튜브·스포티파이는 없음
-    return { instagram: Math.round(fans * 1.5), youtube: 0, spotify: 0 };
+    return { instagram: year >= 2012 ? Math.round(fans * 1.5) : 0, youtube: 0, spotify: 0 };
   }
   const recentHit = c.albums.filter((a) => c.turn - a.turn <= 2).reduce((s, a) => s + (a.melon !== null ? Math.max(0, 30 - a.melon) : 0) + (a.billboard !== null ? 40 : 0), 0);
   const instagram = fans * (3 + pop / 20) + (c.peakBillboard !== null ? 2_000_000 : 0);
   const youtube = fans * (2 + pop / 25) + recentHit * 20_000;
   const spotify = fans * (1.5 + pop / 15) + recentHit * 60_000 + (c.peakBillboard !== null ? 3_000_000 : 0);
   return {
-    instagram: Math.min(METRIC_CAPS.instagram, Math.round(instagram)),
-    youtube: Math.min(METRIC_CAPS.youtube, Math.round(youtube)),
-    spotify: Math.min(METRIC_CAPS.spotify, Math.round(spotify)),
+    instagram: year >= 2012 ? Math.min(METRIC_CAPS.instagram, Math.round(instagram * era)) : 0,
+    youtube: year >= 2009 ? Math.min(METRIC_CAPS.youtube, Math.round(youtube * era)) : 0,
+    spotify: year >= 2021 ? Math.min(METRIC_CAPS.spotify, Math.round(spotify)) : 0,
   };
 }
 

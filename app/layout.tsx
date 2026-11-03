@@ -5,7 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "ENCORE — 연습생부터 레전드까지",
   description:
-    "14살 무소속 지망생에서 시작하는 나만의 K-POP 아이돌 인생. 기획사 오디션, 데뷔, 음악방송 1위, 대상까지 시즌마다 쌓이는 선택이 커리어가 됩니다.",
+    "12살 무소속 지망생에서 시작하는 나만의 K-POP 아이돌 인생. 기획사 오디션, 데뷔, 음악방송 1위, 대상까지 시즌마다 쌓이는 선택이 커리어가 됩니다.",
   icons: { icon: "/favicon.svg" },
 };
 

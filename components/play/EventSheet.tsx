@@ -8,11 +8,13 @@ import { choiceLock } from "@/lib/game/engine";
 import { EventArt } from "@/components/EventArt";
 import type { Career, Signature } from "@/lib/game/types";
 import { ContractView } from "./ContractView";
+import { AlbumNamePicker } from "./AlbumNamePicker";
+import { suggestAlbumName } from "@/lib/game/album";
 
 type Props = {
   career: Career;
   open: boolean;
-  onChoose: (choiceId: string, extra?: { groupName?: string; signature?: Signature }) => void;
+  onChoose: (choiceId: string, extra?: { groupName?: string; signature?: Signature; albumName?: string }) => void;
 };
 
 export function EventSheet({ career, open, onChoose }: Props) {
@@ -20,10 +22,13 @@ export function EventSheet({ career, open, onChoose }: Props) {
   const [selected, setSelected] = useState<string | null>(null);
   const [groupName, setGroupName] = useState("");
   const [contract, setContract] = useState(false);
+  const [customAlbum, setCustomAlbum] = useState(false);
+  const [albumName, setAlbumName] = useState("");
   if (!event) return null;
+  const isAlbum = event.id === "debut-concept";
   const choice = event.choices.find((c) => c.id === selected) ?? null;
   const needsName = choice?.op === "debut" && !choice.sign;
-  const canSubmit = !!choice && (!needsName || groupName.trim().length > 0);
+  const canSubmit = !!choice && (!needsName || groupName.trim().length > 0) && (!isAlbum || !customAlbum || albumName.trim().length > 0);
   const declineChoice = event.choices.find((c) => c.op === "decline") ?? null;
 
   const submit = () => {
@@ -32,9 +37,11 @@ export function EventSheet({ career, open, onChoose }: Props) {
       setContract(true);
       return;
     }
-    onChoose(choice.id, needsName ? { groupName } : undefined);
+    onChoose(choice.id, { groupName: needsName ? groupName : undefined, albumName: isAlbum && customAlbum ? albumName : undefined });
     setSelected(null);
     setGroupName("");
+    setAlbumName("");
+    setCustomAlbum(false);
   };
 
   return (
@@ -91,6 +98,12 @@ export function EventSheet({ career, open, onChoose }: Props) {
             })}
           </div>
 
+          {isAlbum && (
+            <div className="mt-4 fade-up">
+              <p className="t-cap mb-2">앨범 이름</p>
+              <AlbumNamePicker suggested={suggestAlbumName(career)} custom={customAlbum} name={albumName} onChange={(c, n) => { setCustomAlbum(c); setAlbumName(n); }} />
+            </div>
+          )}
           {needsName && (
             <div className="mt-4 fade-up">
               <label className="t-cap block mb-1.5" htmlFor="group-name">그룹 이름</label>

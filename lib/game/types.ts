@@ -83,6 +83,8 @@ export type TurnResult = {
   comments: Comment[];
   milestones: MilestoneId[];
   notes: string[];
+  /** 이번 결과에서 받은 상 (폭죽 효과용) */
+  awards?: Award[];
 };
 
 export type Album = {

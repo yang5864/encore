@@ -47,9 +47,9 @@ export function useCareer() {
     clearError: () => setError(null),
     commit,
     advance: (focusId: string) => run((c) => advanceTurn(c, focusId)),
-    choose: (choiceId: string, extra?: { groupName?: string; signature?: Signature }) =>
+    choose: (choiceId: string, extra?: { groupName?: string; signature?: Signature; albumName?: string }) =>
       run((c) => {
-        const next = resolveChoice(c, choiceId, { groupName: extra?.groupName });
+        const next = resolveChoice(c, choiceId, { groupName: extra?.groupName, albumName: extra?.albumName });
         if (extra?.signature && !next.signature) next.signature = extra.signature;
         return next;
       }),

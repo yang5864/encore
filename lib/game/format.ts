@@ -1,8 +1,8 @@
 import type { Career } from "./types.ts";
 
-export const START_YEAR = 2027;
-export const START_AGE = 14;
-export const MAX_TURN = (38 - START_AGE) * 2 + 1; // 38세 하반기
+export const START_YEAR = 2006;
+export const START_AGE = 12;
+export const MAX_TURN = (32 - START_AGE) * 2 + 1; // 32세 하반기 = 2026년 하반기
 
 export const ageOf = (c: Pick<Career, "turn">) => START_AGE + Math.floor(c.turn / 2);
 export const yearOf = (c: Pick<Career, "turn">) => START_YEAR + Math.floor(c.turn / 2);
@@ -71,4 +71,12 @@ export function careerPhase(c: Pick<Career, "stage" | "turn" | "debutTurn" | "fl
   if (since < 6) return "도약기";
   if (since < 12) return "전성기";
   return "재계약기";
+}
+
+/** 시대 보정: 음반·팬덤 규모는 2006년 약 30% → 2021년 이후 100%. 인기도(0~100)는 시대와 무관하다. */
+export function eraScale(year: number): number {
+  if (year <= 2012) return 0.3;
+  if (year <= 2017) return 0.3 + ((year - 2012) / 5) * 0.3;
+  if (year <= 2021) return 0.6 + ((year - 2017) / 4) * 0.4;
+  return 1;
 }

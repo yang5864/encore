@@ -2,11 +2,12 @@ import type { ActiveEvent, Career, ChoiceDef, Comment, Concept, Effects, Milesto
 import { GameError } from "./types.ts";
 import { AGENCIES, agencyById, auditionChance, TIERS } from "./agencies.ts";
 import { STAT_KEYS, STAT_NAMES, overall } from "./stats.ts";
-import { ageOf, conditionOf, isSecondHalf, MAX_TURN, periodLabel, yearOf } from "./format.ts";
+import { ageOf, conditionOf, eraScale, isSecondHalf, MAX_TURN, periodLabel, yearOf } from "./format.ts";
 import { rng, between, pick } from "./rng.ts";
 import { applyEffects, addReputation, diff, log, snapshot, type Snapshot } from "./effects.ts";
 import { CONCEPTS, MAIN_STAT, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
-import { makeAlbum, albumSummary } from "./album.ts";
+import { makeAlbum, albumSummary, ALBUM_NAME_PATTERN } from "./album.ts";
+import type { Award } from "./types.ts";
 import { yearEndAwards } from "./awards.ts";
 import { DEBUT_COST, TRAINEE_COST_PER_TURN, updateSettlement } from "./economy.ts";
 import { checkMilestones } from "./milestones.ts";
@@ -44,14 +45,14 @@ function grow(c: Career, stat: StatKey, amount: number) {
 
 function popularityTarget(c: Career): number {
   // 코어 팬덤 5천 → 약 27, 35만 → 약 46, 150만 → 약 52, 500만 → 약 56 (+평판·차트 보정)
-  const base = 8.3 * Math.log10(c.fans + 1) + Math.max(0, c.reputation) * 0.12;
+  const base = 8.3 * Math.log10(c.fans / eraScale(yearOf(c)) + 1) + Math.max(0, c.reputation) * 0.12;
   const recent = c.albums.filter((a) => c.turn - a.turn <= 2);
   const chart = Math.min(10, recent.reduce((s, a) => s + (a.melon !== null ? Math.max(0, 30 - a.melon) / 5 : 0) + (a.billboard !== null ? 5 : 0), 0));
   const t = (base + chart) * (c.stage === "idol" ? 1 : 0.5);
   return Math.max(0, Math.min(100, t));
 }
 
-function buildResult(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; milestones?: MilestoneId[] } = {}): TurnResult {
+function buildResult(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; milestones?: MilestoneId[]; awards?: Award[] } = {}): TurnResult {
   const after = snapshot(c);
   return {
     headline,
@@ -62,10 +63,11 @@ function buildResult(c: Career, before: Snapshot, headline: string, text: string
     comments: opts.comments ?? [],
     milestones: opts.milestones ?? [],
     notes: opts.notes ?? [],
+    awards: opts.awards?.length ? opts.awards : undefined,
   };
 }
 
-function finish(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[] } = {}) {
+function finish(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; awards?: Award[] } = {}) {
   updateSettlement(c);
   updateMetrics(c);
   c.peakPopularity = Math.max(c.peakPopularity, Math.round(c.popularity));
@@ -86,6 +88,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   let tone: Tone = "neutral";
   let scene: string | undefined;
   let comments: Comment[] = [];
+  let wonAwards: Award[] = [];
 
   // 군 복무: 한 번에 건너뛴다
   if (c.militaryUntil > c.turn) {
@@ -102,7 +105,9 @@ export function advanceTurn(original: Career, focusId: string): Career {
     return c;
   }
 
-  const [kind, arg] = (c.hiatusUntil > c.turn ? "rest" : focusId).split(":");
+  const [kind, arg, ...restParts] = (c.hiatusUntil > c.turn ? "rest" : focusId).split(":");
+  const albumName = restParts.length ? decodeURIComponent(restParts.join(":")) : "";
+  if (albumName && !ALBUM_NAME_PATTERN.test(albumName)) throw new GameError("앨범 이름은 1~20자로 입력해주세요.");
   let headline = focusLabel(kind === "train" && !arg ? "train:all" : focusId);
   let text = "";
   const period = periodLabel(c);
@@ -128,7 +133,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       headline = "휴식";
     } else throw new GameError("선택할 수 없는 계획이에요.");
     if (c.stage === "trainee") {
-      c.money.invested += TRAINEE_COST_PER_TURN;
+      c.money.invested += Math.round(TRAINEE_COST_PER_TURN * eraScale(yearOf(c)) * 10) / 10;
       c.trust = Math.min(100, c.trust + 4);
     }
   } else if (c.stage === "idol") {
@@ -136,7 +141,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       if (c.lastReleaseTurn === c.turn) throw new GameError("이번 시즌에 이미 앨범을 냈어요.");
       const concept = arg as Concept;
       if (!CONCEPTS.some((x) => x.id === concept)) throw new GameError("콘셉트를 골라주세요.");
-      const album = makeAlbum(c, concept);
+      const album = makeAlbum(c, concept, albumName);
       headline = `${c.albums.length === 1 ? "데뷔 앨범" : "새 앨범"} ${album.name}`;
       text = albumSummary(album);
       scene = "album";
@@ -244,6 +249,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   if (c.turn % 2 === 0 && c.stage === "idol") {
     const year = yearOf({ turn: c.turn - 1 });
     const won = yearEndAwards(c, year, [c.turn - 2, c.turn - 1]);
+    wonAwards = won;
     if (won.length) {
       for (const a of won) log(c, `${a.show} ${a.name}`, `${year}년 연말 시상식에서 ${a.name}을 받았어요.`, "award");
       notes.push(`${year} 연말 시상식: ${won.map((a) => `${a.show} ${a.name}`).join(", ")}`);
@@ -277,7 +283,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   if (c.turn > MAX_TURN) return retire(c, "긴 커리어의 마지막 앵콜을 마쳤어요.");
 
   c.pending = scheduleEvent(c);
-  finish(c, before, headline, text, tone, { scene, notes, comments });
+  finish(c, before, headline, text, tone, { scene, notes, comments, awards: wonAwards });
   return c;
 }
 
@@ -316,7 +322,7 @@ function joinAgency(c: Career, agencyId: string) {
   c.flags.debutDeferredUntil = 0;
 }
 
-export function resolveChoice(original: Career, choiceId: string, extra: { groupName?: string } = {}): Career {
+export function resolveChoice(original: Career, choiceId: string, extra: { groupName?: string; albumName?: string } = {}): Career {
   const c = clone(original);
   if (c.stage === "retired") throw new GameError("이미 완성된 인생예요.");
   const event = c.pending;
@@ -384,8 +390,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     c.stage = "idol";
     c.debutTurn = c.turn;
     c.contractEnd = c.turn + 14;
-    c.money.invested += Math.round(DEBUT_COST * a.budget * 10) / 10;
-    c.fans += Math.round(DEBUT_FANS[a.tier] * (0.8 + rng(c) * 0.4));
+    c.money.invested += Math.round(DEBUT_COST * a.budget * eraScale(yearOf(c)) * 10) / 10;
+    c.fans += Math.round(DEBUT_FANS[a.tier] * eraScale(yearOf(c)) * (0.8 + rng(c) * 0.4));
     c.popularity = Math.max(c.popularity, a.tier === "major" ? 30 : a.tier === "indie" ? 10 : 20);
     c.trust = Math.min(100, c.trust + 10);
     c.mental = Math.min(100, c.mental + 15);
@@ -400,7 +406,9 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     headline = "데뷔를 미뤘어요";
     text = "한 번 더 준비하기로 했어요. 다음 평가에서 다시 제안받아요.";
   } else if (op.startsWith("comeback:")) {
-    const album = makeAlbum(c, op.slice(9) as Concept);
+    const chosen = (extra.albumName ?? "").trim();
+    if (chosen && !ALBUM_NAME_PATTERN.test(chosen)) throw new GameError("앨범 이름은 1~20자로 입력해주세요.");
+    const album = makeAlbum(c, op.slice(9) as Concept, chosen);
     headline = `${c.albums.length === 1 ? "데뷔 앨범" : "새 앨범"} ${album.name}`;
     text = albumSummary(album);
     tone = album.wins > 0 || (album.melon !== null && album.melon <= 10) ? "good" : "neutral";

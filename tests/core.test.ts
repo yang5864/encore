@@ -43,8 +43,8 @@ test("createCareer는 무소속 지망생으로 시작하고 입력을 검증한
   assert.equal(c.stage, "free");
   assert.equal(c.agencyId, null);
   assert.equal(c.turn, 0);
-  assert.equal(ageOf(c), 14);
-  assert.equal(periodLabel(c), "2027년 상반기");
+  assert.equal(ageOf(c), 12);
+  assert.equal(periodLabel(c), "2006년 상반기");
   assert.throws(() => createCareer({ ...base, name: "<script>" }));
   assert.throws(() => createCareer({ ...base, stats: { ...base.stats, vocal: 10 } }));
   for (const k of STAT_KEYS) assert.ok(c.potential[k] >= 72 && c.potential[k] <= 99);
@@ -102,6 +102,7 @@ import { importJSON, exportJSON } from "../lib/storage.ts";
 test("공개 지표는 실제 규모에 맞고, 옛 저장본에도 보완된다", () => {
   const c = createCareer(base, 1);
   c.stage = "idol";
+  c.turn = 36; // 2024년
   c.fans = 350000;
   c.popularity = 45;
   const rookie = metricTargets(c);

@@ -8,8 +8,10 @@ import { CONCEPTS, focusOptions, type FocusOption } from "@/lib/game/focus";
 import { periodLabel } from "@/lib/game/format";
 import { STAT_KEYS, STAT_NAMES } from "@/lib/game/stats";
 import type { Career } from "@/lib/game/types";
+import { suggestAlbumName } from "@/lib/game/album";
+import { AlbumNamePicker } from "./AlbumNamePicker";
 
-export type FocusSelection = { id: string; stat?: string; concept?: string };
+export type FocusSelection = { id: string; stat?: string; concept?: string; albumName?: string; customName?: boolean };
 
 export function FocusCard({ career, value, onChange }: { career: Career; value: FocusSelection; onChange: (v: FocusSelection) => void }) {
   const options = focusOptions(career);
@@ -48,6 +50,11 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
           </div>
         )}
         {selected && o.picker === "concept" && (
+          <div className="mt-2 px-1">
+            <AlbumNamePicker suggested={suggestAlbumName(career)} custom={!!value.customName} name={value.albumName ?? ""} onChange={(custom, name) => onChange({ ...value, customName: custom, albumName: name })} />
+          </div>
+        )}
+        {selected && o.picker === "concept" && (
           <div className="grid grid-cols-2 gap-1.5 mt-2 px-1">
             {CONCEPTS.map((x) => (
               <button key={x.id} onClick={() => onChange({ ...value, concept: x.id })} className={cn("press text-left rounded-xl p-3", value.concept === x.id ? "bg-ink text-bg" : "bg-chip")}>
@@ -79,6 +86,6 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
 
 export function focusIdOf(v: FocusSelection): string {
   if (v.id === "train") return `train:${v.stat ?? "vocal"}`;
-  if (v.id === "comeback") return `comeback:${v.concept ?? "fresh"}`;
+  if (v.id === "comeback") return `comeback:${v.concept ?? "fresh"}${v.customName && v.albumName?.trim() ? `:${encodeURIComponent(v.albumName.trim())}` : ""}`;
   return v.id;
 }

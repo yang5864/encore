@@ -59,7 +59,7 @@ export default function HomePage() {
 
       {/* 히어로 */}
       <Card className="mt-3 fade-up !p-6">
-        <p className="t-cap">14살, 소속사 없는 지망생에서 시작해요</p>
+        <p className="t-cap">12살 중학교 1학년, 소속사 없는 지망생에서 시작해요</p>
         <h1 className="text-[22px] font-extrabold tracking-[-0.03em] leading-[1.15] mt-2">
           연습실에서<br />레전드까지
         </h1>

@@ -33,9 +33,12 @@ function idol(seed = 5): Career {
   return c;
 }
 
-/** Advance until no event is pending, always picking the first choice. */
+/** Advance until no event is pending. 스카우트 제의는 거절해 소속을 유지한다. */
 function settle(c: Career): Career {
-  while (c.pending) c = resolveChoice(c, c.pending.choices[0].id, { groupName: "LUMINA" });
+  while (c.pending) {
+    const stay = c.pending.choices.find((x) => x.id === "stay");
+    c = resolveChoice(c, (stay ?? c.pending.choices[0]).id, { groupName: "LUMINA" });
+  }
   return c;
 }
 
@@ -83,7 +86,8 @@ test("예약 이벤트가 있는 턴에는 이야기 이벤트가 나오지 않�
 
 test("16세 상반기에는 학교 선택이 온다", () => {
   const c = trainee(4);
-  c.turn = 3;
+  c.turn = 7;
+  c.traineeContractEnd = 12;
   const n = advanceTurn(c, "train:all");
   assert.equal(n.pending?.id, "school");
   const after = resolveChoice(n, "general");
@@ -126,7 +130,7 @@ test("데뷔 평가는 소속 후 2턴마다, 기준 OVR을 넘으면 제안", (
   assert.ok(debuted.milestones.includes("debut"));
   const released = resolveChoice(debuted, "fresh");
   assert.equal(released.albums.length, 1);
-  assert.ok(released.money.invested > 20, "데뷔 제작비와 앨범 제작비가 억 단위로 쌓인다");
+  assert.ok(released.money.invested > 5, "데뷔 제작비와 앨범 제작비가 억 단위로 쌓인다 (2007년 시대 보정 포함)");
 });
 
 test("1년 이상 컴백 공백이면 인기 하락 안내가 붙는다", () => {
@@ -171,15 +175,15 @@ test("아이돌 7년 계약 만료에 재계약 이벤트가 온다", () => {
 test("남성 아이돌은 27세 이후 입대 이벤트, 복무는 한 번에 지나간다", () => {
   const c = idol(3);
   c.gender = "male";
-  c.turn = 27;
+  c.turn = 31;
   c.contractEnd = 40;
   c.lastReleaseTurn = 27;
   const n = advanceTurn(c, "promo");
   assert.equal(n.pending?.id, "military");
   const enlisted = resolveChoice(n, "army");
-  assert.equal(enlisted.militaryUntil, 31);
+  assert.equal(enlisted.militaryUntil, 35);
   const back = advanceTurn(enlisted, "promo");
-  assert.equal(back.turn, 31);
+  assert.equal(back.turn, 35);
   assert.ok(back.result?.headline.includes("전역"));
 });
 

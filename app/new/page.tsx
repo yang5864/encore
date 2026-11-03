@@ -81,7 +81,7 @@ export default function NewPage() {
       {step === 0 && (
         <section className="fade-up mt-6">
           <h1 className="t-title">어떤 아이돌로<br />시작할까요?</h1>
-          <p className="t-cap mt-2">14살, 아직 소속사가 없는 지망생이에요.</p>
+          <p className="t-cap mt-2">12살 중학교 1학년, 아직 소속사가 없는 지망생이에요.</p>
           <label className="t-cap block mt-8 mb-1.5" htmlFor="name">활동명</label>
           <input id="name" value={name} onChange={(e) => setName(e.target.value)} maxLength={12} placeholder="예: 하린" className="w-full h-14 rounded-2xl bg-card px-4 text-[16px] font-bold outline-none focus:ring-2 focus:ring-primary" />
           <p className="t-cap mt-6 mb-2">성별</p>
@@ -105,7 +105,7 @@ export default function NewPage() {
 
       {step === 1 && (
         <section className="fade-up mt-6">
-          <p className="t-cap">{name.trim() || "연습생"} · 14세</p>
+          <p className="t-cap">{name.trim() || "연습생"} · 12세</p>
           <h1 className="t-title mt-1">플레이 스타일을<br />골라 주세요</h1>
           <p className="t-cap mt-2">세 후보 모두 능력치 합은 240이고, 분포만 달라요. 가장 높은 능력이 포지션을 정해요.</p>
           <div className="flex flex-col gap-3 mt-5" key={rerolls}>

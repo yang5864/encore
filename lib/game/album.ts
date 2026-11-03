@@ -2,6 +2,7 @@ import type { Album, Career, Concept } from "./types.ts";
 import { agencyById } from "./agencies.ts";
 import { CONCEPTS } from "./focus.ts";
 import { rng } from "./rng.ts";
+import { eraScale, yearOf } from "./format.ts";
 
 const ALBUM_TITLES = ["FIRST LIGHT", "BLOOM", "NEON HOUR", "AFTERGLOW", "ORBIT", "MIDNIGHT CALL", "WAVE", "HEARTLINE", "SUPERNOVA", "ENCORE", "PRISM", "DAYBREAK", "GRAVITY", "PARADE", "LANTERN"];
 
@@ -23,38 +24,48 @@ export function albumCost(c: Career, quality: number): number {
   const a = agencyById(c.agencyId);
   const tierMul = a?.tier === "major" ? 2.0 : a?.tier === "global" ? 1.3 : a?.tier === "mid" ? 1.0 : 0.5;
   const budget = (a?.budget ?? 0.6) * tierMul * (c.flags.independent ? 0.6 : 1);
-  return Math.round((4 + 16 * (quality / 100)) * budget * 10) / 10;
+  // 제작비도 시대에 따라 커진다 (2006년 약 30% → 2021년 이후 100%)
+  return Math.round((4 + 16 * (quality / 100)) * budget * eraScale(yearOf(c)) * 10) / 10;
 }
 
 /** Creates the album, applies sales/charts/fans/money. Returns the album. */
-export function makeAlbum(c: Career, concept: Concept): Album {
+export const ALBUM_NAME_PATTERN = /^[\p{L}\p{N} _·!'&.:-]{1,20}$/u;
+
+/** 소속사가 제안하는 다음 앨범명. */
+export function suggestAlbumName(c: Pick<Career, "albums">): string {
+  const index = c.albums.length;
+  return `${ALBUM_TITLES[index % ALBUM_TITLES.length]}${index >= ALBUM_TITLES.length ? ` ${Math.floor(index / ALBUM_TITLES.length) + 1}` : ""}`;
+}
+
+export function makeAlbum(c: Career, concept: Concept, customName?: string): Album {
   const a = agencyById(c.agencyId);
   const reach = a?.reach ?? 0.8;
   const quality = albumQuality(c, concept);
   const cost = albumCost(c, quality);
   const hype = 0.85 + rng(c) * 0.45;
+  const era = eraScale(yearOf(c));
   const prevSales = c.albums.length ? c.albums[c.albums.length - 1].sales : 0;
   // 초동 ≈ 코어 팬덤의 0.8~1.2배(중복 구매 포함) + 대중 유입. 톱 그룹 상한 450만장.
-  const sales = Math.min(4500000, Math.round((c.fans * 0.85 + Math.pow(quality, 1.7) * 4 + c.popularity * 300) * hype * Math.pow(reach, 0.35)));
+  const sales = Math.min(4500000, Math.round((c.fans * 0.85 + (Math.pow(quality, 1.7) * 4 + c.popularity * 300) * era) * hype * Math.pow(reach, 0.35)));
 
   const popularity = c.popularity;
-  const chartScore = quality * 0.5 + Math.log10(c.fans + 100) * 7.5 + popularity * 0.25 + (concept === "fresh" ? 3 : 0) + rng(c) * 12;
+  const chartScore = quality * 0.5 + Math.log10(c.fans / era + 100) * 7.5 + popularity * 0.25 + (concept === "fresh" ? 3 : 0) + rng(c) * 12;
   const melon = chartScore >= 78 ? Math.max(1, Math.round(100 - (chartScore - 78) * 5.5)) : null;
 
   let billboard: number | null = null;
-  if (popularity >= 70 && c.fans >= 1500000) {
+  if (popularity >= 70 && c.fans / era >= 1500000) {
     const globalBoost = c.flags.globalBoost !== undefined && c.turn - c.flags.globalBoost <= 2 ? 6 : 0;
-    const globalScore = quality * 0.5 + Math.log10(c.fans) * 8 + reach * 4 + globalBoost + rng(c) * 12;
+    const globalScore = quality * 0.5 + Math.log10(c.fans / era) * 8 + reach * 4 + globalBoost + rng(c) * 12;
     if (globalScore >= 95) {
       billboard = Math.max(1, Math.min(100, Math.round(100 - (globalScore - 95) * 4)));
-      if (billboard > 1 && c.fans >= 4000000 && quality >= 85 && rng(c) < 0.35) billboard = 1;
+      if (billboard > 1 && c.fans / era >= 4000000 && quality >= 85 && rng(c) < 0.35) billboard = 1;
     }
   }
 
   // 음악방송 1위 (최대 3회)
   let wins = 0;
-  if (melon !== null && melon <= 30 || sales >= 150000) {
-    const p = Math.max(0.08, Math.min(0.9, 0.08 + sales / 2500000 + (melon !== null ? Math.max(0, 40 - melon) / 90 : 0)));
+  if (melon !== null && melon <= 30 || sales / era >= 150000) {
+    const p = Math.max(0.08, Math.min(0.9, 0.08 + sales / era / 2500000 + (melon !== null ? Math.max(0, 40 - melon) / 90 : 0)));
     for (let i = 0; i < 3; i++) if (rng(c) < p) wins++;
     if (wins === 0 && rng(c) < 0.5) c.flags.candidate = c.turn + 1; // 다음 턴 시작 시 1위 후보 이벤트
   }
@@ -62,7 +73,8 @@ export function makeAlbum(c: Career, concept: Concept): Album {
   // 억: 장당 1.5만원 × 총판 배수 2.2 × 유통·제작 공제 후 회사 몫 40% ≈ 장당 1.3만원
   const revenue = Math.round(sales * 0.000132 * 10) / 10;
   const index = c.albums.length;
-  const name = `${ALBUM_TITLES[index % ALBUM_TITLES.length]}${index >= ALBUM_TITLES.length ? ` ${Math.floor(index / ALBUM_TITLES.length) + 1}` : ""}`;
+  const trimmed = (customName ?? "").trim();
+  const name = trimmed ? trimmed : suggestAlbumName(c);
   const album: Album = { id: `${c.id}-${index}`, turn: c.turn, name, concept, quality, sales, melon, billboard, wins, cost, revenue };
   c.albums.push(album);
   c.lastReleaseTurn = c.turn;
@@ -73,8 +85,8 @@ export function makeAlbum(c: Career, concept: Concept): Album {
   c.peakBillboard = billboard === null ? c.peakBillboard : Math.min(c.peakBillboard ?? 101, billboard);
 
   // 팬덤 성장: 신인기엔 활동마다 크게, 300만 이상부터는 완만하게 (실제 톱 그룹 초동 성장 곡선)
-  const damp = 1 / (1 + c.fans / 2000000);
-  const gained = Math.round((sales * 0.16 * (1 + wins * 0.1) + (melon !== null ? (101 - melon) * 400 : 0) + (billboard !== null ? 250000 : 0)) * Math.pow(reach, 0.35) * damp);
+  const damp = 1 / (1 + c.fans / era / 2000000);
+  const gained = Math.round((sales * 0.16 * (1 + wins * 0.1) + ((melon !== null ? (101 - melon) * 400 : 0) + (billboard !== null ? 250000 : 0)) * era) * Math.pow(reach, 0.35) * damp);
   c.fans += gained;
   c.popularity += (melon !== null ? 4 : 1) + wins * 1 + (billboard !== null ? 4 : 0);
   c.reputation += 2;
