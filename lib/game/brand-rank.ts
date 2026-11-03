@@ -45,12 +45,13 @@ export type RankedEntry = BrandEntry & { rank: number; me: boolean };
 export type RankingSource = { kind: "real"; month: string; label: string } | { kind: "estimate"; label: string };
 export type Ranking = { entries: RankedEntry[]; source: RankingSource; me: RankedEntry; above: RankedEntry | null; below: RankedEntry | null; total: number; outside: boolean };
 
-/** 상반기=3월, 하반기=9월 실제 자료. 그 달이 없으면 같은 해에서 가장 가까운 달. */
+/** 상반기=6월, 하반기=12월 실제 자료. 그 달이 없으면 같은 해에서 가장 가까운 달(없으면 이전 해 12월 이후 6개월 이내). */
 export function realMonthFor(year: number, secondHalf: boolean): string | null {
-  const want = secondHalf ? 9 : 3;
-  const keys = Object.keys(REAL_MONTHS).filter((k) => k.startsWith(`${year}-`));
-  if (!keys.length) return null;
-  return keys.sort((a, b) => Math.abs(Number(a.slice(5)) - want) - Math.abs(Number(b.slice(5)) - want) || a.localeCompare(b))[0];
+  const want = secondHalf ? 12 : 6;
+  const target = year * 12 + want;
+  const keys = Object.keys(REAL_MONTHS).map((k) => ({ k, n: Number(k.slice(0, 4)) * 12 + Number(k.slice(5)) }));
+  const near = keys.filter((x) => Math.abs(x.n - target) <= 6).sort((a, b) => Math.abs(a.n - target) - Math.abs(b.n - target) || a.n - b.n)[0];
+  return near ? near.k : null;
 }
 
 /** 인기도(0~100)를 그 달 지수 분포에 끼워 넣는다: 40 → 50위권 바닥, 100 → 1위 수준 (기하 보간). */
