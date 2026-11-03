@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BackButton } from "@/components/ui/BackButton";
 import { Card } from "@/components/ui/Card";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SupportTrigger } from "@/components/SupportSheet";
@@ -28,7 +29,7 @@ export default function GuidePage() {
   return (
     <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
-        <Link href="/" aria-label="홈" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[22px]">‹</Link>
+        <BackButton href="/" label="홈" />
         <h1 className="t-card">전체 · 게임 가이드</h1>
       </header>
       <div className="flex flex-col gap-3 mt-4">

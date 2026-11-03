@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { Logo } from "@/components/Logo";
 import { AGENCIES } from "@/lib/game/agencies";
 
-const BASE = 22; // 기본 속도 px/s (왼쪽으로)
+const BASE = 40; // 기본 속도 px/s (왼쪽으로)
 
 /**
  * 기획사 로고가 왼쪽으로 천천히 흐르는 무한 스트립.
@@ -97,8 +97,8 @@ export function AgencyMarquee() {
     <div ref={viewport} className="mt-3 overflow-hidden -mx-5 px-5 select-none cursor-grab active:cursor-grabbing" style={{ touchAction: "pan-y" }} aria-label="지원할 수 있는 기획사">
       <div ref={track} className="flex gap-2 w-max will-change-transform">
         {items.map((a, i) => (
-          <div key={`${a.id}-${i}`} className="shrink-0 flex flex-col items-center gap-1.5 w-16" aria-hidden={i >= AGENCIES.length}>
-            <Logo id={a.logo} label={a.name} color={a.color} size={48} rounded="full" />
+          <div key={`${a.id}-${i}`} className="shrink-0 flex flex-col items-center gap-1.5 w-[76px]" aria-hidden={i >= AGENCIES.length}>
+            <Logo id={a.logo} label={a.name} color={a.color} size={60} rounded="full" />
             <span className="text-[13px] text-ink-2 font-semibold truncate w-full text-center">{a.name}</span>
           </div>
         ))}

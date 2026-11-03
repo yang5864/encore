@@ -1,4 +1,5 @@
 "use client";
+import { BackButton } from "@/components/ui/BackButton";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/Avatar";
@@ -71,7 +72,7 @@ export default function NewPage() {
   return (
     <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
-        <button onClick={() => (step ? setStep(step - 1) : router.back())} aria-label="뒤로" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[22px]">‹</button>
+        <BackButton onClick={() => (step ? setStep(step - 1) : router.back())} />
         <div className="flex-1">
           <ProgressBar value={((step + 1) / STEPS.length) * 100} height={4} label="진행" />
         </div>

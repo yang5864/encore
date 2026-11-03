@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { BackButton } from "@/components/ui/BackButton";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/Card";
 import { rankChanges, rankingFor } from "@/lib/game/brand-rank";
@@ -31,7 +31,7 @@ export default function RankingPage() {
   return (
     <main className="shell pt-3">
       <header className="flex items-start gap-3 min-h-12 py-1">
-        <Link href="/play" aria-label="뒤로" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[22px] shrink-0">‹</Link>
+        <BackButton href="/play" />
         <div className="min-w-0 pt-1.5">
           <h1 className="t-card">{real ? "아이돌 개인 브랜드평판" : `${year}년 아이돌 인기 순위`}</h1>
           <p className="text-[13px] text-ink-3 leading-snug">{periodLabel(shown)} 기준 · {r.source.kind === "real" ? `${r.source.label.split(" 아이돌 개인")[0]} 자료 · 한국기업평판연구소` : "게임 추정"}</p>

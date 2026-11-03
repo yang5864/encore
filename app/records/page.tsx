@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { BackButton } from "@/components/ui/BackButton";
 import { Avatar } from "@/components/Avatar";
 import { Card } from "@/components/ui/Card";
 import { agencyById } from "@/lib/game/agencies";
@@ -14,7 +14,7 @@ export default function RecordsPage() {
   return (
     <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
-        <Link href="/" aria-label="홈" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center text-[22px]">‹</Link>
+        <BackButton href="/" label="홈" />
         <h1 className="t-card">내 기록 · 명예의 전당</h1>
       </header>
       <p className="t-cap mt-2">은퇴한 커리어가 점수순으로 쌓여요. 이 기기에만 저장돼요.</p>
