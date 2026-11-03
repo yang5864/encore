@@ -236,8 +236,8 @@
 @keyframes art-next { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
 .art-frame-first.art-animated.art-blink { animation: art-blink-open 4.2s steps(1, end) infinite; }
 .art-frame-next.art-animated.art-blink { animation: art-blink-closed 4.2s steps(1, end) infinite; }
-@keyframes art-blink-open { 0%, 100% { opacity: 1; } 97% { opacity: 0; } }
-@keyframes art-blink-closed { 0%, 100% { opacity: 0; } 97% { opacity: 1; } }
+@keyframes art-blink-open { 0%, 100% { opacity: 1; } 92% { opacity: 0; } }
+@keyframes art-blink-closed { 0%, 100% { opacity: 0; } 92% { opacity: 1; } }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }

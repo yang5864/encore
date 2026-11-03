@@ -1,0 +1,227 @@
+{
+  "cyclesChecked": 6,
+  "stagesChecked": 31,
+  "ignoresSavedAvatar": true,
+  "closedMs": 336,
+  "stages": [
+    {
+      "tick": 0,
+      "avatar": 0,
+      "step": 0,
+      "label": "연습생",
+      "images": 2
+    },
+    {
+      "tick": 1,
+      "avatar": 0,
+      "step": 1,
+      "label": "데뷔",
+      "images": 2
+    },
+    {
+      "tick": 2,
+      "avatar": 0,
+      "step": 2,
+      "label": "음방 1위",
+      "images": 1
+    },
+    {
+      "tick": 3,
+      "avatar": 0,
+      "step": 3,
+      "label": "대상",
+      "images": 1
+    },
+    {
+      "tick": 4,
+      "avatar": 0,
+      "step": 4,
+      "label": "레전드",
+      "images": 2
+    },
+    {
+      "tick": 5,
+      "avatar": 1,
+      "step": 0,
+      "label": "연습생",
+      "images": 2
+    },
+    {
+      "tick": 6,
+      "avatar": 1,
+      "step": 1,
+      "label": "데뷔",
+      "images": 2
+    },
+    {
+      "tick": 7,
+      "avatar": 1,
+      "step": 2,
+      "label": "음방 1위",
+      "images": 1
+    },
+    {
+      "tick": 8,
+      "avatar": 1,
+      "step": 3,
+      "label": "대상",
+      "images": 1
+    },
+    {
+      "tick": 9,
+      "avatar": 1,
+      "step": 4,
+      "label": "레전드",
+      "images": 2
+    },
+    {
+      "tick": 10,
+      "avatar": 2,
+      "step": 0,
+      "label": "연습생",
+      "images": 2
+    },
+    {
+      "tick": 11,
+      "avatar": 2,
+      "step": 1,
+      "label": "데뷔",
+      "images": 2
+    },
+    {
+      "tick": 12,
+      "avatar": 2,
+      "step": 2,
+      "label": "음방 1위",
+      "images": 1
+    },
+    {
+      "tick": 13,
+      "avatar": 2,
+      "step": 3,
+      "label": "대상",
+      "images": 1
+    },
+    {
+      "tick": 14,
+      "avatar": 2,
+      "step": 4,
+      "label": "레전드",
+      "images": 2
+    },
+    {
+      "tick": 15,
+      "avatar": 3,
+      "step": 0,
+      "label": "연습생",
+      "images": 2
+    },
+    {
+      "tick": 16,
+      "avatar": 3,
+      "step": 1,
+      "label": "데뷔",
+      "images": 2
+    },
+    {
+      "tick": 17,
+      "avatar": 3,
+      "step": 2,
+      "label": "음방 1위",
+      "images": 1
+    },
+    {
+      "tick": 18,
+      "avatar": 3,
+      "step": 3,
+      "label": "대상",
+      "images": 1
+    },
+    {
+      "tick": 19,
+      "avatar": 3,
+      "step": 4,
+      "label": "레전드",
+      "images": 2
+    },
+    {
+      "tick": 20,
+      "avatar": 4,
+      "step": 0,
+      "label": "연습생",
+      "images": 2
+    },
+    {
+      "tick": 21,
+      "avatar": 4,
+      "step": 1,
+      "label": "데뷔",
+      "images": 2
+    },
+    {
+      "tick": 22,
+      "avatar": 4,
+      "step": 2,
+      "label": "음방 1위",
+      "images": 1
+    },
+    {
+      "tick": 23,
+      "avatar": 4,
+      "step": 3,
+      "label": "대상",
+      "images": 1
+    },
+    {
+      "tick": 24,
+      "avatar": 4,
+      "step": 4,
+      "label": "레전드",
+      "images": 2
+    },
+    {
+      "tick": 25,
+      "avatar": 5,
+      "step": 0,
+      "label": "연습생",
+      "images": 2
+    },
+    {
+      "tick": 26,
+      "avatar": 5,
+      "step": 1,
+      "label": "데뷔",
+      "images": 2
+    },
+    {
+      "tick": 27,
+      "avatar": 5,
+      "step": 2,
+      "label": "음방 1위",
+      "images": 1
+    },
+    {
+      "tick": 28,
+      "avatar": 5,
+      "step": 3,
+      "label": "대상",
+      "images": 1
+    },
+    {
+      "tick": 29,
+      "avatar": 5,
+      "step": 4,
+      "label": "레전드",
+      "images": 2
+    },
+    {
+      "tick": 30,
+      "avatar": 0,
+      "step": 0,
+      "label": "연습생",
+      "images": 2
+    }
+  ],
+  "errors": [],
+  "failures": []
+}

@@ -1,7 +1,9 @@
 import { idleFrames } from "@/lib/art";
+import type { ArtFrame } from "@/lib/art";
 import { ArtFrames } from "./ArtFrames";
 
-export function Avatar({ index = 0, size = 64, name = "캐릭터", className = "" }: { index?: number; size?: number; name?: string; className?: string }) {
+export function Avatar({ index = 0, size = 64, name = "캐릭터", className = "", frames }: { index?: number; size?: number; name?: string; className?: string; frames?: ArtFrame[] }) {
+  const artwork = frames ?? idleFrames(index);
   return (
     <span
       role="img"
@@ -9,7 +11,7 @@ export function Avatar({ index = 0, size = 64, name = "캐릭터", className = "
       className={`avatar-art shrink-0 ${className}`}
       style={{ width: size, height: size * 1.25 }}
     >
-      <ArtFrames key={index} frames={idleFrames(index)} visibleHeight={112} sizes={`${Math.ceil(size * 1.5)}px`} blink />
+      <ArtFrames key={artwork[0].url} frames={artwork} visibleHeight={112} sizes={`${Math.ceil(size * 1.5)}px`} blink={!frames} />
     </span>
   );
 }

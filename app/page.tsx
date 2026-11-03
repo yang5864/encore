@@ -3,42 +3,29 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/Avatar";
+import { HomeShowcase } from "@/components/HomeShowcase";
 import { Button, FixedCta } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Logo } from "@/components/Logo";
 import { SupportTrigger } from "@/components/SupportSheet";
 import { AGENCIES, agencyById } from "@/lib/game/agencies";
 import { ageOf, fanText, periodLabel, STAGE_NAMES } from "@/lib/game/format";
-import { milestoneStep } from "@/lib/game/milestones";
 import { overall } from "@/lib/game/stats";
 import type { Career } from "@/lib/game/types";
 import { loadCareer, loadRecords, type CareerRecord } from "@/lib/storage";
 import { cn } from "@/lib/cn";
-
-const STEPS = ["연습생", "데뷔", "음방 1위", "대상", "레전드"];
-const STEP_COPY = ["작은 연습실에서", "드디어 무대 위로", "첫 트로피를 들었어요", "올해의 이름이 됐어요", "마침내 레전드까지"];
 
 export default function HomePage() {
   const router = useRouter();
   const [career, setCareer] = useState<Career | null>(null);
   const [records, setRecords] = useState<CareerRecord[]>([]);
   const [ready, setReady] = useState(false);
-  const [showcase, setShowcase] = useState(4);
 
   useEffect(() => {
     setCareer(loadCareer());
     setRecords(loadRecords().slice(0, 3));
     setReady(true);
   }, []);
-
-  // 히어로 타임라인이 5단계를 천천히 순환한다
-  useEffect(() => {
-    const id = setInterval(() => setShowcase((s) => (s + 1) % 5), 2600);
-    return () => clearInterval(id);
-  }, []);
-
-  const step = career ? milestoneStep(career) : null;
-  const heroStep = step !== null && step > 0 ? step - 1 : showcase;
 
   return (
     <main className="shell pt-3">
@@ -68,27 +55,7 @@ export default function HomePage() {
         </p>
       </Card>
 
-      {/* 캐릭터 + 타임라인 */}
-      <Card className="mt-3 fade-up !px-5 !py-7" style={{ animationDelay: "80ms" }}>
-        <div className="flex flex-col items-center">
-          <div className="float">
-            <Avatar index={career?.avatar ?? 0} size={88} name={career?.name ?? "캐릭터"} />
-          </div>
-          <p className="t-card mt-3">{STEP_COPY[heroStep]}</p>
-        </div>
-        <div className="relative mt-6 px-2">
-          <div className="absolute left-4 right-4 top-[7px] h-[2px] bg-chip" />
-          <div className="absolute left-4 top-[7px] h-[2px] bg-primary transition-all duration-700" style={{ width: `calc((100% - 32px) * ${heroStep / 4})` }} />
-          <div className="relative flex justify-between">
-            {STEPS.map((label, i) => (
-              <div key={label} className="flex flex-col items-center w-12">
-                <span className={cn("w-4 h-4 rounded-full border-[3px] transition-colors duration-500", i <= heroStep ? "bg-primary border-primary" : "bg-card border-chip", i === heroStep && "shadow-[0_0_0_5px_rgba(49,130,246,0.25)]")} />
-                <span className={cn("text-[13px] mt-2 whitespace-nowrap", i === heroStep ? "font-bold text-ink" : "text-ink-3")}>{label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Card>
+      <HomeShowcase />
 
       {/* 이어하기 */}
       {ready && career && (

@@ -404,8 +404,8 @@
             "blink-closed"
           ],
           "frameDurationsMs": [
-            4074,
-            126
+            3864,
+            336
           ],
           "loop": true
         },
@@ -600,8 +600,8 @@
             "blink-closed"
           ],
           "frameDurationsMs": [
-            4074,
-            126
+            3864,
+            336
           ],
           "loop": true
         },
@@ -796,8 +796,8 @@
             "blink-closed"
           ],
           "frameDurationsMs": [
-            4074,
-            126
+            3864,
+            336
           ],
           "loop": true
         },
@@ -992,8 +992,8 @@
             "blink-closed"
           ],
           "frameDurationsMs": [
-            4074,
-            126
+            3864,
+            336
           ],
           "loop": true
         },
@@ -1188,8 +1188,8 @@
             "blink-closed"
           ],
           "frameDurationsMs": [
-            4074,
-            126
+            3864,
+            336
           ],
           "loop": true
         },
@@ -1384,8 +1384,8 @@
             "blink-closed"
           ],
           "frameDurationsMs": [
-            4074,
-            126
+            3864,
+            336
           ],
           "loop": true
         },
@@ -2067,6 +2067,7 @@
     "date": "2026-11-03",
     "frames": 6,
     "promptLog": "BLINK-PROMPTS.jsonl",
-    "deprecatedIdleFrames": "idle-02 remains as an unused original; runtime idle uses blink-closed."
+    "deprecatedIdleFrames": "idle-02 remains as an unused original; runtime idle uses blink-closed.",
+    "timingUpdate": "2026-11-03: open 3864ms, fully closed 336ms; 4200ms cycle."
   }
 }
