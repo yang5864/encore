@@ -34,7 +34,7 @@ export const BRAND_RANKS: Record<number, BrandEntry[]> = {
   2026: [["방탄소년단", 98], ["블랙핑크", 88], ["에스파", 86], ["세븐틴", 86], ["스트레이키즈", 86], ["아이브", 84], ["라이즈", 82], ["데이식스", 80], ["베이비몬스터", 80], ["엔하이픈", 78], ["투모로우바이투게더", 75], ["아일릿", 74], ["하츠투하츠", 72], ["올데이프로젝트", 70], ["코르티스", 66]].map(([name, index]) => ({ name: name as string, index: index as number })),
 };
 
-import { REAL_MONTHS, type RealEntry } from "./brand-rank-real.ts";
+import { REAL_MONTHS, REAL_MONTH_NOTES, type RealEntry } from "./brand-rank-real.ts";
 
 export function brandTable(year: number): BrandEntry[] {
   const y = Math.max(2006, Math.min(2026, year));
@@ -42,7 +42,7 @@ export function brandTable(year: number): BrandEntry[] {
 }
 
 export type RankedEntry = BrandEntry & { rank: number; me: boolean };
-export type RankingSource = { kind: "real"; month: string; label: string } | { kind: "estimate"; label: string };
+export type RankingSource = { kind: "real"; month: string; label: string; note?: string } | { kind: "estimate"; label: string };
 export type Ranking = { entries: RankedEntry[]; source: RankingSource; me: RankedEntry; above: RankedEntry | null; below: RankedEntry | null; total: number; outside: boolean };
 
 /** 상반기=6월, 하반기=12월 실제 자료. 그 달이 없으면 같은 해에서 가장 가까운 달(없으면 이전 해 12월 이후 6개월 이내). */
@@ -78,7 +78,7 @@ export function rankingFor(c: Pick<Career, "popularity" | "name" | "groupName" |
     entries = all.map((e, i) => ({ ...e, rank: i + 1 }));
     outside = c.popularity < 40;
     const [y, m] = month.split("-");
-    source = { kind: "real", month, label: `${y}년 ${Number(m)}월 아이돌 개인 브랜드평판 · 한국기업평판연구소` };
+    source = { kind: "real", month, label: `${y}년 ${Number(m)}월 아이돌 개인 브랜드평판 · 한국기업평판연구소`, note: REAL_MONTH_NOTES[month] };
   } else {
     const mine = { name: myName(c), index: Math.round(c.popularity), me: true };
     const all = [...brandTable(year).map((e) => ({ ...e, me: false })), mine].sort((a, b) => b.index - a.index || (a.me ? 1 : -1));
