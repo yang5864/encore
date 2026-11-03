@@ -115,6 +115,8 @@
   html {
     background: var(--bg);
     color-scheme: var(--scheme);
+    /* 바텀시트가 body 스크롤을 잠가도 스크롤바 자리를 유지해 고정 버튼 폭이 흔들리지 않게 */
+    scrollbar-gutter: stable;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
   }
