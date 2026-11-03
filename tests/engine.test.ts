@@ -166,8 +166,11 @@ test("아이돌 7년 계약 만료에 재계약 이벤트가 온다", () => {
   const c = idol();
   c.turn = 19;
   c.lastReleaseTurn = 19;
+  c.popularity = 85;
+  c.stats = { vocal: 80, dance: 75, rap: 60, visual: 75, variety: 65, producing: 60 };
   const n = advanceTurn(c, "promo");
   assert.equal(n.pending?.id, "contract7");
+  assert.ok(!n.pending.choices.some((x) => x.op === "transfer"), "국내 기획사끼리 이적은 없다");
   const renewed = resolveChoice(n, "renew");
   assert.equal(renewed.contractEnd, 26);
 });

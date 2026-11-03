@@ -5,6 +5,7 @@ import { Chip } from "@/components/ui/Chip";
 import { Logo } from "@/components/Logo";
 import { cn } from "@/lib/cn";
 import { AGENCIES, TIERS, TIER_ORDER, auditionChance, chanceLabel } from "@/lib/game/agencies";
+import { APPLY_PER_SEASON, appliedThisSeason } from "@/lib/game/engine";
 import type { Career, Tier } from "@/lib/game/types";
 
 const TONE: Record<string, "danger" | "warn" | "neutral" | "ok" | "info"> = { "매우 낮음": "danger", 낮음: "warn", 보통: "neutral", 높음: "ok", "매우 높음": "info" };
@@ -12,10 +13,12 @@ const TONE: Record<string, "danger" | "warn" | "neutral" | "ok" | "info"> = { "�
 export function AgencySheet({ career, open, onClose, onApply }: { career: Career; open: boolean; onClose: () => void; onApply: (id: string) => void }) {
   const [tier, setTier] = useState<Tier>("indie");
   const locked = career.stage === "idol";
-  const usedThisSeason = career.flags.appliedTurn === career.turn;
+  const used = appliedThisSeason(career);
+  const usedThisSeason = used >= APPLY_PER_SEASON;
+  const appliedNow = (id: string) => career.flags.appliedTurn === career.turn && career.flags[`apply:${id}`] === career.turn;
   const monthsLeft = career.contractEnd !== null ? Math.max(0, (career.contractEnd - career.turn) * 6) : 0;
   return (
-    <Sheet open={open} onOpenChange={(o) => !o && onClose()} title="기획사 지원" description={locked ? `전속계약 중이에요. 재계약 시점(${monthsLeft}개월 뒤)에 열려요` : usedThisSeason ? "이번 시즌에는 이미 지원했어요. 시즌을 진행하면 다시 지원할 수 있어요" : "지원은 시즌마다 한 번이에요. 합격 가능성은 지금 실력 기준이에요"} tall>
+    <Sheet open={open} onOpenChange={(o) => !o && onClose()} title="기획사 지원" description={locked ? `전속계약 중이에요. 재계약 시점(${monthsLeft}개월 뒤)에 열려요` : usedThisSeason ? `이번 시즌 지원 ${APPLY_PER_SEASON}곳을 모두 썼어요. 시즌을 진행하면 다시 지원할 수 있어요` : `이번 시즌 ${APPLY_PER_SEASON - used}곳 더 지원할 수 있어요. 합격 가능성은 지금 실력 기준이에요`} tall>
       <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-5 px-5 pb-1">
         {TIER_ORDER.map((t) => (
           <button key={t} onClick={() => setTier(t)} className={cn("press shrink-0 h-9 px-3.5 rounded-full text-[13px] font-bold", tier === t ? "bg-ink text-bg" : "bg-chip text-ink-2")}>
@@ -43,7 +46,7 @@ export function AgencySheet({ career, open, onClose, onApply }: { career: Career
                 onClick={() => onApply(a.id)}
                 className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary text-white text-[13px] font-bold disabled:bg-chip disabled:text-ink-3"
               >
-                {mine ? "소속" : usedThisSeason ? "지원 완료" : cooldown ? "대기" : "지원"}
+                {mine ? "소속" : appliedNow(a.id) ? "지원 완료" : usedThisSeason ? "마감" : cooldown ? "대기" : "지원"}
               </button>
             </div>
           );

@@ -5,7 +5,7 @@ import { Chip } from "@/components/ui/Chip";
 import { MilestoneBar } from "./MilestoneBar";
 import { Logo } from "@/components/Logo";
 import { agencyById, TIERS } from "@/lib/game/agencies";
-import { ageOf, careerPhase, periodLabel, STAGE_NAMES } from "@/lib/game/format";
+import { ageOf, careerPhase, displayName, periodLabel, STAGE_NAMES } from "@/lib/game/format";
 import { POSITIONS } from "@/lib/game/stats";
 import type { Career } from "@/lib/game/types";
 
@@ -21,7 +21,7 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
         </div>
         <div className="min-w-0 flex-1">
           <p className="t-cap">{periodLabel(career)} · {ageOf(career)}세</p>
-          <h1 className="t-title truncate mt-0.5">{career.stage === "idol" && career.groupName ? `${career.groupName} ${career.name}` : career.name}</h1>
+          <h1 className="t-title truncate mt-0.5">{displayName(career)}</h1>
           <div className="flex flex-wrap items-center gap-1.5 mt-2">
             <Chip tone={career.stage === "idol" ? "info" : career.stage === "trainee" ? "ok" : "neutral"}>{careerPhase(career) === STAGE_NAMES[career.stage] ? STAGE_NAMES[career.stage] : `${STAGE_NAMES[career.stage]} · ${careerPhase(career)}`}</Chip>
             <Chip>{position}</Chip>
@@ -33,7 +33,9 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
         <div className="min-w-0">
           <p className="t-cap">소속</p>
           <p className="t-body font-bold truncate flex items-center gap-1.5">
-            {a ? (
+            {career.flags.independent && career.stage !== "free" ? (
+              <span className="truncate">{career.name} 개인 소속사 <span className="text-ink-3 font-medium">· 1인 기획사</span></span>
+            ) : a ? (
               <>
                 <Logo id={a.logo} label={a.name} color={a.color} size={20} rounded="full" />
                 <span className="truncate">{a.name} <span className="text-ink-3 font-medium">· {TIERS[a.tier].short}</span></span>

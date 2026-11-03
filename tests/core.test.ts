@@ -47,7 +47,7 @@ test("createCareer는 무소속 지망생으로 시작하고 입력을 검증한
   assert.equal(periodLabel(c), "2006년 상반기");
   assert.throws(() => createCareer({ ...base, name: "<script>" }));
   assert.throws(() => createCareer({ ...base, stats: { ...base.stats, vocal: 10 } }));
-  for (const k of STAT_KEYS) assert.ok(c.potential[k] >= 72 && c.potential[k] <= 99);
+  for (const k of STAT_KEYS) assert.ok(c.potential[k] >= 58 && c.potential[k] <= 99);
 });
 
 test("기획사 지원: 합격이면 연습생, 불합격이면 무소속 유지, 같은 회사 재지원은 2턴 쿨다운", () => {
@@ -69,7 +69,8 @@ test("기획사 지원: 합격이면 연습생, 불합격이면 무소속 유지
       assert.equal(signed.traineeContractEnd, 6);
       const declined = resolveChoice(next, "decline");
       assert.equal(declined.stage, "free");
-      assert.throws(() => applyToAgency(declined, "aomg"), /시즌마다 한 번/);
+      const second = applyToAgency(declined, "aomg");
+      assert.equal(second.flags.appliedCount, 2, "한 시즌에 세 곳까지 지원할 수 있다");
     } else {
       failed = true;
       assert.equal(next.agencyId, null);

@@ -1,7 +1,8 @@
 import type { ActiveEvent, Career, GameEventDef } from "./types.ts";
 import { EVENTS, eventById } from "./events/index.ts";
-import { AGENCIES, agencyById, tierRank } from "./agencies.ts";
-import { ageOf } from "./format.ts";
+import { AGENCIES, agencyById, auditionChance, tierRank } from "./agencies.ts";
+import { ageOf, isSecondHalf } from "./format.ts";
+import { renewalEvent } from "./renewal.ts";
 import { overall } from "./stats.ts";
 import { rng } from "./rng.ts";
 
@@ -51,7 +52,16 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
   // 1. 예약
   if (c.stage === "trainee" && c.traineeContractEnd !== null && c.turn >= c.traineeContractEnd) return take(c, "trainee-contract");
   if (c.schoolId === null && ageOf(c) === 16 && c.turn % 2 === 0) return take(c, "school");
-  if (c.stage === "idol" && c.contractEnd !== null && c.turn >= c.contractEnd) return take(c, "contract7");
+  if (c.stage === "free" && ageOf(c) === 19 && isSecondHalf(c)) return lastCallEvent(c);
+  if (c.stage === "idol" && c.flags.bankruptTurn === c.turn) return renewalEvent(c, "bankrupt");
+  if (c.stage === "idol" && c.contractEnd !== null && c.turn >= c.contractEnd) {
+    c.seen.contract7 = c.turn;
+    return renewalEvent(c, "contract");
+  }
+  if (c.flags.burst === c.turn) {
+    const offer = burstCastingEvent(c);
+    if (offer) return offer;
+  }
   if (c.stage === "idol" && eligible(eventById("military")!, c)) return take(c, "military");
   if (c.stage === "trainee" && c.warnings >= 2) return take(c, "trainee-dismiss");
   if (c.flags.debutEval === c.turn) {
@@ -59,6 +69,11 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
     if (kind === 1) return take(c, "debut-offer");
     if (kind === 2) return take(c, "debut-miss");
     if (kind === 3) return take(c, "warning");
+  }
+
+  if (c.stage === "trainee" && c.agencyJoinedTurn !== null && c.turn - c.agencyJoinedTurn >= 4) {
+    const a = agencyById(c.agencyId)!;
+    if (a.tier === "indie" && overall(c.stats, c.position) < a.threshold - 10 && rng(c) < 0.06) return agencyClosedEvent(a.name);
   }
 
   // 2. 상태
@@ -103,4 +118,55 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
     if (r <= 0) return take(c, e.id);
   }
   return take(c, pool[pool.length - 1].id);
+}
+
+/** 19세 하반기: 성인이 되기 전 마지막 기회. 받아주는 회사 중 하나와 반드시 계약한다. */
+function lastCallEvent(c: Career): ActiveEvent {
+  const ranked = AGENCIES.map((a) => ({ a, p: auditionChance(c, a.id) })).sort((x, y) => tierRank(y.a.tier) - tierRank(x.a.tier) || y.p - x.p);
+  const willing = ranked.filter((x) => x.p >= 0.35).slice(0, 3);
+  for (const x of [...ranked].reverse()) {
+    if (willing.length >= 3) break;
+    if (!willing.includes(x)) willing.push(x);
+  }
+  c.seen["last-call"] = c.turn;
+  return {
+    id: "last-call",
+    title: "성인이 되기 전 마지막 기회",
+    text: "곧 스무 살이에요. 지금까지 본 오디션 영상을 기억한 회사들이 연락해왔어요. 이번엔 한 곳을 골라 계약해요.",
+    scene: "contract",
+    choices: willing.map(({ a }) => ({ id: `join-${a.id}`, label: `${a.name}와 계약한다`, hint: `${a.strength} · 데뷔 기준 OVR ${a.threshold}`, risk: a.tier === "indie" ? "safe" as const : "bold" as const, op: `join:${a.id}`, sign: true })),
+  };
+}
+
+/** 포텐이 터지면 대형 기획사가 먼저 캐스팅 제의를 한다. 이미 대형이면 없다. */
+function burstCastingEvent(c: Career): ActiveEvent | null {
+  const mine = agencyById(c.agencyId);
+  if (mine?.tier === "major") return null;
+  const majors = AGENCIES.filter((a) => a.tier === "major");
+  const first = majors[Math.floor(rng(c) * majors.length)];
+  const rest = majors.filter((a) => a.id !== first.id);
+  const picks = rng(c) < 0.4 ? [first, rest[Math.floor(rng(c) * rest.length)]] : [first];
+  c.seen.burst = c.turn;
+  return {
+    id: "burst-cast",
+    title: picks.length > 1 ? `${picks.map((a) => a.name).join(" · ")} 동시 캐스팅 제의` : `${first.name} 캐스팅 제의`,
+    text: `포텐이 터진 걸 알아본 ${picks.map((a) => a.fullName).join("와 ")} 캐스팅 디렉터가 먼저 연락해왔어요. 오디션 없이 바로 연습생으로 받겠대요.${mine ? " 지금 회사와는 합의 종료가 가능해요." : ""}`,
+    scene: "audition",
+    choices: [
+      ...picks.map((a) => ({ id: `cast-${a.id}`, label: `${a.name}와 계약한다`, hint: "더 큰 무대와 빠른 성장. 데뷔 기준도 높아요", risk: "bold" as const, op: `scout:${a.id}`, sign: true })),
+      mine
+        ? { id: "stay", label: "지금 회사에 남는다", hint: "의리를 지켜 신뢰가 크게 올라요", risk: "safe" as const, effects: { trust: 12, mental: 4 } }
+        : { id: "decline", label: "거절한다", hint: "무소속으로 남아 다른 길을 찾아요", risk: "safe" as const, op: "decline" },
+    ],
+  };
+}
+
+function agencyClosedEvent(name: string): ActiveEvent {
+  return {
+    id: "agency-closed",
+    title: `${name} 폐업 통보`,
+    text: "회사 사정이 어려워져 연습생 운영을 접는대요. 데뷔 계획도 모두 멈췄어요.",
+    scene: "contract",
+    choices: [{ id: "leave", label: "짐을 정리하고 나온다", hint: "무소속이 돼요. 바로 다른 회사에 지원할 수 있어요", risk: "safe", op: "agency-closed" }],
+  };
 }

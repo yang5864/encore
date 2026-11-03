@@ -8,7 +8,7 @@ import { conditionOf, reputationLabel } from "../lib/game/format.ts";
 import type { Career } from "../lib/game/types.ts";
 
 const positions = ["vocal", "dance", "rap", "visual", "allround", "producer"] as const;
-const rows: { agency: string; seed: number; ovr22: number; pop22: number; fans22: number; debutAge: number | null; rep22: number; settled: number; ovr26: number; pop26: number; wins: number; events: number; ig22: number; yt22: number; sp22: number; sales22: number; firstSales: number; settleLag: number | null }[] = [];
+const rows: { agency: string; seed: number; ovr22: number; pop22: number; fans22: number; debutAge: number | null; rep22: number; settled: number; ovr26: number; pop26: number; wins: number; events: number; ig22: number; yt22: number; sp22: number; sales22: number; firstSales: number; settleLag: number | null; fans26: number; bankrupt: number; retired: boolean; viral: number; flop: number }[] = [];
 
 for (const a of AGENCIES) {
   for (let seed = 1; seed <= 6; seed++) {
@@ -20,6 +20,7 @@ for (const a of AGENCIES) {
     c.traineeContractEnd = 6;
     c.trust = 30;
     let events = 0;
+    let viral = 0, flop = 0;
     let ovr22 = 0, pop22 = 0, fans22 = 0, rep22 = 0, ig22 = 0, yt22 = 0, sp22 = 0, sales22 = 0;
     for (let i = 0; i < 24 && c.stage !== "retired"; i++) {
       let focus: string;
@@ -30,6 +31,8 @@ for (const a of AGENCIES) {
         focus = cond.level === "danger" ? "rest" : i % 3 === 2 ? "train:all" : `train:${MAIN_STAT[c.position]}`;
       }
       c = advanceTurn(c, focus);
+      if (c.flags.albumViral === c.turn - 1) viral++;
+      if (c.flags.albumFlop === c.turn - 1) flop++;
       while (c.pending) {
         events++;
         const choice = c.pending.choices.find((x) => !x.requires) ?? c.pending.choices[0];
@@ -37,7 +40,7 @@ for (const a of AGENCIES) {
       }
       if (c.turn === 16) { ovr22 = overall(c.stats, c.position); pop22 = Math.round(c.popularity); fans22 = c.fans; rep22 = Math.round(c.reputation); ig22 = c.metrics.instagram; yt22 = c.metrics.youtube; sp22 = c.metrics.spotify; sales22 = c.albums.length ? c.albums[c.albums.length - 1].sales : 0; }
     }
-    rows.push({ agency: a.id, seed, ovr22, pop22, fans22, debutAge: c.debutTurn === null ? null : 14 + Math.floor(c.debutTurn / 2), rep22, settled: c.money.settled, ovr26: overall(c.stats, c.position), pop26: Math.round(c.popularity), wins: c.musicWins, events, ig22, yt22, sp22, sales22, firstSales: c.albums[0]?.sales ?? 0, settleLag: c.money.firstSettledTurn !== null && c.debutTurn !== null ? c.money.firstSettledTurn - c.debutTurn : null });
+    rows.push({ agency: a.id, seed, ovr22, pop22, fans22, debutAge: c.debutTurn === null ? null : 14 + Math.floor(c.debutTurn / 2), rep22, settled: c.money.settled, ovr26: overall(c.stats, c.position), pop26: Math.round(c.popularity), wins: c.musicWins, events, ig22, yt22, sp22, sales22, firstSales: c.albums[0]?.sales ?? 0, settleLag: c.money.firstSettledTurn !== null && c.debutTurn !== null ? c.money.firstSettledTurn - c.debutTurn : null, fans26: c.fans, bankrupt: c.flags.bankruptCount ?? 0, retired: c.stage === "retired", viral, flop });
   }
 }
 
@@ -59,3 +62,7 @@ for (const tier of ["major", "mid", "indie", "global"]) {
   const tl = rs.filter((r) => r.settleLag !== null).map((r) => r.settleLag!);
   console.log(`  ${tier}: 첫 정산 ${tl.length ? median(tl) * 6 + "개월" : "없음"} · OVR22 ${median(rs.map((r) => r.ovr22))} · 데뷔 초동 ${median(rs.map((r) => r.firstSales)).toLocaleString()} · 22세 초동 ${median(rs.map((r) => r.sales22)).toLocaleString()} · 팬 ${median(rs.map((r) => r.fans22)).toLocaleString()} · 인스타 ${median(rs.map((r) => r.ig22)).toLocaleString()} · 인기26 ${median(rs.map((r) => r.pop26))} · 정산 ${median(rs.map((r) => r.settled)).toFixed(1)}억`);
 }
+
+const q = (xs: number[], p: number) => { const s = [...xs].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(s.length * p))]; };
+console.log(`[분산] 인기26 p10/p50/p90 ${q(rows.map((r) => r.pop26), 0.1)}/${q(rows.map((r) => r.pop26), 0.5)}/${q(rows.map((r) => r.pop26), 0.9)} · 팬26 ${q(rows.map((r) => r.fans26), 0.1).toLocaleString()}/${q(rows.map((r) => r.fans26), 0.5).toLocaleString()}/${q(rows.map((r) => r.fans26), 0.9).toLocaleString()} · 정산 ${q(rows.map((r) => r.settled), 0.1).toFixed(0)}/${q(rows.map((r) => r.settled), 0.5).toFixed(0)}/${q(rows.map((r) => r.settled), 0.9).toFixed(0)}억`);
+console.log(`[사건] 파산 경험 ${rows.filter((r) => r.bankrupt > 0).length}명 · 조기 은퇴 ${rows.filter((r) => r.retired).length}명 · 바이럴 앨범 ${rows.reduce((s, r) => s + r.viral, 0)} · 실패 앨범 ${rows.reduce((s, r) => s + r.flop, 0)} · 정산 0원 ${rows.filter((r) => r.settled <= 0).length}명`);

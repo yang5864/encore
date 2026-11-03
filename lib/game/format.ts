@@ -56,6 +56,13 @@ export function conditionOf(c: Pick<Career, "health" | "mental">): Condition {
   return { level: "danger", label: "위험", color: "#f04452", value };
 }
 
+/** 그룹명 + 이름. 솔로로 전향해도 데뷔한 그룹명을 함께 보여준다. */
+export function displayName(c: { name: string; groupName?: string; stage?: Career["stage"] }): string {
+  const group = (c.groupName ?? "").trim();
+  if (!group || group === c.name || c.stage === "free" || c.stage === "trainee") return c.name;
+  return `${group} ${c.name}`;
+}
+
 export const STAGE_NAMES: Record<Career["stage"], string> = { free: "지망생", trainee: "연습생", idol: "아이돌", retired: "은퇴" };
 
 export const pct = (n: number) => `${Math.round(n)}%`;

@@ -55,6 +55,12 @@ export function parseCareer(text: string): Career {
   if (!c.metrics || typeof c.metrics !== "object") c.metrics = { instagram: 0, youtube: 0, spotify: 0 };
   const stats = c.stats as Record<string, number>;
   for (const k of Object.keys(stats)) stats[k] = Math.round(stats[k]);
+  if (!Array.isArray(c.items)) c.items = [];
+  // 예전 솔로 전향은 그룹명을 내 이름으로 덮어썼다: 데뷔 기록에서 되찾는다
+  if (c.groupName === c.name && Array.isArray(c.history)) {
+    const debut = (c.history as { title: string }[]).find((h) => h.title.endsWith(" 데뷔 확정"));
+    if (debut) c.groupName = debut.title.slice(0, -" 데뷔 확정".length);
+  }
   return c as unknown as Career;
 }
 

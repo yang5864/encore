@@ -42,14 +42,20 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string): Alb
   const reach = a?.reach ?? 0.8;
   const quality = albumQuality(c, concept);
   const cost = albumCost(c, quality);
-  const hype = 0.85 + rng(c) * 0.45;
+  // 흥행은 꼬리가 길다: 대부분 평범하지만 가끔 바이럴로 폭발하고, 가끔은 크게 실패한다
+  const roll = rng(c);
+  const viral = roll < 0.03 + Math.max(0, quality - 60) / 700;
+  const flop = !viral && roll > 0.86 - Math.max(0, 62 - quality) / 120;
+  const hype = viral ? 2.5 + rng(c) * 2 : flop ? 0.3 + rng(c) * 0.3 : 0.7 + rng(c) * 0.8;
+  if (viral) c.flags.albumViral = c.turn;
+  if (flop) c.flags.albumFlop = c.turn;
   const era = eraScale(yearOf(c));
   const prevSales = c.albums.length ? c.albums[c.albums.length - 1].sales : 0;
   // 초동 ≈ 코어 팬덤의 0.8~1.2배(중복 구매 포함) + 대중 유입. 톱 그룹 상한 450만장.
   const sales = Math.min(4500000, Math.round((c.fans * 0.85 + (Math.pow(quality, 1.7) * 4 + c.popularity * 300) * era) * hype * Math.pow(reach, 0.35)));
 
   const popularity = c.popularity;
-  const chartScore = quality * 0.5 + Math.log10(c.fans / era + 100) * 7.5 + popularity * 0.25 + (concept === "fresh" ? 3 : 0) + rng(c) * 12;
+  const chartScore = quality * 0.5 + Math.log10(c.fans / era + 100) * 7.5 + popularity * 0.25 + (concept === "fresh" ? 3 : 0) + rng(c) * 12 + (viral ? 18 : flop ? -15 : 0);
   const melon = chartScore >= 78 ? Math.max(1, Math.round(100 - (chartScore - 78) * 5.5)) : null;
 
   let billboard: number | null = null;
@@ -88,7 +94,8 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string): Alb
   const damp = 1 / (1 + c.fans / era / 2000000);
   const gained = Math.round((sales * 0.16 * (1 + wins * 0.1) + ((melon !== null ? (101 - melon) * 400 : 0) + (billboard !== null ? 250000 : 0)) * era) * Math.pow(reach, 0.35) * damp);
   c.fans += gained;
-  c.popularity += (melon !== null ? 4 : 1) + wins * 1 + (billboard !== null ? 4 : 0);
+  if (flop) c.fans = Math.round(c.fans * (0.82 + rng(c) * 0.08));
+  c.popularity += (melon !== null ? 4 : 1) + wins * 1 + (billboard !== null ? 4 : 0) + (viral ? 10 : flop ? -6 : 0);
   c.reputation += 2;
   c.health -= 14;
   c.mental -= 6;

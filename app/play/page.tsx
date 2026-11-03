@@ -9,6 +9,7 @@ import { RankCard } from "@/components/play/RankCard";
 import { Fireworks } from "@/components/Fireworks";
 import { StatsCard } from "@/components/play/StatsCard";
 import { SettlementCard } from "@/components/play/SettlementCard";
+import { ShopCard } from "@/components/play/ShopCard";
 import { FocusCard, focusIdOf, type FocusSelection } from "@/components/play/FocusCard";
 import { EventSheet } from "@/components/play/EventSheet";
 import { ResultSheet } from "@/components/play/ResultSheet";
@@ -24,7 +25,7 @@ import type { MilestoneId, TurnResult } from "@/lib/game/types";
 
 export default function PlayPage() {
   const router = useRouter();
-  const { career, ready, error, clearError, advance, choose, apply, retire, dismissResult, reset, exportFile, importFile } = useCareer();
+  const { career, ready, error, clearError, advance, choose, apply, buy, retire, dismissResult, reset, exportFile, importFile } = useCareer();
   const [focus, setFocus] = useState<FocusSelection>({ id: "" });
   const [progress, setProgress] = useState(0);
   const [agencyOpen, setAgencyOpen] = useState(false);
@@ -112,6 +113,7 @@ export default function PlayPage() {
         {career.stage === "idol" && <RankCard career={career} />}
         <StatsCard career={career} changes={lastResult?.changes} />
         {career.stage === "idol" || career.stage === "retired" ? <SettlementCard career={career} /> : null}
+        {career.stage === "idol" && <ShopCard career={career} onBuy={buy} />}
         {career.stage === "retired" ? (
           <Card className="fade-up">
             <p className="t-cap text-primary">{career.ending?.subtitle}</p>

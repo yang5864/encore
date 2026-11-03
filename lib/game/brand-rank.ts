@@ -1,3 +1,4 @@
+import { displayName } from "./format.ts";
 import type { Career } from "./types.ts";
 
 /**
@@ -63,7 +64,7 @@ export function popularityToRealIndex(popularity: number, rows: RealEntry[]): nu
   return Math.round(floor * Math.pow(top / floor, Math.pow(t, 1.6)));
 }
 
-const myName = (c: Pick<Career, "name" | "groupName" | "stage">) => (c.stage === "idol" && c.groupName ? `${c.groupName} ${c.name}` : c.name);
+const myName = (c: Pick<Career, "name" | "groupName" | "stage">) => displayName(c);
 
 /** 그 시즌의 전체 순위(나 포함). 2023년 이후는 실제 월간 자료, 그 전은 게임 추정표. */
 export function rankingFor(c: Pick<Career, "popularity" | "name" | "groupName" | "stage">, year: number, secondHalf: boolean): Ranking {

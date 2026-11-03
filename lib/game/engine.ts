@@ -16,9 +16,16 @@ import { buildReactions } from "./reactions.ts";
 import { updateMetrics } from "./metrics.ts";
 import { debutEvaluation, scheduleEvent, activate } from "./schedule.ts";
 import { eventById } from "./events/index.ts";
+import { bankruptcyRisk } from "./renewal.ts";
+import { boughtThisSeason, itemById, priceOf, shopOffers, walletOf } from "./shop.ts";
 
 export { focusOptions } from "./focus.ts";
 export { createCareer } from "./create.ts";
+
+/** 지원은 시즌마다 세 곳까지. */
+export const APPLY_PER_SEASON = 3;
+/** 지망생·연습생 시절 포텐이 터질 확률(시즌당). 19세까지 약 16시즌이면 커리어당 약 21%. */
+export const BURST_CHANCE = 0.015;
 
 const DEBUT_FANS: Record<string, number> = { major: 350000, mid: 70000, indie: 5000, global: 50000 };
 export const GROUP_NAME_PATTERN = /^[\p{L}\p{N} _·!-]{1,20}$/u;
@@ -132,6 +139,19 @@ export function advanceTurn(original: Career, focusId: string): Career {
       text = `${period}, 충분히 쉬었어요. 몸과 마음이 가벼워졌어요.`;
       headline = "휴식";
     } else throw new GameError("선택할 수 없는 계획이에요.");
+    if (!c.flags.burst && ageOf(c) <= 19 && rng(c) < BURST_CHANCE) {
+      // 포텐 폭발: 숨은 잠재력 한도와 실력이 한꺼번에 오른다
+      for (const k of STAT_KEYS) {
+        c.potential[k] = Math.min(99, c.potential[k] + 8 + Math.floor(rng(c) * 8));
+        c.stats[k] = Math.min(99, c.stats[k] + 3 + Math.floor(rng(c) * 5) + (k === MAIN_STAT[c.position] ? 4 : 0));
+      }
+      c.flags.burst = c.turn + 1;
+      headline = "포텐이 터졌어요";
+      text = `${period}, 연습실 영상 하나가 업계에 돌았어요. 몇 달 만에 실력이 한 단계 올라섰어요. 큰 회사들이 이름을 묻기 시작했어요.`;
+      tone = "good";
+      scene = "practice";
+      log(c, "포텐 폭발", "실력과 잠재력이 한꺼번에 뛰었어요.", "milestone");
+    }
     if (c.stage === "trainee") {
       c.money.invested += Math.round(TRAINEE_COST_PER_TURN * eraScale(yearOf(c)) * 10) / 10;
       c.trust = Math.min(100, c.trust + 4);
@@ -149,7 +169,9 @@ export function advanceTurn(original: Career, focusId: string): Career {
       log(c, headline, text, "release");
       if (album.wins > 0) log(c, `음악방송 1위 ${album.wins}회`, `${album.name} 활동으로 1위 트로피를 들었어요.`, "award");
       if (album.billboard !== null) log(c, `빌보드 Hot 100 ${album.billboard}위`, "타이틀곡이 미국 종합 차트에 올랐어요.", "award");
-      comments = buildReactions(c, tone === "good" ? "good" : "neutral");
+      if (c.flags.albumViral === c.turn) { tone = "good"; notes.push("타이틀곡이 숏폼에서 터졌어요. 예상보다 훨씬 많은 사람이 들었어요."); }
+      if (c.flags.albumFlop === c.turn) { tone = "bad"; notes.push("이번 앨범은 반응이 차가웠어요. 팬덤 일부가 이탈했어요."); }
+      comments = buildReactions(c, tone === "good" ? "good" : tone === "bad" ? "bad" : "neutral");
     } else if (kind === "promo") {
       grow(c, "variety", 4);
       grow(c, "visual", 1.5);
@@ -243,7 +265,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
     if (age >= 32) c.popularity -= 2;
     else if (age >= 28) c.popularity -= 1;
   }
-  c.popularity = Math.round(Math.max(0, Math.min(100, c.popularity * 0.5 + popularityTarget(c) * 0.5)) * 10) / 10;
+  c.popularity = Math.round(Math.max(0, Math.min(100, c.popularity * 0.65 + popularityTarget(c) * 0.35)) * 10) / 10;
 
   // ── 연말 결산 ──
   if (c.turn % 2 === 0 && c.stage === "idol") {
@@ -270,6 +292,13 @@ export function advanceTurn(original: Career, focusId: string): Career {
   if (c.stage === "free") {
     const best = AGENCIES.map((a) => ({ a, p: auditionChance(c, a.id) })).filter((x) => (c.flags[`apply:${x.a.id}`] ?? -9) <= c.turn - 2).sort((x, y) => y.p - x.p)[0];
     if (best) notes.push(`지금 ${best.a.name} 합격 가능성이 가장 높아요. 홈의 소속 카드에서 지원할 수 있어요.`);
+  }
+
+  // ── 소속사 파산 ──
+  if (rng(c) < bankruptcyRisk(c)) {
+    c.flags.bankruptTurn = c.turn;
+    c.flags.bankruptCount = (c.flags.bankruptCount ?? 0) + 1;
+    notes.push("회사 재정이 버티지 못했어요.");
   }
 
   // ── 종료 조건 ──
@@ -309,6 +338,13 @@ function debutConceptEvent(): ActiveEvent {
     public: true,
     choices: CONCEPTS.map((x) => ({ id: x.id, label: x.name, hint: x.description, risk: "safe" as const, op: `comeback:${x.id}` })),
   };
+}
+
+/** 파산한 회사의 미회수 제작비는 사라진다. 정산은 새 회사에서 처음부터 다시 쌓인다. */
+function writeOffIfBankrupt(c: Career) {
+  if (c.flags.bankruptTurn === undefined) return;
+  c.money.invested = Math.min(c.money.invested, c.money.revenue);
+  delete c.flags.bankruptTurn;
 }
 
 function joinAgency(c: Career, agencyId: string) {
@@ -375,10 +411,11 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     log(c, headline, text, "milestone");
   } else if (op.startsWith("scout:")) {
     const a = agencyById(op.slice(6))!;
+    const wasFree = c.stage === "free";
     joinAgency(c, a.id);
     c.scoutCount += 1;
-    headline = `${a.name}로 이적했어요`;
-    text = `${a.fullName}의 연습생으로 새로 시작해요. 신뢰는 처음부터 쌓아요.`;
+    headline = wasFree ? `${a.name} 캐스팅 계약` : `${a.name}로 이적했어요`;
+    text = wasFree ? `오디션 없이 ${a.fullName}의 연습생이 됐어요. ${TIERS[a.tier].description}.` : `${a.fullName}의 연습생으로 새로 시작해요. 신뢰는 처음부터 쌓아요.`;
     tone = "good";
     log(c, headline, text, "milestone");
   } else if (op === "debut") {
@@ -412,6 +449,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     headline = `${c.albums.length === 1 ? "데뷔 앨범" : "새 앨범"} ${album.name}`;
     text = albumSummary(album);
     tone = album.wins > 0 || (album.melon !== null && album.melon <= 10) ? "good" : "neutral";
+    if (c.flags.albumViral === c.turn) { tone = "good"; notes.push("타이틀곡이 숏폼에서 터졌어요. 예상보다 훨씬 많은 사람이 들었어요."); }
+    if (c.flags.albumFlop === c.turn) { tone = "bad"; notes.push("데뷔 앨범 반응이 차가웠어요."); }
     log(c, headline, text, "release");
     if (album.wins > 0) log(c, `음악방송 1위 ${album.wins}회`, `${album.name} 활동으로 1위 트로피를 들었어요.`, "award");
   } else if (op.startsWith("school:")) {
@@ -437,6 +476,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     text = `${a?.name ?? "회사"}와의 계약을 마쳤어요. 개인 채무는 없어요. 홈의 소속 카드에서 다른 회사에 지원할 수 있어요.`;
     log(c, headline, text, "system");
   } else if (op === "retire") {
+    delete c.flags.bankruptTurn;
     return retire(c, event.id === "contract7" ? "멤버들과 마지막 콘서트를 마쳤어요." : "꿈을 정리하고 새로운 길을 찾기로 했어요.");
   } else if (op === "grind") {
     for (const k of [MAIN_STAT[c.position]]) c.stats[k] = Math.min(99, c.stats[k] + 3);
@@ -506,45 +546,65 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     headline = { army: "육군 입대", navy: "해군 입대", airforce: "공군 입대" }[branch] ?? "입대";
     text = `${turns * 6}개월 뒤 돌아와요. 다음 진행에서 복무 기간이 한 번에 지나가요.`;
     log(c, headline, text, "milestone");
-  } else if (op === "transfer") {
-    const mine = agencyById(c.agencyId)!;
-    const better = AGENCIES.filter((a) => a.id !== mine.id && (a.tier === "major" || a.tier === "mid"));
-    const a = pick(c, better);
+  } else if (op.startsWith("move:")) {
+    const a = agencyById(op.slice(5))!;
+    const bankrupt = c.flags.bankruptTurn !== undefined;
+    writeOffIfBankrupt(c);
     c.agencyId = a.id;
+    c.flags.independent = 0;
     c.contractEnd = c.turn + 6;
     c.flags.renewed = 1;
     c.flags.shareBonus = 1;
     c.trust = 40;
-    headline = `${a.name}로 이적 · 팀 활동 유지`;
-    text = `${a.fullName}와 새 전속계약을 맺었어요. 상표권 합의로 그룹 활동은 그대로 이어가요.`;
+    headline = c.flags.solo ? `${a.name}와 솔로 계약` : `${a.name}로 이적 · 그룹 활동 유지`;
+    text = c.flags.solo ? `${a.fullName}와 전속계약을 맺었어요. 해외 활동 지원을 받아요.` : `${a.fullName}와 새 전속계약을 맺었어요. 상표권 합의로 그룹 활동은 그대로 이어가요.${bankrupt ? " 멤버들은 각자 새 회사를 찾았어요." : ""}`;
     tone = "good";
     log(c, headline, text, "milestone");
   } else if (op === "renew") {
+    const own = !!c.flags.independent;
     c.contractEnd = c.turn + 6;
     c.flags.renewed = 1;
-    c.flags.shareBonus = 1;
+    if (!own) c.flags.shareBonus = 1;
     c.trust = Math.min(100, c.trust + 15);
     c.mental = Math.min(100, c.mental + 10);
-    headline = "재계약 완료";
-    text = "정산 조건이 좋아진 새 계약에 서명했어요. 팬들이 안도했어요.";
+    headline = own ? "내 회사 운영 연장" : "재계약 완료";
+    text = own ? "3년 더 지금 방식으로 활동해요." : "정산 조건이 좋아진 새 계약에 서명했어요. 팬들이 안도했어요.";
     tone = "good";
     log(c, headline, text, "milestone");
   } else if (op === "independent") {
+    writeOffIfBankrupt(c);
     c.contractEnd = c.turn + 6;
     c.flags.renewed = 1;
     c.flags.independent = 1;
-    headline = "독립 레이블 설립";
-    text = "멤버들과 직접 회사를 세웠어요. 정산 몫은 크게 늘고 제작 지원은 줄어요.";
+    headline = "개인 소속사 설립";
+    text = c.flags.solo ? "내 이름으로 회사를 세웠어요. 정산 몫은 크게 늘고 제작 지원은 줄어요." : "개인 소속사를 세우고 그룹 활동은 계속해요. 정산 몫은 크게 늘고 제작 지원은 줄어요.";
     tone = "good";
     log(c, headline, text, "milestone");
   } else if (op === "solo") {
+    writeOffIfBankrupt(c);
     c.contractEnd = c.turn + 6;
+    c.flags.renewed = 1;
     c.flags.solo = 1;
-    c.groupName = c.name;
-    c.fans = Math.round(c.fans * 0.75);
-    headline = "솔로 전향";
-    text = "그룹을 떠나 내 이름으로 활동해요. 팬덤 일부는 떠났지만 정산은 온전히 내 몫이에요.";
+    c.flags.independent = 1;
+    // 그룹 인기에 기대던 팬은 떠나고, 개인 인기가 높을수록 많이 남는다
+    const keep = Math.max(0.5, Math.min(0.9, 0.45 + c.popularity / 200 + rng(c) * 0.1));
+    c.fans = Math.round(c.fans * keep);
+    headline = "그룹 탈퇴 · 개인 소속사 설립";
+    text = `${c.groupName || "그룹"}을(를) 떠나 내 회사에서 내 이름으로 활동해요. 팬덤 ${Math.round((1 - keep) * 100)}%가 떠났지만 정산은 온전히 내 몫이에요.`;
     log(c, headline, text, "milestone");
+  } else if (op === "agency-closed") {
+    const a = agencyById(c.agencyId);
+    c.stage = "free";
+    c.agencyId = null;
+    c.agencyJoinedTurn = null;
+    c.traineeContractEnd = null;
+    c.trust = 0;
+    c.warnings = 0;
+    c.money.invested = 0;
+    headline = `${a?.name ?? "회사"} 폐업`;
+    text = "회사가 문을 닫아 무소속이 됐어요. 개인 채무는 없어요. 다른 회사에 지원할 수 있어요.";
+    tone = "bad";
+    log(c, headline, text, "system");
   }
 
   if (!c.pending) c.pending = null;
@@ -565,10 +625,11 @@ export function applyToAgency(original: Career, agencyId: string): Career {
   if (c.agencyId === agencyId) throw new GameError("이미 소속된 회사예요.");
   const last = c.flags[`apply:${agencyId}`];
   if (last !== undefined && c.turn - last < 2) throw new GameError("같은 회사에는 1년 뒤 다시 지원할 수 있어요.");
-  if (c.flags.appliedTurn === c.turn) throw new GameError("기획사 지원은 시즌마다 한 번만 할 수 있어요. 다음 시즌에 다시 지원해주세요.");
+  if (appliedThisSeason(c) >= APPLY_PER_SEASON) throw new GameError(`기획사 지원은 시즌마다 ${APPLY_PER_SEASON}곳까지예요. 다음 시즌에 다시 지원해주세요.`);
   c.result = null;
   const before = snapshot(c);
   c.flags[`apply:${agencyId}`] = c.turn;
+  c.flags.appliedCount = appliedThisSeason(c) + 1;
   c.flags.appliedTurn = c.turn;
   const p = auditionChance(c, agencyId);
   const passed = rng(c) < p;
@@ -595,6 +656,31 @@ export function applyToAgency(original: Career, agencyId: string): Career {
     log(c, headline, text, "system");
     finish(c, before, headline, text, "bad", { scene: "audition" });
   }
+  return c;
+}
+
+export const appliedThisSeason = (c: Pick<Career, "flags" | "turn">) => (c.flags.appliedTurn === c.turn ? c.flags.appliedCount ?? 1 : 0);
+
+// ─────────────────────────── 상점 ───────────────────────────
+
+export function buyItem(original: Career, itemId: string): Career {
+  const c = clone(original);
+  if (c.stage === "retired") throw new GameError("이미 완성된 인생예요.");
+  if (c.pending) throw new GameError("먼저 지금의 선택을 마쳐주세요.");
+  const item = itemById(itemId);
+  if (!item || !shopOffers(c).some((x) => x.id === itemId)) throw new GameError("이번 시즌에 파는 물건이 아니에요.");
+  if (boughtThisSeason(c)) throw new GameError("상점에서는 시즌마다 하나만 살 수 있어요.");
+  const price = priceOf(c, item);
+  if (walletOf(c) < price) throw new GameError("정산금이 부족해요.");
+  c.result = null;
+  const before = snapshot(c);
+  c.money.spent = Math.round(((c.money.spent ?? 0) + price) * 10) / 10;
+  c.potential[item.stat] = Math.min(99, c.potential[item.stat] + item.amount);
+  c.stats[item.stat] = Math.min(99, c.stats[item.stat] + item.amount);
+  c.flags.shopTurn = c.turn;
+  c.items = [...(c.items ?? []), item.id];
+  log(c, `${item.name} 구매`, `${STAT_NAMES[item.stat]}이(가) ${item.amount} 올랐어요.`, "growth");
+  finish(c, before, `${item.name} 구매`, `${item.description}. ${STAT_NAMES[item.stat]} 실력이 늘었어요.`, "good");
   return c;
 }
 

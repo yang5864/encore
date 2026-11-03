@@ -115,6 +115,8 @@ export type Money = {
   /** 내 정산금 누적(억) */
   settled: number;
   firstSettledTurn: number | null;
+  /** 상점에서 쓴 돈(억) */
+  spent?: number;
 };
 
 export type MilestoneId = "debut" | "firstWin" | "firstSettlement" | "daesang" | "legend";
@@ -160,6 +162,8 @@ export type Career = {
   money: Money;
   metrics: PublicMetrics;
   signature?: Signature | null;
+  /** 상점에서 산 아이템 id */
+  items?: string[];
   warnings: number;
   scoutCount: number;
   lowPopularityTurns: number;

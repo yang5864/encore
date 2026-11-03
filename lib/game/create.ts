@@ -48,7 +48,8 @@ export function createCareer(input: CreateInput, seed: number = newSeed(), id: s
     peakMelon: null,
     peakBillboard: null,
     peakPopularity: 0,
-    money: { invested: 0, revenue: 0, settled: 0, firstSettledTurn: null },
+    money: { invested: 0, revenue: 0, settled: 0, firstSettledTurn: null, spent: 0 },
+    items: [],
     metrics: { instagram: 0, youtube: 0, spotify: 0 },
     warnings: 0,
     scoutCount: 0,
@@ -61,9 +62,9 @@ export function createCareer(input: CreateInput, seed: number = newSeed(), id: s
     milestones: [],
     ending: null,
   };
-  // Hidden potential: each stat can reach somewhere between 78 and 99, nudged by the starting value.
+  // 숨은 잠재력: 사람마다 차이가 커서 60대에서 멈추는 능력도, 99까지 가는 능력도 있다.
   for (const k of STAT_KEYS) {
-    c.potential[k] = Math.round(Math.min(99, 72 + c.stats[k] * 0.25 + rng(c) * 16));
+    c.potential[k] = Math.round(Math.min(99, 58 + c.stats[k] * 0.25 + rng(c) * 32));
   }
   return c;
 }

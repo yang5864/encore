@@ -70,8 +70,34 @@ export function contractTerms(c: Career, event: ActiveEvent, choice: ChoiceDef):
         { label: "정산", value: `회수 후 순이익의 ${share}% 중 멤버 몫` },
         { label: "활동 범위", value: "음반 · 공연 · 방송 · 광고" },
       ],
-      notes: ["그룹 이름을 정하면 계약과 함께 데뷔가 확정돼요.", "7년 뒤 재계약 · 독립 · 솔로 · 해체를 다시 정해요."],
+      notes: ["그룹 이름을 정하면 계약과 함께 데뷔가 확정돼요.", "7년 뒤 재계약 · 해외 이적 · 개인 소속사 · 탈퇴를 다시 정해요. 오퍼는 실력과 인기에 따라 들어와요."],
       needsGroupName: true,
+    };
+  }
+  if (op.startsWith("move:")) {
+    const a = agencyById(op.slice(5))!;
+    const share = Math.round(Math.min(0.8, a.share + 0.1) * 100);
+    return {
+      title: c.flags.solo ? `${a.name}가 ${c.name}와 솔로 계약을 원해요` : `${a.name}가 ${c.name}와 전속계약을 원해요 · 그룹 활동 유지`,
+      text: c.flags.solo ? "해외 레이블과 맺는 솔로 전속계약이에요." : "소속사는 옮기지만 상표권 합의로 그룹 활동은 그대로 이어가요.",
+      party: partyOf(a),
+      rows: [
+        { label: "계약 기간", value: "3년" },
+        { label: "정산", value: `순이익의 ${share}%${c.flags.solo ? "" : " 중 멤버 몫"}`, accent: true },
+        { label: "활동", value: c.flags.solo ? "솔로 · 해외 활동" : "그룹 활동 유지 · 해외 활동" },
+      ],
+      notes: ["신뢰는 새 회사에서 다시 쌓아요."],
+      needsGroupName: false,
+    };
+  }
+  if (op === "renew" && c.flags.independent) {
+    return {
+      title: "내 회사 운영 연장",
+      text: "지금 방식 그대로 3년 더 활동해요.",
+      party: { name: `${c.name} 개인 소속사`, sub: "1인 기획사", logo: null, color: "#3182f6" },
+      rows: [{ label: "계약 기간", value: "3년" }, { label: "정산", value: "순이익의 70%", accent: true }],
+      notes: [],
+      needsGroupName: false,
     };
   }
   if (op === "renew") {
@@ -91,43 +117,29 @@ export function contractTerms(c: Career, event: ActiveEvent, choice: ChoiceDef):
   }
   if (op === "independent") {
     return {
-      title: "멤버들과 독립 레이블 설립 계약",
-      text: "멤버들이 직접 회사를 세우고 그룹 상표권을 가져와요. 제작 지원은 줄지만 정산 몫이 크게 늘어요.",
-      party: { name: `${c.groupName || c.name} LABEL`, sub: "독립 레이블 · 멤버 공동 설립", logo: null, color: "#3182f6" },
+      title: c.flags.solo ? `${c.name} 개인 소속사 설립` : `${c.name} 개인 소속사 설립 · 그룹 활동 유지`,
+      text: c.flags.solo ? "내 이름으로 회사를 세워요." : "전속계약은 내 회사와 맺고, 그룹 활동은 멤버들과 합의해 계속해요. 제작 지원은 줄지만 정산 몫이 크게 늘어요.",
+      party: { name: `${c.name} 개인 소속사`, sub: "1인 기획사", logo: null, color: "#3182f6" },
       rows: [
         { label: "계약 기간", value: "3년" },
-        { label: "정산", value: "순이익의 70% 중 멤버 몫", accent: true },
+        { label: "정산", value: `순이익의 70%${c.flags.solo ? "" : " 중 멤버 몫"}`, accent: true },
         { label: "제작 지원", value: "기존의 60% 수준" },
       ],
-      notes: ["상표권과 활동 결정권을 멤버들이 가져요."],
-      needsGroupName: false,
-    };
-  }
-  if (op === "transfer") {
-    return {
-      title: "다른 회사와 새 전속계약 · 팀 활동 유지",
-      text: "더 큰 회사로 옮기되 상표권 합의로 그룹 활동은 그대로 이어가요. 이적할 회사는 협상 결과에 따라 정해져요.",
-      party: { name: "대형 · 중견 기획사 중 협상", sub: "상표권 사용 합의 포함", logo: null, color: "#7c5cff" },
-      rows: [
-        { label: "계약 기간", value: "3년" },
-        { label: "정산", value: "조건 개선 (+10%p)", accent: true },
-        { label: "그룹 활동", value: "유지 (상표권 합의)" },
-      ],
-      notes: ["신뢰는 새 회사에서 다시 쌓아요."],
+      notes: [c.flags.solo ? "활동 결정권을 내가 가져요." : "그룹 이름은 그대로 써요."],
       needsGroupName: false,
     };
   }
   if (op === "solo") {
     return {
-      title: `${c.name} 솔로 전속계약`,
-      text: "그룹을 떠나 내 이름으로 활동해요. 정산은 온전히 내 몫이지만 팬덤 일부가 떠나요.",
-      party: partyOf(mine),
+      title: `${c.name} 그룹 탈퇴 · 개인 소속사 설립`,
+      text: "그룹을 떠나 내 회사에서 내 이름으로 활동해요. 정산은 온전히 내 몫이지만 팬덤 일부가 떠나요.",
+      party: { name: `${c.name} 개인 소속사`, sub: "1인 기획사", logo: null, color: "#3182f6" },
       rows: [
         { label: "계약 기간", value: "3년" },
-        { label: "정산", value: "순이익 중 내 몫 100%", accent: true },
+        { label: "정산", value: "순이익의 70% · 내 몫 100%", accent: true },
         { label: "활동", value: "솔로 앨범 · 개인 활동" },
       ],
-      notes: ["그룹 활동은 종료돼요."],
+      notes: ["그룹 활동은 종료되지만 데뷔한 그룹 이름은 경력으로 남아요."],
       needsGroupName: false,
     };
   }
@@ -141,7 +153,7 @@ export function contractTerms(c: Career, event: ActiveEvent, choice: ChoiceDef):
   };
 }
 
-export const SIGNING_OPS = ["join:", "scout:", "freecast", "trainee:renew", "debut", "renew", "independent", "transfer", "solo"];
+export const SIGNING_OPS = ["join:", "scout:", "freecast", "trainee:renew", "debut", "renew", "independent", "move:", "solo"];
 export const isSigningChoice = (choice: ChoiceDef) => !!choice.sign;
 
 export { AGENCIES };

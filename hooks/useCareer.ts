@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Career, Signature } from "@/lib/game/types";
 import { GameError } from "@/lib/game/types";
-import { advanceTurn, resolveChoice, applyToAgency, retireCareer } from "@/lib/game/engine";
+import { advanceTurn, resolveChoice, applyToAgency, buyItem, retireCareer } from "@/lib/game/engine";
 import { addRecord, clearCareer, exportJSON, importJSON, loadCareer, saveCareer } from "@/lib/storage";
 
 export function useCareer() {
@@ -54,6 +54,7 @@ export function useCareer() {
         return next;
       }),
     apply: (agencyId: string) => run((c) => applyToAgency(c, agencyId)),
+    buy: (itemId: string) => run((c) => buyItem(c, itemId)),
     retire: () => run((c) => retireCareer(c)),
     dismissResult: () => run((c) => ({ ...c, result: null })),
     reset: () => {
