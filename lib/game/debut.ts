@@ -57,6 +57,12 @@ export function etaLabel(eta: Eta): string {
   return `최소 ${Math.round(eta / 2)}년 뒤 데뷔`;
 }
 
+export function etaSentence(eta: Eta): string {
+  if (eta === null) return "다음 데뷔 일정은 아직 정해지지 않았어요";
+  if (eta <= 1) return "곧 데뷔할 수 있어요";
+  return `다음 데뷔까지 최소 ${Math.round(eta / 2)}년은 기다려야 해요`;
+}
+
 /** 실력이 회사 기준보다 높을수록 빨리 데뷔시켜준다. 큰 회사일수록 대기열이 길다. */
 export function etaFor(c: Career, a: Agency): Eta {
   if (rng(c) < 0.15) return null;
@@ -117,7 +123,7 @@ export function debutCutEvent(c: Career): ActiveEvent {
   return {
     id: "debut-cut",
     title: (c.flags.cutCount ?? 1) > 1 ? "또 데뷔조에 들지 못했어요" : "데뷔조에 들지 못했어요",
-    text: `평가 기준은 넘었지만 최종 명단에 내 이름이 없었어요. ${reason} ${mine.name}에서의 다음 데뷔: ${etaLabel(eta)}.${offers.length ? ` 소식을 들은 다른 회사 ${offers.length}곳에서 연락이 왔어요.` : ""}`,
+    text: `평가 기준은 넘었지만 최종 명단에 내 이름이 없었어요. ${reason} ${mine.name}에서는 ${etaSentence(eta)}.${offers.length ? ` 소식을 들은 다른 회사 ${offers.length}곳에서 연락이 왔어요.` : ""}`,
     scene: "dorm",
     choices: [
       { id: "wait", label: `${mine.name}에 남아 기다린다`, hint: `${etaLabel(eta)}. 회사의 신뢰가 오르지만 마음이 지쳐요`, risk: "safe", effects: { trust: 8, mental: -8 }, op: "debut:cut" },
