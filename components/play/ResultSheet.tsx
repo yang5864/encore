@@ -45,7 +45,7 @@ export function ResultSheet({ result, avatar, gender, name, open, onClose, ctaLa
   const rest = result.changes.filter((c) => !top.includes(c));
   const toneColor = result.tone === "bad" ? "text-danger" : result.tone === "good" || result.tone === "milestone" ? "text-primary" : "text-ink";
   return (
-    <Sheet open={open} onOpenChange={(o) => !o && onClose()}>
+    <Sheet open={open} onOpenChange={(o) => !o && onClose()} footer={<Button onClick={onClose}>{ctaLabel}</Button>}>
       {result.scene && (
         <div className="-mx-5 -mt-3">
           <EventArt scene={result.scene} avatar={avatar} gender={gender} name={name} />
@@ -108,10 +108,6 @@ export function ResultSheet({ result, avatar, gender, name, open, onClose, ctaLa
           )}
         </div>
       )}
-
-      <div className="mt-6">
-        <Button onClick={onClose}>{ctaLabel}</Button>
-      </div>
     </Sheet>
   );
 }

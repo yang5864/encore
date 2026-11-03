@@ -10,11 +10,13 @@ type Props = {
   description?: string;
   tall?: boolean;
   dismissible?: boolean;
+  /** 스크롤 영역 밖에 항상 보이는 하단 버튼 영역 */
+  footer?: ReactNode;
   children: ReactNode;
 };
 
 /** Toss-style bottom sheet. All overlays in the app go through this. */
-export function Sheet({ open, onOpenChange, title, description, tall, dismissible = true, children }: Props) {
+export function Sheet({ open, onOpenChange, title, description, tall, dismissible = true, footer, children }: Props) {
   return (
     <Drawer.Root open={open} onOpenChange={onOpenChange} dismissible={dismissible} repositionInputs={false}>
       <Drawer.Portal>
@@ -38,7 +40,11 @@ export function Sheet({ open, onOpenChange, title, description, tall, dismissibl
               <Drawer.Description className="sr-only">{title ?? "내용"}</Drawer.Description>
             )}
           </div>
-          <div className="px-5 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-3 overflow-y-auto no-scrollbar grow">{children}</div>
+          <div className={cn("px-5 pt-3 overflow-y-auto no-scrollbar grow", footer ? "pb-4" : "pb-[calc(env(safe-area-inset-bottom)+20px)]")}>{children}</div>
+          {footer && (
+            // 시트가 길어도 주 버튼은 항상 보인다
+            <div className="shrink-0 px-5 pt-2 pb-[calc(env(safe-area-inset-bottom)+16px)] bg-card border-t border-line">{footer}</div>
+          )}
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>
