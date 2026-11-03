@@ -91,6 +91,37 @@ export function rankingFor(c: Pick<Career, "popularity" | "name" | "groupName" |
   return { entries, source, me: entries[i], above: i > 0 ? entries[i - 1] : null, below: i < entries.length - 1 ? entries[i + 1] : null, total: entries.length, outside };
 }
 
+const sourceKey = (r: Ranking) => (r.source.kind === "real" ? r.source.month : r.source.label);
+
+/**
+ * 직전 비교 시점 대비 순위 변동. 양수는 상승, 음수는 하락, null은 새로 진입.
+ * 같은 자료를 쓰는 시즌은 건너뛰고 자료가 바뀐 가장 가까운 이전 시점과 비교한다.
+ * 내 변동은 지난 시즌 인기도(prevPopularity)로 계산한다.
+ */
+export function rankChanges(c: Pick<Career, "popularity" | "name" | "groupName" | "stage">, year: number, secondHalf: boolean, prevPopularity?: number): Map<string, number | null> {
+  const now = rankingFor(c, year, secondHalf);
+  let y = year;
+  let h = secondHalf;
+  let prev: Ranking | null = null;
+  for (let i = 0; i < 8; i++) {
+    if (h) h = false;
+    else { y -= 1; h = true; }
+    if (y < 2006) break;
+    const r = rankingFor({ ...c, popularity: prevPopularity ?? c.popularity }, y, h);
+    if (sourceKey(r) !== sourceKey(now)) { prev = r; break; }
+  }
+  const out = new Map<string, number | null>();
+  if (!prev) return out;
+  const before = new Map(prev.entries.map((e) => [e.me ? "@me" : e.name, e.rank]));
+  for (const e of now.entries) {
+    const key = e.me ? "@me" : e.name;
+    if (e.me && prevPopularity === undefined) continue;
+    const was = before.get(key);
+    out.set(key, was === undefined ? null : was - e.rank);
+  }
+  return out;
+}
+
 /** @deprecated rankingFor 사용 */
 export function rankWithMe(c: Pick<Career, "popularity" | "name" | "groupName" | "stage">, year: number): RankedEntry[] {
   return rankingFor(c, year, false).entries;

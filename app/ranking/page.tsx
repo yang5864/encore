@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/Card";
-import { Avatar } from "@/components/Avatar";
-import { rankingFor } from "@/lib/game/brand-rank";
+import { rankChanges, rankingFor } from "@/lib/game/brand-rank";
 import { isSecondHalf, periodLabel, yearOf } from "@/lib/game/format";
 import type { Career } from "@/lib/game/types";
 import { loadCareer } from "@/lib/storage";
@@ -25,6 +24,7 @@ export default function RankingPage() {
   const year = yearOf(career);
   const r = rankingFor(career, year, isSecondHalf(career));
   const list = r.entries;
+  const changes = rankChanges(career, year, isSecondHalf(career), career.flags.prevPopularity);
   const real = r.source.kind === "real";
   return (
     <main className="shell pt-3">
@@ -39,13 +39,7 @@ export default function RankingPage() {
         {list.map((e, i) => (
           <div key={`${e.name}-${i}`} className={cn("flex items-center gap-3 px-3 py-3 rounded-2xl", e.me && "bg-primary-soft/60")}>
             <span className={cn("w-7 text-center font-extrabold text-[16px]", e.rank <= 3 ? "text-warn" : e.me ? "text-primary" : "text-ink-3")}>{e.rank}</span>
-            {e.me ? (
-              <div className="w-9 h-11 rounded-lg bg-chip flex items-end justify-center overflow-hidden">
-                <Avatar index={career.avatar} size={30} name={career.name} />
-              </div>
-            ) : (
-              <span className="w-9 h-9 rounded-lg bg-chip flex items-center justify-center text-[13px] font-bold text-ink-3">{e.name.slice(0, 2)}</span>
-            )}
+            <RankDelta value={changes.has(e.me ? "@me" : e.name) ? changes.get(e.me ? "@me" : e.name)! : undefined} />
             <div className="min-w-0 flex-1">
               <p className={cn("text-[16px] font-bold truncate", e.me && "text-primary")}>{e.name}{e.me ? " (나)" : ""}</p>
             </div>
@@ -60,4 +54,13 @@ export default function RankingPage() {
       </p>
     </main>
   );
+}
+
+/** 순위 변동: 상승은 빨강 ▲, 하락은 파랑 ▼, 유지는 –, 새로 진입은 NEW. 비교 자료가 없으면 빈칸. */
+function RankDelta({ value }: { value: number | null | undefined }) {
+  const base = "w-11 shrink-0 text-center text-[13px] font-bold tabular-nums";
+  if (value === undefined) return <span className={base} />;
+  if (value === null) return <span className={cn(base, "text-up")}>NEW</span>;
+  if (value === 0) return <span className={cn(base, "text-ink-3")}>–</span>;
+  return <span className={cn(base, value > 0 ? "text-up" : "text-down")}>{value > 0 ? "▲" : "▼"}{Math.abs(value)}</span>;
 }

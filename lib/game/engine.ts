@@ -91,6 +91,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   if (c.stage === "retired") throw new GameError("이미 완성된 인생예요. 새 이야기를 시작해보세요.");
   if (c.pending) throw new GameError("먼저 지금의 선택을 마쳐주세요.");
   c.result = null;
+  c.flags.prevPopularity = c.popularity;
   const before = snapshot(c);
   const notes: string[] = [];
   let tone: Tone = "neutral";
