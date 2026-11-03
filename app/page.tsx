@@ -7,8 +7,9 @@ import { HomeShowcase } from "@/components/HomeShowcase";
 import { Button, FixedCta } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Logo } from "@/components/Logo";
+import { AgencyMarquee } from "@/components/AgencyMarquee";
 import { SupportTrigger } from "@/components/SupportSheet";
-import { AGENCIES, agencyById } from "@/lib/game/agencies";
+import { agencyById } from "@/lib/game/agencies";
 import { ageOf, fanText, periodLabel, STAGE_NAMES } from "@/lib/game/format";
 import { overall } from "@/lib/game/stats";
 import type { Career } from "@/lib/game/types";
@@ -110,14 +111,7 @@ export default function HomePage() {
       <Card className="mt-3 fade-up" style={{ animationDelay: "260ms" }}>
         <h2 className="t-card">지원할 수 있는 기획사</h2>
         <p className="t-cap mt-1">2026 종합 순위 순 · 대형 4 · 중견 5 · 레이블 4 · 해외 3</p>
-        <div className="mt-3 flex gap-2 overflow-x-auto no-scrollbar -mx-5 px-5">
-          {AGENCIES.map((a) => (
-            <div key={a.id} className="shrink-0 flex flex-col items-center gap-1.5 w-16">
-              <Logo id={a.logo} label={a.name} color={a.color} size={48} rounded="full" />
-              <span className="text-[13px] text-ink-2 font-semibold truncate w-full text-center">{a.name}</span>
-            </div>
-          ))}
-        </div>
+        <AgencyMarquee />
       </Card>
 
       {/* 메뉴 리스트 */}
