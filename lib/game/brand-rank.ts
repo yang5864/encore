@@ -34,23 +34,66 @@ export const BRAND_RANKS: Record<number, BrandEntry[]> = {
   2026: [["방탄소년단", 98], ["블랙핑크", 88], ["에스파", 86], ["세븐틴", 86], ["스트레이키즈", 86], ["아이브", 84], ["라이즈", 82], ["데이식스", 80], ["베이비몬스터", 80], ["엔하이픈", 78], ["투모로우바이투게더", 75], ["아일릿", 74], ["하츠투하츠", 72], ["올데이프로젝트", 70], ["코르티스", 66]].map(([name, index]) => ({ name: name as string, index: index as number })),
 };
 
+import { REAL_MONTHS, type RealEntry } from "./brand-rank-real.ts";
+
 export function brandTable(year: number): BrandEntry[] {
   const y = Math.max(2006, Math.min(2026, year));
   return [...(BRAND_RANKS[y] ?? BRAND_RANKS[2026])].sort((a, b) => b.index - a.index);
 }
 
 export type RankedEntry = BrandEntry & { rank: number; me: boolean };
+export type RankingSource = { kind: "real"; month: string; label: string } | { kind: "estimate"; label: string };
+export type Ranking = { entries: RankedEntry[]; source: RankingSource; me: RankedEntry; above: RankedEntry | null; below: RankedEntry | null; total: number; outside: boolean };
 
-/** 내 캐릭터를 그 해 표에 끼워 넣은 전체 순위. 인기도(0~100)를 지수로 그대로 쓴다. */
-export function rankWithMe(c: Pick<Career, "popularity" | "name" | "groupName" | "stage">, year: number): RankedEntry[] {
-  const mine = { name: c.stage === "idol" && c.groupName ? c.groupName : c.name, index: Math.round(c.popularity) };
-  const all = [...brandTable(year).map((e) => ({ ...e, me: false })), { ...mine, me: true }].sort((a, b) => b.index - a.index || (a.me ? 1 : -1));
-  return all.map((e, i) => ({ ...e, rank: i + 1 }));
+/** 상반기=3월, 하반기=9월 실제 자료. 그 달이 없으면 같은 해에서 가장 가까운 달. */
+export function realMonthFor(year: number, secondHalf: boolean): string | null {
+  const want = secondHalf ? 9 : 3;
+  const keys = Object.keys(REAL_MONTHS).filter((k) => k.startsWith(`${year}-`));
+  if (!keys.length) return null;
+  return keys.sort((a, b) => Math.abs(Number(a.slice(5)) - want) - Math.abs(Number(b.slice(5)) - want) || a.localeCompare(b))[0];
 }
 
-/** 대시보드용: 내 순위와 바로 위·아래 항목. */
+/** 인기도(0~100)를 그 달 지수 분포에 끼워 넣는다: 40 → 50위권 바닥, 100 → 1위 수준 (기하 보간). */
+export function popularityToRealIndex(popularity: number, rows: RealEntry[]): number {
+  const top = rows[0].index;
+  const floor = rows[rows.length - 1].index;
+  const t = Math.max(0, Math.min(1, (popularity - 40) / 60));
+  if (popularity < 40) return Math.round(floor * Math.max(0.05, popularity / 40) * 0.9);
+  return Math.round(floor * Math.pow(top / floor, Math.pow(t, 1.6)));
+}
+
+const myName = (c: Pick<Career, "name" | "groupName" | "stage">) => (c.stage === "idol" && c.groupName ? `${c.groupName} ${c.name}` : c.name);
+
+/** 그 시즌의 전체 순위(나 포함). 2023년 이후는 실제 월간 자료, 그 전은 게임 추정표. */
+export function rankingFor(c: Pick<Career, "popularity" | "name" | "groupName" | "stage">, year: number, secondHalf: boolean): Ranking {
+  const month = realMonthFor(year, secondHalf);
+  let entries: RankedEntry[];
+  let source: RankingSource;
+  let outside = false;
+  if (month) {
+    const rows = REAL_MONTHS[month];
+    const mine = { name: myName(c), index: popularityToRealIndex(c.popularity, rows), me: true };
+    const all = [...rows.map((r) => ({ name: r.name, index: r.index, me: false })), mine].sort((a, b) => b.index - a.index || (a.me ? 1 : -1));
+    entries = all.map((e, i) => ({ ...e, rank: i + 1 }));
+    outside = c.popularity < 40;
+    const [y, m] = month.split("-");
+    source = { kind: "real", month, label: `${y}년 ${Number(m)}월 아이돌 개인 브랜드평판 · 한국기업평판연구소` };
+  } else {
+    const mine = { name: myName(c), index: Math.round(c.popularity), me: true };
+    const all = [...brandTable(year).map((e) => ({ ...e, me: false })), mine].sort((a, b) => b.index - a.index || (a.me ? 1 : -1));
+    entries = all.map((e, i) => ({ ...e, rank: i + 1 }));
+    outside = entries[entries.length - 1].me && c.popularity < 20;
+    source = { kind: "estimate", label: `${year}년 아이돌 인기 비교 · 게임 추정` };
+  }
+  const i = entries.findIndex((e) => e.me);
+  return { entries, source, me: entries[i], above: i > 0 ? entries[i - 1] : null, below: i < entries.length - 1 ? entries[i + 1] : null, total: entries.length, outside };
+}
+
+/** @deprecated rankingFor 사용 */
+export function rankWithMe(c: Pick<Career, "popularity" | "name" | "groupName" | "stage">, year: number): RankedEntry[] {
+  return rankingFor(c, year, false).entries;
+}
 export function rankNeighbors(c: Pick<Career, "popularity" | "name" | "groupName" | "stage">, year: number) {
-  const list = rankWithMe(c, year);
-  const i = list.findIndex((e) => e.me);
-  return { me: list[i], above: i > 0 ? list[i - 1] : null, below: i < list.length - 1 ? list[i + 1] : null, total: list.length };
+  const r = rankingFor(c, year, false);
+  return { me: r.me, above: r.above, below: r.below, total: r.total };
 }

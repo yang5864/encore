@@ -119,3 +119,22 @@ test("공개 지표는 실제 규모에 맞고, 옛 저장본에도 보완된다
   delete legacy.metrics;
   assert.deepEqual(importJSON(JSON.stringify(legacy)).metrics, { instagram: 0, youtube: 0, spotify: 0 });
 });
+
+import { rankingFor, popularityToRealIndex } from "../lib/game/brand-rank.ts";
+import { REAL_MONTHS } from "../lib/game/brand-rank-real.ts";
+
+test("브랜드평판 순위: 2023년부터 실제 자료, 그 전은 추정표, 인기도가 높을수록 상위", () => {
+  const me = { name: "유나", groupName: "LUMINA", stage: "idol" as const, popularity: 95 };
+  const real = rankingFor(me, 2026, true);
+  assert.equal(real.source.kind, "real");
+  assert.ok(real.me.rank <= 5, `${real.me.rank}`);
+  const mid = rankingFor({ ...me, popularity: 70 }, 2026, true);
+  assert.ok(mid.me.rank > real.me.rank && mid.me.rank <= 40, `${mid.me.rank}`);
+  const low = rankingFor({ ...me, popularity: 20 }, 2026, true);
+  assert.ok(low.outside);
+  const old = rankingFor(me, 2012, false);
+  assert.equal(old.source.kind, "estimate");
+  assert.ok(Object.keys(REAL_MONTHS).length >= 40);
+  const rows = REAL_MONTHS["2026-10"];
+  assert.equal(popularityToRealIndex(100, rows), rows[0].index);
+});
