@@ -7,6 +7,7 @@ import { Button, FixedCta } from "@/components/ui/Button";
 import { ProfileCard } from "@/components/play/ProfileCard";
 import { SummaryCard } from "@/components/play/SummaryCard";
 import { CareerSummary } from "@/components/play/CareerSummary";
+import { DaesangOverlay } from "@/components/play/DaesangOverlay";
 import { Sheet } from "@/components/ui/Sheet";
 import { Fireworks } from "@/components/Fireworks";
 import { StatsCard } from "@/components/play/StatsCard";
@@ -22,7 +23,7 @@ import { CoachMarks } from "@/components/play/CoachMarks";
 import { loadSettings, saveSettings } from "@/lib/storage";
 import { focusOptions } from "@/lib/game/focus";
 import { periodLabel } from "@/lib/game/format";
-import type { MilestoneId, TurnResult } from "@/lib/game/types";
+import type { Award, MilestoneId, TurnResult } from "@/lib/game/types";
 
 export default function PlayPage() {
   const router = useRouter();
@@ -37,6 +38,7 @@ export default function PlayPage() {
   const [seenResultKey, setSeenResultKey] = useState<string | null>(null);
   const [lastResult, setLastResult] = useState<TurnResult | null>(null);
   const [fireworks, setFireworks] = useState<"win" | "daesang" | "award" | null>(null);
+  const [daesang, setDaesang] = useState<Award | null>(null);
 
   useEffect(() => {
     if (ready && !career) router.replace("/");
@@ -65,12 +67,14 @@ export default function PlayPage() {
       setSeenResultKey(resultKey);
       setLastResult(career.result);
       if (career.result.celebrate) setFireworks(career.result.celebrate);
+      const big = career.result.awards?.find((a) => a.kind === "daesang");
+      if (big) setDaesang(big);
     }
   }, [career, resultKey, seenResultKey]);
 
   const pendingMilestone = milestoneQueue[0] ?? null;
-  const showResult = !!career?.result && !pendingMilestone && !coach;
-  const showEvent = !!career?.pending && !career.result && !pendingMilestone && !coach;
+  const showResult = !!career?.result && !pendingMilestone && !coach && !daesang;
+  const showEvent = !!career?.pending && !career.result && !pendingMilestone && !coach && !daesang;
 
   const [advancing, setAdvancing] = useState(false);
   const runAdvance = () => {
@@ -142,7 +146,8 @@ export default function PlayPage() {
         </Button>
       </FixedCta>
 
-      <MilestoneSheet career={career} id={pendingMilestone} open={!!pendingMilestone} onClose={() => setMilestoneQueue((q) => q.slice(1))} />
+      {daesang && <DaesangOverlay career={career} award={daesang} onDone={() => setDaesang(null)} />}
+      <MilestoneSheet career={career} id={pendingMilestone} open={!!pendingMilestone && !daesang} onClose={() => setMilestoneQueue((q) => q.slice(1))} />
       {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} avatar={career.avatar} gender={career.gender} name={career.name} open={showResult} onClose={dismissResult} ctaLabel={career.pending ? "다음 선택 보기" : "확인"} />}
       <EventSheet key={career.pending?.id ?? "none"} career={career} open={showEvent} onChoose={choose} />
       <Sheet open={detail === "settlement"} onOpenChange={(o) => !o && setDetail(null)} title="정산 현황">
