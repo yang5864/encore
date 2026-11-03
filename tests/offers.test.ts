@@ -177,7 +177,7 @@ test("간혹 데뷔조에서 밀리고, 데뷔 시점과 이적 선택지가 나
     const n = advanceTurn(readyTrainee(seed), "train:all");
     if (n.pending?.id !== "debut-cut") continue;
     cuts++;
-    assert.match(n.pending.text, /바로 데뷔 가능|최소 \d년 뒤 데뷔|데뷔 일정 미정/);
+    assert.match(n.pending.text, /최소 \d년은 기다려야|아직 정해지지 않았어요/);
     const wait = resolveChoice(n, "wait");
     assert.ok(wait.flags.debutEta !== undefined && wait.flags.debutEta > wait.turn);
     const move = n.pending.choices.find((x) => x.op?.startsWith("scout:"));
