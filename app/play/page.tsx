@@ -6,10 +6,11 @@ import { useCareer } from "@/hooks/useCareer";
 import { Button, FixedCta } from "@/components/ui/Button";
 import { ProfileCard } from "@/components/play/ProfileCard";
 import { SummaryCard } from "@/components/play/SummaryCard";
+import { CareerSummary } from "@/components/play/CareerSummary";
 import { Sheet } from "@/components/ui/Sheet";
 import { Fireworks } from "@/components/Fireworks";
 import { StatsCard } from "@/components/play/StatsCard";
-import { SettlementBody, SettlementCard } from "@/components/play/SettlementCard";
+import { SettlementBody } from "@/components/play/SettlementCard";
 import { ShopBody } from "@/components/play/ShopCard";
 import { FocusCard, focusIdOf, type FocusSelection } from "@/components/play/FocusCard";
 import { EventSheet } from "@/components/play/EventSheet";
@@ -18,7 +19,6 @@ import { MilestoneSheet } from "@/components/play/MilestoneSheet";
 import { AgencySheet } from "@/components/play/AgencySheet";
 import { MenuSheet } from "@/components/play/MenuSheet";
 import { CoachMarks } from "@/components/play/CoachMarks";
-import { Card } from "@/components/ui/Card";
 import { loadSettings, saveSettings } from "@/lib/storage";
 import { focusOptions } from "@/lib/game/focus";
 import { periodLabel } from "@/lib/game/format";
@@ -113,16 +113,13 @@ export default function PlayPage() {
       <div className="flex flex-col gap-3">
         <ProfileCard career={career} onAgency={() => setAgencyOpen(true)} />
         {career.stage === "idol" && <SummaryCard career={career} onSettlement={() => setDetail("settlement")} onShop={() => setDetail("shop")} />}
-        <StatsCard career={career} changes={lastResult?.changes} />
-        {career.stage === "retired" ? <SettlementCard career={career} /> : null}
         {career.stage === "retired" ? (
-          <Card className="fade-up">
-            <p className="t-cap text-primary">{career.ending?.subtitle}</p>
-            <h2 className="t-title mt-1">{career.ending?.title}</h2>
-            <p className="t-body text-ink-2 mt-2">{career.ending?.text}</p>
-          </Card>
+          <CareerSummary career={career} />
         ) : (
-          <FocusCard career={career} value={focus} onChange={setFocus} />
+          <>
+            <StatsCard career={career} changes={lastResult?.changes} />
+            <FocusCard career={career} value={focus} onChange={setFocus} />
+          </>
         )}
       </div>
 

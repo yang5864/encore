@@ -56,6 +56,7 @@ export function parseCareer(text: string): Career {
   const stats = c.stats as Record<string, number>;
   for (const k of Object.keys(stats)) stats[k] = Math.round(stats[k]);
   if (!Array.isArray(c.items)) c.items = [];
+  if (!Array.isArray(c.timeline)) c.timeline = [];
   // 예전 솔로 전향은 그룹명을 내 이름으로 덮어썼다: 데뷔 기록에서 되찾는다
   if (c.groupName === c.name && Array.isArray(c.history)) {
     const debut = (c.history as { title: string }[]).find((h) => h.title.endsWith(" 데뷔 확정"));

@@ -88,6 +88,10 @@ function finish(c: Career, before: Snapshot, headline: string, text: string, ton
     // 브랜드평판 최고 순위를 기억한다 (톱티어 제안 기준)
     const r = rankingFor(c, yearOf(c), isSecondHalf(c));
     if (!r.outside) c.flags.bestRank = Math.min(c.flags.bestRank ?? 999, r.me.rank);
+    const tl = (c.timeline ??= []);
+    const point = { turn: c.turn, popularity: Math.round(c.popularity), fans: c.fans, rank: r.outside ? null : r.me.rank };
+    if (tl.length && tl[tl.length - 1].turn === c.turn) tl[tl.length - 1] = point;
+    else tl.push(point);
   }
   const milestones = checkMilestones(c);
   if (milestones.includes("firstSettlement")) log(c, "첫 정산", "투자비를 모두 회수했어요. 이제 번 돈이 내 몫으로 들어와요.", "milestone");

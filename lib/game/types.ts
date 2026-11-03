@@ -174,6 +174,8 @@ export type Career = {
   lineup?: Lineup | null;
   /** 데뷔 앨범 준비: 콘셉트 → 쇼케이스 → 음악방송 데뷔 무대 순서로 정한 뒤 발매한다 */
   debutPlan?: { concept: Concept; albumName: string } | null;
+  /** 시즌별 요약 기록 (은퇴 후 그래프용). 아이돌 시즌마다 1개 */
+  timeline?: { turn: number; popularity: number; fans: number; rank: number | null }[];
   warnings: number;
   scoutCount: number;
   lowPopularityTurns: number;

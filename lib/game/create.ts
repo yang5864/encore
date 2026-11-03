@@ -50,6 +50,7 @@ export function createCareer(input: CreateInput, seed: number = newSeed(), id: s
     peakPopularity: 0,
     money: { invested: 0, revenue: 0, settled: 0, firstSettledTurn: null, spent: 0 },
     items: [],
+    timeline: [],
     metrics: { instagram: 0, youtube: 0, spotify: 0 },
     warnings: 0,
     scoutCount: 0,

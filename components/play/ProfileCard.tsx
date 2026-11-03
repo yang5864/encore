@@ -5,7 +5,7 @@ import { Chip } from "@/components/ui/Chip";
 import { MilestoneBar } from "./MilestoneBar";
 import { Logo } from "@/components/Logo";
 import { agencyById, TIERS } from "@/lib/game/agencies";
-import { ageOf, careerPhase, displayName, periodLabel, STAGE_NAMES } from "@/lib/game/format";
+import { ageOf, careerPhase, displayName, MAX_TURN, periodLabel, STAGE_NAMES } from "@/lib/game/format";
 import { POSITIONS } from "@/lib/game/stats";
 import { lineupRoles } from "@/lib/game/debut";
 import type { Career } from "@/lib/game/types";
@@ -21,7 +21,7 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
           <Avatar index={career.avatar} size={64} name={career.name} />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="t-cap">{periodLabel(career)} · {ageOf(career)}세</p>
+          <p className="t-cap">{career.stage === "retired" ? `커리어 완성 · ${ageOf({ turn: Math.min(career.turn, MAX_TURN) })}세 은퇴` : `${periodLabel(career)} · ${ageOf(career)}세`}</p>
           <h1 className="t-title truncate mt-0.5">{displayName(career)}</h1>
           <div className="flex flex-wrap items-center gap-1.5 mt-2">
             <Chip tone={career.stage === "idol" ? "info" : career.stage === "trainee" ? "ok" : "neutral"}>{careerPhase(career) === STAGE_NAMES[career.stage] ? STAGE_NAMES[career.stage] : `${STAGE_NAMES[career.stage]} · ${careerPhase(career)}`}</Chip>
@@ -52,9 +52,11 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
           {career.stage === "idol" && monthsLeft !== null && <p className="text-[13px] text-ink-3 mt-0.5">전속계약 {monthsLeft}개월 남음</p>}
           {career.stage === "trainee" && career.traineeContractEnd !== null && <p className="text-[13px] text-ink-3 mt-0.5">연습생 계약 {Math.max(0, (career.traineeContractEnd - career.turn) * 6)}개월 남음</p>}
         </div>
-        <button onClick={onAgency} className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary-soft text-primary text-[13px] font-bold">
-          {career.stage === "free" ? "기획사 지원" : career.stage === "idol" ? "기획사 보기" : "기획사 지원"}
-        </button>
+        {career.stage !== "retired" && (
+          <button onClick={onAgency} className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary-soft text-primary text-[13px] font-bold">
+            {career.stage === "idol" ? "기획사 보기" : "기획사 지원"}
+          </button>
+        )}
       </div>
 
       <div className="mt-5">
