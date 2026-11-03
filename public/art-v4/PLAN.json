@@ -1,7 +1,7 @@
 {
   "version": "art-v4-event-characters",
   "generationMode": "built-in image_gen",
-  "expectedFrames": 372,
+  "expectedFrames": 396,
   "baseReferencePattern": "../art-v3/characters/avatar-{avatar}/idle-01.png",
   "backgroundPattern": "/art-v3/backgrounds/{scene}.png",
   "sharedPrompt": "Use case: identity-preserve game character animation frame. Edit the supplied isolated avatar reference. Exactly ONE full-body cute crisp pixel-art chibi character on a genuinely transparent square canvas. Preserve face identity, eye color, hairstyle, hair color, and the exact distinctive hair accessory. Keep the same pixel-art style, head/body proportions, camera, centered framing and foot baseline as the reference. Only the situation-appropriate outfit and the requested pose may change. Entire hair, arms and shoes visible with generous empty transparent margins. No background, floor, scenery, shadows, other person, duplicate body, ghost trails, lettering, logo, watermark, border, sprite sheet or collage. Native clean pixel clusters, no blur. ",
@@ -420,9 +420,9 @@
     },
     "military": {
       "label": "군 복무",
-      "outfit": "Adult male Korean-inspired generic woodland camouflage fatigues, plain olive cap with no badges or insignia, dark combat boots. Keep original hair visible and original distinctive hair accessory subtly at the cap edge. No weapons.",
-      "pose01": "Standing respectfully and giving a neat military salute with the right hand near the cap.",
-      "pose02": "Tiny continuation of the salute with a gentle nod, same uniform, no weapons or other people.",
+      "outfit": "Black Korean army beret worn low covering front hairline; only tiny black/dark-brown shaved temple stubble visible. Camouflage uniform and black boots. No bleached hair, long bangs or hair ornaments.",
+      "pose01": "Attention: both arms straight down, heels together, head level and eyes open.",
+      "pose02": "Upright right-hand salute, left arm at thigh; head level, no bow or nod.",
       "eligibleAvatars": [
         3,
         4,
@@ -449,6 +449,34 @@
       "outfit": "Adult character in modest wedding formalwear: ivory long-sleeved wedding dress with original-color ribbon accents for avatars 0-2, ivory and dark formal suit with original-color boutonniere for avatars 3-5. Preserve face, hair and accessory.",
       "pose01": "Avatars 0-2 hold a small pastel bouquet with both hands; avatars 3-5 place one hand over the heart and the other relaxed. Warm sincere smile.",
       "pose02": "A small grateful nod and very slight hand/bouquet movement, same adult wedding outfit. No partner or guests.",
+      "eligibleAvatars": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "grammy": {
+      "label": "그래미 어워드 노미네이트",
+      "outfit": "Luxurious jeweled evening gowns for women, formal tuxedos for men.",
+      "pose01": "Red-carpet arrival pose, no trophy",
+      "pose02": "Graceful shoulder-height wave",
+      "eligibleAvatars": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "stadium": {
+      "label": "월드 스타디움 투어",
+      "outfit": "Crystal-encrusted headliner concert costumes with in-ear monitors and microphones.",
+      "pose01": "Sing with arm extended to the audience",
+      "pose02": "Raise free arm in an overhead wave",
       "eligibleAvatars": [
         0,
         1,

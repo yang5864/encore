@@ -43,7 +43,7 @@ test("대기 동작은 눈을 뜬 원본과 완전히 감은 전용 프레임을
   }
 });
 
-test("성별에 맞는 32개 이벤트의 372장 모두 완성된 이벤트 의상을 사용한다", () => {
+test("성별에 맞는 34개 이벤트의 396장 모두 완성된 이벤트 의상을 사용한다", () => {
   let count = 0;
   for (const scene of SCENES) for (let avatar = 0; avatar < 6; avatar++) {
     if (scene === "military" && avatar < 3 || scene === "military-concert" && avatar >= 3) continue;
@@ -52,7 +52,7 @@ test("성별에 맞는 32개 이벤트의 372장 모두 완성된 이벤트 의�
     assert.ok(art.frames.every((f) => f.url.startsWith(`/art-v4/characters/avatar-${avatar}/${scene}/`)));
     count += art.frames.length;
   }
-  assert.equal(count, 372);
+  assert.equal(count, 396);
 });
 
 test("아이템 12종의 두 변형 모두 존재하고 활동 이미지로 연결된다", () => {

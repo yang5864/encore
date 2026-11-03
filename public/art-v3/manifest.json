@@ -2,7 +2,7 @@
   "version": "art-v3",
   "createdDate": "2026-10-31",
   "generationMode": "built-in image_gen",
-  "canonicalImageCount": 98,
+  "canonicalImageCount": 100,
   "integrationPerformedByThisTask": false,
   "backgrounds": {
     "advert": {
@@ -146,11 +146,11 @@
       "sha256": "9ca0cd0f4fe47e832b63d30fbe79dd85392914e63b1e27a3f1d7eb4a1d544396"
     },
     "military": {
-      "url": "/art-v3/backgrounds/military.png",
+      "url": "/art-v3/backgrounds/military-gate-v2.png",
       "width": 1536,
       "height": 1024,
-      "bytes": 2669568,
-      "sha256": "730fec7db9fb3998e922d0d1f2bab4b56a4d6d4a042608749726197b4a99e1af"
+      "bytes": 2747254,
+      "sha256": "d70863c7b2ba834b91b1b3a7519e56873a4cb2a374cc68f8567d7887a07eca20"
     },
     "press": {
       "url": "/art-v3/backgrounds/press.png",
@@ -228,6 +228,22 @@
       "height": 1024,
       "bytes": 2431945,
       "sha256": "b655b39530a3847479b9fb98e8712368b940cdb2a70ba3b54847231ad7a141bb"
+    },
+    "grammy": {
+      "url": "/art-v3/backgrounds/grammy.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "bytes": 2700365,
+      "sha256": "1e931e80690e39b5d9ab66337a4c3b80a21cb8835440844046be84e7b2c4b720"
+    },
+    "stadium": {
+      "url": "/art-v3/backgrounds/stadium.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "bytes": 2922805,
+      "sha256": "3efb6d0ea592e0be4977d4e925325b1d234d4ebe586673a685ea0f436b76a720"
     }
   },
   "characters": {

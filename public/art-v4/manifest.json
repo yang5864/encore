@@ -4,15 +4,15 @@
   "generatedWith": "built-in image_gen",
   "updatedAtKST": "2026-11-03T18:23:20.151260+09:00",
   "counts": {
-    "expectedFrames": 372,
-    "savedFrames": 372,
+    "expectedFrames": 396,
+    "savedFrames": 396,
     "missingFrames": 0,
-    "completeAnimationPairs": 186,
-    "completeEvents": 32,
-    "backgrounds": 32,
+    "completeAnimationPairs": 198,
+    "completeEvents": 34,
+    "backgrounds": 34,
     "excludedArchivedFrames": 2
   },
-  "runtimeIntegration": "Integrated in ENCORE v2. 2026-11-03: completed all event frames; separate fully closed idle blink frames and brief blink timing added locally.",
+  "runtimeIntegration": "Integrated in ENCORE v2: 34 scenes and 396 event character frames; grammy/stadium event, celebration and result artwork; beret attention/salute military frames.",
   "placementNotes": "Preserve transparent padding. Use each frame footAnchor to place the feet consistently. Generated frames can have minor size and pose variation; no deterministic pixel alignment was applied.",
   "completedEvents": [
     "audition",
@@ -46,7 +46,9 @@
     "family",
     "military",
     "rest",
-    "wedding"
+    "wedding",
+    "grammy",
+    "stadium"
   ],
   "promptLogs": {
     "PROMPTS-B.jsonl": 72,
@@ -11670,16 +11672,16 @@
       "id": "military",
       "label": "군 복무",
       "background": {
-        "url": "/art-v3/backgrounds/military.png",
+        "url": "/art-v3/backgrounds/military-gate-v2.png",
         "width": 1536,
         "height": 1024,
-        "bytes": 2669568,
-        "sha256": "730fec7db9fb3998e922d0d1f2bab4b56a4d6d4a042608749726197b4a99e1af"
+        "bytes": 2747254,
+        "sha256": "d70863c7b2ba834b91b1b3a7519e56873a4cb2a374cc68f8567d7887a07eca20"
       },
-      "outfitPrompt": "Adult male Korean-inspired generic woodland camouflage fatigues, plain olive cap with no badges or insignia, dark combat boots. Keep original hair visible and original distinctive hair accessory subtly at the cap edge. No weapons.",
+      "outfitPrompt": "Black Korean army beret worn low covering front hairline; only tiny black/dark-brown shaved temple stubble visible. Camouflage uniform and black boots. No bleached hair, long bangs or hair ornaments.",
       "motionPrompts": [
-        "Standing respectfully and giving a neat military salute with the right hand near the cap.",
-        "Tiny continuation of the salute with a gentle nod, same uniform, no weapons or other people."
+        "Attention: both arms straight down, heels together, head level and eyes open.",
+        "Upright right-hand salute, left arm at thigh; head level, no bow or nod."
       ],
       "readyFrames": 6,
       "expectedFrames": 6,
@@ -11689,22 +11691,20 @@
           "identity": "black parted hair, blue star hairclip, blue accent",
           "frames": [
             {
-              "frame": "01",
-              "status": "ready",
-              "url": "/art-v4/characters/avatar-3/military/01.png",
+              "url": "/art-v4/characters/avatar-3/military/attention-beret.png",
               "width": 1254,
               "height": 1254,
+              "bytes": 608466,
+              "sha256": "d8c2a440146add430939e68d95c473823d6cfaa9334b5c49b7cc917ea9eee490",
               "mode": "RGBA",
-              "bytes": 745880,
-              "sha256": "dd8f0faac0744daca26db70376811213e098b78baed817c43197ce8d0cadc79a",
               "alphaRange": [
                 0,
                 255
               ],
               "visibleBoundsAlphaAbove128": [
-                277,
-                107,
-                930,
+                386,
+                143,
+                862,
                 1200
               ],
               "maxCanvasBorderAlpha": 1,
@@ -11712,125 +11712,125 @@
               "footAnchor": {
                 "x": 0.5,
                 "y": 0.956938
-              }
+              },
+              "frame": "01",
+              "status": "ready"
             },
             {
-              "frame": "02",
-              "status": "ready",
-              "url": "/art-v4/characters/avatar-3/military/02.png",
+              "url": "/art-v4/characters/avatar-3/military/salute-beret.png",
               "width": 1254,
               "height": 1254,
+              "bytes": 660851,
+              "sha256": "a09b9bf54d14b1febb343411c6b1e4c6dde66a89a94f18b814d02a506f5c6dbe",
               "mode": "RGBA",
-              "bytes": 728691,
-              "sha256": "4fa55a258bbce952e4187da49d443cc3c7dab4b2fd2704e1e4c455aecfa5d5fe",
               "alphaRange": [
                 0,
                 255
               ],
               "visibleBoundsAlphaAbove128": [
-                290,
-                118,
-                930,
-                1195
+                276,
+                144,
+                861,
+                1202
               ],
               "maxCanvasBorderAlpha": 1,
               "visibleContentTouchesCanvasEdge": false,
               "footAnchor": {
                 "x": 0.5,
-                "y": 0.952951
-              }
+                "y": 0.958533
+              },
+              "frame": "02",
+              "status": "ready"
             }
           ],
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -5,
-          "footBaselineDeltaNormalized": 0.003987
+          "footBaselineDifferencePx": 2,
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 4,
           "identity": "blond hair, gold star hairclip, warm yellow accent",
           "frames": [
             {
-              "frame": "01",
-              "status": "ready",
-              "url": "/art-v4/characters/avatar-4/military/01.png",
+              "url": "/art-v4/characters/avatar-4/military/attention-beret.png",
               "width": 1254,
               "height": 1254,
+              "bytes": 679209,
+              "sha256": "685793c57b878b77d8b93c41d560bcf2bc2ca5dfeaed19eb2590e22e9526c3f6",
               "mode": "RGBA",
-              "bytes": 865695,
-              "sha256": "4176b14fb56813c8100544a9704555b75b0eaada893d0cecc9d50183c211449f",
               "alphaRange": [
                 0,
                 255
               ],
               "visibleBoundsAlphaAbove128": [
-                263,
-                74,
-                960,
-                1215
+                342,
+                117,
+                884,
+                1211
               ],
-              "maxCanvasBorderAlpha": 1,
+              "maxCanvasBorderAlpha": 0,
               "visibleContentTouchesCanvasEdge": false,
               "footAnchor": {
                 "x": 0.5,
-                "y": 0.9689
-              }
+                "y": 0.96571
+              },
+              "frame": "01",
+              "status": "ready"
             },
             {
-              "frame": "02",
-              "status": "ready",
-              "url": "/art-v4/characters/avatar-4/military/02.png",
+              "url": "/art-v4/characters/avatar-4/military/salute-beret.png",
               "width": 1254,
               "height": 1254,
+              "bytes": 717427,
+              "sha256": "bc86622c2e8340a98e0b7ae9de766e47c97888ee9ac6bf4212d34eb6db319cde",
               "mode": "RGBA",
-              "bytes": 877403,
-              "sha256": "ea5ff96794735d72f038bdfbd48477d6421d703fd66c0deeeabd7936d3c640ff",
               "alphaRange": [
                 0,
                 255
               ],
               "visibleBoundsAlphaAbove128": [
-                262,
-                75,
-                960,
-                1216
+                244,
+                120,
+                883,
+                1210
               ],
               "maxCanvasBorderAlpha": 1,
               "visibleContentTouchesCanvasEdge": false,
               "footAnchor": {
                 "x": 0.5,
-                "y": 0.969697
-              }
+                "y": 0.964912
+              },
+              "frame": "02",
+              "status": "ready"
             }
           ],
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1,
-          "footBaselineDeltaNormalized": 0.000797
+          "footBaselineDifferencePx": -1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 5,
           "identity": "silver hair, teal music-note hairclip, teal accent",
           "frames": [
             {
-              "frame": "01",
-              "status": "ready",
-              "url": "/art-v4/characters/avatar-5/military/01.png",
+              "url": "/art-v4/characters/avatar-5/military/attention-beret.png",
               "width": 1254,
               "height": 1254,
+              "bytes": 661653,
+              "sha256": "618bc5f7806c9b7bc35371aa826577ea53e247294e667567056861f69b5a1a8a",
               "mode": "RGBA",
-              "bytes": 872173,
-              "sha256": "0bc94dd98369eccce3a197181aea87fe59f5272afc00a76638845a7122122dcb",
               "alphaRange": [
                 0,
                 255
               ],
               "visibleBoundsAlphaAbove128": [
-                263,
-                87,
-                964,
+                356,
+                118,
+                877,
                 1207
               ],
               "maxCanvasBorderAlpha": 1,
@@ -11838,40 +11838,42 @@
               "footAnchor": {
                 "x": 0.5,
                 "y": 0.96252
-              }
+              },
+              "frame": "01",
+              "status": "ready"
             },
             {
-              "frame": "02",
-              "status": "ready",
-              "url": "/art-v4/characters/avatar-5/military/02.png",
+              "url": "/art-v4/characters/avatar-5/military/salute-beret.png",
               "width": 1254,
               "height": 1254,
+              "bytes": 695988,
+              "sha256": "b8f35be8cf5b1f5fcf48e44d180f890fa09c47a1e8c4af46358f7ba55dee6db4",
               "mode": "RGBA",
-              "bytes": 863219,
-              "sha256": "049928de591edf5a31cca315c5519660034655aaa9fb27d6324cb861cdc633e2",
               "alphaRange": [
                 0,
                 255
               ],
               "visibleBoundsAlphaAbove128": [
-                264,
-                90,
-                966,
-                1208
+                259,
+                120,
+                876,
+                1207
               ],
-              "maxCanvasBorderAlpha": 1,
+              "maxCanvasBorderAlpha": 0,
               "visibleContentTouchesCanvasEdge": false,
               "footAnchor": {
                 "x": 0.5,
-                "y": 0.963317
-              }
+                "y": 0.96252
+              },
+              "frame": "02",
+              "status": "ready"
             }
           ],
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1,
-          "footBaselineDeltaNormalized": 0.000797
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -12694,6 +12696,786 @@
         5
       ],
       "allowedGender": "all"
+    },
+    {
+      "id": "grammy",
+      "label": "그래미 어워드 노미네이트",
+      "background": {
+        "url": "/art-v3/backgrounds/grammy.png",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB",
+        "bytes": 2700365,
+        "sha256": "1e931e80690e39b5d9ab66337a4c3b80a21cb8835440844046be84e7b2c4b720"
+      },
+      "avatars": [
+        {
+          "avatar": 0,
+          "gender": "female",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-0/grammy/01.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 1163736,
+              "sha256": "dc5357da1e2738e2b6999082a326fd2f321887ce1bd0971609989a015a439b7f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                228,
+                110,
+                951,
+                1251
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.953506
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/grammy/02.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 1153345,
+              "sha256": "a0fae8bc32a1c7d8ec7919a510a4a9caef7606f2ede8e92985c4ffb641da2f64",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                226,
+                111,
+                958,
+                1258
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.958841
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        },
+        {
+          "avatar": 1,
+          "gender": "female",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-1/grammy/01.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 1136669,
+              "sha256": "9af0a13fa1a2dfa233aa6040f74c1b375bd11727632fb5f5052ef6993e339e32",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                250,
+                55,
+                923,
+                1278
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.974085
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/grammy/02.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 1136606,
+              "sha256": "6e6ef1d1dd2a1fa4300b75e59d1cfde8b4966de9fa328d2eb058d63d71bf35de",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                248,
+                49,
+                924,
+                1279
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.974848
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        },
+        {
+          "avatar": 2,
+          "gender": "female",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-2/grammy/01.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 1507972,
+              "sha256": "defbedb0561ab180b6ad1c4f740d5945c61a3daf279fa4220e2954b584aa75eb",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                144,
+                51,
+                1051,
+                1283
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.977896
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/grammy/02.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 1501710,
+              "sha256": "d309b8bbbb05367d47230162e16a2cda44c27acf55cf7a441a58cf3311c658cb",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                144,
+                49,
+                1055,
+                1283
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.977896
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        },
+        {
+          "avatar": 3,
+          "gender": "male",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-3/grammy/01.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 802982,
+              "sha256": "98b9cfd6a574c4517d7502330bc5cf09d2a795930dff9b112ea225d00e288fc3",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                263,
+                124,
+                935,
+                1262
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.96189
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/grammy/02.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 806930,
+              "sha256": "bbdf20957eff95e371205f132e5b9a199021368496d7464bc7d2cd4ceefd30de",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                259,
+                126,
+                938,
+                1264
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.963415
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        },
+        {
+          "avatar": 4,
+          "gender": "male",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-4/grammy/01.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 926606,
+              "sha256": "b8365c1a6850e4cc422305fcb57c757402aec2cb43a81f86c83f6f5f93bc79cd",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                244,
+                88,
+                931,
+                1253
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95503
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/grammy/02.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 936586,
+              "sha256": "2fffdd08b294c702cff8a474aafefab35d7656f3fcd74dc053566a8e374f572a",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                246,
+                90,
+                937,
+                1259
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.959604
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        },
+        {
+          "avatar": 5,
+          "gender": "male",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-5/grammy/01.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 988913,
+              "sha256": "157c544eed94a03fa35be8b2a19c1bcb5bf9ea33f7eb248481fb401eecca5a19",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                230,
+                88,
+                953,
+                1267
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.965701
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/grammy/02.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 995441,
+              "sha256": "7fad5ee90aaf6a474f118b43eb2fbb4c8ee8532bc833e81edf3675831465a968",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                231,
+                88,
+                955,
+                1267
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.965701
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        }
+      ],
+      "eligibleAvatars": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "allowedGender": "all",
+      "readyFrames": 12,
+      "expectedFrames": 12,
+      "motionPrompts": [
+        "Red-carpet arrival pose, no trophy",
+        "Graceful shoulder-height wave"
+      ],
+      "outfitPrompt": "Luxurious jeweled evening gowns for women, formal tuxedos for men."
+    },
+    {
+      "id": "stadium",
+      "label": "월드 스타디움 투어",
+      "background": {
+        "url": "/art-v3/backgrounds/stadium.png",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB",
+        "bytes": 2922805,
+        "sha256": "3efb6d0ea592e0be4977d4e925325b1d234d4ebe586673a685ea0f436b76a720"
+      },
+      "avatars": [
+        {
+          "avatar": 0,
+          "gender": "female",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-0/stadium/01.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 1166477,
+              "sha256": "f80d1efa9cc32619e5a970cce045fda1d25809e6f1d21f2ae5095a695cbdc483",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                290,
+                63,
+                968,
+                1253
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95503
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/stadium/02.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 1131025,
+              "sha256": "774241ac789381580565c7a3a7bbc3ef04d9246dbb67f8c462e15c2652a19f63",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                291,
+                63,
+                952,
+                1266
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.964939
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        },
+        {
+          "avatar": 1,
+          "gender": "female",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-1/stadium/01.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 1188022,
+              "sha256": "44894896195d4e7921473f4510c19c7a1c1dcda17f1532e67f95d54435063b25",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                304,
+                62,
+                1000,
+                1213
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.967305
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/stadium/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 1139473,
+              "sha256": "a308ecd1a24a32d9ca50efaac74a123ece8d9f3a0cc708d59fcb2f8bd9c4b050",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                306,
+                63,
+                980,
+                1212
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.966507
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        },
+        {
+          "avatar": 2,
+          "gender": "female",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-2/stadium/01.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 1384250,
+              "sha256": "c63dcf74975a1cd3f14d075dbacdfe607c27645dc1f5550a82bfe6dbeddeeffd",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                284,
+                40,
+                1020,
+                1218
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.971292
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/stadium/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 1375498,
+              "sha256": "cc6ecc26851dafe770dfbff8950c3a9aea57c4c4d9caa624e9bc3681e9a1638e",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                283,
+                40,
+                977,
+                1219
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.972089
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        },
+        {
+          "avatar": 3,
+          "gender": "male",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-3/stadium/01.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 972467,
+              "sha256": "e96230e72fe26088a4b9fd2285aa3f4da1a50ff3091ef66af63151d4f0374e57",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                300,
+                118,
+                1015,
+                1214
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968102
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/stadium/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 976827,
+              "sha256": "7c9d0e5897bf8f2e835904767ed4d54ae6ca434649fa8f653e25c643d85be01b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                300,
+                117,
+                997,
+                1214
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968102
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        },
+        {
+          "avatar": 4,
+          "gender": "male",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-4/stadium/01.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 1179239,
+              "sha256": "cc4baf236e13e573a39deb4823c554ef8360ddb26581bb70081c60832ce35064",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                263,
+                58,
+                1012,
+                1262
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.96189
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/stadium/02.png",
+              "width": 1199,
+              "height": 1312,
+              "mode": "RGBA",
+              "bytes": 1155159,
+              "sha256": "3640784e6dd876220fda78553ac220df30fc75ee4b955bb70cf2f4ccafea3263",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                264,
+                58,
+                987,
+                1274
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.971037
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        },
+        {
+          "avatar": 5,
+          "gender": "male",
+          "pairComplete": true,
+          "pixelDistinct": true,
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-5/stadium/01.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 1079618,
+              "sha256": "058e6fa3fc4ae415092292b909baeeba55ee88f3005077a12b38c2c50ee5cec2",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                270,
+                86,
+                994,
+                1190
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.948963
+              },
+              "status": "ready",
+              "frame": "01"
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/stadium/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 1078805,
+              "sha256": "e71f19871ce746df603d9c09e46bf4e49d03e075739cfc7f436c650fdceacf1e",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                271,
+                87,
+                983,
+                1191
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.949761
+              },
+              "status": "ready",
+              "frame": "02"
+            }
+          ]
+        }
+      ],
+      "eligibleAvatars": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "allowedGender": "all",
+      "readyFrames": 12,
+      "expectedFrames": 12,
+      "motionPrompts": [
+        "Sing with arm extended to the audience",
+        "Raise free arm in an overhead wave"
+      ],
+      "outfitPrompt": "Crystal-encrusted headliner concert costumes with in-ear monitors and microphones."
     }
   ],
   "missing": [],
@@ -12708,7 +13490,8 @@
     "unloggedFiles": [],
     "logsWithoutFiles": [],
     "canvasFormats": {
-      "1254x1254 RGBA": 372
+      "1254x1254 RGBA": 380,
+      "1199x1312 RGBA": 16
     }
   },
   "avatarGenders": {
@@ -12730,5 +13513,12 @@
       "error": "usage_limit_reached",
       "resetsAtKST": "2026-11-03T00:08:30+09:00"
     }
-  ]
+  ],
+  "militaryRevision": {
+    "description": "Short buzz cut; attention to upright salute; Hoguk Yoram training-center gate background.",
+    "promptLog": "MILITARY-REVISION.jsonl",
+    "archive": "art-archive/military-revision",
+    "mode": "built-in image_gen",
+    "headwear": "Low black beret, hidden front hairline, black/dark-brown shaved roots; attention → upright salute."
+  }
 }

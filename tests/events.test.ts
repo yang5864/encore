@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
 import { EVENTS, SCENES } from "../lib/game/events/index.ts";
+import { eventArt } from "../lib/art/index.ts";
 
 test("이벤트 id는 고유하고 45개 이상", () => {
   const ids = EVENTS.map((e) => e.id);
@@ -23,8 +24,24 @@ test("모든 선택지 힌트는 숫자 없는 문장", () => {
 });
 
 test("모든 씬 이미지가 존재한다", () => {
-  for (const s of SCENES) assert.ok(existsSync(`public/scenes/${s}.webp`), s);
+  for (const s of SCENES) {
+    const art = eventArt(s, 3, "male");
+    assert.ok(existsSync(`public${art.background}`), s);
+  }
   for (const e of EVENTS) assert.ok((SCENES as readonly string[]).includes(e.scene), `${e.id} scene ${e.scene}`);
+});
+
+test("끝판왕 이벤트는 전용 그래미·스타디움 이미지를 사용한다", () => {
+  for (const id of ["grammy", "stadium"]) {
+    const event = EVENTS.find((e) => e.id === id)!;
+    assert.equal(event.scene, id);
+    for (let avatar = 0; avatar < 6; avatar++) {
+      const art = eventArt(event.scene, avatar);
+      assert.equal(art.scene, id);
+      assert.equal(art.frames.length, 2);
+      assert.ok(art.frames.every((f) => f.url.includes(`/avatar-${avatar}/${id}/`)));
+    }
+  }
 });
 
 test("숨은 이벤트는 중소 기획사에서만 열린다", () => {

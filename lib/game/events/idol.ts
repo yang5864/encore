@@ -461,7 +461,7 @@ export const IDOL_EVENTS: GameEventDef[] = [
     kind: "hidden",
     title: "그래미 어워드 노미네이트",
     text: "레코딩 아카데미가 올해 후보를 발표했어요. 내 이름이 있어요. 한국 아이돌로는 손에 꼽는 일이라 해외 매체가 먼저 기사를 냈어요.",
-    scene: "awards",
+    scene: "grammy",
     public: true,
     when: (c) => c.peakBillboard !== null && c.peakBillboard <= 10 && c.popularity >= 85 && !c.flags.grammy,
     choices: [
@@ -474,7 +474,7 @@ export const IDOL_EVENTS: GameEventDef[] = [
     kind: "hidden",
     title: "월드 스타디움 투어 제안",
     text: "북미·유럽·아시아 스타디움을 도는 단독 투어 제안이 왔어요. 한 회 5만 명 규모, 세계에서 몇 팀만 하는 투어예요.",
-    scene: "tour",
+    scene: "stadium",
     public: true,
     when: (c) => c.popularity >= 90 && c.fans >= 4000000 && !c.flags.stadiumTour && !!c.flags.domeTour,
     choices: [
