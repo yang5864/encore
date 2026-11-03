@@ -23,7 +23,8 @@ export function Sheet({ open, onOpenChange, title, description, tall, dismissibl
           className={cn(
             // iOS 키보드가 올라오면 시트 아래로 뒤 화면이 비친다: 시트 배경을 아래로 길게 이어 틈을 덮는다
             "fixed left-0 right-0 bottom-0 z-50 mx-auto max-w-[480px] rounded-t-[24px] bg-card outline-none flex flex-col after:absolute after:top-full after:inset-x-0 after:h-[100dvh] after:bg-card after:content-['']",
-            tall ? "h-[92dvh]" : "max-h-[88dvh]",
+            // 모든 시트는 내용 높이에 맞춘다. tall은 긴 목록을 위해 상한만 조금 더 준다
+            tall ? "max-h-[92dvh]" : "max-h-[88dvh]",
           )}
         >
           <div className="pt-2.5 pb-1 flex justify-center shrink-0">
