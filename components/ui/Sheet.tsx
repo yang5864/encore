@@ -21,7 +21,8 @@ export function Sheet({ open, onOpenChange, title, description, tall, dismissibl
         <Drawer.Overlay className="fixed inset-0 z-50 bg-black/40" />
         <Drawer.Content
           className={cn(
-            "fixed left-0 right-0 bottom-0 z-50 mx-auto max-w-[480px] rounded-t-[24px] bg-card outline-none flex flex-col",
+            // iOS 키보드가 올라오면 시트 아래로 뒤 화면이 비친다: 시트 배경을 아래로 길게 이어 틈을 덮는다
+            "fixed left-0 right-0 bottom-0 z-50 mx-auto max-w-[480px] rounded-t-[24px] bg-card outline-none flex flex-col after:absolute after:top-full after:inset-x-0 after:h-[100dvh] after:bg-card after:content-['']",
             tall ? "h-[92dvh]" : "max-h-[88dvh]",
           )}
         >
