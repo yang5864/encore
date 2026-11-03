@@ -25,8 +25,9 @@ export function HomeShowcase() {
         <p className="t-card mt-3">{stage.copy}</p>
       </div>
       <div className="relative mt-6 px-2">
-        <div className="absolute left-4 right-4 top-[7px] h-[2px] bg-chip" />
-        <div className="absolute left-4 top-[7px] h-[2px] bg-primary transition-all duration-700" style={{ width: `calc((100% - 32px) * ${stage.step / 4})` }} />
+        {/* 점은 48px 칸 가운데(양끝 8px 여백 포함 32px)에 있으므로 선도 거기서 시작하고 끝난다 */}
+        <div className="absolute left-8 right-8 top-[7px] h-[2px] bg-chip" />
+        <div className="absolute left-8 top-[7px] h-[2px] bg-primary transition-all duration-700" style={{ width: `calc((100% - 64px) * ${stage.step / 4})` }} />
         <div className="relative flex justify-between">
           {SHOWCASE_STEPS.map(({ label }, i) => (
             <div key={label} className="flex flex-col items-center w-12">
