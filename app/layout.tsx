@@ -27,6 +27,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
+        {/* 본문 폰트를 CSS 파싱 전에 받기 시작한다 */}
+        <link rel="preload" href="/fonts/SUIT-Variable.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <Script id="encore-theme" strategy="beforeInteractive">{THEME_SCRIPT}</Script>
       </head>
       <body className="antialiased">{children}</body>
