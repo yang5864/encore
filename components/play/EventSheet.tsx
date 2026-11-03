@@ -4,6 +4,7 @@ import { Sheet } from "@/components/ui/Sheet";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
 import { cn } from "@/lib/cn";
+import { lineupRoles } from "@/lib/game/debut";
 import { choiceLock } from "@/lib/game/engine";
 import { EventArt } from "@/components/EventArt";
 import type { Career, Signature } from "@/lib/game/types";
@@ -93,6 +94,13 @@ export function EventSheet({ career, open, onChoose }: Props) {
                     </div>
                   </div>
                   <p className="text-[13px] text-ink-2 mt-1">{locked ?? ch.hint}</p>
+                  {ch.op === "debut" && career.lineup && (
+                    <div className="flex flex-wrap gap-1.5 mt-3">
+                      {[`${career.lineup.members}인조`, ...lineupRoles(career.lineup)].map((r) => (
+                        <Chip key={r} tone="info">{r}</Chip>
+                      ))}
+                    </div>
+                  )}
                 </button>
               );
             })}

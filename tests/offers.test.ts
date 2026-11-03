@@ -165,7 +165,7 @@ test("데뷔 제안에 그룹 구성과 내 역할이 나온다", () => {
     assert.ok(n.lineup);
     assert.ok(n.lineup.members >= 4 && n.lineup.members <= 7);
     assert.ok(n.lineup.parts.includes("메인보컬"));
-    assert.match(n.pending.text, /인조/);
+    assert.ok(n.pending.choices.some((x) => x.op === "debut"));
     return;
   }
   assert.fail("데뷔 제안이 오지 않았다");

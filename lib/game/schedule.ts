@@ -3,7 +3,7 @@ import { EVENTS, eventById } from "./events/index.ts";
 import { AGENCIES, agencyById, auditionChance, tierRank } from "./agencies.ts";
 import { ageOf, isSecondHalf } from "./format.ts";
 import { renewalEvent } from "./renewal.ts";
-import { cutChance, debutCutEvent, lineupText, makeLineup, rivalOfferEvent } from "./debut.ts";
+import { cutChance, debutCutEvent, makeLineup, rivalOfferEvent } from "./debut.ts";
 import { overall } from "./stats.ts";
 import { rng } from "./rng.ts";
 
@@ -74,11 +74,8 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
   if (c.flags.debutEval === c.turn) {
     const kind = c.flags.debutEvalKind;
     if (kind === 1) {
-      const lineup = makeLineup(c);
-      c.lineup = lineup;
-      const e = take(c, "debut-offer");
-      e.text = `${e.text} 데뷔조 구성: ${lineupText(lineup)}.`;
-      return e;
+      c.lineup = makeLineup(c);
+      return take(c, "debut-offer");
     }
     if (kind === 4) return debutCutEvent(c);
     if (kind === 2) return take(c, "debut-miss");
