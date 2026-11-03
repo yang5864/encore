@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { generateCandidates, deriveRole, describeCandidate } from "../lib/game/candidates.ts";
-import { STAT_KEYS, validateAllocation } from "../lib/game/stats.ts";
+import { generateCandidates, deriveRole, describeCandidate, START_OVR } from "../lib/game/candidates.ts";
+import { STAT_KEYS, validateAllocation, overall } from "../lib/game/stats.ts";
 import { createCareer } from "../lib/game/create.ts";
 import { advanceTurn } from "../lib/game/engine.ts";
 import { focusOptions, soloChance } from "../lib/game/focus.ts";
@@ -69,4 +69,13 @@ test("개인 활동은 데뷔 3년 뒤에 열리고 성공은 주력 수치에 �
   }
   assert.ok(wins >= 30, `strong wins ${wins}`);
   assert.ok(losses >= 28, `weak losses ${losses}`);
+});
+
+test("시작 후보는 모두 OVR 45로 통일된다", () => {
+  for (let i = 0; i < 200; i++) {
+    for (const c of generateCandidates()) {
+      assert.equal(overall(c.stats, c.position), START_OVR, JSON.stringify(c.stats));
+      assert.equal(STAT_KEYS.reduce((s, k) => s + c.stats[k], 0), 240);
+    }
+  }
 });

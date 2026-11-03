@@ -50,6 +50,8 @@ export const STAT_MIN = 20;
 export const STAT_MAX = 60;
 export const STAT_CAP = 99;
 
+export const statWeight = (position: Position, k: StatKey) => WEIGHTS[position][k];
+
 export function overall(stats: Stats, position: Position): number {
   const w = WEIGHTS[position];
   return Math.round(STAT_KEYS.reduce((sum, k) => sum + stats[k] * w[k], 0));

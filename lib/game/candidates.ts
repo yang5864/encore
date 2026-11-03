@@ -1,5 +1,8 @@
 import type { Position, StatKey, Stats } from "./types.ts";
-import { ALLOCATION_TOTAL, STAT_KEYS, STAT_MAX, STAT_MIN, STAT_NAMES } from "./stats.ts";
+import { ALLOCATION_TOTAL, STAT_KEYS, STAT_MAX, STAT_MIN, STAT_NAMES, overall, statWeight } from "./stats.ts";
+
+/** 모든 시작 후보의 OVR */
+export const START_OVR = 45;
 
 export type Candidate = {
   id: string;
@@ -61,8 +64,47 @@ function clampStats(raw: Record<StatKey, number>): Stats {
 
 const rand = (min: number, max: number) => min + Math.random() * (max - min);
 
+/**
+ * 총합 240을 지키면서 OVR이 정확히 START_OVR이 되도록 점수를 옮긴다.
+ * 가중치가 높은 능력에서 낮은 능력으로 1점씩 옮기면 OVR이 내려가고, 반대로 올라간다. 역할이 바뀌는 이동은 되돌린다.
+ */
+function normalizeOvr(stats: Stats): Stats | null {
+  const s = { ...stats };
+  for (let guard = 0; guard < 300; guard++) {
+    const pos = deriveRole(s);
+    const o = overall(s, pos);
+    if (o === START_OVR) return s;
+    const byWeight = [...STAT_KEYS].sort((a, b) => statWeight(pos, b) - statWeight(pos, a));
+    const givers = o > START_OVR ? byWeight : [...byWeight].reverse(); // 무거운 쪽에서 빼면 OVR 하락
+    const takers = o > START_OVR ? [...byWeight].reverse() : byWeight;
+    let moved = false;
+    for (const from of givers) {
+      if (s[from] <= STAT_MIN) continue;
+      for (const to of takers) {
+        if (to === from || s[to] >= STAT_MAX) continue;
+        s[from] -= 1;
+        s[to] += 1;
+        if (deriveRole(s) === pos) { moved = true; break; }
+        s[from] += 1;
+        s[to] -= 1;
+      }
+      if (moved) break;
+    }
+    if (!moved) return null;
+  }
+  return null;
+}
+
 /** One random profile: a main stat, a secondary, and noise elsewhere. Sum is always 240. */
 export function randomCandidate(): Candidate {
+  for (let i = 0; i < 20; i++) {
+    const c = tryCandidate();
+    if (c) return c;
+  }
+  throw new Error("후보를 만들지 못했어요");
+}
+
+function tryCandidate(): Candidate | null {
   const main = STAT_KEYS[Math.floor(Math.random() * STAT_KEYS.length)];
   const others = STAT_KEYS.filter((k) => k !== main);
   const second = others[Math.floor(Math.random() * others.length)];
@@ -71,7 +113,8 @@ export function randomCandidate(): Candidate {
   for (const k of STAT_KEYS) {
     raw[k] = flat ? rand(36, 44) : k === main ? rand(50, 60) : k === second ? rand(42, 52) : rand(22, 44);
   }
-  const stats = clampStats(raw);
+  const stats = normalizeOvr(clampStats(raw));
+  if (!stats) return null;
   const meta = describeCandidate(stats);
   return { id: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`, stats, ...meta };
 }
