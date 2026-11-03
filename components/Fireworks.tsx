@@ -23,7 +23,7 @@ const GOLD = ["#ffd700", "#ffe066", "#ffc300", "#fff3b0", "#e6b800", "#ffffff"];
 export function Fireworks({ kind = "award", duration, onDone }: { kind?: CelebrationKind; duration?: number; onDone?: () => void }) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
-    const total = duration ?? (kind === "award" ? 3200 : 3600);
+    const total = duration ?? (kind === "award" ? 3200 : 3000);
     const canvas = ref.current!;
     const ctx = canvas.getContext("2d")!;
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -45,12 +45,12 @@ export function Fireworks({ kind = "award", duration, onDone }: { kind?: Celebra
     const popConfetti = (x: number, y: number, n: number, colors: string[], shape: Shape) => {
       for (let i = 0; i < n; i++) {
         const a = -Math.PI / 2 + (R() - 0.5) * Math.PI * 1.3;
-        const sp = shape === "dust" ? 3 + R() * 9 : 4 + R() * 10;
+        const sp = shape === "dust" ? 2 + R() * 6 : 2.5 + R() * 6;
         parts.push({
           x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          life: 0, max: 150 + R() * 90, color: colors[Math.floor(R() * colors.length)],
-          size: shape === "dust" ? 1.2 + R() * 2.2 : 5 + R() * 5, shape,
-          spin: (R() - 0.5) * 0.3, wobble: R() * Math.PI * 2,
+          life: 0, max: 170 + R() * 80, color: colors[Math.floor(R() * colors.length)],
+          size: shape === "dust" ? 1.2 + R() * 2 : 4 + R() * 4, shape,
+          spin: (R() - 0.5) * 0.15, wobble: R() * Math.PI * 2,
         });
       }
     };
@@ -88,11 +88,10 @@ export function Fireworks({ kind = "award", duration, onDone }: { kind?: Celebra
       if (!reduce) {
         if (kind === "award") {
           if (t >= nextShot && t < total - 1100) { launch(); if (R() < 0.5) launch(); nextShot = t + 420 + R() * 380; }
-        } else if (t >= nextShot && pops < 3) {
-          const cx = W() * (pops === 0 ? 0.5 : pops === 1 ? 0.25 : 0.75);
-          popConfetti(cx, H() * (pops === 0 ? 0.22 : 0.3), pops === 0 ? 220 : 120, kind === "daesang" ? GOLD : CONFETTI_COLORS, kind === "daesang" ? "dust" : "ribbon");
+        } else if (t >= nextShot && pops < 1) {
+          // 한 번만, 적당한 양으로 터뜨린다: 결과 시트를 가리지 않게
+          popConfetti(W() * 0.5, H() * 0.2, kind === "daesang" ? 110 : 70, kind === "daesang" ? GOLD : CONFETTI_COLORS, kind === "daesang" ? "dust" : "ribbon");
           pops += 1;
-          nextShot = t + 450;
         }
       }
       ctx.clearRect(0, 0, W(), H());
@@ -121,12 +120,12 @@ export function Fireworks({ kind = "award", duration, onDone }: { kind?: Celebra
             for (let k = 0; k < 6; k++) parts.push({ x: p.x, y: p.y, vx: (R() - 0.5) * 3, vy: (R() - 0.5) * 3, life: 0, max: 20 + R() * 15, color: "#ffffff", size: 1, shape: "spark", spin: 0, wobble: 0 });
           }
         } else if (p.shape === "ribbon") {
-          p.vy = Math.min(p.vy + 0.14, 2.2 + R() * 0.6); // 공기 저항으로 금방 느려져 팔랑인다
-          p.vx = p.vx * 0.93 + Math.sin(p.life / 9 + p.wobble) * 0.5;
-          p.spin += 0.02;
+          p.vy = Math.min(p.vy + 0.1, 1.3 + R() * 0.4); // 공기 저항으로 금방 느려져 천천히 팔랑인다
+          p.vx = p.vx * 0.94 + Math.sin(p.life / 12 + p.wobble) * 0.3;
+          p.spin += 0.012;
         } else {
-          p.vy = Math.min(p.vy + 0.1, 1.4 + R() * 0.8);
-          p.vx = p.vx * 0.94 + Math.sin(p.life / 7 + p.wobble) * 0.25;
+          p.vy = Math.min(p.vy + 0.08, 1 + R() * 0.5);
+          p.vx = p.vx * 0.95 + Math.sin(p.life / 10 + p.wobble) * 0.18;
         }
         const fade = p.shape === "spark" ? 1 - p.life / p.max : p.life > p.max * 0.7 ? 1 - (p.life - p.max * 0.7) / (p.max * 0.3) : 1;
         ctx.globalAlpha = Math.max(0, fade);
@@ -135,7 +134,7 @@ export function Fireworks({ kind = "award", duration, onDone }: { kind?: Celebra
           ctx.save();
           ctx.translate(p.x, p.y);
           ctx.rotate(p.spin + p.wobble);
-          const squash = Math.abs(Math.sin(p.life / 6 + p.wobble)); // 종이가 뒤집히며 얇아 보인다
+          const squash = Math.abs(Math.sin(p.life / 10 + p.wobble)); // 종이가 천천히 뒤집히며 얇아 보인다
           ctx.fillRect(-p.size / 2, (-p.size / 4) * squash, p.size, (p.size / 2) * Math.max(0.15, squash));
           ctx.restore();
         } else if (p.shape === "dust") {
