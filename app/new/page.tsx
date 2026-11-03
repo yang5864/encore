@@ -130,7 +130,7 @@ export default function NewPage() {
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-1.5 mt-3">
-                    <Chip tone="neutral" className="bg-ink text-bg">{position?.name}</Chip>
+                    <Chip tone="solid">{position?.name}</Chip>
                     {c.top.map((k) => (
                       <Chip key={k}>{STAT_NAMES[k]} {c.stats[k]}</Chip>
                     ))}

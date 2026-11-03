@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-export function Chip({ tone = "neutral", children, className }: { tone?: "up" | "down" | "neutral" | "warn" | "ok" | "danger" | "info"; children: ReactNode; className?: string }) {
+export function Chip({ tone = "neutral", children, className }: { tone?: "up" | "down" | "neutral" | "warn" | "ok" | "danger" | "info" | "solid"; children: ReactNode; className?: string }) {
   return (
     <span
       className={cn(
@@ -13,6 +13,7 @@ export function Chip({ tone = "neutral", children, className }: { tone?: "up" | 
         tone === "warn" && "bg-warn-soft text-warn",
         tone === "ok" && "bg-ok-soft text-ok",
         tone === "neutral" && "bg-chip text-ink-2",
+        tone === "solid" && "bg-ink text-bg",
         className,
       )}
     >
