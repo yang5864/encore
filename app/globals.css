@@ -117,6 +117,19 @@
     color-scheme: var(--scheme);
     /* 바텀시트가 body 스크롤을 잠가도 스크롤바 자리를 유지해 고정 버튼 폭이 흔들리지 않게 */
     scrollbar-gutter: stable;
+  }
+
+  /* 스크롤 잠금 라이브러리가 스크롤바 폭만큼 body에 padding-right를 넣는데, 거터를 이미 비워 두므로 그 보정은 되레 내용을 밀어낸다 */
+  html body[data-scroll-locked] {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
+  /* vaul도 시트가 열릴 때 html에 인라인 padding-right를 넣는다 */
+  html {
+    padding-right: 0 !important;
+  }
+
+  html {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
   }
