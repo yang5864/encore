@@ -2,7 +2,9 @@ import type { ActiveEvent, Career, ChoiceDef, Comment, Concept, Effects, Milesto
 import { GameError } from "./types.ts";
 import { AGENCIES, agencyById, auditionChance, TIERS } from "./agencies.ts";
 import { STAT_KEYS, STAT_NAMES, overall } from "./stats.ts";
-import { ageOf, conditionOf, eraScale, isSecondHalf, MAX_TURN, periodLabel, yearOf } from "./format.ts";
+import { ageOf, conditionOf, displayName, eraScale, fanText, isSecondHalf, MAX_TURN, periodLabel, yearOf } from "./format.ts";
+
+const hasBatchim = (w: string) => { const ch = w.charCodeAt(w.length - 1); return ch >= 0xac00 && ch <= 0xd7a3 && (ch - 0xac00) % 28 !== 0; };
 import { rng, between, pick } from "./rng.ts";
 import { applyEffects, addReputation, diff, log, snapshot, type Snapshot } from "./effects.ts";
 import { CONCEPTS, DANGER_LOCK, MAIN_STAT, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
@@ -64,7 +66,7 @@ function popularityTarget(c: Career): number {
   return Math.max(0, Math.min(100, t));
 }
 
-function buildResult(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; milestones?: MilestoneId[]; awards?: Award[]; celebrate?: TurnResult["celebrate"] } = {}): TurnResult {
+function buildResult(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; milestones?: MilestoneId[]; awards?: Award[]; celebrate?: TurnResult["celebrate"]; spotlight?: TurnResult["spotlight"] } = {}): TurnResult {
   const after = snapshot(c);
   return {
     headline,
@@ -77,10 +79,11 @@ function buildResult(c: Career, before: Snapshot, headline: string, text: string
     notes: opts.notes ?? [],
     awards: opts.awards?.length ? opts.awards : undefined,
     celebrate: opts.celebrate,
+    spotlight: opts.spotlight,
   };
 }
 
-function finish(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; awards?: Award[]; celebrate?: TurnResult["celebrate"] } = {}) {
+function finish(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; awards?: Award[]; celebrate?: TurnResult["celebrate"]; spotlight?: TurnResult["spotlight"] } = {}) {
   updateSettlement(c);
   updateMetrics(c);
   c.peakPopularity = Math.max(c.peakPopularity, Math.round(c.popularity));
@@ -421,6 +424,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
   const notes: string[] = [];
   const op = choice.op ?? "";
   let celebrate: TurnResult["celebrate"];
+  let spotlight: TurnResult["spotlight"];
   let reaction: import("./reactions.ts").ReactionContext | null = null;
 
   // 확률 선택
@@ -691,6 +695,28 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     headline = "그룹 탈퇴 · 개인 소속사 설립";
     text = `${c.groupName || "그룹"}을(를) 떠나 내 회사에서 내 이름으로 활동해요. 팬덤 ${Math.round((1 - keep) * 100)}%가 떠났지만 정산은 온전히 내 몫이에요.`;
     log(c, headline, text, "milestone");
+  } else if (op === "grammy") {
+    c.flags.grammy = 1;
+    applyEffects(c, { popularity: 10, reputation: 10, fansMul: 1.15, revenue: 40 });
+    c.flags.miracle = 1;
+    headline = "그래미 노미네이트";
+    text = "레드카펫에 섰어요. 수상은 못 했지만 전 세계가 이름을 불렀어요. 한국 아이돌 역사에 남는 순간이에요.";
+    tone = "milestone";
+    celebrate = "daesang";
+    reaction = { kind: "grammy" };
+    spotlight = { chip: `${yearOf(c)} GRAMMY AWARDS`, title: "그래미 어워드에\n노미네이트됐어요", subtitle: `${displayName(c)}의 이름이 레코딩 아카데미 후보에 올랐어요`, stats: [c.peakBillboard !== null ? `빌보드 Hot 100 최고 ${c.peakBillboard}위` : "", `음방 1위 ${c.musicWins}회`].filter(Boolean) };
+    log(c, headline, text, "award");
+  } else if (op === "stadium") {
+    c.flags.stadiumTour = 1;
+    c.flags.miracle = 1;
+    applyEffects(c, { fansMul: 1.2, revenue: 400, popularity: 6, reputation: 8, health: -25, mental: 10 });
+    headline = "월드 스타디움 투어 전 회 매진";
+    text = "북미·유럽·아시아 스타디움을 돌았어요. 매 공연 5만 명. 마이클 잭슨과 BTS가 섰던 자리에 섰어요.";
+    tone = "milestone";
+    celebrate = "daesang";
+    reaction = { kind: "stadium" };
+    spotlight = { chip: `${yearOf(c)} WORLD STADIUM TOUR`, title: "전 세계 스타디움을\n매진시켰어요", subtitle: `${displayName(c)}${hasBatchim(displayName(c)) ? "이" : "가"} 세계에서 몇 팀뿐인 스타디움 투어를 마쳤어요`, stats: ["12개 도시 · 회당 5만 명", `코어 팬덤 ${fanText(c.fans)}`] };
+    log(c, headline, text, "milestone");
   } else if (op === "agency-closed") {
     const a = agencyById(c.agencyId);
     c.stage = "free";
@@ -714,7 +740,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     reaction = { kind };
   }
   const comments = event.public || reaction.kind !== "generic" ? buildReactions(c, tone === "bad" ? "bad" : tone === "neutral" ? "neutral" : "good", reaction) : [];
-  finish(c, before, headline, text, tone, { scene: event.scene, notes, comments, celebrate });
+  finish(c, before, headline, text, tone, { scene: event.scene, notes, comments, celebrate, spotlight });
   return c;
 }
 

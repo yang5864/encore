@@ -30,6 +30,13 @@ export function CareerSummary({ career }: { career: Career }) {
           </span>
           <span className="text-[13px] font-bold text-primary shrink-0">전체 순위 보기 ›</span>
         </Link>
+        {(career.flags.grammy || career.flags.stadiumTour || career.peakBillboard === 1) && (
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            {career.peakBillboard === 1 && <Chip tone="warn">빌보드 Hot 100 1위</Chip>}
+            {career.flags.grammy ? <Chip tone="warn">그래미 노미네이트</Chip> : null}
+            {career.flags.stadiumTour ? <Chip tone="warn">월드 스타디움 투어</Chip> : null}
+          </div>
+        )}
         <div className="grid grid-cols-3 gap-2 mt-3">
           <Stat label="최고 순위" value={career.flags.bestRank ? `${career.flags.bestRank}위` : "순위 밖"} />
           <Stat label="음방 1위" value={`${career.musicWins}회`} />

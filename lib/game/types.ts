@@ -87,6 +87,8 @@ export type TurnResult = {
   awards?: Award[];
   /** 축하 연출: 음방 1위는 꽃가루, 대상은 금빛 가루, 그 외 수상은 폭죽 */
   celebrate?: "win" | "daesang" | "award";
+  /** 전체 화면 축하 연출 내용 (대상·그래미·스타디움 투어) */
+  spotlight?: { chip: string; title: string; subtitle: string; stats?: string[] };
 };
 
 export type Album = {

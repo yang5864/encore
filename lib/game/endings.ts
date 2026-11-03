@@ -13,7 +13,7 @@ export const ENDINGS: Ending[] = [
 
 export function endingFor(c: Career): Ending {
   const by = (id: string) => ENDINGS.find((e) => e.id === id)!;
-  if (c.peakBillboard === 1) return by("legend");
+  if (c.peakBillboard === 1 || c.flags.grammy || c.flags.stadiumTour) return by("legend");
   if (daesangCount(c) >= 3) return by("icon");
   if (c.fans >= 3000000) return by("national");
   if (c.stats.producing >= 80 && c.albums.length >= 5) return by("artist");

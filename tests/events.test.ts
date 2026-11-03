@@ -29,6 +29,6 @@ test("모든 씬 이미지가 존재한다", () => {
 
 test("숨은 이벤트는 중소 기획사에서만 열린다", () => {
   const hidden = EVENTS.filter((e) => e.kind === "hidden");
-  assert.equal(hidden.length, 2);
+  assert.deepEqual(hidden.map((e) => e.id).sort(), ["awaken", "grammy", "rechart", "stadium"], "중소 기적 2개 + 끝판왕 2개");
   for (const e of hidden) assert.ok(e.when);
 });

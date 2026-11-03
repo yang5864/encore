@@ -299,3 +299,29 @@ test("그룹을 탈퇴하면 그룹 활동 구분과 멤버 이벤트가 사라�
   assert.equal(opts.find((o) => o.id === "comeback")?.label, "솔로 앨범 준비");
   for (const id of ["member-bullying", "member-dui", "member-leave", "unit"]) assert.equal(eventById(id)!.when!(c), false, id);
 });
+
+test("그래미·스타디움 투어는 조건을 갖춰야 하고 커리어당 약 5%로 드물다", async () => {
+  const { eventById } = await import("../lib/game/events/index.ts");
+  const { scheduleEvent, ENDGAME_CHANCE } = await import("../lib/game/schedule.ts");
+  const g = eventById("grammy")!, st = eventById("stadium")!;
+  const c = idol(2);
+  assert.equal(g.when!(c), false); assert.equal(st.when!(c), false);
+  const top = idol(2); top.popularity = 92; top.fans = 5000000; top.peakBillboard = 3; top.flags.domeTour = 1;
+  assert.equal(g.when!(top), true); assert.equal(st.when!(top), true);
+  // 전성기 4시즌을 가정: 둘 중 하나라도 뜰 확률이 15% 안팎 (커리어당 각 ~5%)
+  let hit = 0; const N = 400;
+  for (let seed = 1; seed <= N; seed++) {
+    const s = structuredClone(top); s.rngState = seed; s.lastReleaseTurn = s.turn;
+    let got = false;
+    for (let i = 0; i < 4 && !got; i++) { s.turn += 1; const e = scheduleEvent(s); if (e && (e.id === "grammy" || e.id === "stadium")) got = true; }
+    if (got) hit++;
+  }
+  const rate = hit / N;
+  assert.ok(rate > 0.05 && rate < 0.3, `끝판왕 이벤트 비율 ${rate} (시즌당 ${ENDGAME_CHANCE})`);
+  // 결과에 전체 화면 연출 내용이 실린다
+  const ev = { ...top, pending: { id: "grammy", title: "", text: "", scene: "awards", public: true, choices: [{ id: "attend", label: "", hint: "", risk: "safe" as const, op: "grammy" }] } };
+  const n = resolveChoice(ev as Career, "attend");
+  assert.equal(n.flags.grammy, 1);
+  assert.ok(n.result?.spotlight?.title.includes("그래미"));
+  assert.equal(n.result?.celebrate, "daesang");
+});

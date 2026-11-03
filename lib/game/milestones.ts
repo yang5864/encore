@@ -9,7 +9,7 @@ export const MILESTONES: { id: MilestoneId; label: string; title: string; text: 
   { id: "legend", label: "레전드", title: "레전드가 됐어요", text: "이름만으로 한 시대가 떠오르는 아티스트. 작은 연습실에서 시작된 이야기예요." },
 ];
 
-export const isLegend = (c: Career) => c.peakBillboard === 1 || daesangCount(c) >= 3 || !!c.flags.domeTour;
+export const isLegend = (c: Career) => c.peakBillboard === 1 || daesangCount(c) >= 3 || !!c.flags.domeTour || !!c.flags.grammy || !!c.flags.stadiumTour;
 
 /** Returns newly reached milestones and appends them to the career. */
 export function checkMilestones(c: Career): MilestoneId[] {

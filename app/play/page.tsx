@@ -7,7 +7,7 @@ import { Button, FixedCta } from "@/components/ui/Button";
 import { ProfileCard } from "@/components/play/ProfileCard";
 import { SummaryCard } from "@/components/play/SummaryCard";
 import { CareerSummary } from "@/components/play/CareerSummary";
-import { DaesangOverlay } from "@/components/play/DaesangOverlay";
+import { CelebrationOverlay, daesangSpotlight, type Spotlight } from "@/components/play/CelebrationOverlay";
 import { Sheet } from "@/components/ui/Sheet";
 import { Fireworks } from "@/components/Fireworks";
 import { StatsCard } from "@/components/play/StatsCard";
@@ -23,7 +23,7 @@ import { CoachMarks } from "@/components/play/CoachMarks";
 import { loadSettings, saveSettings } from "@/lib/storage";
 import { focusOptions } from "@/lib/game/focus";
 import { periodLabel } from "@/lib/game/format";
-import type { Award, MilestoneId, TurnResult } from "@/lib/game/types";
+import type { MilestoneId, TurnResult } from "@/lib/game/types";
 
 export default function PlayPage() {
   const router = useRouter();
@@ -38,7 +38,7 @@ export default function PlayPage() {
   const [seenResultKey, setSeenResultKey] = useState<string | null>(null);
   const [lastResult, setLastResult] = useState<TurnResult | null>(null);
   const [fireworks, setFireworks] = useState<"win" | "daesang" | "award" | null>(null);
-  const [daesang, setDaesang] = useState<Award | null>(null);
+  const [daesang, setDaesang] = useState<Spotlight | null>(null);
 
   useEffect(() => {
     if (ready && !career) router.replace("/");
@@ -68,7 +68,8 @@ export default function PlayPage() {
       setLastResult(career.result);
       if (career.result.celebrate) setFireworks(career.result.celebrate);
       const big = career.result.awards?.find((a) => a.kind === "daesang");
-      if (big) setDaesang(big);
+      if (career.result.spotlight) setDaesang({ ...career.result.spotlight, scene: career.result.scene });
+      else if (big) setDaesang(daesangSpotlight(career, big));
     }
   }, [career, resultKey, seenResultKey]);
 
@@ -146,7 +147,7 @@ export default function PlayPage() {
         </Button>
       </FixedCta>
 
-      {daesang && <DaesangOverlay career={career} award={daesang} onDone={() => setDaesang(null)} />}
+      {daesang && <CelebrationOverlay career={career} spot={daesang} onDone={() => setDaesang(null)} />}
       <MilestoneSheet career={career} id={pendingMilestone} open={!!pendingMilestone && !daesang} onClose={() => setMilestoneQueue((q) => q.slice(1))} />
       {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} avatar={career.avatar} gender={career.gender} name={career.name} open={showResult} onClose={dismissResult} ctaLabel={career.pending ? "다음 선택 보기" : "확인"} />}
       <EventSheet key={career.pending?.id ?? "none"} career={career} open={showEvent} onChoose={choose} />

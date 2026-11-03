@@ -454,6 +454,33 @@ export const IDOL_EVENTS: GameEventDef[] = [
       { id: "campaign", label: "팬덤과 함께 캠페인을 연다", hint: "평판과 팬덤 결속이 함께 올라요", risk: "safe", effects: { reputation: 7, fansMul: 1.04, mental: 4 } },
     ],
   },
+  // ───────── 커리어 끝판왕 · 아주 드묾 ─────────
+  {
+    id: "grammy",
+    stage: "idol",
+    kind: "hidden",
+    title: "그래미 어워드 노미네이트",
+    text: "레코딩 아카데미가 올해 후보를 발표했어요. 내 이름이 있어요. 한국 아이돌로는 손에 꼽는 일이라 해외 매체가 먼저 기사를 냈어요.",
+    scene: "awards",
+    public: true,
+    when: (c) => c.peakBillboard !== null && c.peakBillboard <= 10 && c.popularity >= 85 && !c.flags.grammy,
+    choices: [
+      { id: "attend", label: "시상식에 참석한다", hint: "레드카펫과 무대. 전 세계 인지도가 한 번에 올라요", risk: "safe", op: "grammy" },
+    ],
+  },
+  {
+    id: "stadium",
+    stage: "idol",
+    kind: "hidden",
+    title: "월드 스타디움 투어 제안",
+    text: "북미·유럽·아시아 스타디움을 도는 단독 투어 제안이 왔어요. 한 회 5만 명 규모, 세계에서 몇 팀만 하는 투어예요.",
+    scene: "tour",
+    public: true,
+    when: (c) => c.popularity >= 90 && c.fans >= 4000000 && !c.flags.stadiumTour && !!c.flags.domeTour,
+    choices: [
+      { id: "go", label: "스타디움 투어를 돈다", hint: "전 세계 매진이면 역사에 남아요. 체력은 크게 떨어져요", risk: "bold", op: "stadium" },
+    ],
+  },
   {
     id: "scout",
     stage: "trainee",

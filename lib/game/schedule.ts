@@ -9,6 +9,7 @@ import { rng } from "./rng.ts";
 
 export const SCOUT_CHANCE = 0.06;
 export const MIRACLE_CHANCE = 0.02;
+export const ENDGAME_CHANCE = 0.025;
 export const STORY_CHANCE = 0.7;
 export const REPEAT_GAP = 4;
 
@@ -97,6 +98,11 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
   for (const id of ["awaken", "rechart"]) {
     const def = eventById(id)!;
     if (eligible(def, c) && rng(c) < MIRACLE_CHANCE) return take(c, id);
+  }
+  // 끝판왕: 조건을 갖춘 시즌마다 2.5%. 전성기 2~3년이면 커리어당 약 5%
+  for (const id of ["grammy", "stadium"]) {
+    const def = eventById(id)!;
+    if (eligible(def, c) && rng(c) < ENDGAME_CHANCE) return take(c, id);
   }
   if (c.stage === "trainee" && c.scoutCount < 3 && c.hiatusUntil <= c.turn && rng(c) < SCOUT_CHANCE + Math.max(0, overall(c.stats, c.position) - 50) / 400) {
     const offer = rivalOfferEvent(c);
