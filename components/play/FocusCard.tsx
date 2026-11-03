@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { equipmentPath } from "@/lib/art";
 import { Card, CardTitle } from "@/components/ui/Card";
@@ -17,6 +18,18 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
   const options = focusOptions(career);
   const groupOptions = options.filter((o) => o.group !== "solo");
   const soloOptions = options.filter((o) => o.group === "solo");
+  // 1단계: 그룹 활동 / 개인 활동 중 하나를 먼저 고르고, 2단계에서 세부 활동을 고른다
+  const [tab, setTab] = useState<"group" | "solo">(value.id.startsWith("solo:") ? "solo" : "group");
+  useEffect(() => {
+    if (value.id.startsWith("solo:") && tab !== "solo") setTab("solo");
+    else if (value.id && !value.id.startsWith("solo:") && tab !== "group") setTab("group");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value.id]);
+  const switchTab = (next: "group" | "solo") => {
+    setTab(next);
+    const first = (next === "solo" ? soloOptions : groupOptions).find((o) => !o.disabledReason);
+    onChange({ id: first?.id ?? "", stat: value.stat ?? STAT_KEYS[0], concept: value.concept ?? CONCEPTS[0].id });
+  };
 
   const renderOption = (o: FocusOption) => {
     const selected = value.id === o.id;
@@ -70,15 +83,23 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
 
   return (
     <Card className="fade-up" style={{ animationDelay: "180ms" }} id="focus-card">
-      <CardTitle sub={`${periodLabel(career)} 무엇을 할지 하나만 골라요`}>이번 시즌 계획</CardTitle>
-      {soloOptions.length > 0 && <p className="text-[13px] font-bold text-ink-3 mb-2">그룹 활동</p>}
-      <div className="flex flex-col gap-2">{groupOptions.map(renderOption)}</div>
+      <CardTitle sub={soloOptions.length > 0 ? `${periodLabel(career)} 활동 종류를 먼저 고르고, 무엇을 할지 하나만 골라요` : `${periodLabel(career)} 무엇을 할지 하나만 골라요`}>이번 시즌 계획</CardTitle>
       {soloOptions.length > 0 && (
+        <div className="grid grid-cols-2 gap-1 p-1 rounded-2xl bg-sub mb-3" role="tablist" aria-label="활동 종류">
+          {(["group", "solo"] as const).map((t) => (
+            <button key={t} role="tab" aria-selected={tab === t} onClick={() => switchTab(t)} className={cn("press h-11 rounded-xl text-[16px] font-bold transition-colors", tab === t ? "bg-card text-ink shadow-sm" : "text-ink-3")}>
+              {t === "group" ? "그룹 활동" : "개인 활동"}
+            </button>
+          ))}
+        </div>
+      )}
+      {soloOptions.length > 0 && tab === "solo" ? (
         <>
-          <p className="text-[13px] font-bold text-ink-3 mt-5 mb-1">개인 활동</p>
           <p className="text-[13px] text-ink-3 mb-2">성공 가능성은 해당 능력치가 정해요. 낮은 능력으로 밀어붙이면 묻혀요.</p>
           <div className="flex flex-col gap-2">{soloOptions.map(renderOption)}</div>
         </>
+      ) : (
+        <div className="flex flex-col gap-2">{groupOptions.map(renderOption)}</div>
       )}
     </Card>
   );
