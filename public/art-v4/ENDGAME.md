@@ -30,4 +30,3 @@
 [ENDGAME-PROMPTS.jsonl](ENDGAME-PROMPTS.jsonl)에 최종 프롬프트 전체, 참조 이미지, 생성 원본과 프로젝트 저장 경로가 있습니다. 별도의 API/CLI 없이 built-in image_gen만 사용했습니다.
 
 검사 결과: 배경 2장, RGBA 투명 캐릭터 24장, 서로 다른 애니메이션 12쌍. alpha 범위 0–255, 외곽 alpha ≤2, 가시 콘텐츠 캔버스 접촉 없음. 모든 최종 이미지를 육안 확인했습니다.
-
