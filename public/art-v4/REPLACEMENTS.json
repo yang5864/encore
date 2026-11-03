@@ -10,6 +10,21 @@
       "sourcePath": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-13b91411-88a9-4980-bbc0-f9300d2bda2b.png",
       "replacesArchivedPath": "art-archive/v4-transparency-fixes/avatar-4/military/02-before.png",
       "reason": "Removed semi-transparent noisy white/gray/red perimeter."
+    },
+    {
+      "avatar": 3,
+      "scene": "press",
+      "frame": "02",
+      "replace": true,
+      "reference": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/characters/avatar-3/press/02.png",
+      "outputPath": "public/art-v4/characters/avatar-3/press/02.png",
+      "logPath": "public/art-v4/PROMPTS-ROOT.jsonl",
+      "prompt": "Use case: precise-object-edit and identity-preserve. Edit the supplied black-haired male chibi avatar with blue star hairclip, charcoal formal suit and blue tie, both hands clasped for a serious official statement. Change ONLY the two eyes to FULLY CLOSED eyelids: simple clean curved closed lash lines with NO iris, NO pupils, NO eye whites, NO visible eye opening or eye slit at all. Both eyes completely closed in a respectful moment of a bow, never half-lidded. Preserve the exact head tilt, hair, blue star hairclip, neutral small mouth, suit, hands, feet, pose, framing, height, transparent padding and every other feature of the supplied reference. Whole body, one isolated character, crisp pixel-art original style. Genuinely transparent alpha background. No scenery, floor, shadows, extra characters, lettering, sheet or collage.",
+      "sourcePath": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-c023fccc-1c3b-44e5-92b7-75c9661b83cf.png",
+      "generatedWith": "built-in image_gen",
+      "date": "2026-11-03",
+      "replacesArchivedPath": "art-archive/v4-eye-fixes/avatar-3/press/02.png",
+      "reason": "Replaced half-lidded eyes with completely closed eyelids; retained serious bow and original costume."
     }
   ]
 }

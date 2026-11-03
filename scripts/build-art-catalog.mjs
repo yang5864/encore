@@ -16,7 +16,7 @@ const frame = (f) => {
 
 const avatars = Object.values(v3.characters).map((a) =>
   Object.fromEntries(["idle", "sing", "dance"].map((action) => [action,
-    ["01", "02"].map((n) => frame(a.frames[`${action}-${n}`])),
+    [frame(a.frames[`${action}-01`]), frame(action === "idle" && a.frames["blink-closed"] ? a.frames["blink-closed"] : a.frames[`${action}-02`])],
   ])),
 );
 const scenes = Object.fromEntries(v4.events.map((event) => [event.id, {

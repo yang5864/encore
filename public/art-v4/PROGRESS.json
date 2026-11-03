@@ -1,12 +1,12 @@
 {
-  "status": "incomplete-generation-limit",
-  "updatedAtKST": "2026-11-02T01:04:59.313197+09:00",
+  "status": "complete",
+  "updatedAtKST": "2026-11-03T18:23:20.151260+09:00",
   "counts": {
     "expectedFrames": 372,
-    "savedFrames": 357,
-    "missingFrames": 15,
-    "completeAnimationPairs": 173,
-    "completeEvents": 29,
+    "savedFrames": 372,
+    "missingFrames": 0,
+    "completeAnimationPairs": 186,
+    "completeEvents": 32,
     "backgrounds": 32,
     "excludedArchivedFrames": 2
   },
@@ -17,6 +17,7 @@
     "vocal",
     "songwriting",
     "survival",
+    "album",
     "debut",
     "advert",
     "challenge",
@@ -24,6 +25,7 @@
     "fansign",
     "livestream",
     "mc",
+    "variety",
     "youtube",
     "awards",
     "coachella",
@@ -32,6 +34,7 @@
     "tour",
     "press",
     "retirement",
+    "contract",
     "birthday",
     "clinic",
     "donation",
@@ -41,113 +44,7 @@
     "rest",
     "wedding"
   ],
-  "missing": [
-    {
-      "avatar": 0,
-      "gender": "female",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-0/album/02.png"
-    },
-    {
-      "avatar": 1,
-      "gender": "female",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-1/album/02.png"
-    },
-    {
-      "avatar": 2,
-      "gender": "female",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-2/album/02.png"
-    },
-    {
-      "avatar": 3,
-      "gender": "male",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-3/album/02.png"
-    },
-    {
-      "avatar": 4,
-      "gender": "male",
-      "scene": "album",
-      "frame": "01",
-      "path": "characters/avatar-4/album/01.png"
-    },
-    {
-      "avatar": 4,
-      "gender": "male",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-4/album/02.png"
-    },
-    {
-      "avatar": 5,
-      "gender": "male",
-      "scene": "album",
-      "frame": "01",
-      "path": "characters/avatar-5/album/01.png"
-    },
-    {
-      "avatar": 5,
-      "gender": "male",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-5/album/02.png"
-    },
-    {
-      "avatar": 4,
-      "gender": "male",
-      "scene": "variety",
-      "frame": "02",
-      "path": "characters/avatar-4/variety/02.png"
-    },
-    {
-      "avatar": 5,
-      "gender": "male",
-      "scene": "variety",
-      "frame": "02",
-      "path": "characters/avatar-5/variety/02.png"
-    },
-    {
-      "avatar": 1,
-      "gender": "female",
-      "scene": "contract",
-      "frame": "02",
-      "path": "characters/avatar-1/contract/02.png"
-    },
-    {
-      "avatar": 2,
-      "gender": "female",
-      "scene": "contract",
-      "frame": "02",
-      "path": "characters/avatar-2/contract/02.png"
-    },
-    {
-      "avatar": 3,
-      "gender": "male",
-      "scene": "contract",
-      "frame": "02",
-      "path": "characters/avatar-3/contract/02.png"
-    },
-    {
-      "avatar": 4,
-      "gender": "male",
-      "scene": "contract",
-      "frame": "02",
-      "path": "characters/avatar-4/contract/02.png"
-    },
-    {
-      "avatar": 5,
-      "gender": "male",
-      "scene": "contract",
-      "frame": "02",
-      "path": "characters/avatar-5/contract/02.png"
-    }
-  ],
+  "missing": [],
   "genderEligibility": {
     "military": {
       "gender": "male",
@@ -167,11 +64,5 @@
     }
   },
   "generationMode": "built-in image_gen",
-  "nextPromptSet": "GENERATE-NEXT.jsonl",
-  "resumeRule": "Only generate missing paths; respect eligibleAvatars, inspect local references before image_gen, save returned originals immediately, and await all pending responses after an error. No application code changes or deployment.",
-  "blockedBy": "Built-in image generation limit",
-  "generationLimit": {
-    "error": "usage_limit_reached",
-    "resetsAtKST": "2026-11-03T00:08:30+09:00"
-  }
+  "nextPromptSet": "GENERATE-NEXT.jsonl"
 }

@@ -1,18 +1,18 @@
 {
   "version": "art-v4-event-characters",
-  "status": "incomplete-generation-limit",
+  "status": "complete",
   "generatedWith": "built-in image_gen",
-  "updatedAtKST": "2026-11-02T01:04:59.313197+09:00",
+  "updatedAtKST": "2026-11-03T18:23:20.151260+09:00",
   "counts": {
     "expectedFrames": 372,
-    "savedFrames": 357,
-    "missingFrames": 15,
-    "completeAnimationPairs": 173,
-    "completeEvents": 29,
+    "savedFrames": 372,
+    "missingFrames": 0,
+    "completeAnimationPairs": 186,
+    "completeEvents": 32,
     "backgrounds": 32,
     "excludedArchivedFrames": 2
   },
-  "runtimeIntegration": "Asset files only; application code, game logic and deployment were not changed.",
+  "runtimeIntegration": "Integrated in ENCORE v2. 2026-11-03: completed all event frames; separate fully closed idle blink frames and brief blink timing added locally.",
   "placementNotes": "Preserve transparent padding. Use each frame footAnchor to place the feet consistently. Generated frames can have minor size and pose variation; no deterministic pixel alignment was applied.",
   "completedEvents": [
     "audition",
@@ -21,6 +21,7 @@
     "vocal",
     "songwriting",
     "survival",
+    "album",
     "debut",
     "advert",
     "challenge",
@@ -28,6 +29,7 @@
     "fansign",
     "livestream",
     "mc",
+    "variety",
     "youtube",
     "awards",
     "coachella",
@@ -36,6 +38,7 @@
     "tour",
     "press",
     "retirement",
+    "contract",
     "birthday",
     "clinic",
     "donation",
@@ -49,7 +52,7 @@
     "PROMPTS-B.jsonl": 72,
     "PROMPTS-A.jsonl": 76,
     "PROMPTS-C.jsonl": 77,
-    "PROMPTS-ROOT.jsonl": 135
+    "PROMPTS-ROOT.jsonl": 151
   },
   "events": [
     {
@@ -130,7 +133,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -1,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 1,
@@ -192,7 +196,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -254,7 +259,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 3,
@@ -316,7 +322,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -2,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.001594
         },
         {
           "avatar": 4,
@@ -378,7 +385,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -5,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.003987
         },
         {
           "avatar": 5,
@@ -440,7 +448,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000797
         }
       ],
       "eligibleAvatars": [
@@ -531,7 +540,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -1,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 1,
@@ -593,7 +603,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -655,7 +666,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 3,
@@ -717,7 +729,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 4,
@@ -779,7 +792,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -841,7 +855,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -932,7 +947,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 1,
@@ -994,7 +1010,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -1056,7 +1073,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 3,
@@ -1118,7 +1136,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 4,
@@ -1180,7 +1199,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 4
+          "footBaselineDifferencePx": 4,
+          "footBaselineDeltaNormalized": 0.00319
         },
         {
           "avatar": 5,
@@ -1242,7 +1262,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -1333,7 +1354,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -1395,7 +1417,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -1457,7 +1480,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -2
+          "footBaselineDifferencePx": -2,
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 3,
@@ -1519,7 +1543,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 2
+          "footBaselineDifferencePx": 2,
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 4,
@@ -1581,7 +1606,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -1643,7 +1669,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         }
       ],
       "eligibleAvatars": [
@@ -1734,7 +1761,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -1796,7 +1824,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 2,
@@ -1858,7 +1887,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 3,
@@ -1920,7 +1950,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 4,
@@ -1982,7 +2013,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -2044,7 +2076,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -1
+          "footBaselineDifferencePx": -1,
+          "footBaselineDeltaNormalized": 0.000797
         }
       ],
       "eligibleAvatars": [
@@ -2135,7 +2168,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 1,
@@ -2197,7 +2231,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -2259,7 +2294,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 3,
@@ -2321,7 +2357,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 4,
@@ -2383,7 +2420,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 5,
@@ -2445,7 +2483,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -2473,7 +2512,7 @@
         "Singing into a handheld studio microphone, eyes focused and free hand keeping rhythm.",
         "Different singing mouth shape and tiny rhythm gesture, same microphone and headphones."
       ],
-      "readyFrames": 4,
+      "readyFrames": 12,
       "expectedFrames": 12,
       "avatars": [
         {
@@ -2508,12 +2547,36 @@
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-0/album/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-0/album/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 899080,
+              "sha256": "306fecbe476b2f8b591f647c26abb27c39a3b40290f164ede2d89cb79fdfc9ee",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                273,
+                112,
+                963,
+                1192
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.950558
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "female"
+          "pairComplete": true,
+          "gender": "female",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -2547,12 +2610,36 @@
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-1/album/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-1/album/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 974373,
+              "sha256": "b050ce194b75fb91fb3fce082f9b20d2150064e3801cf854b010fae76cf22584",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                279,
+                64,
+                975,
+                1202
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.958533
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "female"
+          "pairComplete": true,
+          "gender": "female",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": -1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 2,
@@ -2586,12 +2673,36 @@
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-2/album/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-2/album/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 997792,
+              "sha256": "67ffa72b87c98ab6b54b9265761553eb08c935242508200e3fbe22e07a980fa0",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                268,
+                133,
+                1009,
+                1171
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.933812
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "female"
+          "pairComplete": true,
+          "gender": "female",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": -3,
+          "footBaselineDeltaNormalized": 0.002392
         },
         {
           "avatar": 3,
@@ -2625,12 +2736,36 @@
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-3/album/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-3/album/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 846160,
+              "sha256": "c54b9235465db0e208ea462429270559bea825a6b6027a586bf2de1d2252f48b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                303,
+                107,
+                977,
+                1199
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95614
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "male"
+          "pairComplete": true,
+          "gender": "male",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 4,
@@ -2638,17 +2773,62 @@
           "frames": [
             {
               "frame": "01",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-4/album/01.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-4/album/01.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 914636,
+              "sha256": "c656082bb949d981b8296a0f6f59f336825e0f69911a74bb419279927fb7983f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                288,
+                87,
+                953,
+                1173
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.935407
+              }
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-4/album/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-4/album/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 919357,
+              "sha256": "5d5ed6a60154d2bf79bd63b052ba2c4600865579864cdd520001b3398a1b9a76",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                286,
+                86,
+                955,
+                1173
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.935407
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "male"
+          "pairComplete": true,
+          "gender": "male",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -2656,17 +2836,62 @@
           "frames": [
             {
               "frame": "01",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-5/album/01.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-5/album/01.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 970946,
+              "sha256": "6ae94a3c094e2da8eef48368aeab3438ee352db20a3ee7a9b1fac5d6ae5fb1f5",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                268,
+                83,
+                988,
+                1199
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95614
+              }
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-5/album/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-5/album/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 953528,
+              "sha256": "4c23f0a442bfda38865c2d95be3580ac5af48cd64ec62695dd2f8b9dea15548c",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                269,
+                84,
+                986,
+                1199
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95614
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "male"
+          "pairComplete": true,
+          "gender": "male",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -2757,7 +2982,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -2819,7 +3045,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -2881,7 +3108,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 3,
@@ -2943,7 +3171,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 2
+          "footBaselineDifferencePx": 2,
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 4,
@@ -3005,7 +3234,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -3067,7 +3297,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -3158,7 +3389,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -10,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.007974
         },
         {
           "avatar": 1,
@@ -3220,7 +3452,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -3282,7 +3515,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -2,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 3,
@@ -3344,7 +3578,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 4,
@@ -3406,7 +3641,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 5,
@@ -3468,7 +3704,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -3559,7 +3796,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 2,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 1,
@@ -3621,7 +3859,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -3683,7 +3922,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 3,
@@ -3745,7 +3985,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 2,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 4,
@@ -3807,7 +4048,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 2,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 5,
@@ -3869,7 +4111,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000798
         }
       ],
       "eligibleAvatars": [
@@ -3960,7 +4203,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -4022,7 +4266,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -4
+          "footBaselineDifferencePx": -4,
+          "footBaselineDeltaNormalized": 0.00319
         },
         {
           "avatar": 2,
@@ -4084,7 +4329,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -1
+          "footBaselineDifferencePx": -1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 3,
@@ -4146,7 +4392,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 4,
@@ -4208,7 +4455,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 5,
@@ -4270,7 +4518,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         }
       ],
       "eligibleAvatars": [
@@ -4361,7 +4610,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -4423,7 +4673,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -4485,7 +4736,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 3,
@@ -4547,7 +4799,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 4,
@@ -4609,7 +4862,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -4671,7 +4925,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -4762,7 +5017,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 1,
@@ -4824,7 +5080,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -4886,7 +5143,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 3,
@@ -4948,7 +5206,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 4,
@@ -5010,7 +5269,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 5,
@@ -5072,7 +5332,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         }
       ],
       "eligibleAvatars": [
@@ -5163,7 +5424,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 1,
@@ -5225,7 +5487,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -5287,7 +5550,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 3,
@@ -5349,7 +5613,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 4,
@@ -5411,7 +5676,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 5,
@@ -5473,7 +5739,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -1
+          "footBaselineDifferencePx": -1,
+          "footBaselineDeltaNormalized": 0.000798
         }
       ],
       "eligibleAvatars": [
@@ -5501,7 +5768,7 @@
         "Wearing the apron and holding a small empty serving tray with both hands, playful surprised expression.",
         "Tray tilts only slightly while the face changes to a cheerful smile, no food spills or extra people."
       ],
-      "readyFrames": 10,
+      "readyFrames": 12,
       "expectedFrames": 12,
       "avatars": [
         {
@@ -5564,7 +5831,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 2
+          "footBaselineDifferencePx": 2,
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 1,
@@ -5626,7 +5894,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 2,
@@ -5688,7 +5957,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -1
+          "footBaselineDifferencePx": -1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 3,
@@ -5750,7 +6020,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 4,
@@ -5784,12 +6055,36 @@
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-4/variety/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-4/variety/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 892756,
+              "sha256": "eb8ed1655dea1f28d8a2a88aed92fd8e7e5a4f566dedda0c3afa50fe86947319",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                275,
+                81,
+                966,
+                1203
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95933
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "male"
+          "pairComplete": true,
+          "gender": "male",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -5823,12 +6118,36 @@
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-5/variety/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-5/variety/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 888034,
+              "sha256": "e36a5eb8bb4ce32eb9fa0a58399db35c8742d35561f3fae769aa51fe9f7af9d2",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                276,
+                88,
+                981,
+                1212
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.966507
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "male"
+          "pairComplete": true,
+          "gender": "male",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -5919,7 +6238,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -5981,7 +6301,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 2,
@@ -6043,7 +6364,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -1
+          "footBaselineDifferencePx": -1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 3,
@@ -6105,7 +6427,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -1
+          "footBaselineDifferencePx": -1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 4,
@@ -6167,7 +6490,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -6229,7 +6553,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         }
       ],
       "eligibleAvatars": [
@@ -6320,7 +6645,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -6382,7 +6708,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -14,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.011164
         },
         {
           "avatar": 2,
@@ -6444,7 +6771,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -5,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.003988
         },
         {
           "avatar": 3,
@@ -6506,7 +6834,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 4,
@@ -6568,7 +6897,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -6630,7 +6960,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000798
         }
       ],
       "eligibleAvatars": [
@@ -6721,7 +7052,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -6783,7 +7115,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 2,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.001594
         },
         {
           "avatar": 2,
@@ -6845,7 +7178,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 3,
@@ -6907,7 +7241,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 4,
@@ -6969,7 +7304,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 5,
@@ -7031,7 +7367,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -7122,7 +7459,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 1,
@@ -7184,7 +7522,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -1
+          "footBaselineDifferencePx": -1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 2,
@@ -7246,7 +7585,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 2
+          "footBaselineDifferencePx": 2,
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 3,
@@ -7308,7 +7648,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 4,
@@ -7370,7 +7711,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 2
+          "footBaselineDifferencePx": 2,
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 5,
@@ -7432,7 +7774,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         }
       ],
       "eligibleAvatars": [
@@ -7523,7 +7866,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -7585,7 +7929,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 2
+          "footBaselineDifferencePx": 2,
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 2,
@@ -7647,7 +7992,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -7735,7 +8081,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 1,
@@ -7797,7 +8144,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 2
+          "footBaselineDifferencePx": 2,
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 2,
@@ -7859,7 +8207,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 3,
@@ -7921,7 +8270,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 4,
@@ -7983,7 +8333,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 5,
@@ -8045,7 +8396,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 2
+          "footBaselineDifferencePx": 2,
+          "footBaselineDeltaNormalized": 0.001595
         }
       ],
       "eligibleAvatars": [
@@ -8136,7 +8488,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 1,
@@ -8198,7 +8551,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -6
+          "footBaselineDifferencePx": -6,
+          "footBaselineDeltaNormalized": 0.004784
         },
         {
           "avatar": 2,
@@ -8260,7 +8614,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -6
+          "footBaselineDifferencePx": -6,
+          "footBaselineDeltaNormalized": 0.004785
         },
         {
           "avatar": 3,
@@ -8299,19 +8654,19 @@
               "width": 1254,
               "height": 1254,
               "mode": "RGBA",
-              "bytes": 650450,
-              "sha256": "06190027b7e0851e32343a2c844d0c94b339514932cff6c2bc93a748b39206fe",
+              "bytes": 641373,
+              "sha256": "20378529d090d813434016734d1b29e43cc9821831f9345e80707cc404cb1182",
               "alphaRange": [
                 0,
                 255
               ],
               "visibleBoundsAlphaAbove128": [
-                290,
-                133,
-                959,
+                294,
+                135,
+                957,
                 1214
               ],
-              "maxCanvasBorderAlpha": 1,
+              "maxCanvasBorderAlpha": 0,
               "visibleContentTouchesCanvasEdge": false,
               "footAnchor": {
                 "x": 0.5,
@@ -8322,7 +8677,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -3
+          "footBaselineDifferencePx": -3,
+          "footBaselineDeltaNormalized": 0.002392
         },
         {
           "avatar": 4,
@@ -8384,7 +8740,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -1
+          "footBaselineDifferencePx": -1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 5,
@@ -8446,7 +8803,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -5
+          "footBaselineDifferencePx": -5,
+          "footBaselineDeltaNormalized": 0.003987
         }
       ],
       "eligibleAvatars": [
@@ -8537,7 +8895,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 1,
@@ -8599,7 +8958,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 2
+          "footBaselineDifferencePx": 2,
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 2,
@@ -8661,7 +9021,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 3,
@@ -8723,7 +9084,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 4,
@@ -8785,7 +9147,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 5,
@@ -8847,7 +9210,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         }
       ],
       "eligibleAvatars": [
@@ -8875,7 +9239,7 @@
         "Holding a blank contract folder and signing with a pen, thoughtful composed expression.",
         "Small pen movement and a slight nod, same folder and formal-casual outfit."
       ],
-      "readyFrames": 7,
+      "readyFrames": 12,
       "expectedFrames": 12,
       "avatars": [
         {
@@ -8938,7 +9302,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 1,
@@ -8972,12 +9337,36 @@
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-1/contract/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-1/contract/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 776778,
+              "sha256": "46f399db77ca3b09258e7cb80d761e8f9f287af98b97364d744ad188b72d7461",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                289,
+                108,
+                949,
+                1225
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.976874
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "female"
+          "pairComplete": true,
+          "gender": "female",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 2,
@@ -9011,12 +9400,36 @@
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-2/contract/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-2/contract/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 894248,
+              "sha256": "16f3fa52e14c84b16e6e74f21f1ca2393558b5066c55da69627a532db92969e8",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                276,
+                128,
+                982,
+                1191
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.949761
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "female"
+          "pairComplete": true,
+          "gender": "female",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 3,
@@ -9050,12 +9463,36 @@
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-3/contract/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-3/contract/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 768340,
+              "sha256": "a67c650655e270020da8f138f8f8e33a5018508786d476a49caeed4b2a3f65ad",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                306,
+                105,
+                949,
+                1192
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.950558
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "male"
+          "pairComplete": true,
+          "gender": "male",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 4,
@@ -9089,12 +9526,36 @@
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-4/contract/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-4/contract/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 869871,
+              "sha256": "38085d9d11eb24cf197ba6292c4b66ef7b4713119661652dbe44bfb53032ded6",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                281,
+                94,
+                962,
+                1205
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.960925
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "male"
+          "pairComplete": true,
+          "gender": "male",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -9128,12 +9589,36 @@
             },
             {
               "frame": "02",
-              "status": "missing",
-              "url": "/art-v4/characters/avatar-5/contract/02.png"
+              "status": "ready",
+              "url": "/art-v4/characters/avatar-5/contract/02.png",
+              "width": 1254,
+              "height": 1254,
+              "mode": "RGBA",
+              "bytes": 856127,
+              "sha256": "f4e5d4c79f79a9736b1bbb8412e5f43b84792746601cf4f3dc1faf11a5da587b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                277,
+                99,
+                978,
+                1202
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.958533
+              }
             }
           ],
-          "pairComplete": false,
-          "gender": "male"
+          "pairComplete": true,
+          "gender": "male",
+          "pixelDistinct": true,
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         }
       ],
       "eligibleAvatars": [
@@ -9224,7 +9709,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -9286,7 +9772,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -9348,7 +9835,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 3,
@@ -9410,7 +9898,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 4,
@@ -9472,7 +9961,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -9534,7 +10024,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000797
         }
       ],
       "eligibleAvatars": [
@@ -9625,7 +10116,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -9687,7 +10179,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -1,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 2,
@@ -9749,7 +10242,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -10,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.007975
         },
         {
           "avatar": 3,
@@ -9811,7 +10305,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 4,
@@ -9873,7 +10368,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 5,
@@ -9935,7 +10431,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -10026,7 +10523,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 1,
@@ -10088,7 +10586,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 2,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 2,
@@ -10150,7 +10649,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 3,
@@ -10212,7 +10712,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 4,
@@ -10274,7 +10775,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 5,
@@ -10336,7 +10838,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -10427,7 +10930,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -7,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.005582
         },
         {
           "avatar": 1,
@@ -10489,7 +10993,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 2,
@@ -10551,7 +11056,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -6,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.004785
         },
         {
           "avatar": 3,
@@ -10613,7 +11119,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 1,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 4,
@@ -10675,7 +11182,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -3,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.002393
         },
         {
           "avatar": 5,
@@ -10737,7 +11245,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": -9,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.007177
         }
       ],
       "eligibleAvatars": [
@@ -10828,7 +11337,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 1,
@@ -10890,7 +11400,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 2,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 2,
@@ -10952,7 +11463,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "female"
+          "gender": "female",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 3,
@@ -11014,7 +11526,8 @@
           "pairComplete": true,
           "pixelDistinct": true,
           "footBaselineDifferencePx": 0,
-          "gender": "male"
+          "gender": "male",
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 4,
@@ -11076,7 +11589,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -11138,7 +11652,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         }
       ],
       "eligibleAvatars": [
@@ -11229,7 +11744,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -5
+          "footBaselineDifferencePx": -5,
+          "footBaselineDeltaNormalized": 0.003987
         },
         {
           "avatar": 4,
@@ -11291,7 +11807,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 5,
@@ -11353,7 +11870,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         }
       ],
       "eligibleAvatars": [
@@ -11441,7 +11959,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         },
         {
           "avatar": 1,
@@ -11503,7 +12022,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 2,
@@ -11565,7 +12085,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 3,
@@ -11627,7 +12148,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 2
+          "footBaselineDifferencePx": 2,
+          "footBaselineDeltaNormalized": 0.001595
         },
         {
           "avatar": 4,
@@ -11689,7 +12211,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 0
+          "footBaselineDifferencePx": 0,
+          "footBaselineDeltaNormalized": 0.0
         },
         {
           "avatar": 5,
@@ -11751,7 +12274,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000798
         }
       ],
       "eligibleAvatars": [
@@ -11842,7 +12366,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -20
+          "footBaselineDifferencePx": -20,
+          "footBaselineDeltaNormalized": 0.015949
         },
         {
           "avatar": 1,
@@ -11904,7 +12429,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 2,
@@ -11966,7 +12492,8 @@
           "pairComplete": true,
           "gender": "female",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -7
+          "footBaselineDifferencePx": -7,
+          "footBaselineDeltaNormalized": 0.005582
         },
         {
           "avatar": 3,
@@ -12028,7 +12555,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 4,
@@ -12090,7 +12618,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": 1
+          "footBaselineDifferencePx": 1,
+          "footBaselineDeltaNormalized": 0.000797
         },
         {
           "avatar": 5,
@@ -12152,7 +12681,8 @@
           "pairComplete": true,
           "gender": "male",
           "pixelDistinct": true,
-          "footBaselineDifferencePx": -1
+          "footBaselineDifferencePx": -1,
+          "footBaselineDeltaNormalized": 0.000797
         }
       ],
       "eligibleAvatars": [
@@ -12166,113 +12696,7 @@
       "allowedGender": "all"
     }
   ],
-  "missing": [
-    {
-      "avatar": 0,
-      "gender": "female",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-0/album/02.png"
-    },
-    {
-      "avatar": 1,
-      "gender": "female",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-1/album/02.png"
-    },
-    {
-      "avatar": 2,
-      "gender": "female",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-2/album/02.png"
-    },
-    {
-      "avatar": 3,
-      "gender": "male",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-3/album/02.png"
-    },
-    {
-      "avatar": 4,
-      "gender": "male",
-      "scene": "album",
-      "frame": "01",
-      "path": "characters/avatar-4/album/01.png"
-    },
-    {
-      "avatar": 4,
-      "gender": "male",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-4/album/02.png"
-    },
-    {
-      "avatar": 5,
-      "gender": "male",
-      "scene": "album",
-      "frame": "01",
-      "path": "characters/avatar-5/album/01.png"
-    },
-    {
-      "avatar": 5,
-      "gender": "male",
-      "scene": "album",
-      "frame": "02",
-      "path": "characters/avatar-5/album/02.png"
-    },
-    {
-      "avatar": 4,
-      "gender": "male",
-      "scene": "variety",
-      "frame": "02",
-      "path": "characters/avatar-4/variety/02.png"
-    },
-    {
-      "avatar": 5,
-      "gender": "male",
-      "scene": "variety",
-      "frame": "02",
-      "path": "characters/avatar-5/variety/02.png"
-    },
-    {
-      "avatar": 1,
-      "gender": "female",
-      "scene": "contract",
-      "frame": "02",
-      "path": "characters/avatar-1/contract/02.png"
-    },
-    {
-      "avatar": 2,
-      "gender": "female",
-      "scene": "contract",
-      "frame": "02",
-      "path": "characters/avatar-2/contract/02.png"
-    },
-    {
-      "avatar": 3,
-      "gender": "male",
-      "scene": "contract",
-      "frame": "02",
-      "path": "characters/avatar-3/contract/02.png"
-    },
-    {
-      "avatar": 4,
-      "gender": "male",
-      "scene": "contract",
-      "frame": "02",
-      "path": "characters/avatar-4/contract/02.png"
-    },
-    {
-      "avatar": 5,
-      "gender": "male",
-      "scene": "contract",
-      "frame": "02",
-      "path": "characters/avatar-5/contract/02.png"
-    }
-  ],
+  "missing": [],
   "validation": {
     "pngDecode": "pass",
     "alphaAndBounds": "pass",
@@ -12284,7 +12708,7 @@
     "unloggedFiles": [],
     "logsWithoutFiles": [],
     "canvasFormats": {
-      "1254x1254 RGBA": 357
+      "1254x1254 RGBA": 372
     }
   },
   "avatarGenders": {
@@ -12301,10 +12725,10 @@
       "error": "usage_limit_reached",
       "resetsAtKST": "2026-11-01T21:08:33+09:00",
       "lastErrorConfirmedKST": "2026-11-01T16:41:26.454201+09:00"
+    },
+    {
+      "error": "usage_limit_reached",
+      "resetsAtKST": "2026-11-03T00:08:30+09:00"
     }
-  ],
-  "generationLimit": {
-    "error": "usage_limit_reached",
-    "resetsAtKST": "2026-11-03T00:08:30+09:00"
-  }
+  ]
 }

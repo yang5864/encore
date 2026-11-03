@@ -1,0 +1,71 @@
+{
+  "avatarsChecked": 6,
+  "cycleMs": 4200,
+  "openMs": 4074,
+  "closedMs": 126,
+  "states": [
+    {
+      "gender": "여성",
+      "time": 0,
+      "closed": false
+    },
+    {
+      "gender": "여성",
+      "time": 2000,
+      "closed": false
+    },
+    {
+      "gender": "여성",
+      "time": 4073,
+      "closed": false
+    },
+    {
+      "gender": "여성",
+      "time": 4075,
+      "closed": true
+    },
+    {
+      "gender": "여성",
+      "time": 4199,
+      "closed": true
+    },
+    {
+      "gender": "여성",
+      "time": 4200,
+      "closed": false
+    },
+    {
+      "gender": "남성",
+      "time": 0,
+      "closed": false
+    },
+    {
+      "gender": "남성",
+      "time": 2000,
+      "closed": false
+    },
+    {
+      "gender": "남성",
+      "time": 4073,
+      "closed": false
+    },
+    {
+      "gender": "남성",
+      "time": 4075,
+      "closed": true
+    },
+    {
+      "gender": "남성",
+      "time": 4199,
+      "closed": true
+    },
+    {
+      "gender": "남성",
+      "time": 4200,
+      "closed": false
+    }
+  ],
+  "reducedMotion": "pass",
+  "pageErrors": [],
+  "httpFailures": []
+}

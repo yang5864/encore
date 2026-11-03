@@ -9,10 +9,10 @@
 | 분류 | 내용 | 기본 경로 |
 |---|---|---|
 | 이벤트 배경 | 32종, 모든 인물·관객·거울/화면 속 인물 제거 | `backgrounds/<scene>.png` |
-| 캐릭터 | 기존 선택 순서 6종 × 6프레임 = 36장 | `characters/avatar-<0..5>/<action>-<01..02>.png` |
+| 캐릭터 | 기존 선택 순서 6종 × 7프레임 = 42장 (폐안 포함) | `characters/avatar-<0..5>/<action>-<01..02>.png` |
 | 아이템 | 12종 × 2변형 = 24장 | `items/<item>-<01..02>.png` |
 
-총 92개의 고유 제작 이미지입니다. 인이어의 옛 파일명 `wireless-in-ear-01/02.png`는 동일 이미지의 호환용 사본입니다. 실제 묘사된 장비는 케이블형 인이어 모니터이며 정식 카탈로그 이름은 `in-ear-monitor`입니다.
+기존 92장에 완전 폐안 깜빡임 6장을 추가해 총 98개의 고유 제작 이미지입니다. 인이어의 옛 파일명 `wireless-in-ear-01/02.png`는 동일 이미지의 호환용 사본입니다. 실제 묘사된 장비는 케이블형 인이어 모니터이며 정식 카탈로그 이름은 `in-ear-monitor`입니다.
 
 ## 배경
 
@@ -70,3 +70,7 @@
 
 최종 프롬프트와 원본 참고 이미지 경로는 [BACKGROUNDS-A.md](BACKGROUNDS-A.md), [BACKGROUNDS-B.md](BACKGROUNDS-B.md), [CHARACTERS.md](CHARACTERS.md), [CHARACTERS-A.md](CHARACTERS-A.md), [CHARACTERS-B.md](CHARACTERS-B.md), [CHARACTERS-C-DANCE.md](CHARACTERS-C-DANCE.md), [ITEMS.md](ITEMS.md)에 분담별로 기록합니다. 앱 코드 검증 대신 에셋의 파일 존재·PNG 손상 여부·실제 크기·투명도·가장자리 잘림을 확인합니다.
 
+
+## 2026-11-03 눈 깜빡임 수정
+
+`characters/avatar-<0..5>/blink-closed.png` 6장을 내장 image_gen으로 추가했습니다. 두 눈 모두 완전히 감긴 이미지이며, 생성 원본과 자세·의상·입 모양을 유지했습니다. 기존 반쯤 감긴 `idle-02.png`는 이력으로 보존하되 기본 대기 애니메이션에서 사용하지 않습니다. 현재 앱의 대기는 `idle-01 → blink-closed`이며 4,074ms 뜸 / 126ms 감음으로 표시합니다. 모션 감소 설정에서는 눈을 뜬 상태로 고정합니다. 정확한 생성 프롬프트와 참조 파일은 [BLINK-PROMPTS.jsonl](BLINK-PROMPTS.jsonl)에 기록했습니다. 초기 제작 당시 코드 미연결 안내는 위의 과거 작업 기록이며, 현재 ENCORE v2에는 이미지가 연결되어 있습니다.

@@ -234,6 +234,10 @@
 .art-frame-next.art-animated { visibility: visible; animation: art-next 1.2s steps(1, end) infinite; }
 @keyframes art-first { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 @keyframes art-next { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+.art-frame-first.art-animated.art-blink { animation: art-blink-open 4.2s steps(1, end) infinite; }
+.art-frame-next.art-animated.art-blink { animation: art-blink-closed 4.2s steps(1, end) infinite; }
+@keyframes art-blink-open { 0%, 100% { opacity: 1; } 97% { opacity: 0; } }
+@keyframes art-blink-closed { 0%, 100% { opacity: 0; } 97% { opacity: 1; } }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
@@ -243,6 +247,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .art-frame.art-animated.art-blink { animation: none; }
   .art-frame-first.art-animated { animation: none; opacity: 1; }
   .art-frame-next.art-animated { animation: none; visibility: hidden; }
   *, *::before, *::after {

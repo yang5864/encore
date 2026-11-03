@@ -33,6 +33,28 @@ test("미완성 이벤트는 있는 한 프레임 또는 같은 캐릭터의 기
   assert.equal(idleFrames(99)[0].url, idleFrames(0)[0].url);
 });
 
+test("대기 동작은 눈을 뜬 원본과 완전히 감은 전용 프레임을 사용한다", () => {
+  for (let avatar = 0; avatar < 6; avatar++) {
+    const frames = idleFrames(avatar);
+    assert.equal(frames.length, 2);
+    assert.equal(frames[0].url, `/art-v3/characters/avatar-${avatar}/idle-01.png`);
+    assert.equal(frames[1].url, `/art-v3/characters/avatar-${avatar}/blink-closed.png`);
+    assert.ok(existsSync(`public${frames[1].url}`));
+  }
+});
+
+test("성별에 맞는 32개 이벤트의 372장 모두 완성된 이벤트 의상을 사용한다", () => {
+  let count = 0;
+  for (const scene of SCENES) for (let avatar = 0; avatar < 6; avatar++) {
+    if (scene === "military" && avatar < 3 || scene === "military-concert" && avatar >= 3) continue;
+    const art = eventArt(scene, avatar);
+    assert.equal(art.frames.length, 2, `${scene}/${avatar}`);
+    assert.ok(art.frames.every((f) => f.url.startsWith(`/art-v4/characters/avatar-${avatar}/${scene}/`)));
+    count += art.frames.length;
+  }
+  assert.equal(count, 372);
+});
+
 test("아이템 12종의 두 변형 모두 존재하고 활동 이미지로 연결된다", () => {
   const paths = new Set<string>();
   for (let turn = 0; turn < 12; turn++) {

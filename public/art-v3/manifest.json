@@ -2,7 +2,7 @@
   "version": "art-v3",
   "createdDate": "2026-10-31",
   "generationMode": "built-in image_gen",
-  "canonicalImageCount": 92,
+  "canonicalImageCount": 98,
   "integrationPerformedByThisTask": false,
   "backgrounds": {
     "advert": {
@@ -376,15 +376,37 @@
             0
           ],
           "edgeMaxAlpha": 1
+        },
+        "blink-closed": {
+          "url": "/art-v3/characters/avatar-0/blink-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 784154,
+          "sha256": "4509c53e8059459d4bd5d15cd29b94116af93d584e7763c4f188c778ca6719cb",
+          "alphaBounds": [
+            282,
+            114,
+            968,
+            1164
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.92823
+          },
+          "eyeState": "fully-closed",
+          "generatedWith": "built-in image_gen"
         }
       },
       "animations": {
         "idle": {
           "frameKeys": [
             "idle-01",
-            "idle-02"
+            "blink-closed"
           ],
-          "frameDurationMs": 450,
+          "frameDurationsMs": [
+            4074,
+            126
+          ],
           "loop": true
         },
         "sing": {
@@ -550,15 +572,37 @@
             0
           ],
           "edgeMaxAlpha": 1
+        },
+        "blink-closed": {
+          "url": "/art-v3/characters/avatar-1/blink-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 818781,
+          "sha256": "9522e4c071998b36d203bd654e7a6bd2bc81ae79d7bf2c095820fd4ee0136fc1",
+          "alphaBounds": [
+            282,
+            100,
+            959,
+            1194
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.952153
+          },
+          "eyeState": "fully-closed",
+          "generatedWith": "built-in image_gen"
         }
       },
       "animations": {
         "idle": {
           "frameKeys": [
             "idle-01",
-            "idle-02"
+            "blink-closed"
           ],
-          "frameDurationMs": 450,
+          "frameDurationsMs": [
+            4074,
+            126
+          ],
           "loop": true
         },
         "sing": {
@@ -724,15 +768,37 @@
             0
           ],
           "edgeMaxAlpha": 1
+        },
+        "blink-closed": {
+          "url": "/art-v3/characters/avatar-2/blink-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 839617,
+          "sha256": "21fba6b40cc7ce7e585eb2c7ae41aa6eb88dbe902d0d2ae00747bca00b4c9ef5",
+          "alphaBounds": [
+            265,
+            182,
+            989,
+            1150
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.917065
+          },
+          "eyeState": "fully-closed",
+          "generatedWith": "built-in image_gen"
         }
       },
       "animations": {
         "idle": {
           "frameKeys": [
             "idle-01",
-            "idle-02"
+            "blink-closed"
           ],
-          "frameDurationMs": 450,
+          "frameDurationsMs": [
+            4074,
+            126
+          ],
           "loop": true
         },
         "sing": {
@@ -898,15 +964,37 @@
             0
           ],
           "edgeMaxAlpha": 0
+        },
+        "blink-closed": {
+          "url": "/art-v3/characters/avatar-3/blink-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 747608,
+          "sha256": "31b56cff6ecc85b3afe5c880818ea876ce9206f9eb83243d8fca59b972e68d41",
+          "alphaBounds": [
+            291,
+            113,
+            955,
+            1171
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.933812
+          },
+          "eyeState": "fully-closed",
+          "generatedWith": "built-in image_gen"
         }
       },
       "animations": {
         "idle": {
           "frameKeys": [
             "idle-01",
-            "idle-02"
+            "blink-closed"
           ],
-          "frameDurationMs": 450,
+          "frameDurationsMs": [
+            4074,
+            126
+          ],
           "loop": true
         },
         "sing": {
@@ -1072,15 +1160,37 @@
             0
           ],
           "edgeMaxAlpha": 1
+        },
+        "blink-closed": {
+          "url": "/art-v3/characters/avatar-4/blink-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 810474,
+          "sha256": "1d2931437b64fbc7c6766d264b19688b8e8a03ddf73354573167330185ea5c8c",
+          "alphaBounds": [
+            273,
+            89,
+            961,
+            1172
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.934609
+          },
+          "eyeState": "fully-closed",
+          "generatedWith": "built-in image_gen"
         }
       },
       "animations": {
         "idle": {
           "frameKeys": [
             "idle-01",
-            "idle-02"
+            "blink-closed"
           ],
-          "frameDurationMs": 450,
+          "frameDurationsMs": [
+            4074,
+            126
+          ],
           "loop": true
         },
         "sing": {
@@ -1246,15 +1356,37 @@
             0
           ],
           "edgeMaxAlpha": 1
+        },
+        "blink-closed": {
+          "url": "/art-v3/characters/avatar-5/blink-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 821519,
+          "sha256": "76eebbb2879dcfb31e93addd4087cf194dfa03a5e7d3bdf363f02feea87a2721",
+          "alphaBounds": [
+            266,
+            90,
+            986,
+            1177
+          ],
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.938596
+          },
+          "eyeState": "fully-closed",
+          "generatedWith": "built-in image_gen"
         }
       },
       "animations": {
         "idle": {
           "frameKeys": [
             "idle-01",
-            "idle-02"
+            "blink-closed"
           ],
-          "frameDurationMs": 450,
+          "frameDurationsMs": [
+            4074,
+            126
+          ],
           "loop": true
         },
         "sing": {
@@ -1930,5 +2062,11 @@
     "One full character per file. Do not use sprite-sheet cropping or 600% background scaling.",
     "Frame footAnchor derives from visible alpha bounds. Align feet when connecting independent frames.",
     "Some generated edge pixels retain alpha 1 or 2 out of 255. The original generated pixels are preserved."
-  ]
+  ],
+  "blinkUpdate": {
+    "date": "2026-11-03",
+    "frames": 6,
+    "promptLog": "BLINK-PROMPTS.jsonl",
+    "deprecatedIdleFrames": "idle-02 remains as an unused original; runtime idle uses blink-closed."
+  }
 }
