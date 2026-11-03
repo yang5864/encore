@@ -2,6 +2,8 @@ import type { GameEventDef } from "../types.ts";
 import { agencyById } from "../agencies.ts";
 import { ageOf } from "../format.ts";
 
+import { isTopTier } from "../toptier.ts";
+
 const since = (c: { turn: number; debutTurn: number | null }) => (c.debutTurn === null ? -1 : c.turn - c.debutTurn);
 
 /** 데뷔 후 이벤트. 힌트에는 숫자를 쓰지 않는다. */
@@ -166,18 +168,34 @@ export const IDOL_EVENTS: GameEventDef[] = [
     ],
   },
   {
-    id: "advert",
+    id: "advert-beauty",
     stage: "idol",
     kind: "story",
-    title: "광고 모델 제안",
-    text: "화장품 브랜드와 통신사에서 동시에 광고 제안이 왔어요. 둘 다는 일정상 어려워요.",
+    title: "화장품 브랜드 광고 제안",
+    text: "화장품 브랜드에서 시즌 캠페인 모델 제안이 왔어요. 촬영 일정이 컴백 준비와 겹쳐요.",
     scene: "advert",
     public: true,
     repeatable: true,
     when: (c) => c.popularity >= 45,
     choices: [
-      { id: "beauty", label: "화장품 브랜드", hint: "비주얼 이미지가 강해지고 수익이 생겨요", risk: "safe", effects: { visual: 2, revenue: 6, reputation: 3, popularity: 3 } },
-      { id: "telecom", label: "통신사 광고", hint: "온 가족이 보는 광고라 대중 인지도가 크게 올라요", risk: "safe", effects: { popularity: 8, revenue: 10, reputation: 4 } },
+      { id: "accept", label: "캠페인 모델이 된다", hint: "비주얼 이미지가 강해지고 수익이 생겨요", risk: "safe", effects: { visual: 2, revenue: 6, reputation: 3, popularity: 3 } },
+      { id: "decline", label: "컴백 준비에 집중한다", hint: "컨디션을 아끼고 다음 활동에 힘을 실어요", risk: "safe", effects: { mental: 4, health: 4 } },
+    ],
+  },
+  {
+    id: "advert-telecom",
+    stage: "idol",
+    kind: "story",
+    title: "통신사 광고 모델 제안",
+    text: "통신사는 업계 톱티어만 쓰는 자리예요. 광고주가 지금 가장 영향력 있는 아이돌을 찾다가 연락해왔어요.",
+    scene: "advert",
+    public: true,
+    repeatable: true,
+    weight: 0.7,
+    when: (c) => c.popularity >= 55 && isTopTier(c),
+    choices: [
+      { id: "accept", label: "통신사 광고를 찍는다", hint: "온 가족이 보는 광고라 대중 인지도가 크게 오르고 수익이 커요", risk: "safe", effects: { popularity: 8, revenue: 12, reputation: 4 } },
+      { id: "decline", label: "브랜드 이미지를 고려해 거절한다", hint: "희소성을 지켜 팬덤의 신뢰가 올라요", risk: "bold", effects: { reputation: 3, mental: 3 } },
     ],
   },
   {
@@ -384,10 +402,10 @@ export const IDOL_EVENTS: GameEventDef[] = [
     stage: "idol",
     kind: "story",
     title: "명품 브랜드 글로벌 앰버서더 제안",
-    text: "전성기에 접어들자 해외 명품 브랜드에서 글로벌 앰버서더 제안이 왔어요. 패션위크 참석과 캠페인 촬영이 포함돼요.",
+    text: "해외 명품 브랜드는 업계 톱티어에게만 앰버서더를 맡겨요. 패션위크 참석과 캠페인 촬영이 포함된 제안이 왔어요.",
     scene: "advert",
     public: true,
-    when: (c) => c.popularity >= 65 && since(c) >= 6,
+    when: (c) => c.popularity >= 60 && since(c) >= 4 && isTopTier(c),
     choices: [
       { id: "accept", label: "앰버서더가 된다", hint: "비주얼 이미지와 해외 인지도가 크게 오르고 수익이 커요", risk: "safe", effects: { visual: 2, popularity: 6, fansMul: 1.08, revenue: 15, reputation: 4 } },
       { id: "decline", label: "국내 브랜드와 계속한다", hint: "안정적인 수익을 유지해요", risk: "safe", effects: { revenue: 5, reputation: 2 } },

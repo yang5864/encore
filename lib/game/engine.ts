@@ -17,6 +17,7 @@ import { updateMetrics } from "./metrics.ts";
 import { debutEvaluation, scheduleEvent, activate } from "./schedule.ts";
 import { eventById } from "./events/index.ts";
 import { bankruptcyRisk } from "./renewal.ts";
+import { rankingFor } from "./brand-rank.ts";
 import { decodeEta, etaLabel, setDebutEta } from "./debut.ts";
 import { boughtThisSeason, itemById, priceOf, shopOffers, walletOf } from "./shop.ts";
 
@@ -83,6 +84,11 @@ function finish(c: Career, before: Snapshot, headline: string, text: string, ton
   updateSettlement(c);
   updateMetrics(c);
   c.peakPopularity = Math.max(c.peakPopularity, Math.round(c.popularity));
+  if (c.stage === "idol") {
+    // 브랜드평판 최고 순위를 기억한다 (톱티어 제안 기준)
+    const r = rankingFor(c, yearOf(c), isSecondHalf(c));
+    if (!r.outside) c.flags.bestRank = Math.min(c.flags.bestRank ?? 999, r.me.rank);
+  }
   const milestones = checkMilestones(c);
   if (milestones.includes("firstSettlement")) log(c, "첫 정산", "투자비를 모두 회수했어요. 이제 번 돈이 내 몫으로 들어와요.", "milestone");
   const celebrate = opts.celebrate;
@@ -97,6 +103,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   if (c.pending) throw new GameError("먼저 지금의 선택을 마쳐주세요.");
   c.result = null;
   c.flags.prevPopularity = c.popularity;
+  c.flags.prevFans = c.fans;
   const before = snapshot(c);
   const notes: string[] = [];
   let tone: Tone = "neutral";

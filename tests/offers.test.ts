@@ -262,3 +262,28 @@ test("복무 기간은 육군 18 · 해군 20 · 공군 21개월이고 남는 �
     if (turns * 6 > months) assert.match(back.result!.text, /복귀를 준비/);
   }
 });
+
+test("통신사 광고·명품 앰버서더는 톱티어(10위 경험·급성장·레전드)에게만 온다", async () => {
+  const { eventById } = await import("../lib/game/events/index.ts");
+  const { isTopTier } = await import("../lib/game/toptier.ts");
+  const telecom = eventById("advert-telecom")!;
+  const amb = eventById("ambassador")!;
+  const beauty = eventById("advert-beauty")!;
+  const c = idol(3);
+  c.popularity = 70; c.turn = 20; c.debutTurn = 8;
+  assert.equal(isTopTier(c), false);
+  assert.equal(telecom.when!(c), false);
+  assert.equal(amb.when!(c), false);
+  assert.equal(beauty.when!(c), true, "화장품 광고는 인기 45 이상이면 온다");
+  const ranked = structuredClone(c); ranked.flags.bestRank = 8;
+  assert.equal(telecom.when!(ranked), true);
+  assert.equal(amb.when!(ranked), true);
+  const surging = structuredClone(c); surging.flags.prevPopularity = 50; // +20
+  assert.equal(isTopTier(surging), true);
+  const legend = structuredClone(c); legend.peakBillboard = 1;
+  assert.equal(isTopTier(legend), true);
+  // 시즌을 진행하면 최고 순위가 기록된다
+  const star = idol(5); star.popularity = 95; star.fans = 5000000; star.lastReleaseTurn = star.turn;
+  const n = advanceTurn(star, "promo");
+  assert.ok((n.flags.bestRank ?? 999) <= 10, `bestRank ${n.flags.bestRank}`);
+});
