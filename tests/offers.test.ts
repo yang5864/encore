@@ -189,3 +189,31 @@ test("간혹 데뷔조에서 밀리고, 데뷔 시점과 이적 선택지가 나
   }
   assert.ok(cuts >= 10 && cuts <= 70, `탈락 ${cuts}/119`);
 });
+
+test("네티즌 반응은 상황과 시대에 맞는 문장으로 나온다", async () => {
+  const { buildReactions, eraOf } = await import("../lib/game/reactions.ts");
+  assert.equal(eraOf(2008), "cyworld");
+  assert.equal(eraOf(2024), "now");
+  const c = idol(3);
+  c.turn = 4; // 2008
+  const old = buildReactions(c, "good", { kind: "win", show: "뮤직뱅크", album: "BLOOM" });
+  assert.equal(old.length, 3);
+  assert.ok(old.some((x) => x.text.includes("뮤직뱅크") || x.text.includes("1위")), "1위 상황 문장이 들어간다");
+  assert.ok(new Set(old.map((x) => x.text)).size === 3, "중복 없음");
+  c.turn = 38; // 2025
+  const now = buildReactions(c, "bad", { kind: "album-flop", album: "ORBIT" });
+  assert.ok(now.every((x) => !x.text.includes("{")), "자리표시자가 남지 않는다");
+});
+
+test("음방 1위는 꽃가루, 대상은 금빛 가루 연출로 표시된다", () => {
+  const c = idol(8);
+  c.popularity = 95; c.fans = 4000000;
+  c.stats = { vocal: 90, dance: 90, rap: 80, visual: 90, variety: 80, producing: 80 };
+  c.turn = 21; c.lastReleaseTurn = 20;
+  c.albums.push({ id: "x", turn: 20, name: "NOVA", concept: "fresh", quality: 92, sales: 3000000, melon: 1, billboard: null, wins: 0, shows: [], cost: 30, revenue: 300 });
+  c.flags.candidate = 21;
+  c.pending = { id: "musicshow", title: "", text: "", scene: "mc", public: true, choices: [{ id: "push", label: "", hint: "", risk: "bold", op: "musicshow:push" }] };
+  let won = 0;
+  for (let i = 0; i < 20; i++) { const n = resolveChoice({ ...structuredClone(c), rngState: i + 1 }, "push"); if (n.result?.celebrate === "win") won++; }
+  assert.ok(won > 5, `1위 ${won}/20`);
+});

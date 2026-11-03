@@ -60,7 +60,7 @@ function popularityTarget(c: Career): number {
   return Math.max(0, Math.min(100, t));
 }
 
-function buildResult(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; milestones?: MilestoneId[]; awards?: Award[] } = {}): TurnResult {
+function buildResult(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; milestones?: MilestoneId[]; awards?: Award[]; celebrate?: TurnResult["celebrate"] } = {}): TurnResult {
   const after = snapshot(c);
   return {
     headline,
@@ -72,16 +72,18 @@ function buildResult(c: Career, before: Snapshot, headline: string, text: string
     milestones: opts.milestones ?? [],
     notes: opts.notes ?? [],
     awards: opts.awards?.length ? opts.awards : undefined,
+    celebrate: opts.celebrate,
   };
 }
 
-function finish(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; awards?: Award[] } = {}) {
+function finish(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; awards?: Award[]; celebrate?: TurnResult["celebrate"] } = {}) {
   updateSettlement(c);
   updateMetrics(c);
   c.peakPopularity = Math.max(c.peakPopularity, Math.round(c.popularity));
   const milestones = checkMilestones(c);
   if (milestones.includes("firstSettlement")) log(c, "첫 정산", "투자비를 모두 회수했어요. 이제 번 돈이 내 몫으로 들어와요.", "milestone");
-  c.result = buildResult(c, before, headline, text, milestones.length ? "milestone" : tone, { ...opts, milestones });
+  const celebrate = opts.celebrate ?? (milestones.includes("legend") ? "daesang" : undefined);
+  c.result = buildResult(c, before, headline, text, milestones.length ? "milestone" : tone, { ...opts, milestones, celebrate });
 }
 
 // ─────────────────────────── 시즌 진행 ───────────────────────────
@@ -98,6 +100,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   let scene: string | undefined;
   let comments: Comment[] = [];
   let wonAwards: Award[] = [];
+  let celebrate: TurnResult["celebrate"];
 
   // 군 복무: 한 번에 건너뛴다
   if (c.militaryUntil > c.turn) {
@@ -173,7 +176,8 @@ export function advanceTurn(original: Career, focusId: string): Career {
       if (album.billboard !== null) log(c, `빌보드 Hot 100 ${album.billboard}위`, "타이틀곡이 미국 종합 차트에 올랐어요.", "award");
       if (c.flags.albumViral === c.turn) { tone = "good"; notes.push("타이틀곡이 숏폼에서 터졌어요. 예상보다 훨씬 많은 사람이 들었어요."); }
       if (c.flags.albumFlop === c.turn) { tone = "bad"; notes.push("이번 앨범은 반응이 차가웠어요. 팬덤 일부가 이탈했어요."); }
-      comments = buildReactions(c, tone === "good" ? "good" : tone === "bad" ? "bad" : "neutral");
+      if (album.wins > 0) celebrate = "win";
+      comments = buildReactions(c, tone === "good" ? "good" : tone === "bad" ? "bad" : "neutral", { kind: album.wins > 0 ? "win" : c.flags.albumViral === c.turn ? "album-viral" : c.flags.albumFlop === c.turn ? "album-flop" : "album", album: album.name, show: album.shows?.[0], melon: album.melon });
     } else if (kind === "promo") {
       grow(c, "variety", 4);
       grow(c, "visual", 1.5);
@@ -185,7 +189,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       c.mental -= 2;
       text = `${period}, 예능과 라디오를 돌며 얼굴을 알렸어요.`;
       scene = "variety";
-      comments = buildReactions(c, "good");
+      comments = buildReactions(c, "good", { kind: "variety" });
     } else if (kind === "fanmeet") {
       applyEffects(c, { fansMul: 1.07 });
       addReputation(c, 4);
@@ -195,7 +199,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       grow(c, "variety", 1.5);
       text = `${period}, 팬미팅과 자체 콘텐츠로 팬들과 가까워졌어요.`;
       scene = "fansign";
-      comments = buildReactions(c, "good");
+      comments = buildReactions(c, "good", { kind: "fanmeet" });
     } else if (kind === "overseas") {
       if (c.popularity < 55) throw new GameError("인기도가 더 필요해요.");
       applyEffects(c, { fansMul: 1.12 });
@@ -207,7 +211,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       c.flags.globalBoost = c.turn + 1;
       text = `${period}, 해외 투어와 쇼케이스를 돌았어요. 다음 앨범의 해외 반응이 기대돼요.`;
       scene = "tour";
-      comments = buildReactions(c, "good");
+      comments = buildReactions(c, "good", { kind: "tour" });
     } else if (kind === "solo") {
       const solo = arg as SoloKind;
       if (!SOLO_LABELS[solo]) throw new GameError("개인 활동을 골라주세요.");
@@ -225,7 +229,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
         else if (solo === "solo") { c.popularity += 6; applyEffects(c, { fansMul: 1.1, reputation: 4, revenue: 9 }); headline = "솔로 앨범 성공"; text = `${period}, 내 이름으로 낸 앨범이 좋은 성적을 냈어요. ${statName} 실력이 빛났어요.`; scene = "songwriting"; }
         else if (solo === "variety") { c.popularity += 9; applyEffects(c, { fansMul: 1.08, reputation: 4, revenue: 4 }); headline = "예능 캐릭터가 터졌다"; text = `${period}, 고정 예능과 개인 채널이 동시에 떴어요. 대중이 이름을 기억해요.`; scene = "variety"; }
         else { c.popularity += 3; applyEffects(c, { reputation: 5, revenue: 8 }); headline = "프로듀싱 곡이 차트에 올랐다"; text = `${period}, 다른 가수에게 준 곡이 히트했어요. 작곡가 크레딧에 이름이 쌓여요.`; scene = "songwriting"; }
-        comments = buildReactions(c, "good");
+        comments = buildReactions(c, "good", { kind: solo === "acting" ? "acting-hit" : solo === "solo" ? "solo-hit" : solo === "variety" ? "variety-hit" : "produce-hit" });
       } else {
         tone = "bad";
         c.mental -= 8;
@@ -235,7 +239,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
         else if (solo === "solo") { headline = "솔로 앨범 부진"; text = `${period}, 솔로 앨범 반응이 조용했어요. ${statName} 실력이 아직 솔로를 끌고 가기엔 부족했어요.`; scene = "songwriting"; }
         else if (solo === "variety") { headline = "예능에서 묻혔다"; text = `${period}, 고정 예능에서 존재감이 없었어요. 예능 수치가 낮으면 분량이 안 나와요.`; scene = "variety"; }
         else { headline = "곡이 채택되지 않았다"; text = `${period}, 보낸 데모가 채택되지 않았어요. 프로듀싱 실력을 더 쌓아야 해요.`; scene = "songwriting"; }
-        comments = buildReactions(c, "bad");
+        comments = buildReactions(c, "bad", { kind: solo === "acting" ? "acting-flop" : solo === "solo" ? "solo-flop" : solo === "variety" ? "variety-flop" : "produce-flop" });
       }
       notes.push(`${SOLO_LABELS[solo].label}의 성공 가능성은 ${statName} 수치가 정해요.`);
     } else if (kind === "rest") {
@@ -278,6 +282,8 @@ export function advanceTurn(original: Career, focusId: string): Career {
       for (const a of won) log(c, `${a.show} ${a.name}`, `${year}년 연말 시상식에서 ${a.name}을 받았어요.`, "award");
       notes.push(`${year} 연말 시상식: ${won.map((a) => `${a.show} ${a.name}`).join(", ")}`);
       if (won.some((a) => a.kind === "daesang")) tone = "good";
+      celebrate = won.some((a) => a.kind === "daesang") ? "daesang" : "award";
+      if (!comments.length) comments = buildReactions(c, "good", { kind: celebrate === "daesang" ? "daesang" : "award" });
     } else notes.push(`${year} 연말 시상식: 올해는 수상하지 못했어요.`);
   }
 
@@ -315,7 +321,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   if (c.turn > MAX_TURN) return retire(c, "긴 커리어의 마지막 앵콜을 마쳤어요.");
 
   c.pending = scheduleEvent(c);
-  finish(c, before, headline, text, tone, { scene, notes, comments, awards: wonAwards });
+  finish(c, before, headline, text, tone, { scene, notes, comments, awards: wonAwards, celebrate });
   return c;
 }
 
@@ -398,6 +404,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
   let tone: Tone = "neutral";
   const notes: string[] = [];
   const op = choice.op ?? "";
+  let celebrate: TurnResult["celebrate"];
+  let reaction: import("./reactions.ts").ReactionContext | null = null;
 
   // 확률 선택
   if (choice.chance !== undefined) {
@@ -503,6 +511,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     text = `${STAT_NAMES[stat]}에 힘준 데뷔 무대를 마쳤어요. ${albumSummary(album)}`;
     tone = album.wins > 0 || (album.melon !== null && album.melon <= 10) ? "good" : "neutral";
     notes.push(album.wins > 0 ? `신인이 데뷔 활동에서 1위를 했어요. 정말 드문 일이에요.` : album.melon !== null ? `데뷔곡이 멜론 ${album.melon}위에 올랐어요.` : "데뷔곡은 아직 차트에 오르지 못했어요. 대부분의 신인이 그래요.");
+    if (album.wins > 0) celebrate = "win";
+    reaction = { kind: album.wins > 0 ? "win" : "debut-stage", album: album.name, show: album.shows?.[0], melon: album.melon };
     if (c.flags.albumViral === c.turn) { tone = "good"; notes.push("타이틀곡이 숏폼에서 터졌어요. 예상보다 훨씬 많은 사람이 들었어요."); }
     if (c.flags.albumFlop === c.turn) { tone = "bad"; notes.push("데뷔 앨범 반응이 차가웠어요."); }
     log(c, headline, albumSummary(album), "release");
@@ -516,6 +526,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     tone = album.wins > 0 || (album.melon !== null && album.melon <= 10) ? "good" : "neutral";
     if (c.flags.albumViral === c.turn) { tone = "good"; notes.push("타이틀곡이 숏폼에서 터졌어요. 예상보다 훨씬 많은 사람이 들었어요."); }
     if (c.flags.albumFlop === c.turn) { tone = "bad"; notes.push("데뷔 앨범 반응이 차가웠어요."); }
+    if (album.wins > 0) celebrate = "win";
+    reaction = { kind: album.wins > 0 ? "win" : c.flags.albumViral === c.turn ? "album-viral" : c.flags.albumFlop === c.turn ? "album-flop" : "album", album: album.name, show: album.shows?.[0], melon: album.melon };
     log(c, headline, text, "release");
     if (album.wins > 0) log(c, `음악방송 1위 ${album.wins}회`, `${album.name} 활동으로 1위 트로피를 들었어요.`, "award");
   } else if (op.startsWith("school:")) {
@@ -569,6 +581,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     c.money.revenue += 25;
     addReputation(c, 10);
     c.flags.miracle = 1;
+    celebrate = "win";
+    reaction = { kind: "rechart", album: album.name };
     headline = `${album.name} 역주행 1위`;
     text = "발매한 지 한참 된 곡이 멜론 1위에 올랐어요. 음악방송에서 다시 1위 트로피를 들었어요.";
     tone = "milestone";
@@ -582,11 +596,14 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     if (show) {
       applyEffects(c, { fansMul: 1.08 });
       c.popularity += 3;
+      celebrate = "win";
+      reaction = { kind: "win", album: album.name, show };
       headline = `${show} 1위!`;
       text = `${album.name}(으)로 ${show} 1위 트로피를 들었어요. 앵콜 무대에서 팬들이 떼창을 했어요.`;
       tone = "good";
       log(c, headline, text, "award");
     } else {
+      reaction = { kind: "win-miss", album: album.name };
       headline = "아쉬운 2위";
       text = "근소한 차이로 1위를 놓쳤어요. 다음 주를 노려요.";
       tone = "bad";
@@ -672,8 +689,14 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
   }
 
   if (!c.pending) c.pending = null;
-  const comments = event.public ? buildReactions(c, tone === "bad" ? "bad" : tone === "neutral" ? "neutral" : "good") : [];
-  finish(c, before, headline, text, tone, { scene: event.scene, notes, comments });
+  if (!reaction) {
+    const kind: import("./reactions.ts").ReactionKind =
+      op === "debut" ? "debut" : op.startsWith("showcase:") ? "showcase" : op === "renew" ? "renew" : op.startsWith("move:") ? "move" : op === "independent" ? "own-label" : op === "solo" ? "leave"
+      : op === "retire" ? "disband" : event.id === "agency-bankrupt" ? "bankrupt" : op === "scandal" || event.id.includes("controversy") || event.id === "chartfraud" ? "scandal" : op === "hiatus" ? "hiatus" : op.startsWith("military:") ? "military" : "generic";
+    reaction = { kind };
+  }
+  const comments = event.public || reaction.kind !== "generic" ? buildReactions(c, tone === "bad" ? "bad" : tone === "neutral" ? "neutral" : "good", reaction) : [];
+  finish(c, before, headline, text, tone, { scene: event.scene, notes, comments, celebrate });
   return c;
 }
 

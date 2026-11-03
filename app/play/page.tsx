@@ -34,7 +34,7 @@ export default function PlayPage() {
   const [milestoneQueue, setMilestoneQueue] = useState<MilestoneId[]>([]);
   const [seenResultKey, setSeenResultKey] = useState<string | null>(null);
   const [lastResult, setLastResult] = useState<TurnResult | null>(null);
-  const [fireworks, setFireworks] = useState(false);
+  const [fireworks, setFireworks] = useState<"win" | "daesang" | "award" | null>(null);
 
   useEffect(() => {
     if (ready && !career) router.replace("/");
@@ -62,7 +62,8 @@ export default function PlayPage() {
       setMilestoneQueue(career.result.milestones);
       setSeenResultKey(resultKey);
       setLastResult(career.result);
-      if ((career.result.awards?.length ?? 0) > 0 || career.result.milestones.some((m) => m === "daesang" || m === "legend" || m === "firstWin")) setFireworks(true);
+      const kind = career.result.celebrate ?? ((career.result.awards?.length ?? 0) > 0 ? "award" : career.result.milestones.some((m) => m === "daesang" || m === "legend") ? "daesang" : career.result.milestones.includes("firstWin") ? "win" : null);
+      if (kind) setFireworks(kind);
     }
   }, [career, resultKey, seenResultKey]);
 
@@ -180,7 +181,7 @@ export default function PlayPage() {
           router.replace("/");
         }}
       />
-      {fireworks && <Fireworks onDone={() => setFireworks(false)} />}
+      {fireworks && <Fireworks kind={fireworks} onDone={() => setFireworks(null)} />}
       {coach && (
         <CoachMarks
           onDone={() => {

@@ -85,6 +85,8 @@ export type TurnResult = {
   notes: string[];
   /** 이번 결과에서 받은 상 (폭죽 효과용) */
   awards?: Award[];
+  /** 축하 연출: 음방 1위는 꽃가루, 대상은 금빛 가루, 그 외 수상은 폭죽 */
+  celebrate?: "win" | "daesang" | "award";
 };
 
 export type Album = {
