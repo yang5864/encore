@@ -5,11 +5,12 @@ import Link from "next/link";
 import { useCareer } from "@/hooks/useCareer";
 import { Button, FixedCta } from "@/components/ui/Button";
 import { ProfileCard } from "@/components/play/ProfileCard";
-import { RankCard } from "@/components/play/RankCard";
+import { SummaryCard } from "@/components/play/SummaryCard";
+import { Sheet } from "@/components/ui/Sheet";
 import { Fireworks } from "@/components/Fireworks";
 import { StatsCard } from "@/components/play/StatsCard";
-import { SettlementCard } from "@/components/play/SettlementCard";
-import { ShopCard } from "@/components/play/ShopCard";
+import { SettlementBody, SettlementCard } from "@/components/play/SettlementCard";
+import { ShopBody } from "@/components/play/ShopCard";
 import { FocusCard, focusIdOf, type FocusSelection } from "@/components/play/FocusCard";
 import { EventSheet } from "@/components/play/EventSheet";
 import { ResultSheet } from "@/components/play/ResultSheet";
@@ -30,6 +31,7 @@ export default function PlayPage() {
   const [progress, setProgress] = useState(0);
   const [agencyOpen, setAgencyOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [detail, setDetail] = useState<"settlement" | "shop" | null>(null);
   const [coach, setCoach] = useState(false);
   const [milestoneQueue, setMilestoneQueue] = useState<MilestoneId[]>([]);
   const [seenResultKey, setSeenResultKey] = useState<string | null>(null);
@@ -62,8 +64,7 @@ export default function PlayPage() {
       setMilestoneQueue(career.result.milestones);
       setSeenResultKey(resultKey);
       setLastResult(career.result);
-      const kind = career.result.celebrate ?? ((career.result.awards?.length ?? 0) > 0 ? "award" : career.result.milestones.some((m) => m === "daesang" || m === "legend") ? "daesang" : career.result.milestones.includes("firstWin") ? "win" : null);
-      if (kind) setFireworks(kind);
+      if (career.result.celebrate) setFireworks(career.result.celebrate);
     }
   }, [career, resultKey, seenResultKey]);
 
@@ -111,10 +112,9 @@ export default function PlayPage() {
 
       <div className="flex flex-col gap-3">
         <ProfileCard career={career} onAgency={() => setAgencyOpen(true)} />
-        {career.stage === "idol" && <RankCard career={career} />}
+        {career.stage === "idol" && <SummaryCard career={career} onSettlement={() => setDetail("settlement")} onShop={() => setDetail("shop")} />}
         <StatsCard career={career} changes={lastResult?.changes} />
-        {career.stage === "idol" || career.stage === "retired" ? <SettlementCard career={career} /> : null}
-        {career.stage === "idol" && <ShopCard career={career} onBuy={buy} />}
+        {career.stage === "retired" ? <SettlementCard career={career} /> : null}
         {career.stage === "retired" ? (
           <Card className="fade-up">
             <p className="t-cap text-primary">{career.ending?.subtitle}</p>
@@ -123,18 +123,6 @@ export default function PlayPage() {
           </Card>
         ) : (
           <FocusCard career={career} value={focus} onChange={setFocus} />
-        )}
-        {career.history.length > 0 && (
-          <Card className="fade-up" style={{ animationDelay: "240ms" }}>
-            <p className="t-cap mb-2">최근 기록</p>
-            {career.history.slice(0, 3).map((h, i) => (
-              <div key={i} className={`py-2.5 ${i ? "border-t border-line" : ""}`}>
-                <p className="text-[13px] text-ink-3">{periodLabel({ turn: h.turn })}</p>
-                <p className="text-[13px] font-bold mt-0.5">{h.title}</p>
-              </div>
-            ))}
-            <button onClick={() => setMenuOpen(true)} className="press mt-2 text-[13px] font-bold text-primary">전체 기록 보기</button>
-          </Card>
         )}
       </div>
 
@@ -160,6 +148,12 @@ export default function PlayPage() {
       <MilestoneSheet career={career} id={pendingMilestone} open={!!pendingMilestone} onClose={() => setMilestoneQueue((q) => q.slice(1))} />
       {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} avatar={career.avatar} gender={career.gender} name={career.name} open={showResult} onClose={dismissResult} ctaLabel={career.pending ? "다음 선택 보기" : "확인"} />}
       <EventSheet key={career.pending?.id ?? "none"} career={career} open={showEvent} onChoose={choose} />
+      <Sheet open={detail === "settlement"} onOpenChange={(o) => !o && setDetail(null)} title="정산 현황">
+        <SettlementBody career={career} />
+      </Sheet>
+      <Sheet open={detail === "shop"} onOpenChange={(o) => !o && setDetail(null)} title="상점" tall>
+        <ShopBody career={career} onBuy={buy} />
+      </Sheet>
       <AgencySheet
         career={career}
         open={agencyOpen}

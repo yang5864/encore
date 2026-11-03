@@ -9,15 +9,26 @@ import type { Career } from "@/lib/game/types";
 
 /** 시즌마다 바뀌는 3개 중 하나만 살 수 있는 상점. 정산금으로 산다. */
 export function ShopCard({ career, onBuy }: { career: Career; onBuy: (id: string) => void }) {
+  return (
+    <Card className="fade-up" style={{ animationDelay: "150ms" }}>
+      <CardTitle>상점</CardTitle>
+      <ShopBody career={career} onBuy={onBuy} />
+    </Card>
+  );
+}
+
+/** 상점 본문. 홈 요약에서 누르면 시트로 열린다. */
+export function ShopBody({ career, onBuy }: { career: Career; onBuy: (id: string) => void }) {
   const wallet = walletOf(career);
   const bought = boughtThisSeason(career);
   const items = shopOffers(career);
   const owned = new Set(career.items ?? []);
   return (
-    <Card className="fade-up" style={{ animationDelay: "150ms" }}>
-      <CardTitle sub={bought ? "이번 시즌 구매를 마쳤어요. 다음 시즌에 새 물건이 들어와요" : "시즌마다 3개 중 하나만 살 수 있어요"} right={<span className="t-body font-bold tabular-nums whitespace-nowrap shrink-0">{wonText(wallet)}</span>}>
-        상점
-      </CardTitle>
+    <div>
+      <div className="flex items-center justify-between gap-3 mb-3">
+        <p className="t-cap">{bought ? "이번 시즌 구매를 마쳤어요. 다음 시즌에 새 물건이 들어와요" : "시즌마다 3개 중 하나만 살 수 있어요. 가진 물건은 다시 나오지 않아요"}</p>
+        <span className="t-body font-bold tabular-nums whitespace-nowrap shrink-0">{wonText(wallet)}</span>
+      </div>
       <div className="grid grid-cols-3 gap-2">
         {items.map((item, i) => {
           const price = priceOf(career, item);
@@ -41,6 +52,6 @@ export function ShopCard({ career, onBuy }: { career: Career; onBuy: (id: string
         })}
       </div>
       {wallet === 0 && !bought && <p className="text-[13px] text-ink-3 mt-3">정산금이 들어오면 살 수 있어요.</p>}
-    </Card>
+    </div>
   );
 }

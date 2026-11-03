@@ -82,7 +82,7 @@ function finish(c: Career, before: Snapshot, headline: string, text: string, ton
   c.peakPopularity = Math.max(c.peakPopularity, Math.round(c.popularity));
   const milestones = checkMilestones(c);
   if (milestones.includes("firstSettlement")) log(c, "첫 정산", "투자비를 모두 회수했어요. 이제 번 돈이 내 몫으로 들어와요.", "milestone");
-  const celebrate = opts.celebrate ?? (milestones.includes("legend") ? "daesang" : undefined);
+  const celebrate = opts.celebrate;
   c.result = buildResult(c, before, headline, text, milestones.length ? "milestone" : tone, { ...opts, milestones, celebrate });
 }
 
@@ -767,7 +767,8 @@ export function buyItem(original: Career, itemId: string): Career {
   c.flags.shopTurn = c.turn;
   c.items = [...(c.items ?? []), item.id];
   log(c, `${item.name} 구매`, `${STAT_NAMES[item.stat]}이(가) ${item.amount} 올랐어요.`, "growth");
-  finish(c, before, `${item.name} 구매`, `${item.description}. ${STAT_NAMES[item.stat]} 실력이 늘었어요.`, "good");
+  // 시즌 정산·SNS 갱신은 돌리지 않는다: 아이템은 명시된 능력치만 바꾼다
+  c.result = buildResult(c, before, `${item.name} 구매`, `${item.description}. ${STAT_NAMES[item.stat]} 실력이 늘었어요.`, "good");
   return c;
 }
 

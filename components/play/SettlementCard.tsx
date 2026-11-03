@@ -8,10 +8,20 @@ import type { Career } from "@/lib/game/types";
 
 export function SettlementCard({ career }: { career: Career }) {
   const s = settlement(career);
-  const recovered = s.invested > 0 ? Math.min(100, (Math.min(s.revenue, s.invested) / s.invested) * 100) : 100;
   return (
     <Card className="fade-up" style={{ animationDelay: "120ms" }}>
       <CardTitle sub={s.unrecovered > 0 ? "투자비를 회수한 뒤부터 정산돼요" : `순이익의 ${Math.round(s.share * 100)}% 중 내 몫`}>정산 현황</CardTitle>
+      <SettlementBody career={career} />
+    </Card>
+  );
+}
+
+/** 정산 본문. 홈 요약에서 누르면 시트로 열린다. */
+export function SettlementBody({ career }: { career: Career }) {
+  const s = settlement(career);
+  const recovered = s.invested > 0 ? Math.min(100, (Math.min(s.revenue, s.invested) / s.invested) * 100) : 100;
+  return (
+    <div>
       <div className="flex items-end justify-between">
         <div>
           <p className="t-cap">내 정산금</p>
@@ -29,6 +39,11 @@ export function SettlementCard({ career }: { career: Career }) {
         </div>
         <ProgressBar value={recovered} color={s.unrecovered > 0 ? "var(--warn)" : "var(--ok)"} height={8} label="제작비 회수" />
       </div>
-    </Card>
+      <div className="mt-4 grid grid-cols-2 gap-2 text-[13px]">
+        <div className="rounded-2xl bg-sub p-3"><p className="text-ink-3">회사 투자 누적</p><p className="text-[16px] font-bold mt-0.5">{wonText(s.invested)}</p></div>
+        <div className="rounded-2xl bg-sub p-3"><p className="text-ink-3">내 몫 비율</p><p className="text-[16px] font-bold mt-0.5">{Math.round(s.share * 100)}%</p></div>
+      </div>
+      <p className="text-[13px] text-ink-3 mt-3 leading-relaxed">{s.unrecovered > 0 ? "회사가 먼저 쓴 데뷔·앨범 제작비를 매출로 모두 회수한 뒤부터 순이익을 나눠요." : "회수가 끝났어요. 이제 매출이 늘면 내 정산금도 같이 늘어요."}</p>
+    </div>
   );
 }

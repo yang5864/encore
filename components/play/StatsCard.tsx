@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { CountUp } from "@/components/ui/CountUp";
 import { ProgressBar } from "@/components/ui/ProgressBar";
@@ -21,6 +22,7 @@ export function StatsCard({ career, changes }: { career: Career; changes?: Chang
   const cond = conditionOf(career);
   const band = reputationBand(career.reputation);
   const ovrDelta = delta(changes, "ovr");
+  const [showSns, setShowSns] = useState(false);
   return (
     <Card className="fade-up" style={{ animationDelay: "60ms" }}>
       <div className="flex items-end justify-between">
@@ -65,9 +67,17 @@ export function StatsCard({ career, changes }: { career: Career; changes?: Chang
         </div>
       </div>
 
-      {(career.stage === "idol" || career.stage === "retired" || (career.metrics?.instagram ?? 0) > 0) && (
+      {(career.stage === "idol" || career.stage === "retired" || (career.metrics?.instagram ?? 0) > 0) && !showSns && (
+        <button type="button" onClick={() => setShowSns(true)} className="press mt-3 w-full h-10 rounded-xl bg-sub text-[13px] font-bold text-ink-2">
+          SNS · 스트리밍 보기 · 인스타 {countText(career.metrics?.instagram ?? 0)}
+        </button>
+      )}
+      {(career.stage === "idol" || career.stage === "retired" || (career.metrics?.instagram ?? 0) > 0) && showSns && (
         <div className="mt-3 rounded-2xl bg-sub p-3.5">
-          <p className="text-[13px] text-ink-3 font-semibold mb-2">SNS · 스트리밍</p>
+          <button type="button" onClick={() => setShowSns(false)} className="press w-full flex items-center justify-between mb-2">
+            <span className="text-[13px] text-ink-3 font-semibold">SNS · 스트리밍</span>
+            <span className="text-[13px] text-ink-3">접기</span>
+          </button>
           <div className="flex flex-col gap-2">
             <Row logo="instagram" label="인스타 팔로워" sub="개인 계정" value={career.metrics?.instagram ?? 0} d={delta(changes, "instagram")} />
             {career.stage !== "free" && career.stage !== "trainee" && <Row logo="youtube" label="유튜브 구독자" sub="그룹 채널" value={career.metrics?.youtube ?? 0} d={delta(changes, "youtube")} />}

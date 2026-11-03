@@ -53,13 +53,15 @@ function hash(n: number): number {
 }
 
 /** 시즌마다 바뀌는 진열 상품 3개. 게임 난수(rngState)를 쓰지 않아 다시 열어도 같다. */
-export function shopOffers(c: Pick<Career, "seed" | "turn">): ShopItem[] {
+export function shopOffers(c: Pick<Career, "seed" | "turn"> & Partial<Pick<Career, "items" | "flags">>): ShopItem[] {
   const picked: ShopItem[] = [];
   const kinds = new Set<string>();
-  for (let i = 0; picked.length < 3 && i < 64; i++) {
+  // 이미 가진 물건은 다시 진열하지 않는다. 이번 시즌에 산 물건만 "구매 완료"로 남겨둔다
+  const owned = new Set((c.items ?? []).filter((id) => !(c.flags?.shopTurn === c.turn && id === c.items?.[c.items.length - 1])));
+  for (let i = 0; picked.length < 3 && i < 96; i++) {
     const item = SHOP_ITEMS[hash(c.seed * 31 + c.turn * 977 + i * 7919) % SHOP_ITEMS.length];
     const kind = item.id.slice(0, -3);
-    if (kinds.has(kind)) continue;
+    if (kinds.has(kind) || owned.has(item.id)) continue;
     kinds.add(kind);
     picked.push(item);
   }
