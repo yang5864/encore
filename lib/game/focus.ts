@@ -69,7 +69,19 @@ export function lowestStat(c: Pick<Career, "stats">): StatKey {
   return STAT_KEYS.reduce((min, k) => (c.stats[k] < c.stats[min] ? k : min), STAT_KEYS[0]);
 }
 
+export const DANGER_LOCK = "컨디션이 위험해요. 이번 시즌은 쉬어야 해요";
+
+/** 컨디션이 위험이면 휴식만 고를 수 있다. 무리하면 부상·활동 중단으로 이어지기 때문. */
+function lockWhenDanger(c: Career, options: FocusOption[]): FocusOption[] {
+  if (conditionOf(c).level !== "danger") return options;
+  return options.map((o) => (o.id === "rest" ? { ...o, disabledReason: undefined, hint: "컨디션이 위험해서 이번 시즌은 쉬어야 해요. 몸과 마음을 크게 회복해요" } : { ...o, disabledReason: DANGER_LOCK }));
+}
+
 export function focusOptions(c: Career): FocusOption[] {
+  return lockWhenDanger(c, baseOptions(c));
+}
+
+function baseOptions(c: Career): FocusOption[] {
   const cond = conditionOf(c);
   if (c.stage === "retired") return [];
   if (c.hiatusUntil > c.turn) {

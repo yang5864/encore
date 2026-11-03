@@ -5,7 +5,7 @@ import { STAT_KEYS, STAT_NAMES, overall } from "./stats.ts";
 import { ageOf, conditionOf, eraScale, isSecondHalf, MAX_TURN, periodLabel, yearOf } from "./format.ts";
 import { rng, between, pick } from "./rng.ts";
 import { applyEffects, addReputation, diff, log, snapshot, type Snapshot } from "./effects.ts";
-import { CONCEPTS, MAIN_STAT, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
+import { CONCEPTS, DANGER_LOCK, MAIN_STAT, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
 import { makeAlbum, albumSummary, addShowWin, winBase, ALBUM_NAME_PATTERN } from "./album.ts";
 import type { Award } from "./types.ts";
 import { yearEndAwards } from "./awards.ts";
@@ -118,6 +118,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   }
 
   const [kind, arg, ...restParts] = (c.hiatusUntil > c.turn ? "rest" : focusId).split(":");
+  if (kind !== "rest" && conditionOf(c).level === "danger") throw new GameError(DANGER_LOCK);
   const albumName = restParts.length ? decodeURIComponent(restParts.join(":")) : "";
   if (albumName && !ALBUM_NAME_PATTERN.test(albumName)) throw new GameError("앨범 이름은 1~20자로 입력해주세요.");
   let headline = focusLabel(kind === "train" && !arg ? "train:all" : focusId);

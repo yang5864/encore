@@ -5,6 +5,7 @@ import { advanceTurn, resolveChoice, retireCareer, focusOptions, applyToAgency }
 import { DEFAULT_ALLOCATION, overall } from "../lib/game/stats.ts";
 import { EVENTS } from "../lib/game/events/index.ts";
 import type { Career } from "../lib/game/types.ts";
+import { conditionOf } from "../lib/game/format.ts";
 
 const base = { name: "하린", gender: "female" as const, avatar: 0, position: "vocal" as const, stats: DEFAULT_ALLOCATION.vocal };
 
@@ -99,7 +100,7 @@ test("이야기 이벤트는 커리어당 한 번, repeatable만 4턴 뒤 재등
   c.schoolId = "general";
   const seenTurns: Record<string, number[]> = {};
   for (let i = 0; i < 40 && c.stage !== "retired"; i++) {
-    c = advanceTurn(c, c.stage === "idol" ? (c.lastReleaseTurn === c.turn || i % 2 ? "promo" : "comeback:fresh") : "train:all");
+    c = advanceTurn(c, conditionOf(c).level === "danger" ? "rest" : c.stage === "idol" ? (c.lastReleaseTurn === c.turn || i % 2 ? "promo" : "comeback:fresh") : "train:all");
     if (c.pending) {
       const id = c.pending.id;
       (seenTurns[id] ??= []).push(c.turn);
@@ -213,7 +214,7 @@ test("능력치는 항상 정수다", () => {
   let c = trainee(17);
   c.schoolId = "general";
   for (let i = 0; i < 20 && c.stage !== "retired"; i++) {
-    c = advanceTurn(c, c.stage === "idol" ? (c.lastReleaseTurn === c.turn ? "promo" : "comeback:fresh") : "train:vocal");
+    c = advanceTurn(c, conditionOf(c).level === "danger" ? "rest" : c.stage === "idol" ? (c.lastReleaseTurn === c.turn ? "promo" : "comeback:fresh") : "train:vocal");
     c = settle(c);
     for (const v of Object.values(c.stats)) assert.ok(Number.isInteger(v), `${JSON.stringify(c.stats)}`);
   }

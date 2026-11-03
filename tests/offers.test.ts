@@ -233,3 +233,18 @@ test("아이템 구매는 명시된 능력치만 바꾼다 (SNS·팬·정산 변
   n.turn += 1;
   assert.ok(!shopOffers(n).some((x) => x.id === item.id), "다음 시즌부터는 가진 물건이 진열되지 않는다");
 });
+
+test("컨디션이 위험이면 휴식만 고를 수 있다", async () => {
+  const { focusOptions } = await import("../lib/game/focus.ts");
+  const c = idol(4);
+  c.health = 20;
+  const opts = focusOptions(c);
+  assert.ok(opts.every((o) => (o.id === "rest" ? !o.disabledReason : !!o.disabledReason)));
+  assert.throws(() => advanceTurn(c, "promo"), /위험/);
+  const rested = advanceTurn(c, "rest");
+  assert.ok(rested.health > 20);
+  const t = createCareer(base, 2);
+  t.mental = 10;
+  assert.ok(focusOptions(t).find((o) => o.id === "rest")?.disabledReason === undefined);
+  assert.throws(() => advanceTurn(t, "train:all"), /위험/);
+});
