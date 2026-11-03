@@ -26,7 +26,7 @@ for (const a of AGENCIES) {
       let focus: string;
       const cond = conditionOf(c);
       if (c.stage === "idol") {
-        focus = cond.level === "danger" ? "rest" : c.lastReleaseTurn !== null && c.turn - c.lastReleaseTurn >= 1 ? "comeback:fresh" : c.popularity >= 55 && i % 3 === 0 ? "overseas" : "promo";
+        focus = cond.level === "danger" ? "rest" : c.lastReleaseTurn !== null && c.turn - c.lastReleaseTurn >= 1 ? "comeback:fresh" : c.popularity >= 55 && i % 3 === 0 ? "overseas" : "fanmeet";
       } else {
         focus = cond.level === "danger" ? "rest" : i % 3 === 2 ? "train:all" : `train:${MAIN_STAT[c.position]}`;
       }

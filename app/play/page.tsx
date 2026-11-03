@@ -6,6 +6,8 @@ import { useCareer } from "@/hooks/useCareer";
 import { Button, FixedCta } from "@/components/ui/Button";
 import { ProfileCard } from "@/components/play/ProfileCard";
 import { SummaryCard } from "@/components/play/SummaryCard";
+import { SeasonCard } from "@/components/play/SeasonCard";
+import { APPLY_PER_SEASON, appliedThisSeason } from "@/lib/game/engine";
 import { CareerSummary } from "@/components/play/CareerSummary";
 import { CelebrationOverlay, daesangSpotlight, type Spotlight } from "@/components/play/CelebrationOverlay";
 import { Sheet } from "@/components/ui/Sheet";
@@ -33,6 +35,8 @@ export default function PlayPage() {
   const [agencyOpen, setAgencyOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [detail, setDetail] = useState<"settlement" | "shop" | null>(null);
+  // 지원 결과를 닫으면 남은 지원 횟수가 있을 때 지원 화면으로 돌아간다
+  const [afterApply, setAfterApply] = useState(false);
   const [coach, setCoach] = useState(false);
   const [milestoneQueue, setMilestoneQueue] = useState<MilestoneId[]>([]);
   const [seenResultKey, setSeenResultKey] = useState<string | null>(null);
@@ -118,6 +122,7 @@ export default function PlayPage() {
       <div className="flex flex-col gap-3">
         <ProfileCard career={career} onAgency={() => setAgencyOpen(true)} />
         {career.stage === "idol" && <SummaryCard career={career} onSettlement={() => setDetail("settlement")} onShop={() => setDetail("shop")} />}
+        {career.stage !== "retired" && <SeasonCard career={career} />}
         {career.stage === "retired" ? (
           <CareerSummary career={career} />
         ) : (
@@ -149,7 +154,13 @@ export default function PlayPage() {
 
       {daesang && <CelebrationOverlay career={career} spot={daesang} onDone={() => setDaesang(null)} />}
       <MilestoneSheet career={career} id={pendingMilestone} open={!!pendingMilestone && !daesang} onClose={() => setMilestoneQueue((q) => q.slice(1))} />
-      {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} avatar={career.avatar} gender={career.gender} name={career.name} open={showResult} onClose={dismissResult} ctaLabel={career.pending ? "다음 선택 보기" : "확인"} />}
+      {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} avatar={career.avatar} gender={career.gender} name={career.name} open={showResult} onClose={() => {
+        dismissResult();
+        if (afterApply) {
+          setAfterApply(false);
+          if (!career.pending && career.stage !== "idol" && appliedThisSeason(career) < APPLY_PER_SEASON) setAgencyOpen(true);
+        }
+      }} ctaLabel={career.pending ? "다음 선택 보기" : afterApply && !career.pending && career.stage !== "idol" && appliedThisSeason(career) < APPLY_PER_SEASON ? "다른 기획사 지원하기" : "확인"} />}
       <EventSheet key={career.pending?.id ?? "none"} career={career} open={showEvent} onChoose={choose} />
       <Sheet open={detail === "settlement"} onOpenChange={(o) => !o && setDetail(null)} title="정산 현황">
         <SettlementBody career={career} />
@@ -163,6 +174,7 @@ export default function PlayPage() {
         onClose={() => setAgencyOpen(false)}
         onApply={(id) => {
           setAgencyOpen(false);
+          setAfterApply(true);
           apply(id);
         }}
       />

@@ -34,6 +34,17 @@ export const BURST_CHANCE = 0.015;
 /** 현역 복무 기간(개월): 육군·해병 18, 해군 20, 공군 21 */
 export const MILITARY_MONTHS: Record<string, number> = { army: 18, navy: 20, airforce: 21 };
 
+/** 빌보드 Hot 100 1위는 커리어 최고 순간 중 하나라 전체 화면으로 띄운다. */
+function billboardSpotlight(c: Career, album: { name: string; billboard: number | null; sales: number }): TurnResult["spotlight"] {
+  if (album.billboard !== 1) return undefined;
+  return {
+    chip: `${yearOf(c)} BILLBOARD HOT 100`,
+    title: "빌보드 Hot 100\n1위에 올랐어요",
+    subtitle: `${displayName(c)}의 '${album.name}'${hasBatchim(album.name) ? "이" : "가"} 미국 종합 싱글 차트 정상에 섰어요`,
+    stats: [`초동 ${album.sales >= 10000 ? `${Math.round(album.sales / 10000)}만` : album.sales.toLocaleString("ko-KR")}장`, `코어 팬덤 ${fanText(c.fans)}`],
+  };
+}
+
 const DEBUT_FANS: Record<string, number> = { major: 350000, mid: 70000, indie: 5000, global: 50000 };
 export const GROUP_NAME_PATTERN = /^[\p{L}\p{N} _·!-]{1,20}$/u;
 
@@ -118,6 +129,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   let comments: Comment[] = [];
   let wonAwards: Award[] = [];
   let celebrate: TurnResult["celebrate"];
+  let spotlight: TurnResult["spotlight"];
 
   // 군 복무: 한 번에 건너뛴다
   if (c.militaryUntil > c.turn) {
@@ -131,6 +143,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
     for (const k of STAT_KEYS) c.stats[k] = Math.max(0, c.stats[k] - 1);
     log(c, "전역", `${months}개월의 복무를 마치고 돌아왔어요. 팬들이 기다리고 있었어요.`, "milestone");
     c.pending = scheduleEvent(c);
+    c.lastResult = null;
     finish(c, before, "전역했어요", `${months}개월의 복무를 마쳤어요.${prep > 0 ? ` 남은 ${prep}개월은 몸을 만들며 복귀를 준비했어요.` : ""} 팬들이 기다리고 있었어요. 다시 무대로 돌아갈 시간이에요.`, "good", { scene: "military" });
     return c;
   }
@@ -196,7 +209,9 @@ export function advanceTurn(original: Career, focusId: string): Career {
       if (c.flags.albumViral === c.turn) { tone = "good"; notes.push("타이틀곡이 숏폼에서 터졌어요. 예상보다 훨씬 많은 사람이 들었어요."); }
       if (c.flags.albumFlop === c.turn) { tone = "bad"; notes.push("이번 앨범은 반응이 차가웠어요. 팬덤 일부가 이탈했어요."); }
       if (album.wins > 0) celebrate = "win";
-      comments = buildReactions(c, tone === "good" ? "good" : tone === "bad" ? "bad" : "neutral", { kind: album.wins > 0 ? "win" : c.flags.albumViral === c.turn ? "album-viral" : c.flags.albumFlop === c.turn ? "album-flop" : "album", album: album.name, show: album.shows?.[0], melon: album.melon });
+      spotlight = billboardSpotlight(c, album);
+      if (spotlight) { celebrate = "daesang"; tone = "milestone"; }
+      comments = buildReactions(c, tone === "good" || tone === "milestone" ? "good" : tone === "bad" ? "bad" : "neutral", { kind: album.wins > 0 ? "win" : c.flags.albumViral === c.turn ? "album-viral" : c.flags.albumFlop === c.turn ? "album-flop" : "album", album: album.name, show: album.shows?.[0], melon: album.melon });
     } else if (kind === "promo") {
       grow(c, "variety", 4);
       grow(c, "visual", 1.5);
@@ -339,8 +354,14 @@ export function advanceTurn(original: Career, focusId: string): Career {
   }
   if (c.turn > MAX_TURN) return retire(c, "긴 커리어의 마지막 앵콜을 마쳤어요.");
 
+  if (c.stage === "idol" && !boughtThisSeason(c)) {
+    const offers = shopOffers(c);
+    const cheapest = offers.length ? Math.min(...offers.map((o) => priceOf(c, o))) : Infinity;
+    if (walletOf(c) >= cheapest) notes.push("정산금으로 이번 시즌 상점 아이템을 살 수 있어요. 홈의 상점 줄에서 골라요.");
+  }
   c.pending = scheduleEvent(c);
-  finish(c, before, headline, text, tone, { scene, notes, comments, awards: wonAwards, celebrate });
+  finish(c, before, headline, text, tone, { scene, notes, comments, awards: wonAwards, celebrate, spotlight });
+  c.lastResult = c.result;
   return c;
 }
 
@@ -532,6 +553,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     tone = album.wins > 0 || (album.melon !== null && album.melon <= 10) ? "good" : "neutral";
     notes.push(album.wins > 0 ? `신인이 데뷔 활동에서 1위를 했어요. 정말 드문 일이에요.` : album.melon !== null ? `데뷔곡이 멜론 ${album.melon}위에 올랐어요.` : "데뷔곡은 아직 차트에 오르지 못했어요. 대부분의 신인이 그래요.");
     if (album.wins > 0) celebrate = "win";
+    spotlight = billboardSpotlight(c, album);
+    if (spotlight) celebrate = "daesang";
     reaction = { kind: album.wins > 0 ? "win" : "debut-stage", album: album.name, show: album.shows?.[0], melon: album.melon };
     if (c.flags.albumViral === c.turn) { tone = "good"; notes.push("타이틀곡이 숏폼에서 터졌어요. 예상보다 훨씬 많은 사람이 들었어요."); }
     if (c.flags.albumFlop === c.turn) { tone = "bad"; notes.push("데뷔 앨범 반응이 차가웠어요."); }
@@ -547,6 +570,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     if (c.flags.albumViral === c.turn) { tone = "good"; notes.push("타이틀곡이 숏폼에서 터졌어요. 예상보다 훨씬 많은 사람이 들었어요."); }
     if (c.flags.albumFlop === c.turn) { tone = "bad"; notes.push("데뷔 앨범 반응이 차가웠어요."); }
     if (album.wins > 0) celebrate = "win";
+    spotlight = billboardSpotlight(c, album);
+    if (spotlight) celebrate = "daesang";
     reaction = { kind: album.wins > 0 ? "win" : c.flags.albumViral === c.turn ? "album-viral" : c.flags.albumFlop === c.turn ? "album-flop" : "album", album: album.name, show: album.shows?.[0], melon: album.melon };
     log(c, headline, text, "release");
     if (album.wins > 0) log(c, `음악방송 1위 ${album.wins}회`, `${album.name} 활동으로 1위 트로피를 들었어요.`, "award");

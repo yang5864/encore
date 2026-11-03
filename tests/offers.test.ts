@@ -325,3 +325,23 @@ test("그래미·스타디움 투어는 조건을 갖춰야 하고 커리어당 
   assert.ok(n.result?.spotlight?.title.includes("그래미"));
   assert.equal(n.result?.celebrate, "daesang");
 });
+
+test("빌보드 1위는 전체 화면 연출로 띄우고, 시즌 결과는 홈 요약용으로 남는다", async () => {
+  const { focusOptions } = await import("../lib/game/focus.ts");
+  let hit = 0;
+  for (let seed = 1; seed <= 60 && !hit; seed++) {
+    const c = idol(seed);
+    c.popularity = 98; c.fans = 6000000; c.turn = 30; c.debutTurn = 8; c.lastReleaseTurn = 28;
+    c.stats = { vocal: 95, dance: 95, rap: 90, visual: 95, variety: 85, producing: 90 };
+    c.flags.globalBoost = 30;
+    const n = advanceTurn(c, "comeback:fresh");
+    assert.ok(n.lastResult, "진행 결과가 남는다");
+    if (n.albums[0].billboard === 1) {
+      hit++;
+      assert.ok(n.result?.spotlight?.title.includes("빌보드"));
+      assert.equal(n.result?.celebrate, "daesang");
+    }
+  }
+  assert.ok(hit > 0, "60번 안에 빌보드 1위가 한 번은 나온다");
+  assert.ok(!focusOptions(idol(1)).some((o) => o.id === "promo"), "방송·예능은 계획 선택지에서 빠진다");
+});

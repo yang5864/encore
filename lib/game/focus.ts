@@ -105,7 +105,6 @@ function baseOptions(c: Career): FocusOption[] {
   const solo = !!c.flags.solo;
   const options: FocusOption[] = [
     { id: "comeback", label: solo ? "솔로 앨범 준비" : "컴백 준비", hint: solo ? "내 이름으로 새 앨범을 내요. 초동과 차트 성적이 팬과 인기도를 정해요. 컨디션이 많이 떨어져요" : "새 앨범을 내요. 초동과 차트 성적이 팬과 인기도를 정해요. 컨디션이 많이 떨어져요", risk: "bold", picker: "concept", group: "group" },
-    { id: "promo", label: "방송 · 예능 활동", hint: "대중 인지도와 예능감이 오르고 출연료가 생겨요", risk: "safe", group: "group" },
     { id: "fanmeet", label: "팬미팅 · 콘텐츠", hint: "팬덤 결속과 평판이 올라요. 마음이 편해져요", risk: "safe", group: "group" },
     { id: "overseas", label: "해외 활동", hint: "해외 팬이 크게 늘고 다음 앨범의 해외 차트 가능성이 열려요. 많이 지쳐요", risk: "bold", group: "group", disabledReason: c.popularity < 55 ? "인기도가 더 필요해요" : undefined },
     { id: "rest", label: "휴식기", hint: "컨디션을 크게 회복해요. 팬이 조금 줄어요", risk: "safe", group: "group" },

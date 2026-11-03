@@ -178,6 +178,8 @@ export type Career = {
   debutPlan?: { concept: Concept; albumName: string } | null;
   /** 시즌별 요약 기록 (은퇴 후 그래프용). 아이돌 시즌마다 1개 */
   timeline?: { turn: number; popularity: number; fans: number; rank: number | null }[];
+  /** 가장 최근 시즌 진행 결과 (대시보드 요약용, 닫아도 남는다) */
+  lastResult?: TurnResult | null;
   warnings: number;
   scoutCount: number;
   lowPopularityTurns: number;
