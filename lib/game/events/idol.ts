@@ -291,7 +291,7 @@ export const IDOL_EVENTS: GameEventDef[] = [
     scene: "press",
     public: true,
     weight: 0.08,
-    when: (c) => since(c) >= 2,
+    when: (c) => !c.flags.solo && since(c) >= 2,
     choices: [
       { id: "verify", label: "사실 확인 후 멤버 활동 중단을 발표한다", hint: "팀 평판 하락을 줄이고 신뢰를 지켜요. 팬덤은 조금 줄어요", risk: "safe", effects: { reputation: -10, fansMul: 0.9, mental: -10 } },
       { id: "defend", label: "멤버를 감싸는 입장을 낸다", hint: "사실이면 팀 전체가 크게 흔들려요", risk: "bold", chance: 0.35, success: { reputation: -3, mental: -6 }, fail: { reputation: -30, fansMul: 0.7, mental: -15 }, successText: "의혹은 사실이 아니었어요. 팬들이 '기다리길 잘했다'고 해요.", failText: "추가 증언이 나왔어요. 팀 전체가 자숙에 들어갔어요.", op: "scandal" },
@@ -306,7 +306,7 @@ export const IDOL_EVENTS: GameEventDef[] = [
     scene: "press",
     public: true,
     weight: 0.06,
-    when: (c) => ageOf(c) >= 20 && since(c) >= 2,
+    when: (c) => !c.flags.solo && ageOf(c) >= 20 && since(c) >= 2,
     choices: [
       { id: "remove", label: "멤버 탈퇴와 팀 자숙을 발표한다", hint: "큰 타격이지만 회복의 시작이에요", risk: "safe", effects: { reputation: -18, fansMul: 0.85, mental: -12 }, op: "scandal" },
       { id: "pause", label: "멤버 활동 중단만 발표한다", hint: "팀은 유지되지만 여론이 오래 안 좋아요", risk: "bold", effects: { reputation: -28, fansMul: 0.8, mental: -8 }, op: "scandal" },
@@ -349,7 +349,7 @@ export const IDOL_EVENTS: GameEventDef[] = [
     scene: "dorm",
     public: true,
     weight: 0.3,
-    when: (c) => since(c) >= 4,
+    when: (c) => !c.flags.solo && since(c) >= 4,
     choices: [
       { id: "support", label: "멤버의 결정을 응원하는 메시지를 낸다", hint: "팬들이 성숙한 대응이라고 해요. 팀은 조금 작아져요", risk: "safe", effects: { reputation: 4, fansMul: 0.92, mental: -8 } },
       { id: "reorg", label: "새 포지션으로 빠르게 재정비한다", hint: "내 파트가 늘어 실력이 오르지만 지쳐요", risk: "bold", effects: { vocal: 2, dance: 2, fansMul: 0.9, health: -12, mental: -6 } },
@@ -390,7 +390,7 @@ export const IDOL_EVENTS: GameEventDef[] = [
     text: "도약기에 들어서며 회사가 유닛 활동을 제안했어요. 보컬 유닛, 퍼포먼스 유닛, 힙합 유닛 중 내 색이 드러나는 조합을 고를 수 있어요.",
     scene: "songwriting",
     public: true,
-    when: (c) => since(c) >= 3,
+    when: (c) => !c.flags.solo && since(c) >= 3,
     choices: [
       { id: "vocal", label: "보컬 유닛", hint: "보컬이 오르고 음원 반응이 와요", risk: "safe", effects: { vocal: 3, popularity: 4, fansMul: 1.05, revenue: 3, reputation: 2 } },
       { id: "perf", label: "퍼포먼스 유닛", hint: "댄스와 비주얼이 오르고 챌린지가 돌아요", risk: "safe", effects: { dance: 3, visual: 1, popularity: 4, fansMul: 1.05, revenue: 3, reputation: 2 } },

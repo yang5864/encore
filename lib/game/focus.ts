@@ -101,9 +101,10 @@ function baseOptions(c: Career): FocusOption[] {
       { id: "rest", label: "휴식", hint: "컨디션을 크게 회복해요. 실력은 오르지 않아요", risk: "safe", disabledReason: cond.level === "good" ? "컨디션이 좋을 땐 필요 없어요" : undefined },
     ];
   }
-  // idol
+  // idol. 그룹을 떠났으면 모든 활동이 개인 활동이라 섹션을 나누지 않는다
+  const solo = !!c.flags.solo;
   const options: FocusOption[] = [
-    { id: "comeback", label: "컴백 준비", hint: "새 앨범을 내요. 초동과 차트 성적이 팬과 인기도를 정해요. 컨디션이 많이 떨어져요", risk: "bold", picker: "concept", group: "group" },
+    { id: "comeback", label: solo ? "솔로 앨범 준비" : "컴백 준비", hint: solo ? "내 이름으로 새 앨범을 내요. 초동과 차트 성적이 팬과 인기도를 정해요. 컨디션이 많이 떨어져요" : "새 앨범을 내요. 초동과 차트 성적이 팬과 인기도를 정해요. 컨디션이 많이 떨어져요", risk: "bold", picker: "concept", group: "group" },
     { id: "promo", label: "방송 · 예능 활동", hint: "대중 인지도와 예능감이 오르고 출연료가 생겨요", risk: "safe", group: "group" },
     { id: "fanmeet", label: "팬미팅 · 콘텐츠", hint: "팬덤 결속과 평판이 올라요. 마음이 편해져요", risk: "safe", group: "group" },
     { id: "overseas", label: "해외 활동", hint: "해외 팬이 크게 늘고 다음 앨범의 해외 차트 가능성이 열려요. 많이 지쳐요", risk: "bold", group: "group", disabledReason: c.popularity < 55 ? "인기도가 더 필요해요" : undefined },
@@ -111,12 +112,12 @@ function baseOptions(c: Career): FocusOption[] {
   ];
   if (c.lastReleaseTurn === c.turn) options[0].disabledReason = "이번 시즌에 이미 앨범을 냈어요";
   if (c.debutTurn !== null && c.turn - c.debutTurn >= SOLO_UNLOCK_TURNS) {
-    for (const kind of ["solo", "acting", "variety", "producing"] as SoloKind[]) {
+    for (const kind of (solo ? ["acting", "variety", "producing"] : ["solo", "acting", "variety", "producing"]) as SoloKind[]) {
       const p = soloChance(c, kind);
       options.push({ id: `solo:${kind}`, label: SOLO_LABELS[kind].label, hint: SOLO_LABELS[kind].hint, risk: p < 0.5 ? "bold" : "safe", group: "solo", readiness: readinessOf(p) });
     }
   }
-  return options;
+  return solo ? options.map((o) => ({ ...o, group: undefined })) : options;
 }
 
 export function focusLabel(focusId: string): string {

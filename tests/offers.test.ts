@@ -287,3 +287,15 @@ test("통신사 광고·명품 앰버서더는 톱티어(10위 경험·급성장
   const n = advanceTurn(star, "promo");
   assert.ok((n.flags.bestRank ?? 999) <= 10, `bestRank ${n.flags.bestRank}`);
 });
+
+test("그룹을 탈퇴하면 그룹 활동 구분과 멤버 이벤트가 사라진다", async () => {
+  const { focusOptions } = await import("../lib/game/focus.ts");
+  const { eventById } = await import("../lib/game/events/index.ts");
+  const c = idol(9);
+  c.turn = 20; c.debutTurn = 8; c.flags.solo = 1; c.flags.independent = 1;
+  const opts = focusOptions(c);
+  assert.ok(opts.every((o) => o.group === undefined), "섹션 구분 없음");
+  assert.ok(!opts.some((o) => o.id === "solo:solo"), "솔로 앨범 활동은 컴백으로 합쳐진다");
+  assert.equal(opts.find((o) => o.id === "comeback")?.label, "솔로 앨범 준비");
+  for (const id of ["member-bullying", "member-dui", "member-leave", "unit"]) assert.equal(eventById(id)!.when!(c), false, id);
+});
