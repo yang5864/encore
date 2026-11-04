@@ -56,6 +56,18 @@ export const CONCEPTS: { id: Concept; name: string; description: string; stats: 
   { id: "performance", name: "퍼포먼스", description: "칼군무와 킬링파트. 댄스가 가장 중요해요", stats: ["dance", "visual"] },
 ];
 
+export const PRODUCERS: { id: import("./types.ts").Producer; name: string; description: string }[] = [
+  { id: "inhouse", name: "회사 A&R", description: "기본 제작. 비용과 완성도 모두 무난해요" },
+  { id: "star", name: "유명 프로듀서", description: "완성도가 크게 오르지만 제작비가 많이 들어요" },
+  { id: "self", name: "자작곡", description: "프로듀싱이 높으면 완성도와 평판이 오르고, 낮으면 손해예요. 제작비는 적어요" },
+];
+export const PROMOS: { id: import("./types.ts").Promo; name: string; description: string }[] = [
+  { id: "balanced", name: "균형", description: "음원·음반을 고르게 밀어요" },
+  { id: "digital", name: "음원 집중", description: "멜론 순위에 유리하고 초동은 조금 줄어요" },
+  { id: "physical", name: "음반 집중", description: "초동이 크게 늘고 팬덤 결속이 오르지만 차트는 불리해요" },
+  { id: "global", name: "해외 집중", description: "빌보드 가능성이 열리고 국내 초동은 줄어요. 인기 55 이상" },
+];
+
 export const MAIN_STAT: Record<Career["position"], StatKey> = {
   vocal: "vocal",
   dance: "dance",

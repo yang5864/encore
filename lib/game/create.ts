@@ -30,6 +30,7 @@ export function createCareer(input: CreateInput, seed: number = newSeed(), id: s
     fans: 0,
     popularity: 0,
     reputation: 0,
+    loyalty: 50,
     turn: 0,
     stage: "free",
     agencyId: null,

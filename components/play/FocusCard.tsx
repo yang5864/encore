@@ -5,14 +5,15 @@ import { equipmentPath } from "@/lib/art";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import { cn } from "@/lib/cn";
-import { CONCEPTS, focusOptions, type FocusOption } from "@/lib/game/focus";
+import { CONCEPTS, PRODUCERS, PROMOS, focusOptions, type FocusOption } from "@/lib/game/focus";
+import { conceptStreak } from "@/lib/game/album";
 import { periodLabel } from "@/lib/game/format";
 import { STAT_KEYS, STAT_NAMES } from "@/lib/game/stats";
 import type { Career } from "@/lib/game/types";
 import { suggestAlbumName } from "@/lib/game/album";
 import { AlbumNamePicker } from "./AlbumNamePicker";
 
-export type FocusSelection = { id: string; stat?: string; concept?: string; albumName?: string; customName?: boolean };
+export type FocusSelection = { id: string; stat?: string; concept?: string; albumName?: string; customName?: boolean; producer?: string; promo?: string };
 
 export function FocusCard({ career, value, onChange }: { career: Career; value: FocusSelection; onChange: (v: FocusSelection) => void }) {
   const options = focusOptions(career);
@@ -68,14 +69,42 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
           </div>
         )}
         {selected && o.picker === "concept" && (
-          <div className="grid grid-cols-2 gap-1.5 mt-2 px-1">
-            {CONCEPTS.map((x) => (
-              <button key={x.id} onClick={() => onChange({ ...value, concept: x.id })} className={cn("press text-left rounded-xl p-3", value.concept === x.id ? "bg-ink text-bg" : "bg-chip")}>
-                <p className="text-[13px] font-bold">{x.name}</p>
-                <p className={cn("text-[13px] mt-0.5", value.concept === x.id ? "text-bg/70" : "text-ink-3")}>{x.description}</p>
-              </button>
-            ))}
-          </div>
+          <>
+            <p className="text-[13px] font-bold text-ink-3 mt-3 px-1">콘셉트</p>
+            <div className="grid grid-cols-2 gap-1.5 mt-1.5 px-1">
+              {CONCEPTS.map((x) => {
+                const streak = conceptStreak(career, x.id);
+                const tag = streak >= 2 ? `연속 ${streak}번째 · 매너리즘` : career.albums.length > 0 && streak === 0 && conceptStreak(career, career.albums[career.albums.length - 1].concept) >= 2 ? "변신 보너스" : null;
+                return (
+                  <button key={x.id} onClick={() => onChange({ ...value, concept: x.id })} className={cn("press text-left rounded-xl p-3", value.concept === x.id ? "bg-ink text-bg" : "bg-chip")}>
+                    <p className="text-[13px] font-bold">{x.name}{tag && <span className={cn("ml-1.5 font-semibold", streak >= 2 ? "text-down" : "text-up")}>{tag}</span>}</p>
+                    <p className={cn("text-[13px] mt-0.5", value.concept === x.id ? "text-bg/70" : "text-ink-3")}>{x.description}</p>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-[13px] font-bold text-ink-3 mt-3 px-1">타이틀 제작</p>
+            <div className="grid grid-cols-3 gap-1.5 mt-1.5 px-1">
+              {PRODUCERS.map((x) => (
+                <button key={x.id} onClick={() => onChange({ ...value, producer: x.id })} className={cn("press text-left rounded-xl p-3", (value.producer ?? "inhouse") === x.id ? "bg-ink text-bg" : "bg-chip")}>
+                  <p className="text-[13px] font-bold">{x.name}</p>
+                  <p className={cn("text-[13px] mt-0.5", (value.producer ?? "inhouse") === x.id ? "text-bg/70" : "text-ink-3")}>{x.description}</p>
+                </button>
+              ))}
+            </div>
+            <p className="text-[13px] font-bold text-ink-3 mt-3 px-1">프로모션 비중</p>
+            <div className="grid grid-cols-2 gap-1.5 mt-1.5 px-1">
+              {PROMOS.map((x) => {
+                const locked = x.id === "global" && career.popularity < 55;
+                return (
+                  <button key={x.id} disabled={locked} onClick={() => onChange({ ...value, promo: x.id })} className={cn("press text-left rounded-xl p-3", (value.promo ?? "balanced") === x.id ? "bg-ink text-bg" : "bg-chip", locked && "opacity-45")}>
+                    <p className="text-[13px] font-bold">{x.name}</p>
+                    <p className={cn("text-[13px] mt-0.5", (value.promo ?? "balanced") === x.id ? "text-bg/70" : "text-ink-3")}>{x.description}</p>
+                  </button>
+                );
+              })}
+            </div>
+          </>
         )}
       </div>
     );
@@ -107,6 +136,6 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
 
 export function focusIdOf(v: FocusSelection): string {
   if (v.id === "train") return `train:${v.stat ?? "vocal"}`;
-  if (v.id === "comeback") return `comeback:${v.concept ?? "fresh"}${v.customName && v.albumName?.trim() ? `:${encodeURIComponent(v.albumName.trim())}` : ""}`;
+  if (v.id === "comeback") return `comeback:${v.concept ?? "fresh"}:${v.producer ?? "inhouse"}:${v.promo ?? "balanced"}:${v.customName && v.albumName?.trim() ? encodeURIComponent(v.albumName.trim()) : ""}`;
   return v.id;
 }

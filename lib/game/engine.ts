@@ -8,7 +8,10 @@ const hasBatchim = (w: string) => { const ch = w.charCodeAt(w.length - 1); retur
 import { rng, between, pick } from "./rng.ts";
 import { applyEffects, addReputation, diff, log, snapshot, type Snapshot } from "./effects.ts";
 import { CONCEPTS, DANGER_LOCK, MAIN_STAT, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
-import { makeAlbum, albumSummary, addShowWin, winBase, ALBUM_NAME_PATTERN } from "./album.ts";
+import { makeAlbum, albumSummary, addShowWin, winBase, ALBUM_NAME_PATTERN, DEFAULT_PRODUCTION } from "./album.ts";
+import { PRODUCERS, PROMOS } from "./focus.ts";
+import { makeKpi, kpiMet } from "./kpi.ts";
+import type { Production } from "./types.ts";
 import type { Award } from "./types.ts";
 import { yearEndAwards } from "./awards.ts";
 import { DEBUT_COST, TRAINEE_COST_PER_TURN, updateSettlement } from "./economy.ts";
@@ -150,7 +153,17 @@ export function advanceTurn(original: Career, focusId: string): Career {
 
   const [kind, arg, ...restParts] = (c.hiatusUntil > c.turn ? "rest" : focusId).split(":");
   if (kind !== "rest" && conditionOf(c).level === "danger") throw new GameError(DANGER_LOCK);
-  const albumName = restParts.length ? decodeURIComponent(restParts.join(":")) : "";
+  // comeback:<concept>:<producer>:<promo>:<encodedName> (구형 comeback:<concept>:<encodedName>도 받는다)
+  let production: Production = { ...DEFAULT_PRODUCTION };
+  let nameParts = restParts;
+  if (kind === "comeback" && restParts.length >= 3) {
+    const [producer, promo, ...rest] = restParts;
+    if (!PRODUCERS.some((p) => p.id === producer) || !PROMOS.some((p) => p.id === promo)) throw new GameError("제작 방식을 골라주세요.");
+    production = { producer: producer as Production["producer"], promo: promo as Production["promo"] };
+    nameParts = rest;
+  }
+  if (production.promo === "global" && c.popularity < 55) throw new GameError("해외 집중 프로모션은 인기도 55 이상부터예요.");
+  const albumName = nameParts.length ? decodeURIComponent(nameParts.join(":")) : "";
   if (albumName && !ALBUM_NAME_PATTERN.test(albumName)) throw new GameError("앨범 이름은 1~20자로 입력해주세요.");
   let headline = focusLabel(kind === "train" && !arg ? "train:all" : focusId);
   let text = "";
@@ -198,8 +211,9 @@ export function advanceTurn(original: Career, focusId: string): Career {
       if (c.lastReleaseTurn === c.turn) throw new GameError("이번 시즌에 이미 앨범을 냈어요.");
       const concept = arg as Concept;
       if (!CONCEPTS.some((x) => x.id === concept)) throw new GameError("콘셉트를 골라주세요.");
-      const album = makeAlbum(c, concept, albumName);
+      const album = makeAlbum(c, concept, albumName, production);
       headline = `${c.albums.length === 1 ? "데뷔 앨범" : "새 앨범"} ${album.name}`;
+      if (production.producer === "self") notes.push(c.stats.producing >= 55 ? "자작곡이 좋은 평가를 받았어요. 프로듀싱 실력이 늘어요." : "자작곡의 완성도가 아쉬웠어요. 프로듀싱을 더 키우거나 외부 제작을 고려해요.");
       text = albumSummary(album);
       scene = "album";
       tone = album.melon !== null && album.melon <= 10 || album.wins > 0 ? "good" : "neutral";
@@ -225,9 +239,10 @@ export function advanceTurn(original: Career, focusId: string): Career {
       scene = "variety";
       comments = buildReactions(c, "good", { kind: "variety" });
     } else if (kind === "fanmeet") {
-      applyEffects(c, { fansMul: 1.07 });
+      applyEffects(c, { fansMul: 1.1 });
       addReputation(c, 4);
       c.money.revenue += 2;
+      c.loyalty = Math.min(100, c.loyalty + 12);
       c.mental += 6;
       c.health -= 4;
       grow(c, "variety", 1.5);
@@ -238,6 +253,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       if (c.popularity < 55) throw new GameError("인기도가 더 필요해요.");
       applyEffects(c, { fansMul: 1.12 });
       c.popularity += 3;
+      c.loyalty = Math.max(0, c.loyalty - 3);
       c.money.revenue += 6;
       c.health -= 12;
       c.mental -= 4;
@@ -255,6 +271,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       const success = rng(c) < p;
       grow(c, stat, success ? 3 : 1.5);
       c.health -= 8;
+      c.loyalty = Math.max(0, c.loyalty - 5); // 개인 활동 동안 그룹 팬덤은 서운하다
       c.flags[`solo:${solo}`] = (c.flags[`solo:${solo}`] ?? 0) + (success ? 1 : 0);
       const statName = STAT_NAMES[stat];
       if (success) {
@@ -296,6 +313,9 @@ export function advanceTurn(original: Career, focusId: string): Career {
   if (c.stage === "idol") {
     const gap = c.lastReleaseTurn === null ? 99 : c.turn - c.lastReleaseTurn;
     if (kind !== "comeback") c.fans = Math.round(c.fans * 0.97);
+    if (kind === "rest") c.loyalty = Math.min(100, c.loyalty + 2);
+    if (c.loyalty < 30) { c.fans = Math.round(c.fans * 0.95); notes.push("팬덤 결속이 낮아 팬이 빠져나가요. 팬미팅·콘텐츠로 챙겨주세요."); }
+    else if (c.loyalty >= 80) notes.push("팬덤 결속이 단단해요. 초동과 음방 투표에 힘이 실려요.");
     if (gap >= 2 && kind !== "comeback") {
       c.popularity -= 5;
       c.fans = Math.round(c.fans * 0.95);
@@ -306,6 +326,28 @@ export function advanceTurn(original: Career, focusId: string): Career {
     else if (age >= 28) c.popularity -= 1;
   }
   c.popularity = Math.round(Math.max(0, Math.min(100, c.popularity * 0.65 + popularityTarget(c) * 0.35)) * 10) / 10;
+
+  // ── 회사 목표(KPI) 결산 · 새 목표 ──
+  if (c.stage === "idol" && c.kpi && c.turn >= c.kpi.deadline) {
+    const met = kpiMet(c, c.kpi, c.flags.kpiSince ?? c.kpi.deadline - 2);
+    if (met) {
+      c.trust = Math.min(100, c.trust + 10);
+      c.flags.budgetBonus = 1;
+      c.flags.kpiHits = (c.flags.kpiHits ?? 0) + 1;
+      notes.push(`회사 목표 달성: ${c.kpi.label}. 다음 앨범 제작 지원이 늘어요.`);
+    } else {
+      c.trust = Math.max(0, c.trust - 8);
+      c.flags.budgetCut = 1;
+      c.flags.kpiMisses = (c.flags.kpiMisses ?? 0) + 1;
+      notes.push(`회사 목표 미달: ${c.kpi.label}. 다음 앨범 제작비가 줄어요.`);
+      if ((c.flags.kpiMisses ?? 0) >= 2) { addReputation(c, -2); notes.push("목표를 두 해 연속 놓쳐 회사 안에서 입지가 흔들려요."); }
+    }
+    c.kpi = null;
+  }
+  if (c.stage === "idol" && !c.kpi && c.turn % 2 === 0 && c.debutTurn !== null && c.turn - c.debutTurn >= 1 && c.contractEnd !== null && c.turn < c.contractEnd) {
+    c.kpi = makeKpi(c);
+    if (c.kpi) { c.flags.kpiSince = c.turn; notes.push(`올해 회사 목표: ${c.kpi.label}`); }
+  }
 
   // ── 연말 결산 ──
   if (c.turn % 2 === 0 && c.stage === "idol") {
@@ -456,7 +498,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     tone = success ? "good" : "bad";
     headline = success ? `${choice.label} — 성공` : `${choice.label} — 아쉬운 결과`;
     if (success && op === "tour:dome") c.flags.domeTour = 1;
-    if (!success && op === "scandal") { c.flags.scandalTurn = c.turn; c.hiatusUntil = c.turn + 1; }
+    if (!success && op === "scandal") { c.flags.scandalTurn = c.turn; c.hiatusUntil = c.turn + 1; c.loyalty = Math.max(0, c.loyalty - 10); }
   } else {
     applyEffects(c, choice.effects);
   }
@@ -511,6 +553,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     c.popularity = Math.max(c.popularity, a.tier === "major" ? 30 : a.tier === "indie" ? 10 : 20);
     c.trust = Math.min(100, c.trust + 10);
     c.mental = Math.min(100, c.mental + 15);
+    c.loyalty = 55;
     addReputation(c, 3);
     headline = `${name} 데뷔 확정`;
     text = `${ageOf(c)}세, ${a.name}에서 ${name}(으)로 데뷔해요. 데뷔 앨범 콘셉트를 정할 차례예요.`;

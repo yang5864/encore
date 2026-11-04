@@ -7,6 +7,13 @@ export type Tier = "major" | "mid" | "indie" | "global";
 export type Risk = "safe" | "bold";
 export type SchoolId = "arts" | "general" | "ged";
 export type Concept = "fresh" | "girlcrush" | "ballad" | "performance";
+/** 타이틀 제작 방식 */
+export type Producer = "inhouse" | "star" | "self";
+/** 프로모션 비중 */
+export type Promo = "balanced" | "digital" | "physical" | "global";
+export type Production = { producer: Producer; promo: Promo };
+/** 회사가 1년 단위로 거는 목표 */
+export type Kpi = { kind: "sales" | "melon" | "wins" | "fans" | "billboard"; target: number; deadline: number; label: string };
 
 export type Effects = Partial<Record<StatKey, number>> & {
   health?: number;
@@ -101,6 +108,7 @@ export type Album = {
   melon: number | null;
   billboard: number | null;
   wins: number;
+  production?: Production;
   /** 1위한 음악방송 이름 */
   shows?: string[];
   cost: number;
@@ -149,6 +157,8 @@ export type Career = {
   fans: number;
   popularity: number;
   reputation: number;
+  /** 팬덤 결속 0~100: 팬을 챙기면 오르고 컴백만 반복하면 식는다. 초동·투표·이탈에 영향 */
+  loyalty: number;
   turn: number;
   stage: Stage;
   agencyId: string | null;
@@ -176,6 +186,7 @@ export type Career = {
   lineup?: Lineup | null;
   /** 데뷔 앨범 준비: 콘셉트 → 쇼케이스 → 음악방송 데뷔 무대 순서로 정한 뒤 발매한다 */
   debutPlan?: { concept: Concept; albumName: string } | null;
+  kpi?: Kpi | null;
   /** 시즌별 요약 기록 (은퇴 후 그래프용). 아이돌 시즌마다 1개 */
   timeline?: { turn: number; popularity: number; fans: number; rank: number | null }[];
   /** 가장 최근 시즌 진행 결과 (대시보드 요약용, 닫아도 남는다) */
