@@ -1,0 +1,28 @@
+name: Prune old Vercel deployments
+
+# ECR 라이프사이클 정책처럼: 매주 월요일 03:00 KST(일요일 18:00 UTC)에 최신 N개와 프로덕션만 남기고 삭제
+on:
+  schedule:
+    - cron: "0 18 * * 0"
+  workflow_dispatch:
+    inputs:
+      keep:
+        description: "남길 최신 배포 개수 (프로덕션 별칭은 항상 유지)"
+        default: "3"
+
+env:
+  VERCEL_ORG_ID: team_bQt002CA4Qv2dQuitwxmrUCt
+  VERCEL_PROJECT_ID: prj_GIrBGV1LomxJBZ7IUJ2g4AII6rZK
+
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node scripts/prune-deployments.mjs
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          KEEP: ${{ github.event.inputs.keep || '3' }}

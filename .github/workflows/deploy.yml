@@ -1,0 +1,58 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+env:
+  VERCEL_ORG_ID: team_bQt002CA4Qv2dQuitwxmrUCt
+  VERCEL_PROJECT_ID: prj_GIrBGV1LomxJBZ7IUJ2g4AII6rZK
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Check VERCEL_TOKEN secret
+        run: |
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "::error::VERCEL_TOKEN 시크릿이 없어요. vercel.com/account/tokens 에서 토큰을 만들고 GitHub 저장소 Settings → Secrets → Actions 에 VERCEL_TOKEN 으로 넣어주세요."
+            exit 1
+          fi
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+
+      - name: Install Vercel CLI
+        run: npm i -g vercel@latest
+
+      - name: Pull Vercel project settings
+        run: vercel pull --yes --environment=production --token="${{ secrets.VERCEL_TOKEN }}"
+
+      - name: Build
+        run: vercel build --prod --token="${{ secrets.VERCEL_TOKEN }}"
+
+      # 커밋 작성자 이메일이 Vercel 계정과 달라 git 메타데이터가 붙으면 차단되므로 .git 없이 올린다
+      - name: Deploy (production)
+        run: |
+          rm -rf .git
+          vercel deploy --prebuilt --prod --yes --token="${{ secrets.VERCEL_TOKEN }}"
+
+      # 배포 직후 오래된 배포를 정리해 무료 플랜 저장 용량(10GB)을 지킨다
+      - name: Prune old deployments
+        run: node scripts/prune-deployments.mjs
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          KEEP: "3"
