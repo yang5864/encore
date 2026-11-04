@@ -345,3 +345,33 @@ test("빌보드 1위는 전체 화면 연출로 띄우고, 시즌 결과는 홈 
   assert.ok(hit > 0, "60번 안에 빌보드 1위가 한 번은 나온다");
   assert.ok(!focusOptions(idol(1)).some((o) => o.id === "promo"), "방송·예능은 계획 선택지에서 빠진다");
 });
+
+test("팀 케미 · 예산 배분 · 라이벌 컴백이 돌아간다", async () => {
+  const { rivalFor, BUDGET_PRESETS } = await import("../lib/game/team.ts");
+  const { eventById } = await import("../lib/game/events/index.ts");
+  // 라이벌: 시드·시즌으로 정해지고 약 40% 시즌에 있다
+  const c = idol(3); c.turn = 20; c.debutTurn = 8;
+  let hits = 0;
+  for (let t = 20; t < 60; t++) if (rivalFor({ ...c, turn: t })) hits++;
+  assert.ok(hits >= 8 && hits <= 24, `라이벌 시즌 ${hits}/40`);
+  assert.deepEqual(rivalFor({ ...c, turn: 21 }), rivalFor({ ...c, turn: 21 }), "같은 시즌엔 같은 라이벌");
+  // 케미가 낮으면 불화 이벤트 조건, 더 낮으면 탈퇴 이벤트 조건
+  const low = idol(4); low.chemistry = 30; low.turn = 20; low.debutTurn = 8;
+  assert.equal(eventById("feud")!.when!(low), true);
+  assert.equal(eventById("member-leave")!.when!(low), true);
+  const fine = idol(4); fine.chemistry = 70; fine.turn = 20; fine.debutTurn = 8;
+  assert.equal(eventById("member-leave")!.when!(fine), false);
+  // 개인 활동은 케미를, 팬미팅은 결속과 케미를 움직인다
+  const s = idol(5); s.turn = 20; s.debutTurn = 8; s.lastReleaseTurn = 20;
+  assert.ok(advanceTurn(s, "solo:acting").chemistry < s.chemistry);
+  const f = advanceTurn(s, "fanmeet");
+  assert.ok(f.chemistry > s.chemistry && f.loyalty > s.loyalty);
+  // 연초 예산 이벤트 → 선택하면 budget이 잡힌다
+  const y = idol(6); y.turn = 21; y.debutTurn = 8; y.lastReleaseTurn = 21; y.kpi = null; y.contractEnd = 40; y.flags.burst = 1;
+  let n = advanceTurn(y, "fanmeet");
+  for (let i = 0; i < 3 && n.pending && n.pending.id !== "budget"; i++) { n = resolveChoice(n, n.pending.choices.find((x) => !x.requires)!.id); }
+  if (n.pending?.id === "budget") {
+    const chosen = resolveChoice(n, "chart");
+    assert.deepEqual(chosen.budget, BUDGET_PRESETS.find((p) => p.id === "chart")!.split);
+  } else assert.ok(n.kpi, "연초엔 KPI가 잡힌다");
+});

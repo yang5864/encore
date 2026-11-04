@@ -159,6 +159,10 @@ export type Career = {
   reputation: number;
   /** 팬덤 결속 0~100: 팬을 챙기면 오르고 컴백만 반복하면 식는다. 초동·투표·이탈에 영향 */
   loyalty: number;
+  /** 팀 케미 0~100: 그룹이 같이 움직이면 오르고 개인 활동·불화로 내려간다. 완성도·탈퇴 위험에 영향 */
+  chemistry: number;
+  /** 올해 홍보 예산 배분(%) */
+  budget?: { mv: number; digital: number; global: number; fan: number } | null;
   turn: number;
   stage: Stage;
   agencyId: string | null;

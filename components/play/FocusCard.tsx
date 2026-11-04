@@ -7,6 +7,7 @@ import { Chip } from "@/components/ui/Chip";
 import { cn } from "@/lib/cn";
 import { CONCEPTS, PRODUCERS, PROMOS, focusOptions, type FocusOption } from "@/lib/game/focus";
 import { conceptStreak } from "@/lib/game/album";
+import { rivalFor } from "@/lib/game/team";
 import { periodLabel } from "@/lib/game/format";
 import { STAT_KEYS, STAT_NAMES } from "@/lib/game/stats";
 import type { Career } from "@/lib/game/types";
@@ -32,6 +33,7 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
     onChange({ id: first?.id ?? "", stat: value.stat ?? STAT_KEYS[0], concept: value.concept ?? CONCEPTS[0].id });
   };
 
+  const rival = rivalFor(career);
   const renderOption = (o: FocusOption) => {
     const selected = value.id === o.id;
     const disabled = !!o.disabledReason;
@@ -53,6 +55,9 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
             {o.readiness ? <Chip tone={o.readiness.tone}>{o.readiness.label}</Chip> : <Chip tone={o.risk === "bold" ? "warn" : "ok"}>{o.risk === "bold" ? "도전" : "안정"}</Chip>}
           </div>
           <p className="text-[13px] text-ink-2 mt-1">{o.disabledReason ?? o.hint}</p>
+          {o.id === "comeback" && rival && !o.disabledReason && (
+            <p className="text-[13px] font-bold text-warn mt-1.5">⚠ 이번 시즌 {rival.name} 컴백 예정 · 초동·차트·음방 점수를 나눠 가져요. 이기면 화제성이 붙어요</p>
+          )}
         </button>
         {selected && o.picker === "stat" && (
           <div className="flex flex-wrap gap-1.5 mt-2 px-1">

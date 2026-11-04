@@ -8,6 +8,7 @@ import { conditionOf, fanText, reputationBand, reputationProgress } from "@/lib/
 import { countText } from "@/lib/game/metrics";
 import { Logo } from "@/components/Logo";
 import { cn } from "@/lib/cn";
+import { chemistryLabel } from "@/lib/game/team";
 import type { Career, Change } from "@/lib/game/types";
 
 function delta(changes: Change[] | undefined, key: string) {
@@ -58,12 +59,19 @@ export function StatsCard({ career, changes }: { career: Career; changes?: Chang
         })}
       </div>
 
-      <div className={cn("grid gap-2 mt-5", career.stage === "idol" || career.stage === "retired" ? "grid-cols-2" : "grid-cols-3")}>
+      <div className="grid gap-2 mt-5 grid-cols-3">
         {(career.stage === "idol" || career.stage === "retired") && (
           <div className="rounded-2xl bg-sub p-3 min-w-0">
             <p className="text-[13px] text-ink-3 font-semibold">팬덤 결속</p>
             <p className="text-[16px] font-bold tracking-[-0.02em]" style={{ color: career.loyalty >= 65 ? "#04c75a" : career.loyalty >= 35 ? "#ff9500" : "#f04452" }}>{Math.round(career.loyalty)}{delta(changes, "loyalty") !== null && <span className={`ml-1 text-[13px] ${delta(changes, "loyalty")! > 0 ? "text-up" : "text-down"}`}>{delta(changes, "loyalty")! > 0 ? "+" : ""}{Math.round(delta(changes, "loyalty")!)}</span>}</p>
             <ProgressBar value={career.loyalty} color={career.loyalty >= 65 ? "#04c75a" : career.loyalty >= 35 ? "#ff9500" : "#f04452"} height={4} className="mt-1.5" label="팬덤 결속" />
+          </div>
+        )}
+        {(career.stage === "idol" || career.stage === "retired") && !career.flags.solo && (
+          <div className="rounded-2xl bg-sub p-3 min-w-0">
+            <p className="text-[13px] text-ink-3 font-semibold">팀 케미</p>
+            <p className="text-[16px] font-bold tracking-[-0.02em]" style={{ color: career.chemistry >= 75 ? "#04c75a" : career.chemistry >= 45 ? "#ff9500" : "#f04452" }}>{chemistryLabel(career.chemistry)}{delta(changes, "chemistry") !== null && <span className={`ml-1 text-[13px] ${delta(changes, "chemistry")! > 0 ? "text-up" : "text-down"}`}>{delta(changes, "chemistry")! > 0 ? "+" : ""}{Math.round(delta(changes, "chemistry")!)}</span>}</p>
+            <ProgressBar value={career.chemistry} color={career.chemistry >= 75 ? "#04c75a" : career.chemistry >= 45 ? "#ff9500" : "#f04452"} height={4} className="mt-1.5" label="팀 케미" />
           </div>
         )}
         <Metric label="코어 팬덤" value={<CountUp value={career.fans} format={fanText} />} d={delta(changes, "fans")} fmt={(n) => fanText(Math.abs(n))} />

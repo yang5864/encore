@@ -11,6 +11,7 @@ import { CONCEPTS, DANGER_LOCK, MAIN_STAT, focusLabel, lowestStat, soloChance, s
 import { makeAlbum, albumSummary, addShowWin, winBase, ALBUM_NAME_PATTERN, DEFAULT_PRODUCTION } from "./album.ts";
 import { PRODUCERS, PROMOS } from "./focus.ts";
 import { makeKpi, kpiMet } from "./kpi.ts";
+import { BUDGET_PRESETS, budgetOf, rivalFor } from "./team.ts";
 import type { Production } from "./types.ts";
 import type { Award } from "./types.ts";
 import { yearEndAwards } from "./awards.ts";
@@ -213,6 +214,13 @@ export function advanceTurn(original: Career, focusId: string): Career {
       if (!CONCEPTS.some((x) => x.id === concept)) throw new GameError("콘셉트를 골라주세요.");
       const album = makeAlbum(c, concept, albumName, production);
       headline = `${c.albums.length === 1 ? "데뷔 앨범" : "새 앨범"} ${album.name}`;
+      if (c.flags.rivalClash === c.turn) {
+        const rv = rivalFor({ ...c, turn: c.turn })!;
+        const beat = album.melon !== null && album.melon <= 5;
+        if (beat) { c.popularity += 3; addReputation(c, 2); notes.push(`${rv.name} 컴백과 맞붙어 차트에서 이겼어요. 화제성이 붙어요.`); }
+        else notes.push(`${rv.name} 컴백과 시기가 겹쳐 초동·차트·음방 점수를 나눠 가졌어요.`);
+        delete c.flags.rivalClash;
+      }
       if (production.producer === "self") notes.push(c.stats.producing >= 55 ? "자작곡이 좋은 평가를 받았어요. 프로듀싱 실력이 늘어요." : "자작곡의 완성도가 아쉬웠어요. 프로듀싱을 더 키우거나 외부 제작을 고려해요.");
       text = albumSummary(album);
       scene = "album";
@@ -243,6 +251,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       addReputation(c, 4);
       c.money.revenue += 2;
       c.loyalty = Math.min(100, c.loyalty + 12);
+      if (!c.flags.solo) c.chemistry = Math.min(100, c.chemistry + 3);
       c.mental += 6;
       c.health -= 4;
       grow(c, "variety", 1.5);
@@ -272,6 +281,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       grow(c, stat, success ? 3 : 1.5);
       c.health -= 8;
       c.loyalty = Math.max(0, c.loyalty - 5); // 개인 활동 동안 그룹 팬덤은 서운하다
+      if (!c.flags.solo) c.chemistry = Math.max(0, c.chemistry - 6); // 멤버들은 빈자리를 느낀다
       c.flags[`solo:${solo}`] = (c.flags[`solo:${solo}`] ?? 0) + (success ? 1 : 0);
       const statName = STAT_NAMES[stat];
       if (success) {
@@ -313,7 +323,14 @@ export function advanceTurn(original: Career, focusId: string): Career {
   if (c.stage === "idol") {
     const gap = c.lastReleaseTurn === null ? 99 : c.turn - c.lastReleaseTurn;
     if (kind !== "comeback") c.fans = Math.round(c.fans * 0.97);
-    if (kind === "rest") c.loyalty = Math.min(100, c.loyalty + 2);
+    if (kind === "rest") { c.loyalty = Math.min(100, c.loyalty + 2); if (!c.flags.solo) c.chemistry = Math.min(100, c.chemistry + 4); }
+    if (kind === "comeback" && !c.flags.solo && c.albums.length >= 3 && c.albums.slice(-3).every((al, i, arr) => al.turn === arr[0].turn + i)) c.chemistry = Math.max(0, c.chemistry - 3); // 쉼 없는 컴백 3연속
+    if (!c.flags.solo) {
+      const fanBudget = budgetOf(c).fan;
+      if (fanBudget > 25) c.loyalty = Math.min(100, c.loyalty + Math.round((fanBudget - 25) / 8)); // 팬 콘텐츠 예산
+      if (c.chemistry < 30) notes.push("팀 분위기가 위기예요. 휴식이나 팬미팅으로 멤버들과 시간을 보내지 않으면 탈퇴 이야기가 나와요.");
+      else if (c.chemistry >= 80) notes.push("팀 케미가 최고예요. 완성도에 힘이 실려요.");
+    }
     if (c.loyalty < 30) { c.fans = Math.round(c.fans * 0.95); notes.push("팬덤 결속이 낮아 팬이 빠져나가요. 팬미팅·콘텐츠로 챙겨주세요."); }
     else if (c.loyalty >= 80) notes.push("팬덤 결속이 단단해요. 초동과 음방 투표에 힘이 실려요.");
     if (gap >= 2 && kind !== "comeback") {
@@ -347,6 +364,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   if (c.stage === "idol" && !c.kpi && c.turn % 2 === 0 && c.debutTurn !== null && c.turn - c.debutTurn >= 1 && c.contractEnd !== null && c.turn < c.contractEnd) {
     c.kpi = makeKpi(c);
     if (c.kpi) { c.flags.kpiSince = c.turn; notes.push(`올해 회사 목표: ${c.kpi.label}`); }
+    c.flags.budgetDue = c.turn; // 예산 배분 이벤트
   }
 
   // ── 연말 결산 ──
@@ -402,6 +420,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
     if (walletOf(c) >= cheapest) notes.push("정산금으로 이번 시즌 상점 아이템을 살 수 있어요. 홈의 상점 줄에서 골라요.");
   }
   c.pending = scheduleEvent(c);
+  if (!c.pending && c.flags.budgetDue === c.turn) c.pending = budgetEvent(c);
   finish(c, before, headline, text, tone, { scene, notes, comments, awards: wonAwards, celebrate, spotlight });
   c.lastResult = c.result;
   return c;
@@ -436,6 +455,19 @@ function writeOffIfBankrupt(c: Career) {
   if (c.flags.bankruptTurn === undefined) return;
   c.money.invested = Math.min(c.money.invested, c.money.revenue);
   delete c.flags.bankruptTurn;
+}
+
+/** 연초 홍보 예산 배분. 회사가 준 예산을 어디에 쓸지 정한다. */
+function budgetEvent(c: Career): ActiveEvent {
+  const a = agencyById(c.agencyId);
+  const pool = Math.round((a?.budget ?? 0.6) * 20 * eraScale(yearOf(c)));
+  return {
+    id: "budget",
+    title: `${yearOf(c)}년 홍보 예산 배분`,
+    text: `회사가 올해 홍보 예산 ${pool}억원을 배정했어요. 어디에 집중할지 정해요. 회사 목표${c.kpi ? `(${c.kpi.label})` : ""}와 맞추면 좋아요.`,
+    scene: "contract",
+    choices: BUDGET_PRESETS.map((p) => ({ id: p.id, label: p.name, hint: p.hint, risk: "safe" as const, op: `budget:${p.id}` })),
+  };
 }
 
 function debutStageEvent(): ActiveEvent {
@@ -499,6 +531,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     headline = success ? `${choice.label} — 성공` : `${choice.label} — 아쉬운 결과`;
     if (success && op === "tour:dome") c.flags.domeTour = 1;
     if (!success && op === "scandal") { c.flags.scandalTurn = c.turn; c.hiatusUntil = c.turn + 1; c.loyalty = Math.max(0, c.loyalty - 10); }
+  if (event.id === "member-bullying" || event.id === "member-dui") c.chemistry = Math.max(0, c.chemistry - 10);
+  if (event.id === "unit" && tone === "good") c.chemistry = Math.min(100, c.chemistry + 5);
   } else {
     applyEffects(c, choice.effects);
   }
@@ -554,6 +588,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     c.trust = Math.min(100, c.trust + 10);
     c.mental = Math.min(100, c.mental + 15);
     c.loyalty = 55;
+    c.chemistry = 60;
     addReputation(c, 3);
     headline = `${name} 데뷔 확정`;
     text = `${ageOf(c)}세, ${a.name}에서 ${name}(으)로 데뷔해요. 데뷔 앨범 콘셉트를 정할 차례예요.`;
@@ -785,6 +820,28 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     reaction = { kind: "stadium" };
     spotlight = { chip: `${yearOf(c)} WORLD STADIUM TOUR`, title: "전 세계 스타디움을\n매진시켰어요", subtitle: `${displayName(c)}${hasBatchim(displayName(c)) ? "이" : "가"} 세계에서 몇 팀뿐인 스타디움 투어를 마쳤어요`, stats: ["12개 도시 · 회당 5만 명", `코어 팬덤 ${fanText(c.fans)}`] };
     log(c, headline, text, "milestone");
+  } else if (op.startsWith("budget:")) {
+    const p = BUDGET_PRESETS.find((x) => x.id === op.slice(7))!;
+    c.budget = { ...p.split };
+    delete c.flags.budgetDue;
+    headline = `홍보 예산: ${p.name}`;
+    text = `뮤직비디오 ${p.split.mv}% · 음원 ${p.split.digital}% · 해외 ${p.split.global}% · 팬 콘텐츠 ${p.split.fan}%로 올해를 운영해요.`;
+  } else if (op === "feud:talk") {
+    c.chemistry = Math.min(100, c.chemistry + 18);
+    c.mental -= 6;
+    headline = "멤버들과 밤새 이야기했어요";
+    text = "쌓였던 말을 다 꺼냈어요. 당장 편하진 않지만 팀이 다시 한 방향을 봐요.";
+    tone = "good";
+  } else if (op === "feud:company") {
+    c.chemistry = Math.min(100, c.chemistry + 8);
+    c.trust = Math.max(0, c.trust - 6);
+    headline = "회사가 중재했어요";
+    text = "회사가 멤버 면담을 잡았어요. 겉으로는 정리됐지만 '회사가 끼었다'는 서운함이 남아요.";
+  } else if (op === "feud:ignore") {
+    c.chemistry = Math.max(0, c.chemistry - 8);
+    headline = "일단 활동부터 했어요";
+    text = "말을 아끼고 스케줄을 돌렸어요. 분위기는 더 가라앉았어요.";
+    tone = "bad";
   } else if (op === "agency-closed") {
     const a = agencyById(c.agencyId);
     c.stage = "free";

@@ -3,6 +3,7 @@ import { agencyById } from "./agencies.ts";
 import { CONCEPTS } from "./focus.ts";
 import { rng } from "./rng.ts";
 import { eraScale, yearOf } from "./format.ts";
+import { budgetOf, chemistryQuality, rivalFor } from "./team.ts";
 
 const ALBUM_TITLES = ["FIRST LIGHT", "BLOOM", "NEON HOUR", "AFTERGLOW", "ORBIT", "MIDNIGHT CALL", "WAVE", "HEARTLINE", "SUPERNOVA", "ENCORE", "PRISM", "DAYBREAK", "GRAVITY", "PARADE", "LANTERN"];
 
@@ -92,6 +93,9 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
   let cost = albumCost(c, quality);
   if (production.producer === "star") cost = Math.round(cost * 1.6 * 10) / 10;
   if (production.producer === "self") cost = Math.round(cost * 0.7 * 10) / 10;
+  if (!c.flags.solo) quality = Math.max(10, Math.min(100, quality + chemistryQuality(c.chemistry)));
+  const budget = budgetOf(c);
+  const rival = rivalFor(c);
   if (c.flags.budgetBonus) { quality = Math.min(100, quality + 3); }
   if (c.flags.budgetCut) { quality = Math.max(10, quality - 3); }
   // 흥행은 꼬리가 길다: 대부분 평범하지만 가끔 바이럴로 폭발하고, 가끔은 크게 실패한다
@@ -104,6 +108,8 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
   if (production.promo === "physical") hype *= 1.2;
   if (production.promo === "digital") hype *= 0.85;
   if (production.promo === "global") hype *= 0.9;
+  hype *= 1 + (budget.mv - 25) / 200; // 뮤직비디오·마케팅 예산
+  if (rival) hype *= 0.9; // 같은 시기 라이벌 컴백과 초동을 나눠 갖는다
   if (viral) c.flags.albumViral = c.turn;
   if (flop) c.flags.albumFlop = c.turn;
   const era = eraScale(yearOf(c));
@@ -113,14 +119,15 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
 
   const popularity = c.popularity;
   const chartScore = quality * 0.5 + Math.log10(c.fans / era + 100) * 7.5 + popularity * 0.25 + (concept === "fresh" ? 3 : 0) + rng(c) * 12 + (viral ? 18 : flop ? -15 : 0)
-    + (production.promo === "digital" ? 6 : production.promo === "physical" ? -4 : 0) + (switched ? 5 : 0) - fatigue * 3;
+    + (production.promo === "digital" ? 6 : production.promo === "physical" ? -4 : 0) + (switched ? 5 : 0) - fatigue * 3
+    + (budget.digital - 25) / 5 - (rival ? 6 : 0);
   // 멜론 TOP100: 진입 자체가 쉽지 않고, 1위는 팬덤·인기·완성도가 모두 받쳐야 한다
   const melon = chartScore >= 86 ? Math.max(1, Math.round(100 - (chartScore - 86) * 5)) : null;
 
   let billboard: number | null = null;
   if (popularity >= 70 && c.fans / era >= 1500000) {
     const globalBoost = c.flags.globalBoost !== undefined && c.turn - c.flags.globalBoost <= 2 ? 6 : 0;
-    const globalScore = quality * 0.5 + Math.log10(c.fans / era) * 8 + reach * 4 + globalBoost + rng(c) * 12 + (production.promo === "global" ? 7 : 0);
+    const globalScore = quality * 0.5 + Math.log10(c.fans / era) * 8 + reach * 4 + globalBoost + rng(c) * 12 + (production.promo === "global" ? 7 : 0) + (budget.global - 25) / 4;
     if (globalScore >= 95) {
       billboard = Math.max(1, Math.min(100, Math.round(100 - (globalScore - 95) * 4)));
       if (billboard > 1 && c.fans / era >= 4000000 && quality >= 85 && rng(c) < 0.35) billboard = 1;
@@ -128,8 +135,9 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
   }
 
   // 음악방송 1위: 6개 방송을 각각 따로 겨룬다 (방송마다 최대 1회)
-  const base = winBase(c, melon, sales);
+  const base = winBase(c, melon, sales) * (rival ? 0.7 : 1);
   const shows = MUSIC_SHOWS.filter((s) => rng(c) < Math.min(0.9, base * s.ease)).map((s) => s.name);
+  if (rival) c.flags.rivalClash = c.turn; // 결과 문구용
   const wins = shows.length;
   if (wins === 0 && base >= 0.1 && rng(c) < 0.5) c.flags.candidate = c.turn + 1; // 다음 턴 시작 시 1위 후보 이벤트
   delete c.flags.stageBonus;

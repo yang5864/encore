@@ -38,6 +38,7 @@ export type Snapshot = {
   popularity: number;
   reputation: number;
   loyalty: number;
+  chemistry: number;
   condition: number;
   settled: number;
   instagram: number;
@@ -53,6 +54,7 @@ export function snapshot(c: Career): Snapshot {
     popularity: Math.round(c.popularity),
     reputation: Math.round(c.reputation),
     loyalty: Math.round(c.loyalty ?? 50),
+    chemistry: Math.round(c.chemistry ?? 60),
     condition: conditionOf(c).value,
     settled: c.money.settled,
     instagram: c.metrics?.instagram ?? 0,
@@ -70,6 +72,7 @@ export function diff(before: Snapshot, after: Snapshot, showMoney: boolean): Cha
   push("ovr", "OVR", before.ovr, after.ovr, "int");
   push("fans", "팬", before.fans, after.fans, "fans");
   push("loyalty", "팬덤 결속", before.loyalty, after.loyalty, "int");
+  push("chemistry", "팀 케미", before.chemistry, after.chemistry, "int");
   push("popularity", "인기도", before.popularity, after.popularity, "int");
   push("reputation", "평판", before.reputation, after.reputation, "rep");
   if (showMoney) push("settled", "정산금", before.settled, after.settled, "won");

@@ -89,7 +89,7 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
   }
 
   // 2. 상태
-  for (const id of ["showcase", "musicshow", "live-controversy", "chartfraud", "hiatus-health", "injury"]) {
+  for (const id of ["showcase", "musicshow", "feud", "live-controversy", "chartfraud", "hiatus-health", "injury"]) {
     const def = eventById(id)!;
     if (eligible(def, c) && (id !== "injury" || rng(c) < 0.35)) return take(c, id);
   }

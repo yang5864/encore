@@ -39,6 +39,21 @@ export const IDOL_EVENTS: GameEventDef[] = [
     ],
   },
   {
+    id: "feud",
+    stage: "idol",
+    kind: "state",
+    title: "멤버 불화",
+    text: "연습실에서 말다툼이 있었어요. 각자 스케줄에 치여 서로 서운한 게 쌓였어요. 팬들도 눈치채기 시작했어요.",
+    scene: "dorm",
+    repeatable: true,
+    when: (c) => !c.flags.solo && c.chemistry < 35,
+    choices: [
+      { id: "talk", label: "멤버들과 밤새 이야기한다", hint: "케미가 크게 회복되지만 마음이 지쳐요", risk: "safe", op: "feud:talk" },
+      { id: "company", label: "회사에 중재를 맡긴다", hint: "조금 회복되지만 회사 신뢰가 깎여요", risk: "safe", op: "feud:company" },
+      { id: "ignore", label: "일단 활동부터 한다", hint: "분위기가 더 가라앉고 탈퇴 위험이 커져요", risk: "bold", op: "feud:ignore" },
+    ],
+  },
+  {
     id: "live-controversy",
     stage: "idol",
     kind: "state",
@@ -349,7 +364,7 @@ export const IDOL_EVENTS: GameEventDef[] = [
     scene: "dorm",
     public: true,
     weight: 0.3,
-    when: (c) => !c.flags.solo && since(c) >= 4,
+    when: (c) => !c.flags.solo && since(c) >= 4 && c.chemistry < 45,
     choices: [
       { id: "support", label: "멤버의 결정을 응원하는 메시지를 낸다", hint: "팬들이 성숙한 대응이라고 해요. 팀은 조금 작아져요", risk: "safe", effects: { reputation: 4, fansMul: 0.92, mental: -8 } },
       { id: "reorg", label: "새 포지션으로 빠르게 재정비한다", hint: "내 파트가 늘어 실력이 오르지만 지쳐요", risk: "bold", effects: { vocal: 2, dance: 2, fansMul: 0.9, health: -12, mental: -6 } },
