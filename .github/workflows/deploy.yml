@@ -50,6 +50,10 @@ jobs:
           rm -rf .git
           vercel deploy --prebuilt --prod --yes --token="${{ secrets.VERCEL_TOKEN }}"
 
+      # 첫 방문자가 이미지 변환을 기다리지 않도록 아트 캐시를 데운다
+      - name: Warm image cache
+        run: node scripts/warm-images.mjs https://encore-alpha-peach.vercel.app
+
       # 배포 직후 오래된 배포를 정리해 무료 플랜 저장 용량(10GB)을 지킨다
       - name: Prune old deployments
         run: node scripts/prune-deployments.mjs

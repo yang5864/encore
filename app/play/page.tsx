@@ -18,6 +18,7 @@ import { ShopBody } from "@/components/play/ShopCard";
 import { FocusCard, focusIdOf, type FocusSelection } from "@/components/play/FocusCard";
 import { EventSheet } from "@/components/play/EventSheet";
 import { PrefetchArt } from "@/components/EventArt";
+import { AWARD_SCENES } from "@/components/play/AwardShow";
 import { ResultSheet } from "@/components/play/ResultSheet";
 import { MilestoneSheet } from "@/components/play/MilestoneSheet";
 import { AgencySheet } from "@/components/play/AgencySheet";
@@ -110,7 +111,8 @@ export default function PlayPage() {
 
   if (!ready || !career) return <div className="shell" />;
   const FOCUS_SCENE: Record<string, string> = { comeback: "album", promo: "variety", fanmeet: "fansign", overseas: "tour", rest: "rest", "solo:acting": "drama", "solo:solo": "songwriting", "solo:variety": "variety", "solo:producing": "songwriting", train: "dance" };
-  const prefetchScenes = [career.pending?.scene ?? "", FOCUS_SCENE[focus.id] ?? FOCUS_SCENE[focus.id.split(":")[0]] ?? "", career.stage === "idol" ? "awards" : ""];
+  const ceremonySoon = career.pending?.id === "awards-invite" || career.pending?.id === "ceremony" || (career.stage === "idol" && career.turn % 2 === 1);
+  const prefetchScenes = [career.pending?.scene ?? "", FOCUS_SCENE[focus.id] ?? FOCUS_SCENE[focus.id.split(":")[0]] ?? "", ...(ceremonySoon ? AWARD_SCENES.slice(0, 4) : career.stage === "idol" ? ["awards"] : [])];
 
   return (
     <main className="shell pt-3">

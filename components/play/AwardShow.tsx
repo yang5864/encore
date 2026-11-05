@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { ArtFrames } from "@/components/ArtFrames";
-import Image from "next/image";
+import { EventArt, PrefetchArt } from "@/components/EventArt";
 import { eventArt } from "@/lib/art";
 import { brandTable } from "@/lib/game/brand-rank";
 import { SHOW_FULL } from "@/lib/game/awards";
@@ -13,10 +12,12 @@ import { cn } from "@/lib/cn";
  * 시상식 장면 id. 아트 카탈로그에 같은 id의 장면이 있으면 그걸 쓰고, 없으면 기본 "awards" 장면으로 대신한다.
  * (카탈로그에 추가할 장면: awards-redcarpet, awards-stage, awards-seat, awards-announce, awards-win, awards-cry, awards-speech, awards-lose)
  */
-function sceneFor(id: string, avatar: number, gender?: "female" | "male") {
-  const art = eventArt(id, avatar, gender);
-  return art.scene === id ? art : eventArt("awards", avatar, gender);
+function sceneIdFor(id: string, avatar: number, gender?: "female" | "male"): string {
+  return eventArt(id, avatar, gender).scene === id ? id : "awards";
 }
+export const AWARD_SCENES = ["awards-redcarpet", "awards-stage", "awards-seat", "awards-announce", "awards-win", "awards-cry", "awards-speech", "awards-lose"];
+const stepScene = (step: Step, reaction: Reaction | null) =>
+  step.kind === "redcarpet" ? "awards-redcarpet" : step.kind === "stage" ? "awards-stage" : step.kind === "seat" ? "awards-seat" : step.kind === "announce" ? "awards-announce" : step.kind === "lose" ? "awards-lose" : step.kind === "win" ? (reaction === "cry" ? "awards-cry" : "awards-win") : "awards-speech";
 
 type Step = { kind: "redcarpet" } | { kind: "stage"; name: string } | { kind: "seat"; award: Award | null } | { kind: "announce"; award: Award | null } | { kind: "win"; award: Award } | { kind: "lose" } | { kind: "speech"; award: Award };
 type Reaction = "joy" | "cry" | "calm";
@@ -99,11 +100,9 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
   }, [i, step.kind]);
 
   const next = () => setI((n) => Math.min(steps.length - 1, n + 1));
-  const art = sceneFor(
-    step.kind === "redcarpet" ? "awards-redcarpet" : step.kind === "stage" ? "awards-stage" : step.kind === "seat" ? "awards-seat" : step.kind === "announce" ? "awards-announce" : step.kind === "lose" ? "awards-lose" : step.kind === "win" ? (reaction === "cry" ? "awards-cry" : "awards-win") : "awards-speech",
-    career.avatar,
-    career.gender,
-  );
+  const sceneId = sceneIdFor(stepScene(step, reaction), career.avatar, career.gender);
+  // 다음 장면(과 반응 분기)을 미리 받아 둔다
+  const upcoming = [steps[i + 1], steps[i + 2]].filter(Boolean).flatMap((s) => (s.kind === "win" ? ["awards-win", "awards-cry"] : [stepScene(s, reaction)]));
   const show = SHOW_FULL[cm.show] ?? cm.show;
   const name = career.groupName || career.name;
 
@@ -130,10 +129,10 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
           <span className="text-[13px] text-white/50">{cm.year} {show}</span>
           <span className="text-[13px] text-white/40">{i + 1} / {steps.length}</span>
         </div>
-        <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-black/40 fade-up" key={`art-${i}-${reaction ?? ""}`}>
-          <Image src={art.background} alt="" fill sizes="(max-width: 480px) 100vw, 480px" className="object-cover" loading="eager" />
-          <ArtFrames key={`${art.scene}:${career.avatar}:${i}`} frames={art.frames} visibleHeight={43} sizes="(max-width: 480px) 65vw, 310px" />
+        <div className="rounded-2xl overflow-hidden bg-black/40 fade-up" key={`art-${i}-${reaction ?? ""}`}>
+          <EventArt scene={sceneId} avatar={career.avatar} gender={career.gender} name={career.name} />
         </div>
+        <PrefetchArt scenes={upcoming} avatar={career.avatar} gender={career.gender} />
         <div className="mt-6 text-center fade-up" key={`cap-${i}-${revealed}`}>
           <span className="inline-block rounded-full bg-[#3a2b0f] text-[#f5b942] text-[13px] font-bold px-4 py-2">{caption.chip}</span>
           <h2 className={cn("mt-4 font-extrabold tracking-[-0.02em] leading-[1.25]", step.kind === "announce" && revealed ? "text-[32px]" : "text-[22px]")}>{caption.title}</h2>
