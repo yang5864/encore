@@ -18,7 +18,7 @@ type Props = {
 /** Toss-style bottom sheet. All overlays in the app go through this. */
 export function Sheet({ open, onOpenChange, title, description, tall, dismissible = true, footer, children }: Props) {
   return (
-    <Drawer.Root open={open} onOpenChange={onOpenChange} dismissible={dismissible} repositionInputs={false}>
+    <Drawer.Root open={open} onOpenChange={onOpenChange} dismissible={dismissible} repositionInputs={false} handleOnly>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-50 bg-black/40" />
         <Drawer.Content
@@ -30,7 +30,7 @@ export function Sheet({ open, onOpenChange, title, description, tall, dismissibl
           )}
         >
           <div className="pt-2.5 pb-1 flex justify-center shrink-0">
-            <div aria-hidden className="h-1 w-10 rounded-full bg-line" />
+            <Drawer.Handle className="!h-1 !w-10 !rounded-full !bg-line !opacity-100" />
           </div>
           <div className="px-5 pt-2 shrink-0">
             {title ? <Drawer.Title className="t-title">{title}</Drawer.Title> : <Drawer.Title className="sr-only">시트</Drawer.Title>}

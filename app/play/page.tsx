@@ -99,7 +99,7 @@ export default function PlayPage() {
       advance(focusId);
       setProgress(0);
       setAdvancing(false);
-    }, 800);
+    }, 450);
   };
 
   const ctaLabel = useMemo(() => {

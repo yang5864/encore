@@ -112,6 +112,11 @@
 }
 
 @layer base {
+  /* 터치가 더블탭 확대 판정으로 늦게 먹거나 씹히지 않게 */
+  button, a, [role="button"], .press {
+    touch-action: manipulation;
+  }
+
   html {
     background: var(--bg);
     color-scheme: var(--scheme);
