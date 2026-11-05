@@ -2,7 +2,10 @@ import type { Award, Career } from "./types.ts";
 import { rng, pick } from "./rng.ts";
 import { eraScale } from "./format.ts";
 
-const SHOWS = ["MAMA", "MMA", "골든디스크"];
+export const SHOWS = ["MAMA", "MMA", "골든디스크"];
+export const SHOW_FULL: Record<string, string> = { MAMA: "MAMA AWARDS", MMA: "멜론뮤직어워드 (MMA)", 골든디스크: "골든디스크 어워즈" };
+/** 방송사 연말 가요제 — 시상은 없고 무대만 */
+export const YEAR_END_STAGES = ["SBS 가요대전", "KBS 가요대축제", "MBC 가요대제전"];
 
 /** Called once per finished year (after 하반기). Returns awards won this season. */
 export function yearEndAwards(c: Career, year: number, lastTwoTurns: [number, number]): Award[] {
@@ -29,7 +32,6 @@ export function yearEndAwards(c: Career, year: number, lastTwoTurns: [number, nu
       won.push({ year, show, name: show === "MAMA" ? "올해의 아티스트 (대상)" : "올해의 앨범 (대상)", kind: "daesang" });
     }
   }
-  c.awards.push(...won);
   return won;
 }
 

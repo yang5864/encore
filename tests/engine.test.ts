@@ -176,7 +176,9 @@ test("아이돌 7년 계약 만료에 재계약 이벤트가 온다", () => {
   c.lastReleaseTurn = 19;
   c.popularity = 85;
   c.stats = { vocal: 80, dance: 75, rap: 60, visual: 75, variety: 65, producing: 60 };
-  const n = advanceTurn(c, "promo");
+  const n0 = advanceTurn(c, "promo");
+  // 연말이면 시상식 초청이 먼저 오고, 끝내면 재계약 협상이 바로 이어진다
+  const n = n0.pending?.id === "awards-invite" ? resolveChoice(n0, "skip") : n0;
   assert.equal(n.pending?.id, "contract7");
   assert.ok(!n.pending.choices.some((x) => x.op === "transfer"), "국내 기획사끼리 이적은 없다");
   const renewed = resolveChoice(n, "renew");
@@ -189,7 +191,8 @@ test("남성 아이돌은 27세 이후 입대 이벤트, 복무는 한 번에 �
   c.turn = 31;
   c.contractEnd = 40;
   c.lastReleaseTurn = 27;
-  const n = advanceTurn(c, "promo");
+  const n0 = advanceTurn(c, "promo");
+  const n = n0.pending?.id === "awards-invite" ? resolveChoice(n0, "skip") : n0;
   assert.equal(n.pending?.id, "military");
   const enlisted = resolveChoice(n, "army");
   assert.equal(enlisted.militaryUntil, 35);

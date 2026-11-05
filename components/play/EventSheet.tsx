@@ -10,12 +10,13 @@ import { EventArt } from "@/components/EventArt";
 import type { Career, Signature } from "@/lib/game/types";
 import { ContractView } from "./ContractView";
 import { AlbumNamePicker } from "./AlbumNamePicker";
+import { AwardShow } from "./AwardShow";
 import { suggestAlbumName } from "@/lib/game/album";
 
 type Props = {
   career: Career;
   open: boolean;
-  onChoose: (choiceId: string, extra?: { groupName?: string; signature?: Signature; albumName?: string }) => void;
+  onChoose: (choiceId: string, extra?: { groupName?: string; signature?: Signature; albumName?: string; reaction?: string }) => void;
 };
 
 export function EventSheet({ career, open, onChoose }: Props) {
@@ -26,6 +27,8 @@ export function EventSheet({ career, open, onChoose }: Props) {
   const [customAlbum, setCustomAlbum] = useState(false);
   const [albumName, setAlbumName] = useState("");
   if (!event) return null;
+  // 시상식은 시트가 아니라 전체 화면 장면으로 진행한다
+  if (event.id === "ceremony" && career.ceremony) return open ? <AwardShow career={career} event={event} onChoose={(id, extra) => onChoose(id, extra)} /> : null;
   const isAlbum = event.id === "debut-concept";
   const choice = event.choices.find((c) => c.id === selected) ?? null;
   const needsName = choice?.op === "debut" && !choice.sign;

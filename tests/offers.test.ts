@@ -375,3 +375,26 @@ test("팀 케미 · 예산 배분 · 라이벌 컴백이 돌아간다", async ()
     assert.deepEqual(chosen.budget, BUDGET_PRESETS.find((p) => p.id === "chart")!.split);
   } else assert.ok(n.kpi, "연초엔 KPI가 잡힌다");
 });
+
+test("연말 시상식: 초청 → 참석 → 호명 → 수상소감 순서로 진행되고, 불참이면 대리 수상", () => {
+  const base = idol(7);
+  base.turn = 21; base.debutTurn = 8; base.lastReleaseTurn = 21; base.popularity = 70; base.fans = 2000000; base.contractEnd = 40; base.flags.burst = 1;
+  base.albums = [{ id: "a", turn: 21, name: "X", concept: "fresh", quality: 75, sales: 400000, melon: 3, billboard: null, wins: 2, shows: ["더쇼", "뮤직뱅크"], cost: 20, revenue: 50 }];
+  const n = advanceTurn(base, "fanmeet");
+  assert.equal(n.pending?.id, "awards-invite", "연말엔 초청장이 먼저 온다");
+  assert.ok(n.ceremony && n.ceremony.awards.length > 0, "본상은 확보돼 있다");
+  assert.equal(n.awards.length, 0, "참석 전엔 수상이 확정되지 않는다");
+  assert.equal(n.result?.celebrate, undefined, "활동 결과에 폭죽이 붙지 않는다");
+  const attended = resolveChoice(n, "attend");
+  assert.equal(attended.pending?.id, "ceremony");
+  assert.ok(attended.pending!.choices.some((x) => x.op === "speech:fans"));
+  const spoke = resolveChoice(attended, "fans", { reaction: "cry" });
+  assert.ok(spoke.awards.length > 0, "소감 뒤 수상이 기록된다");
+  assert.ok(spoke.loyalty > attended.loyalty, "팬 감사 소감은 결속을 올린다");
+  assert.ok(spoke.result?.celebrate === "award" || spoke.result?.celebrate === "daesang");
+  assert.equal(spoke.ceremony, null);
+  const skipped = resolveChoice(n, "skip");
+  assert.ok(skipped.awards.length > 0, "불참해도 대리 수상으로 기록된다");
+  assert.equal(skipped.result?.celebrate, undefined);
+  assert.ok(skipped.popularity < n.popularity);
+});

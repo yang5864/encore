@@ -10,7 +10,7 @@ export type ReactionKind =
   | "album" | "album-viral" | "album-flop" | "debut-stage" | "showcase"
   | "win" | "win-miss" | "rechart" | "award" | "daesang"
   | "variety" | "fanmeet" | "tour" | "acting-hit" | "acting-flop" | "solo-hit" | "solo-flop" | "variety-hit" | "variety-flop" | "produce-hit" | "produce-flop"
-  | "grammy" | "stadium"
+  | "grammy" | "stadium" | "award-miss"
   | "renew" | "move" | "own-label" | "leave" | "disband" | "bankrupt" | "scandal" | "hiatus" | "military" | "debut" | "generic";
 
 type Era = "cyworld" | "early-twitter" | "insta" | "shortform" | "now";
@@ -86,6 +86,7 @@ const S: Record<ReactionKind, string[]> = {
   "variety-flop": ["예능에서 존재감 없어서 편집당함", "분량 안 나오는 거 보니 예능은 아닌 듯", "말 수가 너무 없어서 아쉬움", "고정 하차설 벌써 나옴", "본업은 잘하니까 무대에 집중해라", "예능감은 노력으로 안 되나 봄"],
   "produce-hit": ["다른 가수한테 준 곡이 차트에 있네 작곡가 크레딧 봐", "프로듀서로도 성공 실화", "자작곡 퀄리티 점점 올라감", "셀프 프로듀싱돌 인정", "작곡 저작권료 쏠쏠하겠다 ㅋㅋ", "다음 앨범도 직접 써줘"],
   "produce-flop": ["데모 채택 안 됐대 아쉽", "작곡은 아직 아마추어 느낌", "본업 먼저 하고 작곡은 취미로", "자작곡 수록곡으로라도 넣어주지", "프로듀서 꿈은 응원하는데 시간이 필요함", "곡은 괜찮았는데 운이 없었던 듯"],
+  "award-miss": ["올해는 아쉽지만 무대는 레전드였다", "상은 내년에 받자 올해 활동 고생했어", "시상식 무대 직캠 조회수 봐 상보다 이게 남음", "후보 오른 것만으로도 대단한 거임", "내년 대상 가자 진짜", "다른 팀 축하해주는 모습도 멋있었음"],
   grammy: ["그래미 노미네이트 실화냐 한국 아이돌이", "레드카펫 사진 외신에 다 떴다", "수상 못 해도 후보 자체가 역사임", "미국 토크쇼 섭외 들어온다며", "이제 해외 팬들이 더 많은 듯", "그래미 무대 직캠 조회수 봐"],
   stadium: ["스타디움 투어 전 회 매진 미쳤다", "회당 5만 명이면 도시 하나가 움직인 거임", "해외 뉴스에 공항 영상 나옴", "BTS 이후 처음이라는 기사 떴다", "현지 팬들 한국어 떼창 소름", "투어 끝나고 쉬어야 할 텐데 체력 걱정"],
   renew: ["재계약 ㅠㅠㅠ 완전체 유지 감사합니다", "7년 넘기는 그룹 드문데 대단", "재계약 조건 좋아졌다며 다행", "멤버들 의리 보소", "앞으로도 오래오래", "재계약 발표에 팬들 안도의 한숨"],

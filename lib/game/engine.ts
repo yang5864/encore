@@ -14,7 +14,7 @@ import { makeKpi, kpiMet } from "./kpi.ts";
 import { BUDGET_PRESETS, budgetOf, rivalFor } from "./team.ts";
 import type { Production } from "./types.ts";
 import type { Award } from "./types.ts";
-import { yearEndAwards } from "./awards.ts";
+import { yearEndAwards, SHOW_FULL, YEAR_END_STAGES } from "./awards.ts";
 import { DEBUT_COST, TRAINEE_COST_PER_TURN, updateSettlement } from "./economy.ts";
 import { checkMilestones } from "./milestones.ts";
 import { endingFor } from "./endings.ts";
@@ -371,14 +371,15 @@ export function advanceTurn(original: Career, focusId: string): Career {
   if (c.turn % 2 === 0 && c.stage === "idol") {
     const year = yearOf({ turn: c.turn - 1 });
     const won = yearEndAwards(c, year, [c.turn - 2, c.turn - 1]);
-    wonAwards = won;
-    if (won.length) {
-      for (const a of won) log(c, `${a.show} ${a.name}`, `${year}년 연말 시상식에서 ${a.name}을 받았어요.`, "award");
-      notes.push(`${year} 연말 시상식: ${won.map((a) => `${a.show} ${a.name}`).join(", ")}`);
-      if (won.some((a) => a.kind === "daesang")) tone = "good";
-      celebrate = won.some((a) => a.kind === "daesang") ? "daesang" : "award";
-      if (!comments.length) comments = buildReactions(c, "good", { kind: celebrate === "daesang" ? "daesang" : "award" });
-    } else notes.push(`${year} 연말 시상식: 올해는 수상하지 못했어요.`);
+    const releasedThisYear = c.albums.some((a) => a.turn === c.turn - 2 || a.turn === c.turn - 1);
+    if (releasedThisYear || c.popularity >= 35) {
+      // 수상은 시상식에 참석해 호명될 때 확정된다. 초청장을 먼저 받는다
+      const show = won[0]?.show ?? (c.popularity >= 60 ? "MAMA" : c.popularity >= 45 ? "MMA" : "골든디스크");
+      const stages = YEAR_END_STAGES.slice(0, c.popularity >= 70 ? 3 : c.popularity >= 55 ? 2 : 1);
+      c.ceremony = { year, show, awards: won, stages };
+      c.flags.ceremonyDue = c.turn;
+      notes.push(`${year} 연말 시상식 초청장이 도착했어요.`);
+    } else notes.push(`${year} 연말 시상식: 올해는 초청받지 못했어요.`);
   }
 
   // ── 데뷔 평가 ──
@@ -419,8 +420,12 @@ export function advanceTurn(original: Career, focusId: string): Career {
     const cheapest = offers.length ? Math.min(...offers.map((o) => priceOf(c, o))) : Infinity;
     if (walletOf(c) >= cheapest) notes.push("정산금으로 이번 시즌 상점 아이템을 살 수 있어요. 홈의 상점 줄에서 골라요.");
   }
-  c.pending = scheduleEvent(c);
-  if (!c.pending && c.flags.budgetDue === c.turn) c.pending = budgetEvent(c);
+  if (c.flags.ceremonyDue === c.turn && c.ceremony) {
+    c.pending = inviteEvent(c);
+  } else {
+    c.pending = scheduleEvent(c);
+    if (!c.pending && c.flags.budgetDue === c.turn) c.pending = budgetEvent(c);
+  }
   finish(c, before, headline, text, tone, { scene, notes, comments, awards: wonAwards, celebrate, spotlight });
   c.lastResult = c.result;
   return c;
@@ -455,6 +460,64 @@ function writeOffIfBankrupt(c: Career) {
   if (c.flags.bankruptTurn === undefined) return;
   c.money.invested = Math.min(c.money.invested, c.money.revenue);
   delete c.flags.bankruptTurn;
+}
+
+/** 연말 시상식 초청장. 참석해야 무대와 시상이 진행된다. */
+function inviteEvent(c: Career): ActiveEvent {
+  const cm = c.ceremony!;
+  return {
+    id: "awards-invite",
+    title: `${cm.year} ${SHOW_FULL[cm.show] ?? cm.show} 초청장`,
+    text: `${cm.year} ${SHOW_FULL[cm.show] ?? cm.show} 측에서 ${c.groupName || c.name}을(를) 초청했어요. ${cm.stages.join(" · ")} 무대 출연 요청도 같이 왔어요. 연말 일정이 빡빡하지만, 시상식은 한 해의 결산이에요.`,
+    scene: "awards",
+    public: true,
+    choices: [
+      { id: "attend", label: "시상식에 참석한다", hint: "연말 무대에 서고 시상 결과를 현장에서 들어요. 체력이 조금 떨어져요", risk: "safe", op: "awards:attend" },
+      { id: "skip", label: "참석하지 않는다", hint: "쉬어요. 수상해도 대리 수상이 되고 팬들이 아쉬워해요", risk: "bold", op: "awards:skip" },
+    ],
+  };
+}
+
+/** 시상식 본편. 화면은 AwardShow가 장면별로 보여주고, 선택지는 수상소감(또는 다음 기약)이다. */
+function ceremonyEvent(c: Career): ActiveEvent {
+  const cm = c.ceremony!;
+  const top = [...cm.awards].sort((a, b) => rank(b) - rank(a))[0];
+  const choices: ChoiceDef[] = top
+    ? [
+        { id: "fans", label: "팬들에게 감사해요", hint: "팬덤 결속과 평판이 올라요", risk: "safe", op: "speech:fans" },
+        { id: "parents", label: "부모님께 감사해요", hint: "평판이 오르고 마음이 단단해져요", risk: "safe", op: "speech:parents" },
+        { id: "company", label: "소속사에 감사해요", hint: "회사 신뢰가 크게 오르지만 팬들은 조금 서운해요", risk: "safe", op: "speech:company" },
+        { id: "expected", label: "당연히 받을 줄 알았어요", hint: "화제성은 붙지만 평판이 깎이고 태도 논란이 날 수 있어요", risk: "bold", op: "speech:expected" },
+      ]
+    : [{ id: "next", label: "다음을 기약해요", hint: "무대는 잘 마쳤어요. 내년을 노려요", risk: "safe", op: "awards:none" }];
+  return {
+    id: "ceremony",
+    title: `${cm.year} ${SHOW_FULL[cm.show] ?? cm.show}`,
+    text: top ? `${top.name} 발표를 앞두고 있어요.` : "시상 부문 발표를 앞두고 있어요.",
+    scene: "awards",
+    public: true,
+    choices,
+  };
+}
+const rank = (a: Award) => (a.kind === "daesang" ? 3 : a.kind === "bonsang" ? 2 : 1);
+
+/** 시상식 결과 확정: 상을 기록하고 연출을 붙인다. */
+function commitAwards(c: Career, attended: boolean): { celebrate: TurnResult["celebrate"]; spotlight: TurnResult["spotlight"]; notes: string[] } {
+  const cm = c.ceremony!;
+  const notes: string[] = [];
+  c.awards.push(...cm.awards);
+  for (const a of cm.awards) log(c, `${a.show} ${a.name}`, `${cm.year}년 ${SHOW_FULL[a.show] ?? a.show}에서 ${a.name}을 받았어요.${attended ? "" : " (대리 수상)"}`, "award");
+  const daesang = cm.awards.find((a) => a.kind === "daesang");
+  let spotlight: TurnResult["spotlight"];
+  if (daesang && attended) {
+    const count = c.awards.filter((a) => a.kind === "daesang").length;
+    spotlight = { chip: `${daesang.year} ${daesang.show}`, title: `${count <= 1 ? "첫" : `${count}번째`} 대상을\n받았어요`, subtitle: `${displayName(c)}${hasBatchim(displayName(c)) ? "이" : "가"} ${daesang.name.replace(/\s*\(대상\)$/, "")}${hasBatchim(daesang.name.replace(/\s*\(대상\)$/, "")) ? "으로" : "로"} 뽑혔어요`, stats: [`음방 1위 ${c.musicWins}회`, c.peakMelon === 1 ? "멜론 1위" : c.peakMelon ? `멜론 최고 ${c.peakMelon}위` : ""].filter(Boolean) };
+  }
+  const celebrate: TurnResult["celebrate"] = !cm.awards.length ? undefined : !attended ? undefined : daesang ? "daesang" : "award";
+  if (cm.awards.length) notes.push(`${cm.year} ${SHOW_FULL[cm.show] ?? cm.show}: ${cm.awards.map((a) => a.name).join(" · ")}`);
+  c.ceremony = null;
+  delete c.flags.ceremonyDue;
+  return { celebrate, spotlight, notes };
 }
 
 /** 연초 홍보 예산 배분. 회사가 준 예산을 어디에 쓸지 정한다. */
@@ -501,7 +564,7 @@ function joinAgency(c: Career, agencyId: string) {
   c.lineup = null;
 }
 
-export function resolveChoice(original: Career, choiceId: string, extra: { groupName?: string; albumName?: string } = {}): Career {
+export function resolveChoice(original: Career, choiceId: string, extra: { groupName?: string; albumName?: string; reaction?: string } = {}): Career {
   const c = clone(original);
   if (c.stage === "retired") throw new GameError("이미 완성된 인생예요.");
   const event = c.pending;
@@ -820,6 +883,59 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     reaction = { kind: "stadium" };
     spotlight = { chip: `${yearOf(c)} WORLD STADIUM TOUR`, title: "전 세계 스타디움을\n매진시켰어요", subtitle: `${displayName(c)}${hasBatchim(displayName(c)) ? "이" : "가"} 세계에서 몇 팀뿐인 스타디움 투어를 마쳤어요`, stats: ["12개 도시 · 회당 5만 명", `코어 팬덤 ${fanText(c.fans)}`] };
     log(c, headline, text, "milestone");
+  } else if (op === "awards:attend") {
+    const cm = c.ceremony!;
+    cm.attended = true;
+    c.health = Math.max(0, c.health - 6);
+    c.popularity += 2;
+    applyEffects(c, { fansMul: 1.03 });
+    headline = `${cm.year} ${SHOW_FULL[cm.show] ?? cm.show} 참석`;
+    text = `${cm.stages.join(" · ")} 무대를 마치고 시상식장에 앉았어요.`;
+    c.pending = ceremonyEvent(c);
+  } else if (op === "awards:skip") {
+    const cm = c.ceremony!;
+    c.popularity -= 2;
+    c.loyalty = Math.max(0, c.loyalty - 3);
+    const r = commitAwards(c, false);
+    notes.push(...r.notes);
+    headline = cm.awards.length ? `${cm.show} 불참 · 대리 수상` : `${cm.show} 불참`;
+    text = cm.awards.length ? "참석하지 않은 자리에서 이름이 불렸어요. 소속사 대표가 대신 트로피를 받았어요. 팬들은 아쉬워했어요." : "연말을 조용히 보냈어요. 팬들은 무대를 기다렸어요.";
+    tone = cm.awards.length ? "neutral" : "bad";
+    reaction = { kind: cm.awards.length ? "award" : "generic" };
+    c.pending = scheduleEvent(c) ?? (c.flags.budgetDue === c.turn ? budgetEvent(c) : null);
+  } else if (op === "awards:none") {
+    const cm = c.ceremony!;
+    commitAwards(c, true);
+    headline = `${cm.year} ${SHOW_FULL[cm.show] ?? cm.show} · 수상 없음`;
+    text = "무대는 잘 마쳤지만 트로피는 없었어요. 객석에서 박수를 보내며 내년을 생각했어요.";
+    c.mental = Math.max(0, c.mental - 4);
+    reaction = { kind: "award-miss" };
+    c.pending = scheduleEvent(c) ?? (c.flags.budgetDue === c.turn ? budgetEvent(c) : null);
+  } else if (op.startsWith("speech:")) {
+    const cm = c.ceremony!;
+    const kind = op.slice(7);
+    const rx = extra.reaction;
+    if (rx === "cry") c.loyalty = Math.min(100, c.loyalty + 3);
+    else if (rx === "joy") c.popularity += 1;
+    else if (rx === "calm") addReputation(c, 1);
+    let speech = "";
+    if (kind === "fans") { c.loyalty = Math.min(100, c.loyalty + 8); addReputation(c, 3); speech = "이 상은 팬 여러분 거예요. 응원봉 하나하나가 저희를 여기까지 데려왔어요."; }
+    else if (kind === "parents") { addReputation(c, 4); c.mental = Math.min(100, c.mental + 5); speech = "엄마 아빠, 연습생 때 믿어줘서 고마워요. 이 트로피는 집에 가져갈게요."; }
+    else if (kind === "company") { c.trust = Math.min(100, c.trust + 10); c.loyalty = Math.max(0, c.loyalty - 3); speech = "대표님과 스태프 분들께 감사해요. 회사가 아니었다면 이 무대는 없었어요."; }
+    else {
+      c.popularity += 4; addReputation(c, -6); speech = "솔직히 올해는 저희가 받을 줄 알았어요.";
+      if (rng(c) < 0.25) { addReputation(c, -4); notes.push("수상소감이 '거만하다'는 반응이 커뮤니티에 돌았어요. 태도 논란이 붙었어요."); }
+    }
+    const r = commitAwards(c, true);
+    notes.push(...r.notes);
+    celebrate = r.celebrate;
+    spotlight = r.spotlight;
+    const top = [...c.awards].filter((a) => a.year === cm.year).sort((a, b) => rank(b) - rank(a))[0];
+    headline = `${top.show} ${top.name}`;
+    text = `${rx === "cry" ? "눈물을 닦으며 " : rx === "calm" ? "담담하게 " : "환하게 웃으며 "}마이크를 잡았어요. "${speech}"`;
+    tone = "milestone";
+    reaction = { kind: top.kind === "daesang" ? "daesang" : "award" };
+    c.pending = scheduleEvent(c) ?? (c.flags.budgetDue === c.turn ? budgetEvent(c) : null);
   } else if (op.startsWith("budget:")) {
     const p = BUDGET_PRESETS.find((x) => x.id === op.slice(7))!;
     c.budget = { ...p.split };

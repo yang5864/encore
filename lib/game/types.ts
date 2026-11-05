@@ -191,6 +191,8 @@ export type Career = {
   /** 데뷔 앨범 준비: 콘셉트 → 쇼케이스 → 음악방송 데뷔 무대 순서로 정한 뒤 발매한다 */
   debutPlan?: { concept: Concept; albumName: string } | null;
   kpi?: Kpi | null;
+  /** 진행 중인 연말 시상식 (초청 → 참석 → 수상소감) */
+  ceremony?: { year: number; show: string; awards: Award[]; stages: string[]; attended?: boolean } | null;
   /** 시즌별 요약 기록 (은퇴 후 그래프용). 아이돌 시즌마다 1개 */
   timeline?: { turn: number; popularity: number; fans: number; rank: number | null }[];
   /** 가장 최근 시즌 진행 결과 (대시보드 요약용, 닫아도 남는다) */
