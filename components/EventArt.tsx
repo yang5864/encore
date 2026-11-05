@@ -22,7 +22,7 @@ export function EventArt({ scene, avatar, gender, name = "캐릭터", className 
   }, [art.scene, art.background, avatar]);
   const ready = (bg && fg) || timedOut;
   return (
-    <div role="img" aria-label={`${name}의 이벤트 장면`} className={`event-art ${className}`} data-scene={art.scene} style={{ "--art-foot-y": audition ? "70%" : "86%", opacity: ready ? 1 : 0, transition: "opacity 180ms ease-out" } as CSSProperties}>
+    <div role="img" aria-label={`${name}의 이벤트 장면`} className={`event-art ${className}`} data-scene={art.scene} style={{ "--art-foot-y": audition ? "70%" : "86%", opacity: ready ? 1 : 0 } as CSSProperties}>
       <Image src={art.background} alt="" fill sizes="(max-width: 480px) 100vw, 480px" className="object-cover" loading="eager" priority onLoad={() => setBg(true)} />
       <ArtFrames key={`${art.scene}:${avatar}`} frames={art.frames} visibleHeight={audition ? 33 : 43} sizes="(max-width: 480px) 65vw, 310px" onReady={() => setFg(true)} />
     </div>
