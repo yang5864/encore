@@ -17,6 +17,7 @@ import { SettlementBody } from "@/components/play/SettlementCard";
 import { ShopBody } from "@/components/play/ShopCard";
 import { FocusCard, focusIdOf, type FocusSelection } from "@/components/play/FocusCard";
 import { EventSheet } from "@/components/play/EventSheet";
+import { PrefetchArt } from "@/components/EventArt";
 import { ResultSheet } from "@/components/play/ResultSheet";
 import { MilestoneSheet } from "@/components/play/MilestoneSheet";
 import { AgencySheet } from "@/components/play/AgencySheet";
@@ -108,6 +109,8 @@ export default function PlayPage() {
   }, [career]);
 
   if (!ready || !career) return <div className="shell" />;
+  const FOCUS_SCENE: Record<string, string> = { comeback: "album", promo: "variety", fanmeet: "fansign", overseas: "tour", rest: "rest", "solo:acting": "drama", "solo:solo": "songwriting", "solo:variety": "variety", "solo:producing": "songwriting", train: "dance" };
+  const prefetchScenes = [career.pending?.scene ?? "", FOCUS_SCENE[focus.id] ?? FOCUS_SCENE[focus.id.split(":")[0]] ?? "", career.stage === "idol" ? "awards" : ""];
 
   return (
     <main className="shell pt-3">
@@ -191,6 +194,7 @@ export default function PlayPage() {
         }}
       />
       {fireworks && <Fireworks kind={fireworks} onDone={() => setFireworks(null)} />}
+      <PrefetchArt scenes={prefetchScenes} avatar={career.avatar} gender={career.gender} />
       {coach && (
         <CoachMarks
           onDone={() => {
