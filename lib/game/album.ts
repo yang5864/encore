@@ -4,27 +4,9 @@ import { CONCEPTS } from "./focus.ts";
 import { rng } from "./rng.ts";
 import { eraScale, yearOf } from "./format.ts";
 import { budgetOf, chemistryQuality, rivalFor } from "./team.ts";
+import { activityScores, melonRank, billboardRank, winChance, addBuzz, MUSIC_SHOWS } from "./metrics-model.ts";
 
 const ALBUM_TITLES = ["FIRST LIGHT", "BLOOM", "NEON HOUR", "AFTERGLOW", "ORBIT", "MIDNIGHT CALL", "WAVE", "HEARTLINE", "SUPERNOVA", "ENCORE", "PRISM", "DAYBREAK", "GRAVITY", "PARADE", "LANTERN"];
-
-/** 대중적인 주간 음악방송 6개. 케이블 순위 프로그램이 신인에게 상대적으로 열려 있다. */
-export const MUSIC_SHOWS: { name: string; ease: number }[] = [
-  { name: "더쇼", ease: 1.6 },
-  { name: "쇼챔피언", ease: 1.5 },
-  { name: "엠카운트다운", ease: 1.0 },
-  { name: "뮤직뱅크", ease: 0.9 },
-  { name: "쇼! 음악중심", ease: 0.85 },
-  { name: "인기가요", ease: 0.8 },
-];
-
-/** 이번 활동의 1위 기본 확률. 음원 순위·판매량·인기도가 함께 받쳐줘야 한다. */
-export function winBase(c: Career, melon: number | null, sales: number): number {
-  const era = eraScale(yearOf(c));
-  const chart = melon === null ? 0.01 : melon <= 5 ? 0.55 : melon <= 10 ? 0.4 : melon <= 30 ? 0.2 : melon <= 60 ? 0.08 : 0.03;
-  const rookie = c.albums.length === 0 ? 0.3 : c.albums.length === 1 ? 0.6 : 1; // 신인은 팬덤이 작아 투표·음원 점수가 약하다
-  const p = (chart + Math.min(0.25, sales / era / 2000000 * 0.25) + Math.max(-0.05, (c.popularity - 55) / 200) + (c.loyalty - 50) / 400) * rookie * (1 + (c.flags.stageBonus ?? 0));
-  return Math.max(0.005, Math.min(0.85, p));
-}
 
 /** 아직 1위 못 한 방송 중 하나를 골라 1위를 더한다. 모두 했으면 null. */
 export function addShowWin(c: Career, album: Album, pick: number): string | null {
@@ -117,29 +99,16 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
   // 초동 ≈ 코어 팬덤의 0.8~1.2배(중복 구매 포함) + 대중 유입. 톱 그룹 상한 450만장.
   const sales = Math.min(4500000, Math.round((c.fans * 0.85 + (Math.pow(quality, 1.7) * 4 + c.popularity * 300) * era) * hype * Math.pow(reach, 0.35)));
 
-  const popularity = c.popularity;
-  const chartScore = quality * 0.5 + Math.log10(c.fans / era + 100) * 7.5 + popularity * 0.25 + (concept === "fresh" ? 3 : 0) + rng(c) * 12 + (viral ? 18 : flop ? -15 : 0)
-    + (production.promo === "digital" ? 6 : production.promo === "physical" ? -4 : 0) + (switched ? 5 : 0) - fatigue * 3
-    + (budget.digital - 25) / 5 - (rival ? 6 : 0);
-  // 멜론 TOP100: 진입 자체가 쉽지 않고, 1위는 팬덤·인기·완성도가 모두 받쳐야 한다
-  const melon = chartScore >= 86 ? Math.max(1, Math.round(100 - (chartScore - 86) * 5)) : null;
-
-  let billboard: number | null = null;
-  if (popularity >= 70 && c.fans / era >= 1500000) {
-    const globalBoost = c.flags.globalBoost !== undefined && c.turn - c.flags.globalBoost <= 2 ? 6 : 0;
-    const globalScore = quality * 0.5 + Math.log10(c.fans / era) * 8 + reach * 4 + globalBoost + rng(c) * 12 + (production.promo === "global" ? 7 : 0) + (budget.global - 25) / 4;
-    if (globalScore >= 95) {
-      billboard = Math.max(1, Math.min(100, Math.round(100 - (globalScore - 95) * 4)));
-      if (billboard > 1 && c.fans / era >= 4000000 && quality >= 85 && rng(c) < 0.35) billboard = 1;
-    }
-  }
-
-  // 음악방송 1위: 6개 방송을 각각 따로 겨룬다 (방송마다 최대 1회)
-  const base = winBase(c, melon, sales) * (rival ? 0.7 : 1);
-  const shows = MUSIC_SHOWS.filter((s) => rng(c) < Math.min(0.9, base * s.ease)).map((s) => s.name);
+  // ── 다섯 점수 → 멜론 · 빌보드 · 음악방송 6개 (방송별 집계 비율이 다르다)
+  const scores = activityScores(c, { quality, production, hype, budget, rival: !!rival });
+  const melon = melonRank(c, scores, !!rival, rng(c));
+  const billboard = billboardRank(c, scores, { quality, production, hype, budget, rival: !!rival }, rng(c));
+  const rookie = c.albums.length; // 0: 데뷔 앨범, 1: 두 번째
+  const shows = MUSIC_SHOWS.filter((show) => rng(c) < winChance(c, scores, show, !!rival, rookie) * (1 + (c.flags.stageBonus ?? 0))).map((show) => show.name);
   if (rival) c.flags.rivalClash = c.turn; // 결과 문구용
   const wins = shows.length;
-  if (wins === 0 && base >= 0.1 && rng(c) < 0.5) c.flags.candidate = c.turn + 1; // 다음 턴 시작 시 1위 후보 이벤트
+  const nearMiss = MUSIC_SHOWS.some((show) => winChance(c, scores, show, !!rival, rookie) >= 0.25);
+  if (wins === 0 && nearMiss && rng(c) < 0.6) c.flags.candidate = c.turn + 1; // 다음 턴 시작 시 1위 후보 이벤트
   delete c.flags.stageBonus;
 
   // 억: 장당 1.5만원 × 총판 배수 2.2 × 유통·제작 공제 후 회사 몫 40% ≈ 장당 1.3만원
@@ -147,7 +116,7 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
   const index = c.albums.length;
   const trimmed = (customName ?? "").trim();
   const name = trimmed ? trimmed : suggestAlbumName(c);
-  const album: Album = { id: `${c.id}-${index}`, turn: c.turn, name, concept, quality, sales, melon, billboard, wins, shows, cost, revenue, production };
+  const album: Album = { id: `${c.id}-${index}`, turn: c.turn, name, concept, quality, sales, melon, billboard, wins, shows, cost, revenue, production, scores };
   c.albums.push(album);
   c.lastReleaseTurn = c.turn;
   c.money.invested += cost;
@@ -162,7 +131,10 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
   // 팬덤 결속이 낮으면 새 팬이 머물지 않는다 (0 → 절반, 100 → 그대로). 음반 집중은 팬 유입이 크다
   c.fans += Math.round(gained * (0.5 + c.loyalty / 200) * (production.promo === "physical" ? 1.25 : 1));
   if (flop) c.fans = Math.round(c.fans * (0.82 + rng(c) * 0.08));
-  c.popularity += (melon !== null ? 4 : 1) + wins * 1 + (billboard !== null ? 4 : 0) + (viral ? 10 : flop ? -6 : 0);
+  c.popularity += (melon !== null ? Math.max(1, (60 - melon) / 15) : 0.5) + wins * 0.8 + (billboard !== null ? 4 : 0) + (viral ? 8 : flop ? -5 : 0);
+  // 화제성·미디어: 컴백 자체 + 성적. 1위·바이럴·빌보드는 크게 튄다
+  addBuzz(c, 14 + (melon !== null ? Math.max(0, 40 - melon) / 2 : 0) + wins * 5 + (billboard !== null ? 20 : 0) + (viral ? 30 : flop ? -8 : 0) + (budget.mv - 25) / 5);
+  c.flags.mediaHeat = Math.min(100, (c.flags.mediaHeat ?? 0) + 25 + wins * 6 + (melon !== null && melon <= 10 ? 15 : 0) + (viral ? 25 : 0) + (billboard !== null ? 20 : 0));
   c.reputation += 2;
   if (production.producer === "self") { c.reputation += c.stats.producing >= 55 ? 3 : -2; c.stats.producing = Math.min(99, c.stats.producing + 2); }
   // 음반 집중은 팬을 챙기는 활동, 그 외 컴백은 팬덤이 조금 식는다

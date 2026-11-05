@@ -8,7 +8,8 @@ const hasBatchim = (w: string) => { const ch = w.charCodeAt(w.length - 1); retur
 import { rng, between, pick } from "./rng.ts";
 import { applyEffects, addReputation, diff, log, snapshot, type Snapshot } from "./effects.ts";
 import { CONCEPTS, DANGER_LOCK, MAIN_STAT, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
-import { makeAlbum, albumSummary, addShowWin, winBase, ALBUM_NAME_PATTERN, DEFAULT_PRODUCTION } from "./album.ts";
+import { makeAlbum, albumSummary, addShowWin, ALBUM_NAME_PATTERN, DEFAULT_PRODUCTION } from "./album.ts";
+import { MUSIC_SHOWS, winChance, addBuzz, BUZZ_DECAY, INCIDENT_IDS } from "./metrics-model.ts";
 import { PRODUCERS, PROMOS } from "./focus.ts";
 import { makeKpi, kpiMet } from "./kpi.ts";
 import { BUDGET_PRESETS, budgetOf, rivalFor } from "./team.ts";
@@ -77,7 +78,7 @@ function popularityTarget(c: Career): number {
   const base = 8.3 * Math.log10(c.fans / eraScale(yearOf(c)) + 1) + Math.max(0, c.reputation) * 0.12;
   const recent = c.albums.filter((a) => c.turn - a.turn <= 2);
   const chart = Math.min(18, recent.reduce((s, a) => s + (a.melon !== null ? Math.max(0, 50 - a.melon) / 4 : 0) + a.wins * 1 + (a.billboard !== null ? 5 : 0), 0));
-  const t = (base + chart) * (c.stage === "idol" ? 1 : 0.5);
+  const t = (base + chart + (c.buzz ?? 0) * 0.12) * (c.stage === "idol" ? 1 : 0.5);
   return Math.max(0, Math.min(100, t));
 }
 
@@ -101,6 +102,7 @@ function buildResult(c: Career, before: Snapshot, headline: string, text: string
 function finish(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; awards?: Award[]; celebrate?: TurnResult["celebrate"]; spotlight?: TurnResult["spotlight"] } = {}) {
   updateSettlement(c);
   updateMetrics(c);
+  c.popularity = Math.max(0, Math.min(100, c.popularity));
   c.peakPopularity = Math.max(c.peakPopularity, Math.round(c.popularity));
   if (c.stage === "idol") {
     // 브랜드평판 최고 순위를 기억한다 (톱티어 제안 기준)
@@ -152,6 +154,15 @@ export function advanceTurn(original: Career, focusId: string): Career {
     return c;
   }
 
+  // 화제성과 미디어 열기는 시즌이 시작되며 먼저 식는다. 활동이 없으면 브랜드평판이 눈에 띄게 내려앉는다
+  c.buzz = Math.round((c.buzz ?? 0) * BUZZ_DECAY);
+  c.flags.mediaHeat = Math.round((c.flags.mediaHeat ?? 0) * 0.5);
+  {
+    const prevIg = c.flags.prevInstagram ?? c.metrics?.instagram ?? 0;
+    const nowIg = c.metrics?.instagram ?? 0;
+    c.flags.snsGrowth = prevIg > 0 ? Math.max(0, Math.min(50, Math.round(((nowIg - prevIg) / prevIg) * 100))) : 0;
+    c.flags.prevInstagram = nowIg;
+  }
   const [kind, arg, ...restParts] = (c.hiatusUntil > c.turn ? "rest" : focusId).split(":");
   if (kind !== "rest" && conditionOf(c).level === "danger") throw new GameError(DANGER_LOCK);
   // comeback:<concept>:<producer>:<promo>:<encodedName> (구형 comeback:<concept>:<encodedName>도 받는다)
@@ -252,6 +263,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       c.money.revenue += 2;
       c.loyalty = Math.min(100, c.loyalty + 12);
       if (!c.flags.solo) c.chemistry = Math.min(100, c.chemistry + 3);
+      addBuzz(c, 4);
       c.mental += 6;
       c.health -= 4;
       grow(c, "variety", 1.5);
@@ -263,6 +275,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       applyEffects(c, { fansMul: 1.12 });
       c.popularity += 3;
       c.loyalty = Math.max(0, c.loyalty - 3);
+      addBuzz(c, 8);
       c.money.revenue += 6;
       c.health -= 12;
       c.mental -= 4;
@@ -286,6 +299,8 @@ export function advanceTurn(original: Career, focusId: string): Career {
       const statName = STAT_NAMES[stat];
       if (success) {
         tone = "good";
+        addBuzz(c, 12);
+        c.flags.mediaHeat = Math.min(100, (c.flags.mediaHeat ?? 0) + 15);
         if (solo === "acting") { c.popularity += 7; applyEffects(c, { fansMul: 1.1, reputation: 5, revenue: 6 }); headline = "드라마 흥행 — 연기돌로 인정"; text = `${period}, 출연한 작품이 화제가 됐어요. '연기 되는 아이돌' 수식어가 붙었어요.`; scene = "drama"; }
         else if (solo === "solo") { c.popularity += 6; applyEffects(c, { fansMul: 1.1, reputation: 4, revenue: 9 }); headline = "솔로 앨범 성공"; text = `${period}, 내 이름으로 낸 앨범이 좋은 성적을 냈어요. ${statName} 실력이 빛났어요.`; scene = "songwriting"; }
         else if (solo === "variety") { c.popularity += 9; applyEffects(c, { fansMul: 1.08, reputation: 4, revenue: 4 }); headline = "예능 캐릭터가 터졌다"; text = `${period}, 고정 예능과 개인 채널이 동시에 떴어요. 대중이 이름을 기억해요.`; scene = "variety"; }
@@ -322,7 +337,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
 
   if (c.stage === "idol") {
     const gap = c.lastReleaseTurn === null ? 99 : c.turn - c.lastReleaseTurn;
-    if (kind !== "comeback") c.fans = Math.round(c.fans * 0.97);
+    if (kind !== "comeback") c.fans = Math.round(c.fans * (kind === "fanmeet" ? 0.985 : 0.965));
     if (kind === "rest") { c.loyalty = Math.min(100, c.loyalty + 2); if (!c.flags.solo) c.chemistry = Math.min(100, c.chemistry + 4); }
     if (kind === "comeback" && !c.flags.solo && c.albums.length >= 3 && c.albums.slice(-3).every((al, i, arr) => al.turn === arr[0].turn + i)) c.chemistry = Math.max(0, c.chemistry - 3); // 쉼 없는 컴백 3연속
     if (!c.flags.solo) {
@@ -506,6 +521,10 @@ function commitAwards(c: Career, attended: boolean): { celebrate: TurnResult["ce
   const cm = c.ceremony!;
   const notes: string[] = [];
   c.awards.push(...cm.awards);
+  if (cm.awards.length) {
+    addBuzz(c, cm.awards.some((a) => a.kind === "daesang") ? 35 : 18);
+    c.flags.mediaHeat = Math.min(100, (c.flags.mediaHeat ?? 0) + (cm.awards.some((a) => a.kind === "daesang") ? 45 : 25));
+  }
   for (const a of cm.awards) log(c, `${a.show} ${a.name}`, `${cm.year}년 ${SHOW_FULL[a.show] ?? a.show}에서 ${a.name}을 받았어요.${attended ? "" : " (대리 수상)"}`, "award");
   const daesang = cm.awards.find((a) => a.kind === "daesang");
   let spotlight: TurnResult["spotlight"];
@@ -598,6 +617,14 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
   if (event.id === "unit" && tone === "good") c.chemistry = Math.min(100, c.chemistry + 5);
   } else {
     applyEffects(c, choice.effects);
+  }
+
+  if (INCIDENT_IDS.includes(event.id)) {
+    // 논란·사고는 미디어 관심을 끌어 브랜드평판 지수는 오히려 튀고, 호감과 결속은 깎인다
+    c.flags.mediaHeat = Math.min(100, (c.flags.mediaHeat ?? 0) + 30);
+    addBuzz(c, 10);
+    c.flags.lastIncident = c.turn;
+    if (tone === "bad") { c.loyalty = Math.max(0, c.loyalty - 6); }
   }
 
   // 운영 훅
@@ -767,6 +794,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     c.money.revenue += 25;
     addReputation(c, 10);
     c.flags.miracle = 1;
+    addBuzz(c, 40);
+    c.flags.mediaHeat = Math.min(100, (c.flags.mediaHeat ?? 0) + 40);
     celebrate = "win";
     reaction = { kind: "rechart", album: album.name };
     headline = `${album.name} 역주행 1위`;
@@ -775,8 +804,12 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     log(c, headline, text, "award");
   } else if (op.startsWith("musicshow:")) {
     const album = c.albums[c.albums.length - 1];
-    const base = Math.min(0.7, winBase(c, album.melon, album.sales) * 1.2);
-    const p = op === "musicshow:push" ? Math.min(0.75, base + 0.1) : base;
+    const won = new Set(album.shows ?? []);
+    const open = MUSIC_SHOWS.filter((s) => !won.has(s.name));
+    const scores = album.scores ?? { digital: 50, physical: 50, broadcast: 50, social: 50, vote: 50 };
+    const best = open.length ? Math.max(...open.map((s) => winChance(c, scores, s, false, c.albums.length - 1))) : 0;
+    const base = Math.min(0.7, best * 1.1);
+    const p = op === "musicshow:push" ? Math.min(0.78, base + 0.12) : base;
     if (op === "musicshow:push" && rng(c) < 0.3) { addReputation(c, -2); notes.push("일부 커뮤니티에서 과한 총공이라는 말이 나왔어요."); }
     const show = rng(c) < p ? addShowWin(c, album, rng(c)) : null;
     if (show) {

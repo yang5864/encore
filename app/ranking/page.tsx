@@ -51,7 +51,7 @@ export default function RankingPage() {
       </Card>
       <p className="mt-4 text-[13px] text-ink-3 leading-relaxed pb-6">
         {real
-          ? `한국기업평판연구소(brikorea.com)가 발표한 그 달의 아이돌 개인 브랜드평판이에요.${r.source.kind === "real" && r.source.note ? ` ${r.source.note}.` : ""} 내 캐릭터는 인기도를 그 달 지수에 환산해 끼워 넣은 값이라 실제 측정치가 아니에요.`
+          ? `한국기업평판연구소(brikorea.com)가 발표한 그 달의 아이돌 개인 브랜드평판이에요.${r.source.kind === "real" && r.source.note ? ` ${r.source.note}.` : ""} 내 캐릭터의 지수는 팬덤 참여·미디어 노출·SNS·화제성을 같은 방식으로 합산한 게임 추정값이라 실제 측정치가 아니에요. 컴백·1위·수상·논란이 있던 시즌에 튀고, 조용한 시즌엔 내려앉아요.`
           : "2018년 이전은 공개 자료가 없어 당시 음반·음원·인지도를 바탕으로 만든 게임 추정 지수예요. 2018년 하반기부터 실제 자료로 바뀌어요."}
       </p>
     </main>

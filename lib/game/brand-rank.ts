@@ -36,6 +36,7 @@ export const BRAND_RANKS: Record<number, BrandEntry[]> = {
 };
 
 import { REAL_MONTHS, REAL_MONTH_NOTES, type RealEntry } from "./brand-rank-real.ts";
+import { brandIndex } from "./metrics-model.ts";
 
 export function brandTable(year: number): BrandEntry[] {
   const y = Math.max(2006, Math.min(2026, year));
@@ -93,17 +94,22 @@ export function rankingFor(input: RankInput, year: number, secondHalf: boolean):
   let outside = false;
   if (month) {
     const rows = REAL_MONTHS[month];
-    const mine = { name: myName(c), index: popularityToRealIndex(c.popularity, rows), me: true };
+    const full = input as Career;
+    const index = "fans" in full && "loyalty" in full ? brandIndex(full, rows[0].index) : popularityToRealIndex(c.popularity, rows);
+    const mine = { name: myName(c), index, me: true };
     const all = [...rows.map((r) => ({ name: r.name, index: r.index, me: false })), mine].sort((a, b) => b.index - a.index || (a.me ? 1 : -1));
     entries = all.map((e, i) => ({ ...e, rank: i + 1 }));
-    outside = c.popularity < 40;
+    outside = index < rows[rows.length - 1].index;
     const [y, m] = month.split("-");
     source = { kind: "real", month, label: `${y}년 ${Number(m)}월 아이돌 개인 브랜드평판 · 한국기업평판연구소`, note: REAL_MONTH_NOTES[month] };
   } else {
-    const mine = { name: myName(c), index: Math.round(c.popularity), me: true };
+    const full = input as Career;
+    // 추정표(0~100)에도 같은 모델을 쓴다: 1위 지수를 100으로 보고 환산
+    const index = "fans" in full && "loyalty" in full ? Math.round(brandIndex(full, 10000) / 100) : Math.round(c.popularity);
+    const mine = { name: myName(c), index, me: true };
     const all = [...brandTable(year).map((e) => ({ ...e, me: false })), mine].sort((a, b) => b.index - a.index || (a.me ? 1 : -1));
     entries = all.map((e, i) => ({ ...e, rank: i + 1 }));
-    outside = entries[entries.length - 1].me && c.popularity < 20;
+    outside = entries[entries.length - 1].me && index < 20;
     source = { kind: "estimate", label: `${year}년 아이돌 인기 비교 · 게임 추정` };
   }
   const i = entries.findIndex((e) => e.me);

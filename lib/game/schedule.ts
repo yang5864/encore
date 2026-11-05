@@ -4,6 +4,7 @@ import { AGENCIES, agencyById, auditionChance, tierRank } from "./agencies.ts";
 import { ageOf, isSecondHalf } from "./format.ts";
 import { renewalEvent } from "./renewal.ts";
 import { cutChance, debutCutEvent, makeLineup, rivalOfferEvent } from "./debut.ts";
+import { INCIDENT_IDS, INCIDENT_COOLDOWN, INCIDENT_GLOBAL_GAP, incidentChance } from "./metrics-model.ts";
 import { overall } from "./stats.ts";
 import { rng } from "./rng.ts";
 
@@ -88,10 +89,23 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
     if (a.tier === "indie" && overall(c.stats, c.position) < a.threshold - 10 && rng(c) < 0.06) return agencyClosedEvent(a.name);
   }
 
-  // 2. 상태
-  for (const id of ["showcase", "musicshow", "feud", "live-controversy", "chartfraud", "hiatus-health", "injury"]) {
+  // 2. 상태 (이야기 흐름상 바로 이어져야 하는 것)
+  for (const id of ["showcase", "musicshow", "feud", "hiatus-health"]) {
     const def = eventById(id)!;
-    if (eligible(def, c) && (id !== "injury" || rng(c) < 0.35)) return take(c, id);
+    if (eligible(def, c) && (id !== "hiatus-health" || rng(c) < 0.5)) return take(c, id);
+  }
+
+  // 2-1. 돌발 사건: 인기가 높을수록 자주, 같은 사건은 3시즌 쿨다운, 사건 직후 시즌은 조용
+  if (c.turn - (c.flags.lastIncident ?? -99) > INCIDENT_GLOBAL_GAP && rng(c) < incidentChance(c)) {
+    const pool = INCIDENT_IDS.filter((id) => {
+      const def = eventById(id);
+      if (!def || !stageMatches(def, c)) return false;
+      if (def.when && !def.when(c)) return false;
+      const seenAt = c.seen[id];
+      if (seenAt === undefined) return true;
+      return !!def.repeatable && c.turn - seenAt >= INCIDENT_COOLDOWN; // 한 번뿐인 사건은 다시 안 온다
+    });
+    if (pool.length) return take(c, pool[Math.floor(rng(c) * pool.length)]);
   }
 
   // 3. 숨은 이벤트 · 스카우트

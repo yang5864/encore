@@ -109,6 +109,8 @@ export type Album = {
   billboard: number | null;
   wins: number;
   production?: Production;
+  /** 활동 점수 (음원·음반·방송·소셜·투표) */
+  scores?: { digital: number; physical: number; broadcast: number; social: number; vote: number };
   /** 1위한 음악방송 이름 */
   shows?: string[];
   cost: number;
@@ -161,6 +163,8 @@ export type Career = {
   loyalty: number;
   /** 팀 케미 0~100: 그룹이 같이 움직이면 오르고 개인 활동·불화로 내려간다. 완성도·탈퇴 위험에 영향 */
   chemistry: number;
+  /** 화제성 0~100: 활동·수상·논란으로 튀고 시즌마다 식는다. 음원·소셜·브랜드평판에 바로 반영 */
+  buzz: number;
   /** 올해 홍보 예산 배분(%) */
   budget?: { mv: number; digital: number; global: number; fan: number } | null;
   turn: number;

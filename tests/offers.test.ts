@@ -210,7 +210,7 @@ test("음방 1위는 꽃가루, 대상은 금빛 가루 연출로 표시된다",
   c.popularity = 95; c.fans = 4000000;
   c.stats = { vocal: 90, dance: 90, rap: 80, visual: 90, variety: 80, producing: 80 };
   c.turn = 21; c.lastReleaseTurn = 20;
-  c.albums.push({ id: "x", turn: 20, name: "NOVA", concept: "fresh", quality: 92, sales: 3000000, melon: 1, billboard: null, wins: 0, shows: [], cost: 30, revenue: 300 });
+  c.albums.push({ id: "x", turn: 20, name: "NOVA", concept: "fresh", quality: 92, sales: 3000000, melon: 1, billboard: null, wins: 0, shows: [], cost: 30, revenue: 300, scores: { digital: 92, physical: 90, broadcast: 85, social: 88, vote: 90 } });
   c.flags.candidate = 21;
   c.pending = { id: "musicshow", title: "", text: "", scene: "mc", public: true, choices: [{ id: "push", label: "", hint: "", risk: "bold", op: "musicshow:push" }] };
   let won = 0;
@@ -283,8 +283,8 @@ test("통신사 광고·명품 앰버서더는 톱티어(10위 경험·급성장
   const legend = structuredClone(c); legend.peakBillboard = 1;
   assert.equal(isTopTier(legend), true);
   // 시즌을 진행하면 최고 순위가 기록된다
-  const star = idol(5); star.popularity = 95; star.fans = 5000000; star.lastReleaseTurn = star.turn;
-  const n = advanceTurn(star, "promo");
+  const star = idol(5); star.popularity = 95; star.fans = 5000000; star.lastReleaseTurn = star.turn - 1; star.buzz = 90; star.loyalty = 85; star.flags.mediaHeat = 90; star.metrics = { instagram: 20000000, youtube: 15000000, spotify: 10000000 };
+  const n = advanceTurn(star, "comeback:fresh:star:digital:");
   assert.ok((n.flags.bestRank ?? 999) <= 10, `bestRank ${n.flags.bestRank}`);
 });
 
@@ -333,8 +333,8 @@ test("빌보드 1위는 전체 화면 연출로 띄우고, 시즌 결과는 홈 
     const c = idol(seed);
     c.popularity = 98; c.fans = 6000000; c.turn = 30; c.debutTurn = 8; c.lastReleaseTurn = 28;
     c.stats = { vocal: 95, dance: 95, rap: 90, visual: 95, variety: 85, producing: 90 };
-    c.flags.globalBoost = 30;
-    const n = advanceTurn(c, "comeback:fresh");
+    c.flags.globalBoost = 30; c.buzz = 90; c.loyalty = 90; c.metrics = { instagram: 30000000, youtube: 25000000, spotify: 40000000 }; c.budget = { mv: 20, digital: 15, global: 50, fan: 15 };
+    const n = advanceTurn(c, "comeback:fresh:inhouse:global:");
     assert.ok(n.lastResult, "진행 결과가 남는다");
     if (n.albums[0].billboard === 1) {
       hit++;
