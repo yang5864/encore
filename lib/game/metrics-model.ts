@@ -138,5 +138,5 @@ export const INCIDENT_COOLDOWN = 4; // 같은 사건은 4시즌 뒤에나 (반�
 export const INCIDENT_GLOBAL_GAP = 1; // 사건 직후 다음 시즌은 조용하다
 export function incidentChance(c: Career): number {
   if (c.stage !== "idol") return 0.06;
-  return clamp(0.2 + c.popularity / 400 + (c.loyalty < 30 ? 0.04 : 0), 0.12, 0.4);
+  return clamp(0.17 + c.popularity / 400 + (c.loyalty < 30 ? 0.04 : 0), 0.12, 0.38);
 }
