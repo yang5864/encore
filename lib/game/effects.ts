@@ -28,6 +28,7 @@ export function applyEffects(c: Career, e: Effects | undefined) {
   }
   if (e.popularity) c.popularity = Math.max(0, Math.min(100, c.popularity + e.popularity));
   if (e.reputation) addReputation(c, e.reputation);
+  if (e.loyalty) c.loyalty = Math.max(0, Math.min(100, (c.loyalty ?? 50) + e.loyalty));
   if (e.revenue) c.money.revenue = Math.round((c.money.revenue + e.revenue) * 10) / 10;
 }
 

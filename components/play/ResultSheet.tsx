@@ -3,11 +3,11 @@ import { useState } from "react";
 import { Sheet } from "@/components/ui/Sheet";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
-import { fanText, reputationLabel, wonText } from "@/lib/game/format";
+import { artGroupFor, fanText, reputationLabel, wonText } from "@/lib/game/format";
 import { EventArt } from "@/components/EventArt";
 import { likeText } from "@/lib/game/reactions";
 import { countText } from "@/lib/game/metrics";
-import type { Change, TurnResult } from "@/lib/game/types";
+import type { Change, Lineup, TurnResult } from "@/lib/game/types";
 
 const PRIORITY = ["fans", "popularity", "instagram", "ovr", "reputation", "settled", "spotify", "youtube", "condition"];
 
@@ -39,7 +39,7 @@ export function pickTop(changes: Change[], n = 3): Change[] {
     .slice(0, n);
 }
 
-export function ResultSheet({ result, avatar, gender, name, open, onClose, ctaLabel = "확인" }: { result: TurnResult; avatar: number; gender: "female" | "male"; name: string; open: boolean; onClose: () => void; ctaLabel?: string }) {
+export function ResultSheet({ result, avatar, gender, name, lineup, open, onClose, ctaLabel = "확인" }: { result: TurnResult; lineup?: Lineup | null; avatar: number; gender: "female" | "male"; name: string; open: boolean; onClose: () => void; ctaLabel?: string }) {
   const [more, setMore] = useState(false);
   const top = pickTop(result.changes);
   const rest = result.changes.filter((c) => !top.includes(c));
@@ -48,7 +48,7 @@ export function ResultSheet({ result, avatar, gender, name, open, onClose, ctaLa
     <Sheet open={open} onOpenChange={(o) => !o && onClose()} footer={<Button onClick={onClose}>{ctaLabel}</Button>}>
       {result.scene && (
         <div className="-mx-5 -mt-3">
-          <EventArt scene={result.scene} avatar={avatar} gender={gender} name={name} />
+          <EventArt scene={result.scene} avatar={avatar} gender={gender} name={name} mood={result.tone === "bad" ? "sad" : result.tone === "good" || result.tone === "milestone" ? "happy" : undefined} group={artGroupFor(lineup, result.scene)} />
         </div>
       )}
       <p className={`t-cap mt-4 ${toneColor}`}>{result.tone === "bad" ? "아쉬운 결과" : result.tone === "good" ? "좋은 결과" : result.tone === "milestone" ? "중요한 순간" : "이번 반기"}</p>

@@ -24,6 +24,8 @@ export type Effects = Partial<Record<StatKey, number>> & {
   fansMul?: number;
   popularity?: number;
   reputation?: number;
+  /** 팬덤 결속 */
+  loyalty?: number;
   /** 억 단위 매출 */
   revenue?: number;
 };

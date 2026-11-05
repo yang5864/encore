@@ -1,4 +1,4 @@
-import type { Career } from "./types.ts";
+import type { Career, Lineup } from "./types.ts";
 
 export const START_YEAR = 2006;
 export const START_AGE = 12;
@@ -14,7 +14,7 @@ export const koreanAge = (c: Pick<Career, "turn">) => ageOf(c) + KOREAN_AGE_OFFS
 export const ageText = (c: Pick<Career, "turn">) => `${koreanAge(c)}살`;
 export const yearOf = (c: Pick<Career, "turn">) => START_YEAR + Math.floor(c.turn / 2);
 export const isSecondHalf = (c: Pick<Career, "turn">) => c.turn % 2 === 1;
-export const periodLabel = (c: Pick<Career, "turn">) => `${yearOf(c)}년 ${isSecondHalf(c) ? "하반기" : "상반기"}`;
+export const periodLabel = (c: Pick<Career, "turn">) => `${koreanAge(c)}살 ${isSecondHalf(c) ? "하반기" : "상반기"}`;
 
 export function fanText(n: number): string {
   if (n < 10000) return `${Math.round(n).toLocaleString("ko-KR")}명`;
@@ -94,3 +94,13 @@ export function eraScale(year: number): number {
   if (year <= 2021) return 0.6 + ((year - 2017) / 4) * 0.4;
   return 1;
 }
+
+/** 무대·공식 행사 장면에서만 멤버들을 함께 그린다. */
+const GROUP_SCENES = ["album", "tour", "mc", "debut", "festival", "coachella", "military-concert", "fansign", "showcase"];
+export function artGroupFor(lineup: Lineup | null | undefined, scene: string | undefined): { avatars: number[]; center: boolean } | undefined {
+  if (!scene || !lineup?.memberAvatars?.length) return undefined;
+  if (!scene.startsWith("awards") && !GROUP_SCENES.includes(scene)) return undefined;
+  return { avatars: lineup.memberAvatars, center: !!lineup.center };
+}
+
+export const SAD_EVENTS = ["live-controversy", "chartfraud", "hate", "dating", "member-bullying", "member-dui", "hiatus-health", "injury", "feud", "agency-bankrupt", "debut-cut", "trainee-dismiss", "warning", "scandal"];

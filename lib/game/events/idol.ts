@@ -1,6 +1,6 @@
 import type { GameEventDef } from "../types.ts";
 import { agencyById } from "../agencies.ts";
-import { ageOf } from "../format.ts";
+import { ageOf, yearOf } from "../format.ts";
 
 import { isTopTier } from "../toptier.ts";
 
@@ -281,10 +281,12 @@ export const IDOL_EVENTS: GameEventDef[] = [
     repeatable: true,
     scene: "press",
     public: true,
-    when: (c) => ageOf(c) >= 20,
+    weight: 0.25,
+    // 커리어당 최대 2번. 터지면 팬덤이 크게 흔들린다
+    when: (c) => ageOf(c) >= 20 && (c.flags.datingCount ?? 0) < 2,
     choices: [
-      { id: "admit", label: "솔직하게 인정한다", hint: "팬덤 일부가 떠나지만 대중 평판은 지켜요", risk: "bold", effects: { fansMul: 0.85, reputation: 3, mental: 6 } },
-      { id: "deny", label: "친한 사이라고 부인한다", hint: "당장은 조용하지만 나중에 밝혀지면 더 커져요", risk: "bold", chance: 0.6, success: { fansMul: 0.96, mental: -4 }, fail: { fansMul: 0.8, reputation: -12, mental: -10 }, successText: "기사는 조용히 묻혔어요.", failText: "추가 사진이 공개됐어요. '거짓 해명' 논란이 번졌어요." },
+      { id: "admit", label: "솔직하게 인정한다", hint: "팬덤이 크게 흔들려요. 배신감에 떠나는 팬이 많고 결속이 무너져요", risk: "bold", effects: { fansMul: 0.75, loyalty: -25, reputation: 3, mental: 6 } },
+      { id: "deny", label: "친한 사이라고 부인한다", hint: "당장은 조용하지만 나중에 밝혀지면 더 커져요", risk: "bold", chance: 0.6, success: { fansMul: 0.96, mental: -4 }, fail: { fansMul: 0.7, reputation: -18, loyalty: -20, mental: -10 }, successText: "기사는 조용히 묻혔어요.", failText: "추가 사진이 공개됐어요. '거짓 해명' 논란이 번졌어요." },
     ],
   },
   {
@@ -295,6 +297,8 @@ export const IDOL_EVENTS: GameEventDef[] = [
     text: "숙소 앞에 사생팬이 기다리고, 커뮤니티엔 악플이 쌓여요. 회사 법무팀이 고소를 제안했어요.",
     repeatable: true,
     scene: "rest",
+    // 커리어당 최대 2번
+    when: (c) => (c.flags.hateCount ?? 0) < 2,
     choices: [
       { id: "sue", label: "강경 대응을 공식화한다", hint: "악플이 줄고 팬들이 지지해요. 마음은 조금 지쳐요", risk: "safe", effects: { reputation: 4, mental: -4, fansMul: 1.03 } },
       { id: "ignore", label: "신경 쓰지 않으려 한다", hint: "당장은 편하지만 마음이 계속 흔들려요", risk: "bold", effects: { mental: -14 } },
@@ -509,5 +513,38 @@ export const IDOL_EVENTS: GameEventDef[] = [
     scene: "audition",
     when: () => false, // 엔진이 직접 생성
     choices: [],
+  },
+  {
+    id: "sns-open",
+    stage: "any",
+    kind: "story",
+    title: "인스타그램 개설",
+    text: "요즘은 아이돌도 공식 인스타그램 계정을 열어 팬들과 소통해요. 회사가 계정을 열자고 제안했어요. 사진 한 장 한 장이 곧 이미지가 돼요.",
+    scene: "livestream",
+    public: true,
+    repeatable: true,
+    weight: 3,
+    when: (c) => (c.stage === "trainee" || c.stage === "idol") && yearOf(c) >= 2012 && !c.flags.snsOpened,
+    choices: [
+      { id: "open", label: "공식 계정을 연다", hint: "팬들과 직접 소통해요. 팔로워가 천천히 쌓이기 시작해요", risk: "safe", op: "sns:open" },
+      { id: "later", label: "조금 더 미룬다", hint: "마음의 준비를 해요. 나중에 다시 제안받아요", risk: "safe", effects: { mental: 2 } },
+    ],
+  },
+  {
+    id: "isac",
+    stage: "idol",
+    kind: "story",
+    title: "아이돌 스타 육상 선수권 출전 요청",
+    text: "명절 특집 '아이돌 스타 육상 선수권'에서 출전 요청이 왔어요. 종목은 직접 고를 수 있어요. 빠지면 팬들이 아쉬워하지만 몸은 편해요.",
+    scene: "challenge",
+    public: true,
+    repeatable: true,
+    weight: 1.5,
+    when: (c) => yearOf(c) >= 2010 && c.popularity >= 35,
+    choices: [
+      { id: "run", label: "달리기 60m", hint: "댄스 실력이 좋을수록 결승선이 가까워요. 넘어지면 몸이 상해요", risk: "bold", op: "isac:run" },
+      { id: "archery", label: "양궁", hint: "침착함과 예능감이 승부를 정해요. 중계 화면에 얼굴이 크게 나와요", risk: "bold", op: "isac:archery" },
+      { id: "skip", label: "불참하고 쉰다", hint: "몸은 편하지만 팬들이 조금 서운해해요", risk: "safe", op: "isac:skip" },
+    ],
   },
 ];

@@ -15,7 +15,6 @@ export function EventArt({ scene, avatar, gender, name = "캐릭터", className 
   /** 무대·공식 행사에서 같이 서는 멤버들. center면 내가 가운데 */
   group?: ArtGroup;
 }) {
-  void mood; void group; // 그룹·감정 표현은 별도 작업에서 그린다
   const art = eventArt(scene, avatar, gender);
   // The audition background has a foreground judging desk; keep feet on the floor behind it.
   const audition = art.scene === "audition";
@@ -29,10 +28,29 @@ export function EventArt({ scene, avatar, gender, name = "캐릭터", className 
     return () => window.clearTimeout(t);
   }, [art.scene, art.background, avatar]);
   const ready = (bg && fg) || timedOut;
+  // 그룹 배치: 나 + 멤버를 무대 바닥에 나란히. 슬롯 i의 중심은 (i + 0.5) / N
+  const groupAvatars = group && group.avatars.length >= 1 ? group.avatars : null;
+  const total = groupAvatars ? groupAvatars.length + 1 : 1;
+  const playerSlot = group?.center ? Math.ceil(total / 2) - 1 : Math.floor(total / 3);
+  const groupHeight = Math.min(audition ? 33 : 43, (audition ? 33 : 43) * 3 / total);
+  const slotX = (i: number) => ((i + 0.5) / total) * 100;
+  // 멤버 목록에서 내 자리를 건너뛰고 채운다
+  const memberAt = (i: number) => (i < playerSlot ? i : i - 1);
   return (
-    <div role="img" aria-label={`${name}의 이벤트 장면`} className={`event-art ${className}`} data-scene={art.scene} style={{ "--art-foot-y": audition ? "70%" : "86%", opacity: ready ? 1 : 0 } as CSSProperties}>
+    <div role="img" aria-label={`${name}의 이벤트 장면`} className={`event-art ${className}`} data-scene={art.scene} style={{ "--art-foot-y": audition ? "70%" : "86%", opacity: ready ? 1 : 0, ...(mood === "sad" || mood === "happy" ? { filter: mood === "sad" ? "saturate(0.85) brightness(0.95)" : undefined } : {}) } as CSSProperties}>
       <Image src={art.background} alt="" fill sizes="(max-width: 480px) 100vw, 480px" className="object-cover" loading="eager" priority onLoad={() => setBg(true)} />
-      <ArtFrames key={`${art.scene}:${avatar}`} frames={art.frames} visibleHeight={audition ? 33 : 43} sizes="(max-width: 480px) 65vw, 310px" onReady={() => setFg(true)} />
+      {groupAvatars ? (
+        <>
+          {Array.from({ length: total }, (_, i) => i).filter((i) => i !== playerSlot).map((i) => { const m = groupAvatars[memberAt(i)]; return (
+            <ArtFrames key={`m${i}:${art.scene}:${m}`} frames={eventArt(art.scene, m, gender).frames} visibleHeight={groupHeight} sizes="(max-width: 480px) 40vw, 200px" offsetX={slotX(i)} zIndex={1} />
+          ); })}
+        </>
+      ) : null}
+      <ArtFrames key={`${art.scene}:${avatar}`} frames={art.frames} visibleHeight={groupAvatars ? groupHeight * 1.06 : audition ? 33 : 43} sizes="(max-width: 480px) 65vw, 310px" onReady={() => setFg(true)}
+        {...(groupAvatars ? { offsetX: slotX(playerSlot), zIndex: 2 } : {})} />
+      {mood === "sad" || mood === "happy" ? (
+        <span className={`art-mood-badge art-mood-${mood}`} aria-hidden style={{ left: groupAvatars ? `calc(${slotX(playerSlot)}% - 6%)` : undefined }}>{mood === "sad" ? "💧" : "✨"}</span>
+      ) : null}
     </div>
   );
 }

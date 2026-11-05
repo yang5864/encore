@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCareer } from "@/hooks/useCareer";
@@ -23,6 +23,7 @@ import { ResultSheet } from "@/components/play/ResultSheet";
 import { MilestoneSheet } from "@/components/play/MilestoneSheet";
 import { AgencySheet } from "@/components/play/AgencySheet";
 import { MenuSheet } from "@/components/play/MenuSheet";
+import { RecapOverlay } from "@/components/play/RecapOverlay";
 import { CoachMarks } from "@/components/play/CoachMarks";
 import { loadSettings, saveSettings } from "@/lib/storage";
 import { focusOptions } from "@/lib/game/focus";
@@ -45,6 +46,39 @@ export default function PlayPage() {
   const [lastResult, setLastResult] = useState<TurnResult | null>(null);
   const [fireworks, setFireworks] = useState<"win" | "daesang" | "award" | null>(null);
   const [daesang, setDaesang] = useState<Spotlight | null>(null);
+  const [seasonBanner, setSeasonBanner] = useState<string | null>(null);
+  const [recapDone, setRecapDone] = useState(true);
+  const hadResult = useRef(false);
+
+  // 결과 시트를 닫고 새 시즌 계획 카드가 나오면 맨 위로 올리고 안내한다
+  useEffect(() => {
+    if (!career) return;
+    if (career.result) {
+      hadResult.current = true;
+      return;
+    }
+    if (hadResult.current && !career.pending && career.stage !== "retired") {
+      hadResult.current = false;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setSeasonBanner(`새 시즌 시작 · ${periodLabel(career)}`);
+    }
+  }, [career]);
+  useEffect(() => {
+    if (!seasonBanner) return;
+    const t = window.setTimeout(() => setSeasonBanner(null), 2500);
+    return () => window.clearTimeout(t);
+  }, [seasonBanner]);
+
+  // 은퇴 회고는 커리어당 한 번만
+  const retiredId = career?.stage === "retired" ? career.id : null;
+  useEffect(() => {
+    if (!retiredId) return;
+    try {
+      setRecapDone(localStorage.getItem(`encore2:recap:${retiredId}`) === "1");
+    } catch {
+      setRecapDone(true);
+    }
+  }, [retiredId]);
 
   useEffect(() => {
     if (ready && !career) router.replace("/");
@@ -81,6 +115,7 @@ export default function PlayPage() {
 
   const pendingMilestone = milestoneQueue[0] ?? null;
   const showResult = !!career?.result && !pendingMilestone && !coach && !daesang;
+  const showRecap = !!retiredId && !recapDone && !career?.result && !coach && !daesang && !pendingMilestone;
   const showEvent = !!career?.pending && !career.result && !pendingMilestone && !coach && !daesang;
 
   const [advancing, setAdvancing] = useState(false);
@@ -116,6 +151,11 @@ export default function PlayPage() {
 
   return (
     <main className="shell pt-3">
+      {seasonBanner && (
+        <div className="fixed top-3 inset-x-0 z-[65] flex justify-center px-5 pointer-events-none" role="status">
+          <div className="fade-up rounded-full bg-ink text-bg text-[13px] font-bold px-4 py-2.5 shadow-lg">{seasonBanner}</div>
+        </div>
+      )}
       <div className="top-progress" style={{ width: `${progress}%`, opacity: progress ? 1 : 0 }} />
       <header className="flex items-center justify-between h-12 mb-2">
         <Link href="/" className="font-extrabold text-[16px] tracking-tight">encore<span className="text-primary">.</span></Link>
@@ -159,7 +199,7 @@ export default function PlayPage() {
 
       {daesang && <CelebrationOverlay career={career} spot={daesang} onDone={() => setDaesang(null)} />}
       <MilestoneSheet career={career} id={pendingMilestone} open={!!pendingMilestone && !daesang} onClose={() => setMilestoneQueue((q) => q.slice(1))} />
-      {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} avatar={career.avatar} gender={career.gender} name={career.name} open={showResult} onClose={() => {
+      {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} avatar={career.avatar} gender={career.gender} name={career.name} lineup={career.lineup} open={showResult} onClose={() => {
         dismissResult();
         if (afterApply) {
           setAfterApply(false);
@@ -195,6 +235,15 @@ export default function PlayPage() {
           router.replace("/");
         }}
       />
+      {showRecap && (
+        <RecapOverlay
+          career={career}
+          onDone={() => {
+            try { localStorage.setItem(`encore2:recap:${career.id}`, "1"); } catch { /* ignore */ }
+            setRecapDone(true);
+          }}
+        />
+      )}
       {fireworks && <Fireworks kind={fireworks} onDone={() => setFireworks(null)} />}
       <PrefetchArt scenes={prefetchScenes} avatar={career.avatar} gender={career.gender} />
       {coach && (

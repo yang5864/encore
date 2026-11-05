@@ -7,7 +7,7 @@ import { ageOf, ageText, conditionOf, displayName, eraScale, fanText, isSecondHa
 const hasBatchim = (w: string) => { const ch = w.charCodeAt(w.length - 1); return ch >= 0xac00 && ch <= 0xd7a3 && (ch - 0xac00) % 28 !== 0; };
 import { rng, between, pick } from "./rng.ts";
 import { applyEffects, addReputation, diff, log, snapshot, type Snapshot } from "./effects.ts";
-import { CONCEPTS, DANGER_LOCK, MAIN_STAT, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
+import { CONCEPTS, DANGER_LOCK, MAIN_STAT, inCooldown, isPublicFocus, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
 import { makeAlbum, albumSummary, addShowWin, ALBUM_NAME_PATTERN, DEFAULT_PRODUCTION } from "./album.ts";
 import { MUSIC_SHOWS, winChance, addBuzz, BUZZ_DECAY, INCIDENT_IDS } from "./metrics-model.ts";
 import { PRODUCERS, PROMOS } from "./focus.ts";
@@ -20,13 +20,13 @@ import { DEBUT_COST, TRAINEE_COST_PER_TURN, updateSettlement } from "./economy.t
 import { checkMilestones } from "./milestones.ts";
 import { endingFor } from "./endings.ts";
 import { buildReactions } from "./reactions.ts";
-import { updateMetrics } from "./metrics.ts";
+import { updateMetrics, metricTargets } from "./metrics.ts";
 import { debutEvaluation, scheduleEvent, activate } from "./schedule.ts";
 import { eventById } from "./events/index.ts";
 import { bankruptcyRisk } from "./renewal.ts";
 import { rankingFor } from "./brand-rank.ts";
 import { decodeEta, etaLabel, setDebutEta } from "./debut.ts";
-import { boughtThisSeason, itemById, priceOf, shopOffers, walletOf } from "./shop.ts";
+import { boughtThisSeason, priceOf, shopOffers, walletOf } from "./shop.ts";
 
 export { focusOptions } from "./focus.ts";
 export { createCareer } from "./create.ts";
@@ -49,6 +49,13 @@ function billboardSpotlight(c: Career, album: { name: string; billboard: number 
     stats: [`초동 ${album.sales >= 10000 ? `${Math.round(album.sales / 10000)}만` : album.sales.toLocaleString("ko-KR")}장`, `코어 팬덤 ${fanText(c.fans)}`],
   };
 }
+
+/** 복무 중 고른 길(flags.servicePath 1~3). 전역 결과에 한 줄로 남는다. */
+const SERVICE_PATHS: Record<number, { discharge: string }> = {
+  1: { discharge: "군악대·홍보대사로 복무하며 무대 감각을 지켜서 돌아왔어요." },
+  2: { discharge: "일반 복무로 몸과 마음을 푹 쉬고 돌아왔어요." },
+  3: { discharge: "체력 단련에 집중해 몸을 만들어 돌아왔어요." },
+};
 
 const DEBUT_FANS: Record<string, number> = { major: 350000, mid: 70000, indie: 5000, global: 50000 };
 export const GROUP_NAME_PATTERN = /^[\p{L}\p{N} _·!-]{1,20}$/u;
@@ -147,10 +154,11 @@ export function advanceTurn(original: Career, focusId: string): Career {
     c.health = Math.min(100, c.health + 20);
     c.mental = Math.min(100, c.mental + 10);
     for (const k of STAT_KEYS) c.stats[k] = Math.max(0, c.stats[k] - 1);
-    log(c, "전역", `${months}개월의 복무를 마치고 돌아왔어요. 팬들이 기다리고 있었어요.`, "milestone");
+    const path = SERVICE_PATHS[c.flags.servicePath ?? 0];
+    log(c, "전역", `${months}개월의 복무를 마치고 돌아왔어요. ${path ? path.discharge : "팬들이 기다리고 있었어요."}`, "milestone");
     c.pending = scheduleEvent(c);
     c.lastResult = null;
-    finish(c, before, "전역했어요", `${months}개월의 복무를 마쳤어요.${prep > 0 ? ` 남은 ${prep}개월은 몸을 만들며 복귀를 준비했어요.` : ""} 팬들이 기다리고 있었어요. 다시 무대로 돌아갈 시간이에요.`, "good", { scene: "military" });
+    finish(c, before, "전역했어요", `${months}개월의 복무를 마쳤어요.${path ? ` ${path.discharge}` : ""}${prep > 0 ? ` 남은 ${prep}개월은 몸을 만들며 복귀를 준비했어요.` : ""} 팬들이 기다리고 있었어요. 다시 무대로 돌아갈 시간이에요.`, "good", { scene: "military" });
     return c;
   }
 
@@ -327,6 +335,27 @@ export function advanceTurn(original: Career, focusId: string): Career {
       scene = "rest";
     } else throw new GameError("선택할 수 없는 계획이에요.");
     c.trust = Math.min(100, c.trust + 2);
+
+    // ── 자숙 기간: 논란이 가라앉기 전에 공개 활동을 하면 여론이 돌아선다 ──
+    if (inCooldown({ flags: c.flags, turn: c.turn })) {
+      if (isPublicFocus(kind)) {
+        if (rng(c) < 0.8) {
+          c.popularity = Math.max(0, c.popularity - 6);
+          c.loyalty = Math.max(0, c.loyalty - 8);
+          addReputation(c, -5);
+          c.buzz = Math.max(0, (c.buzz ?? 0) - 10);
+          notes.push("논란이 가라앉기 전에 활동을 강행했어요. 여론이 더 나빠졌어요.");
+          tone = "bad";
+        } else {
+          addBuzz(c, 25);
+          addReputation(c, 6);
+          notes.push("정면 돌파가 통했어요. 여론이 돌아섰어요.");
+          delete c.flags.scandalCooldown;
+        }
+      } else if (kind === "rest" || kind === "fanmeet") {
+        c.flags.scandalCooldown = (c.flags.scandalCooldown ?? 0) - 1; // 조용히 지내면 자숙이 한 시즌 더 빨리 끝난다
+      }
+    }
   }
 
   // ── 시간이 흐른다 ──
@@ -334,10 +363,15 @@ export function advanceTurn(original: Career, focusId: string): Career {
   c.health = Math.max(0, Math.min(100, c.health + 8));
   c.mental = Math.max(0, Math.min(100, c.mental + (c.schoolId === "ged" && c.stage !== "idol" ? 3 : 6)));
   if (c.flags.scandalTurn !== c.turn - 1) addReputation(c, 1);
+  // 2012년 전에 데뷔한 아이돌은 SNS가 열리는 해에 회사가 계정을 알아서 열어준다
+  if (c.stage === "idol" && !c.flags.snsOpened && yearOf(c) >= 2012 && c.debutTurn !== null && yearOf({ turn: c.debutTurn }) < 2012) {
+    c.flags.snsOpened = Math.max(1, c.turn);
+    notes.push("회사가 공식 인스타그램 계정을 열었어요.");
+  }
 
   if (c.stage === "idol") {
     const gap = c.lastReleaseTurn === null ? 99 : c.turn - c.lastReleaseTurn;
-    if (kind !== "comeback") c.fans = Math.round(c.fans * (kind === "fanmeet" ? 0.985 : 0.965));
+    if (kind !== "comeback") c.fans = Math.round(c.fans * (kind === "fanmeet" ? 0.985 : 0.975));
     if (kind === "rest") { c.loyalty = Math.min(100, c.loyalty + 2); if (!c.flags.solo) c.chemistry = Math.min(100, c.chemistry + 4); }
     if (kind === "comeback" && !c.flags.solo && c.albums.length >= 3 && c.albums.slice(-3).every((al, i, arr) => al.turn === arr[0].turn + i)) c.chemistry = Math.max(0, c.chemistry - 3); // 쉼 없는 컴백 3연속
     if (!c.flags.solo) {
@@ -414,7 +448,8 @@ export function advanceTurn(original: Career, focusId: string): Career {
   }
 
   // ── 소속사 파산 ──
-  if (rng(c) < bankruptcyRisk(c)) {
+  // 계약을 맺은 직후 두 시즌은 파산 소식이 오지 않는다 (서명 직후 또 계약 화면이 뜨는 혼란 방지)
+  if (c.turn - (c.flags.contractTurn ?? -99) >= 2 && rng(c) < bankruptcyRisk(c)) {
     c.flags.bankruptTurn = c.turn;
     c.flags.bankruptCount = (c.flags.bankruptCount ?? 0) + 1;
     notes.push("회사 재정이 버티지 못했어요.");
@@ -430,6 +465,10 @@ export function advanceTurn(original: Career, focusId: string): Career {
   }
   if (c.turn > MAX_TURN) return retire(c, "긴 커리어의 마지막 앵콜을 마쳤어요.");
 
+  if (c.flags.snsOpened && !c.flags.snsGrowNoted && metricTargets(c).instagram > (c.metrics?.instagram ?? 0) * 1.05) {
+    c.flags.snsGrowNoted = 1;
+    notes.push("인스타 팔로워가 늘기 시작했어요.");
+  }
   if (c.stage === "idol" && !boughtThisSeason(c)) {
     const offers = shopOffers(c);
     const cheapest = offers.length ? Math.min(...offers.map((o) => priceOf(c, o))) : Infinity;
@@ -486,9 +525,25 @@ function inviteEvent(c: Career): ActiveEvent {
     text: `${cm.year} ${SHOW_FULL[cm.show] ?? cm.show} 측에서 ${c.groupName || c.name}을(를) 초청했어요. ${cm.stages.join(" · ")} 무대 출연 요청도 같이 왔어요. 연말 일정이 빡빡하지만, 시상식은 한 해의 결산이에요.`,
     scene: "awards",
     public: true,
+    // 연말 시상식은 빠질 수 없다. awards:skip 처리는 예전 저장 데이터 호환을 위해 남겨둔다
     choices: [
       { id: "attend", label: "시상식에 참석한다", hint: "연말 무대에 서고 시상 결과를 현장에서 들어요. 체력이 조금 떨어져요", risk: "safe", op: "awards:attend" },
-      { id: "skip", label: "참석하지 않는다", hint: "쉬어요. 수상해도 대리 수상이 되고 팬들이 아쉬워해요", risk: "bold", op: "awards:skip" },
+    ],
+  };
+}
+
+/** 입대 직후 한 번 뜨는 복무 계획. 고른 길이 전역 결과에 남는다. */
+function militaryEvent(c: Career): ActiveEvent {
+  return {
+    id: "military-service",
+    title: "복무 중",
+    text: `${c.flags.militaryMonths ?? 18}개월의 복무가 시작돼요. 어떻게 보낼지 정해요. 전역 뒤 복귀 무대에 영향을 줘요.`,
+    scene: "military",
+    public: true,
+    choices: [
+      { id: "band", label: "군악대 · 홍보대사로 복무", hint: "무대 감각을 지키고 팬들과 소식이 이어져요. 보컬이 받쳐줘야 뽑혀요", risk: "safe", requires: { stat: "vocal", value: 55 }, effects: { loyalty: 5, health: 5 }, op: "service:band" },
+      { id: "regular", label: "일반 복무", hint: "몸과 마음이 크게 회복되지만 실력은 조금 무뎌져요", risk: "safe", effects: { health: 15, mental: 8, vocal: -1, dance: -1, rap: -1, visual: -1, variety: -1, producing: -1 }, op: "service:regular" },
+      { id: "fitness", label: "체력 단련에 집중", hint: "체력이 가장 크게 오르고 춤 근력도 붙어요", risk: "safe", effects: { health: 25, dance: 2 }, op: "service:fitness" },
     ],
   };
 }
@@ -581,6 +636,7 @@ function joinAgency(c: Career, agencyId: string) {
   delete c.flags.promisedDebut;
   delete c.flags.cutEta;
   c.lineup = null;
+  c.flags.contractTurn = c.turn;
 }
 
 export function resolveChoice(original: Career, choiceId: string, extra: { groupName?: string; albumName?: string; reaction?: string } = {}): Career {
@@ -625,6 +681,23 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     addBuzz(c, 10);
     c.flags.lastIncident = c.turn;
     if (tone === "bad") { c.loyalty = Math.max(0, c.loyalty - 6); }
+  }
+  // 열애설·악플은 커리어당 두 번까지만 찾아온다
+  if (event.id === "dating") c.flags.datingCount = (c.flags.datingCount ?? 0) + 1;
+  if (event.id === "hate") c.flags.hateCount = (c.flags.hateCount ?? 0) + 1;
+  // 멤버가 탈퇴하면 팀이 실제로 줄어든다
+  if (event.id === "member-leave" && c.lineup) {
+    c.lineup.members = Math.max(2, c.lineup.members - 1);
+    if (c.lineup.memberAvatars?.length) c.lineup.memberAvatars.pop();
+  }
+  // 논란 뒤에는 두 시즌 자숙 기간: 이 동안 공개 활동은 역효과가 난다
+  {
+    const incident = INCIDENT_IDS.includes(event.id);
+    const failedChance = choice.chance !== undefined && tone === "bad";
+    const badEffects = choice.chance === undefined && (choice.effects?.reputation ?? 0) <= -8;
+    if ((incident && (failedChance || badEffects || (event.id === "dating" && choice.id === "admit"))) || (op === "scandal" && (choice.chance === undefined || failedChance))) {
+      c.flags.scandalCooldown = c.turn + 2;
+    }
   }
 
   // 운영 훅
@@ -848,6 +921,38 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     headline = { army: "육군 입대", navy: "해군 입대", airforce: "공군 입대" }[branch] ?? "입대";
     text = `${months}개월 복무 뒤 돌아와요.${turns * 6 > months ? ` 전역 후 남는 ${turns * 6 - months}개월은 복귀 준비에 써요.` : ""} 다음 진행에서 복무 기간이 한 번에 지나가요.`;
     log(c, headline, text, "milestone");
+    c.pending = militaryEvent(c);
+  } else if (op.startsWith("service:")) {
+    const path = op.slice(8);
+    c.flags.servicePath = path === "band" ? 1 : path === "regular" ? 2 : 3;
+    if (path === "band") addBuzz(c, 10);
+    headline = { band: "군악대 · 홍보대사로 복무", regular: "일반 복무", fitness: "체력 단련에 집중" }[path] ?? "복무";
+    text = { band: "군악대 공연과 홍보대사 활동으로 팬들에게 소식이 이어져요.", regular: "평범한 병사로 하루하루를 보내요. 몸과 마음이 단단해져요.", fitness: "남는 시간을 몸 만드는 데 써요. 전역할 땐 체력이 달라져 있을 거예요." }[path] ?? "";
+    log(c, headline, text, "milestone");
+  } else if (op === "sns:open") {
+    c.flags.snsOpened = Math.max(1, c.turn);
+    c.metrics = { ...(c.metrics ?? { instagram: 0, youtube: 0, spotify: 0 }), instagram: Math.max(500, Math.round(c.fans * 0.3)) };
+    headline = "공식 인스타그램을 열었어요";
+    text = "첫 게시물을 올리자 팬들이 몰려들었어요. 앞으로 팔로워가 천천히 쌓여요.";
+    tone = "good";
+    log(c, headline, text, "milestone");
+  } else if (op.startsWith("isac:")) {
+    const kind = op.slice(5);
+    if (kind === "skip") {
+      applyEffects(c, { health: 6, loyalty: -2 });
+      headline = "육상 대회에 불참했어요";
+      text = "방송 대신 푹 쉬었어요. 팬들은 아쉬워했지만 컨디션은 좋아졌어요.";
+    } else {
+      const run = kind === "run";
+      const p = run ? 0.3 + c.stats.dance / 150 : 0.3 + c.stats.variety / 150;
+      const success = rng(c) < p;
+      tone = success ? "good" : "bad";
+      if (run) {
+        if (success) { addBuzz(c, 15); applyEffects(c, { loyalty: 4, popularity: 2 }); headline = "60m 달리기 결승 진출"; text = "트랙을 가르며 결승선을 끊었어요. 직캠이 실시간 검색어에 올랐어요."; }
+        else { applyEffects(c, { health: -6 }); headline = "60m 달리기에서 넘어졌어요"; text = "출발 직후 발이 꼬였어요. 짤이 돌았지만 다친 데는 없어서 다행이에요."; }
+      } else if (success) { addBuzz(c, 12); applyEffects(c, { popularity: 3 }); headline = "양궁 10점 명중"; text = "숨을 고르고 쏜 화살이 정중앙에 꽂혔어요. '침착한 센터'라는 말이 돌았어요."; }
+      else { headline = "양궁에서 과녁을 빗나갔어요"; text = "긴장한 탓에 화살이 엉뚱한 곳으로 날아갔어요. 팬들은 귀엽다고 해줬어요."; }
+    }
   } else if (op.startsWith("move:")) {
     const a = agencyById(op.slice(5))!;
     const bankrupt = c.flags.bankruptTurn !== undefined;
@@ -1006,14 +1111,22 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     log(c, headline, text, "system");
   }
 
+  if (/^(renew|independent|solo|trainee:renew|move:|debut$)/.test(op)) c.flags.contractTurn = c.turn;
   if (!c.pending) c.pending = null;
+  let commentTone: "good" | "bad" | "neutral" | undefined;
   if (!reaction) {
+    const BAD_EVENT_KIND: Record<string, import("./reactions.ts").ReactionKind> = {
+      "member-bullying": "scandal-bullying", dating: "scandal-dating", "member-dui": "scandal-dui", "live-controversy": "scandal-live", chartfraud: "scandal-chart",
+      hate: "hate-sasaeng", "hiatus-health": "health", injury: "injury", feud: "feud", "debut-cut": "cut",
+    };
     const kind: import("./reactions.ts").ReactionKind =
-      op === "debut" ? "debut" : op.startsWith("showcase:") ? "showcase" : op === "renew" ? "renew" : op.startsWith("move:") ? "move" : op === "independent" ? "own-label" : op === "solo" ? "leave"
-      : op === "retire" ? "disband" : event.id === "agency-bankrupt" ? "bankrupt" : op === "scandal" || event.id.includes("controversy") || event.id === "chartfraud" ? "scandal" : op === "hiatus" ? "hiatus" : op.startsWith("military:") ? "military" : "generic";
+      BAD_EVENT_KIND[event.id] ?? (event.id === "isac" ? "isac" : event.id === "sns-open" ? "sns-open" : op.startsWith("military:") ? "military-enlist"
+      : op === "debut" ? "debut" : op.startsWith("showcase:") ? "showcase" : op === "renew" ? "renew" : op.startsWith("move:") ? "move" : op === "independent" ? "own-label" : op === "solo" ? "leave"
+      : op === "retire" ? "disband" : event.id === "agency-bankrupt" ? "bankrupt" : op === "scandal" || event.id.includes("controversy") ? "scandal" : op === "hiatus" ? "hiatus" : "generic");
     reaction = { kind };
+    if (event.id in BAD_EVENT_KIND) commentTone = tone === "good" ? "neutral" : "bad";
   }
-  const comments = event.public || reaction.kind !== "generic" ? buildReactions(c, tone === "bad" ? "bad" : tone === "neutral" ? "neutral" : "good", reaction) : [];
+  const comments = event.public || reaction.kind !== "generic" ? buildReactions(c, commentTone ?? (tone === "bad" ? "bad" : tone === "neutral" ? "neutral" : "good"), reaction) : [];
   finish(c, before, headline, text, tone, { scene: event.scene, notes, comments, celebrate, spotlight });
   return c;
 }
@@ -1072,8 +1185,8 @@ export function buyItem(original: Career, itemId: string): Career {
   const c = clone(original);
   if (c.stage === "retired") throw new GameError("이미 완성된 인생예요.");
   if (c.pending) throw new GameError("먼저 지금의 선택을 마쳐주세요.");
-  const item = itemById(itemId);
-  if (!item || !shopOffers(c).some((x) => x.id === itemId)) throw new GameError("이번 시즌에 파는 물건이 아니에요.");
+  const item = shopOffers(c).find((x) => x.id === itemId);
+  if (!item) throw new GameError("이번 시즌에 파는 물건이 아니에요.");
   if (boughtThisSeason(c)) throw new GameError("상점에서는 시즌마다 하나만 살 수 있어요.");
   const price = priceOf(c, item);
   if (walletOf(c) < price) throw new GameError("정산금이 부족해요.");

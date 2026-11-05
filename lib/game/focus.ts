@@ -51,7 +51,7 @@ export const SOLO_LABELS: Record<SoloKind, { label: string; hint: string }> = {
 
 export const CONCEPTS: { id: Concept; name: string; description: string; stats: StatKey[] }[] = [
   { id: "fresh", name: "청량", description: "밝고 여름 같은 곡. 비주얼과 댄스가 중요해요", stats: ["visual", "dance"] },
-  { id: "girlcrush", name: "걸크러시 · 힙합", description: "강렬한 비트. 랩과 퍼포먼스가 중요해요", stats: ["rap", "dance"] },
+  { id: "girlcrush", name: "힙합 · 크러시", description: "강렬한 비트와 센 콘셉트. 랩과 퍼포먼스가 중요해요", stats: ["rap", "dance"] },
   { id: "ballad", name: "보컬 · 발라드", description: "감성 보컬. 보컬과 프로듀싱이 중요해요", stats: ["vocal", "producing"] },
   { id: "performance", name: "퍼포먼스", description: "칼군무와 킬링파트. 댄스가 가장 중요해요", stats: ["dance", "visual"] },
 ];
@@ -89,8 +89,21 @@ function lockWhenDanger(c: Career, options: FocusOption[]): FocusOption[] {
   return options.map((o) => (o.id === "rest" ? { ...o, disabledReason: undefined, hint: "컨디션이 위험해서 이번 시즌은 쉬어야 해요. 몸과 마음을 크게 회복해요" } : { ...o, disabledReason: DANGER_LOCK }));
 }
 
+/** 논란 직후 자숙 기간인지 (사건 후 2시즌). 이 동안 공개 활동은 역효과가 날 가능성이 높다. */
+export const inCooldown = (c: Pick<Career, "flags" | "turn">) => (c.flags?.scandalCooldown ?? 0) > c.turn;
+export const COOLDOWN_HINT = "⚠ 논란 직후 · 역효과 80%";
+/** 자숙 중 역효과가 나는 공개 활동인지 (휴식·팬미팅·훈련은 제외) */
+export const isPublicFocus = (focusId: string) => {
+  const kind = focusId.split(":")[0];
+  return kind === "comeback" || kind === "overseas" || kind === "solo" || kind === "promo";
+};
+
 export function focusOptions(c: Career): FocusOption[] {
-  return lockWhenDanger(c, baseOptions(c));
+  let options = baseOptions(c);
+  if (c.stage === "idol" && inCooldown(c)) {
+    options = options.map((o) => (isPublicFocus(o.id) ? { ...o, hint: `${COOLDOWN_HINT} · ${o.hint}` } : o));
+  }
+  return lockWhenDanger(c, options);
 }
 
 function baseOptions(c: Career): FocusOption[] {

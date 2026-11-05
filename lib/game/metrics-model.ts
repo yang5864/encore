@@ -1,6 +1,7 @@
 import type { Career, Production } from "./types.ts";
 import { eraScale, yearOf } from "./format.ts";
 import { agencyById } from "./agencies.ts";
+import { rivalFor } from "./team.ts";
 
 /**
  * 지표가 서로 얽혀 움직이는 모델. 한 활동(앨범)에서 다섯 가지 점수를 먼저 구하고,
@@ -65,22 +66,34 @@ export function activityScores(c: Career, a: ActivityInput): Scores {
 export const showScore = (s: Scores, show: ShowDef) =>
   s.digital * show.w.digital + s.physical * show.w.physical + s.broadcast * show.w.broadcast + s.social * show.w.social + s.vote * show.w.vote;
 
+/** 방탄소년단과 컴백이 겹치면 음방·차트 경쟁 바가 크게 올라간다. */
+export const BTS_RIVAL_BONUS = { show: 12, melon: 5 };
+export const isBtsRival = (name?: string | null) => !!name && name.includes("방탄소년단");
+/** 라이벌 이름: 직접 넘기지 않으면 이번 시즌의 라이벌(rivalFor)을 읽는다 */
+function rivalNameOf(c: Career, rival: boolean, given?: string): string | undefined {
+  if (!rival) return undefined;
+  if (given !== undefined) return given;
+  return rivalFor(c)?.name;
+}
+
 /**
  * 방송별 1위 확률. 내 점수와 그 주 경쟁자 점수 차이의 로지스틱.
  * 경쟁자 점수는 시대(2010년대 중반 이후 경쟁 심화)·라이벌 컴백·신인 여부로 올라간다.
  */
-export function winChance(c: Career, s: Scores, show: ShowDef, rival: boolean, rookie: number): number {
+export function winChance(c: Career, s: Scores, show: ShowDef, rival: boolean, rookie: number, rivalName?: string): number {
   const year = yearOf(c);
   const eraBar = year >= 2016 ? 6 : year >= 2012 ? 3 : 0;
-  const bar = show.bar + eraBar + (rival ? 9 : 0) + (rookie === 0 ? 10 : rookie === 1 ? 5 : 0);
+  const bts = rival && isBtsRival(rivalNameOf(c, rival, rivalName)) ? BTS_RIVAL_BONUS.show : 0;
+  const bar = show.bar + eraBar + (rival ? 9 : 0) + bts + (rookie === 0 ? 10 : rookie === 1 ? 5 : 0);
   const gap = showScore(s, show) - bar - 4;
   return clamp(1 / (1 + Math.exp(-gap / 5)), 0.01, 0.9);
 }
 
 /** 멜론 TOP100 최고 순위. 음원 점수가 경쟁 바(시대별)보다 얼마나 높은지로 정한다. null이면 차트 밖. */
-export function melonRank(c: Career, s: Scores, rival: boolean, noise: number): number | null {
+export function melonRank(c: Career, s: Scores, rival: boolean, noise: number, rivalName?: string): number | null {
   const year = yearOf(c);
-  const bar = 62 + (year >= 2016 ? 6 : year >= 2012 ? 3 : 0) + (rival ? 3 : 0);
+  const bts = rival && isBtsRival(rivalNameOf(c, rival, rivalName)) ? BTS_RIVAL_BONUS.melon : 0;
+  const bar = 62 + (year >= 2016 ? 6 : year >= 2012 ? 3 : 0) + (rival ? 3 : 0) + bts;
   const edge = s.digital + 0.15 * s.social + noise * 10 - bar; // 0이면 100위 언저리
   if (edge < 0) return null;
   // 0 → 100위, 10 → 50위, 20 → 15위, 28 → 3위, 32+ → 1위

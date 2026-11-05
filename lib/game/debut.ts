@@ -3,6 +3,7 @@ import { AGENCIES, agencyById, auditionChance, tierRank, type Agency } from "./a
 import { overall, STAT_KEYS } from "./stats.ts";
 import { ageOf } from "./format.ts";
 import { rng } from "./rng.ts";
+import { FEMALE_AVATARS, MALE_AVATARS } from "../art/index.ts";
 
 // ─────────────────────────── 그룹 내 역할 ───────────────────────────
 
@@ -37,7 +38,14 @@ export function makeLineup(c: Career): Lineup {
   const center = visualTop ? rng(c) < 0.75 : rng(c) < 0.12;
   const leader = (c.stats.variety >= 55 && c.trust >= 45 && rng(c) < 0.6) || (age >= 20 && rng(c) < 0.4) || rng(c) < 1 / members / 2;
   const maknae = !leader && age <= 16 && rng(c) < 0.45;
-  return { members, leader, center, maknae, parts };
+  // 같은 성별의 서로 다른 아바타로 멤버를 채운다 (내 아바타 제외). 부족하면 마지막 수단으로 중복 허용.
+  const pool = (c.gender === "male" ? MALE_AVATARS : FEMALE_AVATARS).filter((x) => x !== c.avatar);
+  const memberAvatars: number[] = [];
+  for (let i = 0; i < members - 1; i++) {
+    if (!pool.length) { memberAvatars.push(memberAvatars.length ? memberAvatars[i % memberAvatars.length] : c.avatar); continue; }
+    memberAvatars.push(pool.splice(Math.floor(rng(c) * pool.length), 1)[0]);
+  }
+  return { members, leader, center, maknae, parts, memberAvatars };
 }
 
 export function lineupRoles(l: Lineup): string[] {

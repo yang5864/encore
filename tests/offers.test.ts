@@ -254,9 +254,10 @@ test("복무 기간은 육군 18 · 해군 20 · 공군 21개월이고 남는 �
     const c = idol(2);
     c.gender = "male"; c.turn = 31; c.contractEnd = 40;
     c.pending = { id: "military", title: "", text: "", scene: "military", choices: [{ id: branch, label: "", hint: "", risk: "safe", op: `military:${branch}` }] };
-    const n = resolveChoice(c, branch);
-    assert.equal(n.militaryUntil, 31 + turns);
-    assert.match(n.result!.text, new RegExp(`${months}개월 복무`));
+    const n0 = resolveChoice(c, branch);
+    assert.equal(n0.militaryUntil, 31 + turns);
+    assert.match(n0.result!.text, new RegExp(`${months}개월 복무`));
+    const n = resolveChoice(n0, "regular");
     const back = advanceTurn(n, "promo");
     assert.match(back.result!.text, new RegExp(`${months}개월의 복무`));
     if (turns * 6 > months) assert.match(back.result!.text, /복귀를 준비/);
@@ -380,9 +381,11 @@ test("연말 시상식: 초청 → 참석 → 호명 → 수상소감 순서로 
   const base = idol(7);
   base.turn = 21; base.debutTurn = 8; base.lastReleaseTurn = 21; base.popularity = 70; base.fans = 2000000; base.contractEnd = 40; base.flags.burst = 1;
   base.albums = [{ id: "a", turn: 21, name: "X", concept: "fresh", quality: 75, sales: 400000, melon: 3, billboard: null, wins: 2, shows: ["더쇼", "뮤직뱅크"], cost: 20, revenue: 50 }];
-  const n = advanceTurn(base, "fanmeet");
+  // 수상은 확률이라, 수상자가 나오는 난수 상태를 하나 골라 흐름을 검증한다
+  let n = advanceTurn(base, "fanmeet");
+  for (let k = 1; k < 60 && !(n.ceremony && n.ceremony.awards.length > 0); k++) n = advanceTurn({ ...structuredClone(base), rngState: k }, "fanmeet");
   assert.equal(n.pending?.id, "awards-invite", "연말엔 초청장이 먼저 온다");
-  assert.ok(n.ceremony && n.ceremony.awards.length > 0, "본상은 확보돼 있다");
+  assert.ok(n.ceremony && n.ceremony.awards.length > 0, "수상 후보가 나오는 해가 있다");
   assert.equal(n.awards.length, 0, "참석 전엔 수상이 확정되지 않는다");
   assert.equal(n.result?.celebrate, undefined, "활동 결과에 폭죽이 붙지 않는다");
   const attended = resolveChoice(n, "attend");
@@ -393,8 +396,5 @@ test("연말 시상식: 초청 → 참석 → 호명 → 수상소감 순서로 
   assert.ok(spoke.loyalty > attended.loyalty, "팬 감사 소감은 결속을 올린다");
   assert.ok(spoke.result?.celebrate === "award" || spoke.result?.celebrate === "daesang");
   assert.equal(spoke.ceremony, null);
-  const skipped = resolveChoice(n, "skip");
-  assert.ok(skipped.awards.length > 0, "불참해도 대리 수상으로 기록된다");
-  assert.equal(skipped.result?.celebrate, undefined);
-  assert.ok(skipped.popularity < n.popularity);
+  assert.ok(!n.pending!.choices.some((x) => x.id === "skip"), "시상식은 불참할 수 없다");
 });

@@ -12,6 +12,7 @@ import { ContractView } from "./ContractView";
 import { AlbumNamePicker } from "./AlbumNamePicker";
 import { AwardShow } from "./AwardShow";
 import { suggestAlbumName } from "@/lib/game/album";
+import { artGroupFor, SAD_EVENTS } from "@/lib/game/format";
 
 type Props = {
   career: Career;
@@ -72,7 +73,7 @@ export function EventSheet({ career, open, onChoose }: Props) {
       ) : (
         <>
           <div className="-mx-5 -mt-3">
-            <EventArt scene={event.scene} avatar={career.avatar} gender={career.gender} name={career.name} />
+            <EventArt scene={event.scene} avatar={career.avatar} gender={career.gender} name={career.name} mood={SAD_EVENTS.includes(event.id) ? "sad" : undefined} group={artGroupFor(career.lineup, event.scene)} />
           </div>
           <h2 className="t-title mt-4">{event.title}</h2>
           <p className="t-body text-ink-2 mt-2">{event.text}</p>

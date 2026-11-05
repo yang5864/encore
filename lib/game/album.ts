@@ -137,8 +137,8 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
   c.flags.mediaHeat = Math.min(100, (c.flags.mediaHeat ?? 0) + 25 + wins * 6 + (melon !== null && melon <= 10 ? 15 : 0) + (viral ? 25 : 0) + (billboard !== null ? 20 : 0));
   c.reputation += 2;
   if (production.producer === "self") { c.reputation += c.stats.producing >= 55 ? 3 : -2; c.stats.producing = Math.min(99, c.stats.producing + 2); }
-  // 음반 집중은 팬을 챙기는 활동, 그 외 컴백은 팬덤이 조금 식는다
-  c.loyalty = Math.max(0, Math.min(100, c.loyalty + (production.promo === "physical" ? 3 : -4)));
+  // 음반 집중은 팬을 챙기는 활동, 그 외 컴백은 팬덤이 조금 식는다. 1위·바이럴은 팬덤을 다시 묶는다
+  c.loyalty = Math.max(0, Math.min(100, c.loyalty + (production.promo === "physical" ? 3 : -2) + (wins > 0 ? 2 : 0) + (viral ? 4 : 0)));
   delete c.flags.budgetBonus;
   delete c.flags.budgetCut;
   c.health -= 14;

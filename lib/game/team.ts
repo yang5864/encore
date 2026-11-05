@@ -1,5 +1,5 @@
 import type { Career } from "./types.ts";
-import { brandTable } from "./brand-rank.ts";
+import { rivalGroups, groupStrength } from "./brand-rank.ts";
 import { yearOf } from "./format.ts";
 
 // ─────────────────────────── 팀 케미 ───────────────────────────
@@ -40,8 +40,9 @@ export function rivalFor(c: Pick<Career, "seed" | "turn" | "stage" | "groupName"
   if (c.stage !== "idol") return null;
   const h = hash(c.seed * 131 + c.turn * 7919);
   if (h % 100 >= 40) return null;
-  const table = brandTable(yearOf(c)).filter((e) => e.name !== c.groupName).slice(0, 8);
-  if (!table.length) return null;
-  const e = table[hash(h + 17) % table.length];
-  return { name: e.name, strength: e.index };
+  const year = yearOf(c);
+  const groups = rivalGroups(year).filter((g) => g !== c.groupName);
+  if (!groups.length) return null;
+  const name = groups[hash(h + 17) % groups.length];
+  return { name, strength: groupStrength(year, name) };
 }

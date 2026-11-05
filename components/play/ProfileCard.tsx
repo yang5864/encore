@@ -21,7 +21,7 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
           <Avatar index={career.avatar} size={64} name={career.name} />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="t-cap">{career.stage === "retired" ? `커리어 완성 · ${ageText({ turn: Math.min(career.turn, MAX_TURN) })} 은퇴` : `${periodLabel(career)} · ${ageText(career)}`}</p>
+          <p className="t-cap">{career.stage === "retired" ? `커리어 완성 · ${ageText({ turn: Math.min(career.turn, MAX_TURN) })} 은퇴` : periodLabel(career)}</p>
           <h1 className="t-title truncate mt-0.5">{displayName(career)}</h1>
           <div className="flex flex-wrap items-center gap-1.5 mt-2">
             <Chip tone={career.stage === "idol" ? "info" : career.stage === "trainee" ? "ok" : "neutral"}>{careerPhase(career) === STAGE_NAMES[career.stage] ? STAGE_NAMES[career.stage] : `${STAGE_NAMES[career.stage]} · ${careerPhase(career)}`}</Chip>

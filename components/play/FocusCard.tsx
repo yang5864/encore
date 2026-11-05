@@ -69,12 +69,11 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
           </div>
         )}
         {selected && o.picker === "concept" && (
-          <div className="mt-2 px-1">
-            <AlbumNamePicker suggested={suggestAlbumName(career)} custom={!!value.customName} name={value.albumName ?? ""} onChange={(custom, name) => onChange({ ...value, customName: custom, albumName: name })} />
-          </div>
-        )}
-        {selected && o.picker === "concept" && (
-          <>
+          <div className="mt-2 mb-3 rounded-2xl border border-primary/40 bg-primary-soft/20 p-3">
+            <p className="text-[13px] font-bold text-primary px-1">컴백 설정</p>
+            <div className="mt-2 px-1">
+              <AlbumNamePicker suggested={suggestAlbumName(career)} custom={!!value.customName} name={value.albumName ?? ""} onChange={(custom, name) => onChange({ ...value, customName: custom, albumName: name })} />
+            </div>
             <p className="text-[13px] font-bold text-ink-3 mt-3 px-1">콘셉트</p>
             <div className="grid grid-cols-2 gap-1.5 mt-1.5 px-1">
               {CONCEPTS.map((x) => {
@@ -109,7 +108,7 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
                 );
               })}
             </div>
-          </>
+          </div>
         )}
       </div>
     );

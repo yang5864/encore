@@ -20,16 +20,18 @@ export function metricTargets(c: Pick<Career, "fans" | "popularity" | "stage" | 
   // 플랫폼이 존재하기 전에는 0: 유튜브 2009년부터, 인스타그램 2012년부터, 스포티파이 국내 2021년부터
   const fans = Math.max(0, c.fans);
   const pop = Math.max(0, c.popularity);
+  // 인스타그램은 공식 계정을 열기 전까지 0이다 (flags.snsOpened)
+  const igOpen = !!c.flags?.snsOpened;
   if (c.stage === "free" || c.stage === "trainee") {
     // 프리 데뷔 계정: 작은 팬덤의 1.5배 정도, 유튜브·스포티파이는 없음
-    return { instagram: year >= 2012 ? Math.round(fans * 1.5) : 0, youtube: 0, spotify: 0 };
+    return { instagram: year >= 2012 && igOpen ? Math.round(fans * 1.5) : 0, youtube: 0, spotify: 0 };
   }
   const recentHit = c.albums.filter((a) => c.turn - a.turn <= 2).reduce((s, a) => s + (a.melon !== null ? Math.max(0, 30 - a.melon) : 0) + (a.billboard !== null ? 40 : 0), 0);
   const instagram = fans * (3 + pop / 20) + (c.peakBillboard !== null ? 2_000_000 : 0);
   const youtube = fans * (2 + pop / 25) + recentHit * 20_000;
   const spotify = fans * (1.5 + pop / 15) + recentHit * 60_000 + (c.peakBillboard !== null ? 3_000_000 : 0);
   return {
-    instagram: year >= 2012 ? Math.min(METRIC_CAPS.instagram, Math.round(instagram * era)) : 0,
+    instagram: year >= 2012 && igOpen ? Math.min(METRIC_CAPS.instagram, Math.round(instagram * era)) : 0,
     youtube: year >= 2009 ? Math.min(METRIC_CAPS.youtube, Math.round(youtube * era)) : 0,
     spotify: year >= 2021 ? Math.min(METRIC_CAPS.spotify, Math.round(spotify)) : 0,
   };
@@ -37,8 +39,10 @@ export function metricTargets(c: Pick<Career, "fans" | "popularity" | "stage" | 
 
 /** Moves stored metrics toward their targets: growth catches up 40% per half-year, decline 15%. */
 export function updateMetrics(c: Career): Metrics {
-  const target = metricTargets(c);
   const prev = c.metrics ?? EMPTY_METRICS;
+  // 예전 저장 데이터: 이미 인스타 팔로워가 있으면 계정이 열린 것으로 본다
+  if (!c.flags.snsOpened && prev.instagram > 0) c.flags.snsOpened = Math.max(1, c.turn);
+  const target = metricTargets(c);
   const next: Metrics = { ...prev };
   for (const k of ["instagram", "youtube", "spotify"] as const) {
     const t = target[k];

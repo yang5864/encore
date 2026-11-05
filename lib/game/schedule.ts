@@ -14,6 +14,10 @@ export const ENDGAME_CHANCE = 0.025;
 export const STORY_CHANCE = 0.7;
 export const REPEAT_GAP = 4;
 
+/** 막 계약한 직후(두 시즌 안)에는 또 다른 계약 제안이 뜨지 않는다. */
+export const JUST_SIGNED_GAP = 2;
+const justSigned = (c: Career) => c.turn - (c.flags.contractTurn ?? -99) < JUST_SIGNED_GAP;
+
 export function activate(def: GameEventDef): ActiveEvent {
   return { id: def.id, title: def.title, text: def.text, scene: def.scene, public: def.public, choices: structuredClone(def.choices) };
 }
@@ -67,7 +71,7 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
     c.seen.contract7 = c.turn;
     return renewalEvent(c, "contract");
   }
-  if (c.flags.burst === c.turn) {
+  if (c.flags.burst === c.turn && !justSigned(c)) {
     const offer = burstCastingEvent(c);
     if (offer) return offer;
   }
@@ -118,7 +122,7 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
     const def = eventById(id)!;
     if (eligible(def, c) && rng(c) < ENDGAME_CHANCE) return take(c, id);
   }
-  if (c.stage === "trainee" && c.scoutCount < 3 && c.hiatusUntil <= c.turn && rng(c) < SCOUT_CHANCE + Math.max(0, overall(c.stats, c.position) - 50) / 400) {
+  if (c.stage === "trainee" && c.scoutCount < 3 && c.hiatusUntil <= c.turn && !justSigned(c) && rng(c) < SCOUT_CHANCE + Math.max(0, overall(c.stats, c.position) - 50) / 400) {
     const offer = rivalOfferEvent(c);
     if (offer) {
       c.seen.scout = c.turn;

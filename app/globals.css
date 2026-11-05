@@ -115,6 +115,9 @@
   /* 터치가 더블탭 확대 판정으로 늦게 먹거나 씹히지 않게 */
   button, a, [role="button"], .press {
     touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   html {
@@ -193,7 +196,13 @@
 .press {
   transition: transform 160ms var(--ease), background-color 160ms var(--ease), opacity 160ms var(--ease);
 }
-.press:active { transform: scale(0.97); }
+/* 터치 기기에서는 :active 변형이 탭 도중 대상 위치를 바꿔 click이 유실될 수 있어, 마우스 환경에서만 눌림 효과를 준다 */
+@media (hover: hover) and (pointer: fine) {
+  .press:active { transform: scale(0.97); }
+}
+@media (hover: none) {
+  .press:active { opacity: 0.8; }
+}
 
 .bar-track {
   background: var(--chip);
@@ -207,12 +216,13 @@
   transition: width 700ms var(--ease), background-color 300ms var(--ease);
 }
 
+/* opacity만 쓴다: 애니메이션 중 위치가 움직이면 iOS Safari가 그 위의 탭(click)을 버린다. backwards라 끝나면 효과가 완전히 사라진다 */
 .fade-up {
-  animation: fade-up 420ms var(--ease) both;
+  animation: fade-up 280ms ease-out backwards;
 }
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .pop-in {
@@ -276,3 +286,10 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* 그룹 장면: 슬롯별 가로 위치 */
+.art-frame { left: var(--art-x, 50%); }
+/* 감정 배지 */
+.art-mood-badge { position: absolute; left: 42%; top: 22%; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 16px; line-height: 1; background: rgba(255,255,255,0.88); box-shadow: 0 1px 4px rgba(0,0,0,0.25); z-index: 5; pointer-events: none; animation: art-mood-in 600ms ease-out both; }
+@keyframes art-mood-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .art-mood-badge { animation: none; } }

@@ -89,7 +89,7 @@ export function CareerSummary({ career }: { career: Career }) {
           {[...career.history].reverse().filter((h) => h.kind === "milestone" || h.kind === "award" || h.kind === "system").map((h, i) => (
             <li key={i} className="relative">
               <span className={cn("absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full", h.kind === "award" ? "bg-warn" : h.kind === "milestone" ? "bg-primary" : "bg-ink-3")} />
-              <p className="text-[13px] text-ink-3">{periodLabel({ turn: h.turn })} · {ageText({ turn: h.turn })}</p>
+              <p className="text-[13px] text-ink-3">{periodLabel({ turn: h.turn })}</p>
               <p className="text-[13px] font-bold mt-0.5">{h.title}</p>
             </li>
           ))}

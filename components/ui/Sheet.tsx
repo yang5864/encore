@@ -32,7 +32,7 @@ export function Sheet({ open, onOpenChange, title, description, tall, dismissibl
           <div className="pt-2.5 pb-1 flex justify-center shrink-0">
             <Drawer.Handle className="!h-1 !w-10 !rounded-full !bg-line !opacity-100" />
           </div>
-          <div className="px-5 pt-2 shrink-0">
+          <div data-vaul-no-drag className="px-5 pt-2 shrink-0">
             {title ? <Drawer.Title className="t-title">{title}</Drawer.Title> : <Drawer.Title className="sr-only">시트</Drawer.Title>}
             {description ? (
               <Drawer.Description className="t-cap mt-1">{description}</Drawer.Description>
@@ -40,10 +40,10 @@ export function Sheet({ open, onOpenChange, title, description, tall, dismissibl
               <Drawer.Description className="sr-only">{title ?? "내용"}</Drawer.Description>
             )}
           </div>
-          <div className={cn("px-5 pt-3 overflow-y-auto no-scrollbar grow", footer ? "pb-4" : "pb-[calc(env(safe-area-inset-bottom)+20px)]")}>{children}</div>
+          <div data-vaul-no-drag className={cn("px-5 pt-3 overflow-y-auto no-scrollbar grow", footer ? "pb-4" : "pb-[calc(env(safe-area-inset-bottom)+20px)]")}>{children}</div>
           {footer && (
             // 시트가 길어도 주 버튼은 항상 보인다
-            <div className="shrink-0 px-5 pt-2 pb-[calc(env(safe-area-inset-bottom)+16px)] bg-card border-t border-line">{footer}</div>
+            <div data-vaul-no-drag className="shrink-0 px-5 pt-2 pb-[calc(env(safe-area-inset-bottom)+16px)] bg-card border-t border-line">{footer}</div>
           )}
         </Drawer.Content>
       </Drawer.Portal>
