@@ -5,9 +5,17 @@ import type { CSSProperties } from "react";
 import { eventArt } from "@/lib/art";
 import { ArtFrames } from "./ArtFrames";
 
-export function EventArt({ scene, avatar, gender, name = "캐릭터", className = "" }: {
+export type ArtMood = "sad" | "happy" | "neutral";
+export type ArtGroup = { avatars: number[]; center: boolean };
+
+export function EventArt({ scene, avatar, gender, name = "캐릭터", className = "", mood, group }: {
   scene: string; avatar: number; gender?: "female" | "male"; name?: string; className?: string;
+  /** 나쁜 결과·논란이면 "sad": 표정 대신 분위기로 감정을 보여준다 */
+  mood?: ArtMood;
+  /** 무대·공식 행사에서 같이 서는 멤버들. center면 내가 가운데 */
+  group?: ArtGroup;
 }) {
+  void mood; void group; // 그룹·감정 표현은 별도 작업에서 그린다
   const art = eventArt(scene, avatar, gender);
   // The audition background has a foreground judging desk; keep feet on the floor behind it.
   const audition = art.scene === "audition";
