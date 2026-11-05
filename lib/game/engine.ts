@@ -2,7 +2,7 @@ import type { ActiveEvent, Career, ChoiceDef, Comment, Concept, Effects, Milesto
 import { GameError } from "./types.ts";
 import { AGENCIES, agencyById, auditionChance, TIERS } from "./agencies.ts";
 import { STAT_KEYS, STAT_NAMES, overall } from "./stats.ts";
-import { ageOf, conditionOf, displayName, eraScale, fanText, isSecondHalf, MAX_TURN, periodLabel, yearOf } from "./format.ts";
+import { ageOf, ageText, conditionOf, displayName, eraScale, fanText, isSecondHalf, MAX_TURN, periodLabel, yearOf } from "./format.ts";
 
 const hasBatchim = (w: string) => { const ch = w.charCodeAt(w.length - 1); return ch >= 0xac00 && ch <= 0xd7a3 && (ch - 0xac00) % 28 !== 0; };
 import { rng, between, pick } from "./rng.ts";
@@ -654,7 +654,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     c.chemistry = 60;
     addReputation(c, 3);
     headline = `${name} 데뷔 확정`;
-    text = `${ageOf(c)}세, ${a.name}에서 ${name}(으)로 데뷔해요. 데뷔 앨범 콘셉트를 정할 차례예요.`;
+    text = `${ageText(c)}, ${a.name}에서 ${name}(으)로 데뷔해요. 데뷔 앨범 콘셉트를 정할 차례예요.`;
     tone = "milestone";
     log(c, headline, text, "milestone");
     c.pending = debutConceptEvent();

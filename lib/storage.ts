@@ -121,7 +121,7 @@ export function toRecord(c: Career, now = Date.now()): CareerRecord {
     awards: c.awards.length,
     wins: c.musicWins,
     albums: c.albums.length,
-    age: 12 + Math.floor(c.turn / 2),
+    age: 12 + Math.floor(c.turn / 2), // 만 나이로 저장, 화면에선 한국 나이(+2)로 보여준다
     retiredAt: now,
   };
 }

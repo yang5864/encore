@@ -4,7 +4,7 @@ import { Card, CardTitle } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import { Logo } from "@/components/Logo";
 import { agencyById } from "@/lib/game/agencies";
-import { ageOf, fanText, isSecondHalf, MAX_TURN, periodLabel, wonText, yearOf } from "@/lib/game/format";
+import { ageText, fanText, isSecondHalf, MAX_TURN, periodLabel, wonText, yearOf } from "@/lib/game/format";
 import { rankingFor } from "@/lib/game/brand-rank";
 import { settlement } from "@/lib/game/economy";
 import type { Career } from "@/lib/game/types";
@@ -84,12 +84,12 @@ export function CareerSummary({ career }: { career: Career }) {
       )}
 
       <Card className="fade-up" style={{ animationDelay: "200ms" }}>
-        <CardTitle sub={`${yearOf({ turn: 0 })}년 ${ageOf({ turn: 0 })}세부터 ${a ? `${a.name} ` : ""}${career.groupName || career.name}까지`}>내 인생 타임라인</CardTitle>
+        <CardTitle sub={`${yearOf({ turn: 0 })}년 ${ageText({ turn: 0 })}부터 ${a ? `${a.name} ` : ""}${career.groupName || career.name}까지`}>내 인생 타임라인</CardTitle>
         <ol className="relative border-l border-line ml-2 pl-4 flex flex-col gap-3">
           {[...career.history].reverse().filter((h) => h.kind === "milestone" || h.kind === "award" || h.kind === "system").map((h, i) => (
             <li key={i} className="relative">
               <span className={cn("absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full", h.kind === "award" ? "bg-warn" : h.kind === "milestone" ? "bg-primary" : "bg-ink-3")} />
-              <p className="text-[13px] text-ink-3">{periodLabel({ turn: h.turn })} · {ageOf({ turn: h.turn })}세</p>
+              <p className="text-[13px] text-ink-3">{periodLabel({ turn: h.turn })} · {ageText({ turn: h.turn })}</p>
               <p className="text-[13px] font-bold mt-0.5">{h.title}</p>
             </li>
           ))}

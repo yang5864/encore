@@ -2,9 +2,16 @@ import type { Career } from "./types.ts";
 
 export const START_YEAR = 2006;
 export const START_AGE = 12;
-export const MAX_TURN = (32 - START_AGE) * 2 + 1; // 32세 하반기 = 2026년 하반기
+export const MAX_TURN = (32 - START_AGE) * 2 + 1; // 만 32세(한국 나이 34살) 하반기 = 2026년 하반기
 
 export const ageOf = (c: Pick<Career, "turn">) => START_AGE + Math.floor(c.turn / 2);
+/**
+ * 화면에 보이는 나이는 한국식 나이(태어난 해 1살, 해마다 +1)다. 게임 규칙은 만 나이(`ageOf`)로 계산한다.
+ * 2006년 중1 = 14살, 2026년 = 34살.
+ */
+export const KOREAN_AGE_OFFSET = 2;
+export const koreanAge = (c: Pick<Career, "turn">) => ageOf(c) + KOREAN_AGE_OFFSET;
+export const ageText = (c: Pick<Career, "turn">) => `${koreanAge(c)}살`;
 export const yearOf = (c: Pick<Career, "turn">) => START_YEAR + Math.floor(c.turn / 2);
 export const isSecondHalf = (c: Pick<Career, "turn">) => c.turn % 2 === 1;
 export const periodLabel = (c: Pick<Career, "turn">) => `${yearOf(c)}년 ${isSecondHalf(c) ? "하반기" : "상반기"}`;

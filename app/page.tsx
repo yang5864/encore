@@ -10,7 +10,7 @@ import { Logo } from "@/components/Logo";
 import { AgencyMarquee } from "@/components/AgencyMarquee";
 import { SupportTrigger } from "@/components/SupportSheet";
 import { agencyById } from "@/lib/game/agencies";
-import { ageOf, fanText, periodLabel, STAGE_NAMES } from "@/lib/game/format";
+import { ageText, fanText, periodLabel, STAGE_NAMES } from "@/lib/game/format";
 import { overall } from "@/lib/game/stats";
 import type { Career } from "@/lib/game/types";
 import { loadCareer, loadRecords, type CareerRecord } from "@/lib/storage";
@@ -47,7 +47,7 @@ export default function HomePage() {
 
       {/* 히어로 */}
       <Card className="mt-3 fade-up !p-6">
-        <p className="t-cap">12살 중학교 1학년, 소속사 없는 지망생에서 시작해요</p>
+        <p className="t-cap">14살 중학교 1학년, 소속사 없는 지망생에서 시작해요</p>
         <h1 className="text-[22px] font-extrabold tracking-[-0.03em] leading-[1.15] mt-2">
           연습실에서<br />레전드까지
         </h1>
@@ -70,7 +70,7 @@ export default function HomePage() {
               <p className="t-card truncate">{career.groupName ? `${career.groupName} ${career.name}` : career.name}</p>
               <p className="text-[13px] text-ink-2 flex items-center gap-1.5 truncate">
                 {career.agencyId && <Logo id={agencyById(career.agencyId)?.logo} label={agencyById(career.agencyId)?.name ?? ""} color={agencyById(career.agencyId)?.color} size={16} rounded="full" />}
-                <span className="truncate">{periodLabel(career)} · {ageOf(career)}세 · {STAGE_NAMES[career.stage]} · OVR {overall(career.stats, career.position)}</span>
+                <span className="truncate">{periodLabel(career)} · {ageText(career)} · {STAGE_NAMES[career.stage]} · OVR {overall(career.stats, career.position)}</span>
               </p>
             </div>
             <button onClick={() => router.push("/play")} className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary-soft text-primary text-[13px] font-bold">

@@ -4,7 +4,7 @@ import { BackButton } from "@/components/ui/BackButton";
 import { Avatar } from "@/components/Avatar";
 import { Card } from "@/components/ui/Card";
 import { agencyById } from "@/lib/game/agencies";
-import { fanText, displayName } from "@/lib/game/format";
+import { fanText, displayName, KOREAN_AGE_OFFSET } from "@/lib/game/format";
 import { loadRecords, type CareerRecord } from "@/lib/storage";
 import { Logo } from "@/components/Logo";
 
@@ -32,7 +32,7 @@ export default function RecordsPage() {
             </div>
             <div className="min-w-0 flex-1">
               <p className="t-body font-bold truncate">{displayName({ name: r.name, groupName: r.groupName, stage: "retired" })}</p>
-              <p className="text-[13px] text-ink-3 truncate flex items-center gap-1">{r.agency && <Logo id={agencyById(r.agency)?.logo} label={agencyById(r.agency)?.name ?? ""} color={agencyById(r.agency)?.color} size={14} rounded="full" />}<span className="truncate">{r.ending} · {agencyById(r.agency)?.name ?? "무소속"} · {r.age}세 은퇴</span></p>
+              <p className="text-[13px] text-ink-3 truncate flex items-center gap-1">{r.agency && <Logo id={agencyById(r.agency)?.logo} label={agencyById(r.agency)?.name ?? ""} color={agencyById(r.agency)?.color} size={14} rounded="full" />}<span className="truncate">{r.ending} · {agencyById(r.agency)?.name ?? "무소속"} · {r.age + KOREAN_AGE_OFFSET}살 은퇴</span></p>
               <p className="text-[13px] text-ink-2 mt-0.5">팬 {fanText(r.fans)} · 음방 1위 {r.wins}회 · 수상 {r.awards}회 · 앨범 {r.albums}장</p>
             </div>
             <div className="text-right">

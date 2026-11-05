@@ -85,9 +85,9 @@ test("예약 이벤트가 있는 턴에는 이야기 이벤트가 나오지 않�
   assert.equal(n.pending?.id, "trainee-contract");
 });
 
-test("16세 상반기에는 학교 선택이 온다", () => {
+test("중3 하반기(16살)에 고교 진학 선택이 온다", () => {
   const c = trainee(4);
-  c.turn = 7;
+  c.turn = 4;
   c.traineeContractEnd = 12;
   const n = advanceTurn(c, "train:all");
   assert.equal(n.pending?.id, "school");

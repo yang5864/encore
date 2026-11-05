@@ -59,7 +59,7 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
 
   // 1. 예약
   if (c.stage === "trainee" && c.traineeContractEnd !== null && c.turn >= c.traineeContractEnd) return take(c, "trainee-contract");
-  if (c.schoolId === null && ageOf(c) === 16 && c.turn % 2 === 0) return take(c, "school");
+  if (c.schoolId === null && ageOf(c) === 14 && isSecondHalf(c)) return take(c, "school"); // 중3 하반기(16살): 고교 진학 결정
   if (c.stage === "free" && ageOf(c) === 19 && isSecondHalf(c)) return lastCallEvent(c);
   if (c.stage === "idol" && c.flags.bankruptTurn === c.turn) return renewalEvent(c, "bankrupt");
   if (c.stage === "idol" && c.contractEnd !== null && c.turn >= c.contractEnd) {
@@ -125,7 +125,7 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
   return take(c, pool[pool.length - 1].id);
 }
 
-/** 19세 하반기: 성인이 되기 전 마지막 기회. 받아주는 회사 중 하나와 반드시 계약한다. */
+/** 만 19세(21살) 하반기: 마지막 기회. 받아주는 회사 중 하나와 반드시 계약한다. */
 function lastCallEvent(c: Career): ActiveEvent {
   const ranked = AGENCIES.map((a) => ({ a, p: auditionChance(c, a.id) })).sort((x, y) => tierRank(y.a.tier) - tierRank(x.a.tier) || y.p - x.p);
   const willing = ranked.filter((x) => x.p >= 0.35).slice(0, 3);
@@ -137,7 +137,7 @@ function lastCallEvent(c: Career): ActiveEvent {
   return {
     id: "last-call",
     title: "성인이 되기 전 마지막 기회",
-    text: "곧 스무 살이에요. 지금까지 본 오디션 영상을 기억한 회사들이 연락해왔어요. 이번엔 한 곳을 골라 계약해요.",
+    text: "고등학교를 졸업하고 스물한 살이 됐어요. 지금까지 본 오디션 영상을 기억한 회사들이 연락해왔어요. 이번엔 한 곳을 골라 계약해요.",
     scene: "contract",
     choices: willing.map(({ a }) => ({ id: `join-${a.id}`, label: `${a.name}와 계약한다`, hint: `${a.strength} · 데뷔 기준 OVR ${a.threshold}`, risk: a.tier === "indie" ? "safe" as const : "bold" as const, op: `join:${a.id}`, sign: true })),
   };
