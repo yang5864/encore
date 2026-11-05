@@ -1,0 +1,16 @@
+{
+  "key": "bg-awards-seat",
+  "scene": "awards-seat",
+  "kind": "background",
+  "dest": "public/art-v3/backgrounds/awards-seat.png",
+  "prompt": "Use case: illustration-story. Cute polished crisp pixel-art, 16-bit JRPG cutscene style, elegant soft lilac mint peach cream palette with warm gold accents, confident clean pixel clusters and restrained dithering, subtle material shading, no blurry edges, no photorealism, no text, no logo, no watermark.\nIndependent wide 4:3 background plate for a Korean year-end music awards ceremony, absolutely no people, no faces, no silhouettes, no lettering. Consistent elegant arena venue. Artist seating area inside the arena seen from the aisle, round tables with white cloth, small warm lamps, stage glowing in distance, empty elegant chairs. Camera at chibi eye level, clear uncluttered lower-center foreground for a separately overlaid character. No UI. Opaque background.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-7199b4de-3574-4c89-8d5f-15d5bd3c2c42.png",
+  "tool": "built-in image_gen",
+  "background": {
+    "url": "/art-v3/backgrounds/awards-seat.png",
+    "width": 1448,
+    "height": 1086,
+    "bytes": 2677100,
+    "sha256": "1e280c6c3b414f56bfab55c8d743ff2087618d47826e4736976ea4830c0deea4"
+  }
+}

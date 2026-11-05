@@ -1,0 +1,126 @@
+{
+  "key": "avatar-5-awards-redcarpet",
+  "scene": "awards-redcarpet",
+  "avatar": 5,
+  "kind": "strip",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-5/awards-redcarpet.png"
+  ],
+  "dest": "public/art-v4/awards-sheets/avatar-5/awards-redcarpet.png",
+  "prompt": "Use case: background-extraction. The supplied image is a four-frame character animation strip. Remove ONLY the white/light background and ground shadows; make all background areas ACTUAL completely transparent alpha=0. Preserve ALL FOUR characters, chairs if present, props, dark clothing, fine hair, expressions, poses, crisp pixels and exact strip layout. Do not redesign or redraw faces or objects. Do not add a checkerboard, white, gray, colored or semi-transparent matte. Actual RGBA PNG cutout, four equal-width cells intact, entire strip with generous original padding. All solid character interiors must be fully opaque alpha=255. No light halo. No text.",
+  "repair": true,
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-86de9a4d-19fb-4a0a-bcca-32f7e62a6b47.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/avatar-5/awards-redcarpet/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 338940,
+      "sha256": "bf14e742511670845db639f87d59c2eaea4813f98be679e0be76af912f88433a",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        86,
+        11,
+        472,
+        697
+      ],
+      "maxCanvasBorderAlpha": 2,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.962707
+      },
+      "animationReferenceHeight": 0.947514
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-redcarpet/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 354175,
+      "sha256": "12c278d0afd83fb33ee63d92e5023ca5b619b7d31247f8dfa649191141859932",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        85,
+        11,
+        471,
+        697
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.962707
+      },
+      "animationReferenceHeight": 0.947514
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-redcarpet/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 348034,
+      "sha256": "b44b1c01fe6d7bbd4f9f57439cc42d519d5e960eb8f59fb636aeded586cc0db2",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        85,
+        11,
+        472,
+        697
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.962707
+      },
+      "animationReferenceHeight": 0.947514
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-redcarpet/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 322794,
+      "sha256": "2dd68648cb8d38f3c7c0434fb801ddefdbd022ef6ec399b313edc0d2b8cc8c28",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        86,
+        43,
+        475,
+        697
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.962707
+      },
+      "animationReferenceHeight": 0.947514
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-5/awards-redcarpet.png"
+}

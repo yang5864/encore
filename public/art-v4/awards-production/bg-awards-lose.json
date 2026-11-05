@@ -1,0 +1,19 @@
+{
+  "key": "bg-awards-lose",
+  "scene": "awards-lose",
+  "kind": "background",
+  "dest": "public/art-v3/backgrounds/awards-lose.png",
+  "prompt": "Use case: illustration-story. Cute polished crisp pixel-art, 16-bit JRPG cutscene style, elegant soft lilac mint peach cream palette with warm gold accents, confident clean pixel clusters and restrained dithering, subtle material shading, no blurry edges, no photorealism, no text, no logo, no watermark.\nIndependent wide 4:3 background plate for a Korean year-end music awards ceremony, absolutely no people, no faces, no silhouettes, no lettering. Consistent elegant arena venue. Same empty artist seating area at night, calm blue lighting, stage lit for someone else far away with NO performer visible, quiet gracious applause mood. Camera at chibi eye level, clear uncluttered lower-center foreground for a separately overlaid character. No UI. Opaque background.\nInput image is venue architecture/palette reference ONLY: keep the same arena, lilac-mint arch geometry and warm gold accents, but compose this requested different camera/location.",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v3/backgrounds/awards-seat.png"
+  ],
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-d012640e-d89d-46f8-b2e7-4ed30561341e.png",
+  "tool": "built-in image_gen",
+  "background": {
+    "url": "/art-v3/backgrounds/awards-lose.png",
+    "width": 1448,
+    "height": 1086,
+    "bytes": 2501882,
+    "sha256": "6fffa41ad4dc9b32662be0305994754ef3ab35c40012a182bab67ab8ddc3418d"
+  }
+}

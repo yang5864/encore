@@ -1,0 +1,125 @@
+{
+  "key": "avatar-1-awards-redcarpet",
+  "scene": "awards-redcarpet",
+  "avatar": 1,
+  "kind": "strip",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/characters/avatar-1/awards/01.png"
+  ],
+  "dest": "public/art-v4/awards-sheets/avatar-1/awards-redcarpet.png",
+  "prompt": "Use case: illustration-story. Cute polished crisp pixel-art, 16-bit JRPG cutscene style, elegant soft lilac mint peach cream palette with warm gold accents, confident clean pixel clusters and restrained dithering, subtle material shading, no blurry edges, no photorealism, no text, no logo, no watermark.\nReference image is identity reference ONLY. Preserve the exact face, eye colors, hairstyle, hair color and distinctive hair accessory. REMOVE the old trophy. Character wears an elegant BLACK floor-length formal evening dress with small warm GOLD embroidery/details and matching shoes. This outfit must remain EXACTLY identical in all four frames. Neat hair, cute full-body chibi, same proportions as reference.\nCharacter sheet: ONE horizontal 1x4 strip containing EXACTLY FOUR sequential full-body frames in four EQUAL-WIDTH imaginary cells, equal spacing, same scale and camera. Wide 4:1 canvas preferred. Each figure fully contained in its own quarter with generous TRANSPARENT gutters: no body parts touch or cross cell boundaries. All shoes visible, common floor/feet baseline. No drawn panel dividers. (1) standing straight, (2) waving right hand at cameras, (3) hand on hip pose, (4) small polite bow.\nGenuine transparent background, character only, NO carpet/floor/shadow/text/numbers/scenery, no other figures, no trophy. Four poses of SAME character, NOT four different people.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-5fa95a53-c880-4ec9-b9a2-5c0c5fcc9eae.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/avatar-1/awards-redcarpet/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 358518,
+      "sha256": "1ade2e1faa8a00ef6f2ad309f0b408e143a5f3b8139727abfa9d48b44704297d",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        83,
+        30,
+        454,
+        695
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.959945
+      },
+      "animationReferenceHeight": 0.918508
+    },
+    {
+      "url": "/art-v4/characters/avatar-1/awards-redcarpet/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 386983,
+      "sha256": "7ffba3d2dab733593d42b8edace984ddc489d443555708fb6cd835ea3f805328",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        41,
+        30,
+        455,
+        695
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.959945
+      },
+      "animationReferenceHeight": 0.918508
+    },
+    {
+      "url": "/art-v4/characters/avatar-1/awards-redcarpet/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 375855,
+      "sha256": "8140f8eb4eb1c48e2e6b1ba3a5cf5a2941e170ce7316cc7144a9be60cc1c012a",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        85,
+        30,
+        455,
+        695
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.959945
+      },
+      "animationReferenceHeight": 0.918508
+    },
+    {
+      "url": "/art-v4/characters/avatar-1/awards-redcarpet/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 360928,
+      "sha256": "97fdb8ee38654215d17681f05b8c531705ebac7b0186eea4af771b20cb37b47b",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        84,
+        32,
+        456,
+        694
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.959945
+      },
+      "animationReferenceHeight": 0.918508
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-1/awards-redcarpet.png"
+}

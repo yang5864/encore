@@ -1,0 +1,125 @@
+{
+  "key": "avatar-3-awards-stage",
+  "avatar": 3,
+  "kind": "strip",
+  "scene": "awards-stage",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/characters/avatar-3/awards-redcarpet/01.png"
+  ],
+  "dest": "public/art-v4/awards-sheets/avatar-3/awards-stage.png",
+  "prompt": "Use case: illustration-story. Cute polished crisp pixel-art, 16-bit JRPG cutscene style, elegant soft lilac mint peach cream palette with warm gold accents, confident clean pixel clusters and restrained dithering, subtle material shading, no blurry edges, no photorealism, no text, no logo, no watermark.\nReference is the EXACT character and outfit to preserve. Same face identity, eyes, hairstyle/color, signature hair ornament, BLACK formal tailored suit with GOLD details, jewelry and shoes. Do NOT redesign or recolor outfit between frames.\nONE horizontal 1x4 character sheet, EXACTLY FOUR sequential animation frames in four EQUAL-WIDTH cells, same scale and camera, full body chibi. Wide4:1 canvas preferred. Every head, garment, hands, shoes and prop is completely inside its own quarter with generous TRANSPARENT gutters. Common fixed ground baseline for all poses, no drawn panel dividers or numbers. Frames: (1) holding a wireless microphone at chest, (2) singing with microphone raised, (3) free arm stretched toward crowd while holding mic, (4) sharp dance pose with one knee bent and mic in hand.\nActual transparent alpha background, characters and explicitly requested personal props only. No ground, background, scenery, lettering, watermark, extra person or extra frames. Keep all frames spatially separate. Remove any trophy.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-47ae7e19-ae6a-4d7e-8aa0-70609cbe27a1.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/avatar-3/awards-stage/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 281151,
+      "sha256": "4a987bf5ff8c16c474fcba9a40132470fe851397490ef16fac9d11028f1f91e5",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        130,
+        21,
+        439,
+        693
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.957182
+      },
+      "animationReferenceHeight": 0.928177
+    },
+    {
+      "url": "/art-v4/characters/avatar-3/awards-stage/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 298202,
+      "sha256": "28d987821115a61822d06de36796a9ff40c01281fc4e465a746015526d6fc92d",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        131,
+        21,
+        439,
+        693
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.957182
+      },
+      "animationReferenceHeight": 0.928177
+    },
+    {
+      "url": "/art-v4/characters/avatar-3/awards-stage/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 310308,
+      "sha256": "677c8701d0952ba371f1eb47073ea7769402a46d139a0156eb15b44cefb8d5b6",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        132,
+        21,
+        459,
+        693
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.957182
+      },
+      "animationReferenceHeight": 0.928177
+    },
+    {
+      "url": "/art-v4/characters/avatar-3/awards-stage/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 303772,
+      "sha256": "87672ca08fa0327801efe21fca4dd629b20dad700ed5cea31db57921aa4e3833",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        109,
+        29,
+        456,
+        693
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.957182
+      },
+      "animationReferenceHeight": 0.928177
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-3/awards-stage.png"
+}

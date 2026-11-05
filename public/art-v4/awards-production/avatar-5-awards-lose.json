@@ -1,0 +1,126 @@
+{
+  "key": "avatar-5-awards-lose",
+  "avatar": 5,
+  "kind": "strip",
+  "scene": "awards-lose",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-5/awards-lose.png"
+  ],
+  "dest": "public/art-v4/awards-sheets/avatar-5/awards-lose.png",
+  "prompt": "Use case: background-extraction. The supplied image is a four-frame character animation strip. Remove ONLY the white/light background and ground shadows; make all background areas ACTUAL completely transparent alpha=0. Preserve ALL FOUR characters, chairs if present, props, dark clothing, fine hair, expressions, poses, crisp pixels and exact strip layout. Do not redesign or redraw faces or objects. Do not add a checkerboard, white, gray, colored or semi-transparent matte. Actual RGBA PNG cutout, four equal-width cells intact, entire strip with generous original padding. All solid character interiors must be fully opaque alpha=255. No light halo. No text.\nEliminate ALL faint white/gray background speckles and any cast shadows too; leave clean alpha0 outside the four complete sprites. Keep transparent gutters completely empty, not translucent.",
+  "repair": true,
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-33fefff1-7e8b-4254-ba16-a9104c84d922.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/avatar-5/awards-lose/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 425612,
+      "sha256": "fba2bc96026c4d600e5d67eeaee3fd7267e34dfef70978a07b3ac7c87ddb5698",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        83,
+        25,
+        459,
+        692
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.955801
+      },
+      "animationReferenceHeight": 0.921271
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-lose/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 426583,
+      "sha256": "57dc7fed370c551f70aeb371c7c666fc4ab0da55b8eecf1a3c434046dce02f57",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        84,
+        25,
+        459,
+        692
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.955801
+      },
+      "animationReferenceHeight": 0.921271
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-lose/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 419376,
+      "sha256": "61635f7cbf29abc8be0d92c28625f3e211b04c42a8488f68250554ba0ab89c12",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        84,
+        34,
+        459,
+        692
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.955801
+      },
+      "animationReferenceHeight": 0.921271
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-lose/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 425613,
+      "sha256": "8aff300df26d341aa2329ebd10060623e0062872df898d21461efd18aa1aa95f",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        84,
+        25,
+        460,
+        692
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.955801
+      },
+      "animationReferenceHeight": 0.921271
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-5/awards-lose.png"
+}

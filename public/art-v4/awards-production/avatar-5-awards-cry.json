@@ -1,0 +1,125 @@
+{
+  "key": "avatar-5-awards-cry",
+  "avatar": 5,
+  "kind": "strip",
+  "scene": "awards-cry",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/characters/avatar-5/awards-redcarpet/01.png"
+  ],
+  "dest": "public/art-v4/awards-sheets/avatar-5/awards-cry.png",
+  "prompt": "Use case: illustration-story. Cute polished crisp pixel-art, 16-bit JRPG cutscene style, elegant soft lilac mint peach cream palette with warm gold accents, confident clean pixel clusters and restrained dithering, subtle material shading, no blurry edges, no photorealism, no text, no logo, no watermark.\nReference is the EXACT character and outfit to preserve. Same face identity, eyes, hairstyle/color, signature hair ornament, BLACK formal tailored suit with GOLD details, jewelry and shoes. Do NOT redesign or recolor outfit between frames.\nONE horizontal 1x4 character sheet, EXACTLY FOUR sequential animation frames in four EQUAL-WIDTH cells, same scale and camera, full body chibi. Wide4:1 canvas preferred. Every head, garment, hands, shoes and prop is completely inside its own quarter with generous TRANSPARENT gutters. Common fixed ground baseline for all poses, no drawn panel dividers or numbers. Frames: (1) eyes glistening with tears, (2) one hand wiping a tear, (3) trembling smile with visible tears, (4) head bowed, hand on chest. Standing full-body. Gentle emotional face, no exaggerated ugly crying.\nActual transparent alpha background, characters and explicitly requested personal props only. No ground, background, scenery, lettering, watermark, extra person or extra frames. Keep all frames spatially separate. ",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-0b15e2ef-838a-40a4-8faf-618eb228f02c.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/avatar-5/awards-cry/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 317044,
+      "sha256": "753cc74a1d1dd4f7c4582bb517a15a81547d8f50422278f9df7bd284f32ee832",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        106,
+        10,
+        467,
+        689
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.951657
+      },
+      "animationReferenceHeight": 0.937845
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-cry/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 315357,
+      "sha256": "a05159e7ada36fef9e62978dff9421cdfbf9aebcfc381737ceee8cc9f854396e",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        106,
+        10,
+        467,
+        689
+      ],
+      "maxCanvasBorderAlpha": 2,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.951657
+      },
+      "animationReferenceHeight": 0.937845
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-cry/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 321488,
+      "sha256": "6130ed8490c1fb2521e09880f7c43d1757f276d9f4473030095a9362c18dc192",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        107,
+        10,
+        466,
+        689
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.951657
+      },
+      "animationReferenceHeight": 0.937845
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-cry/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 306887,
+      "sha256": "f1e7b4b5653446ff7ca22ba0ffac5f957a57391e01d1ab2309088c96cd24ebfc",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        105,
+        19,
+        463,
+        689
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.951657
+      },
+      "animationReferenceHeight": 0.937845
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-5/awards-cry.png"
+}

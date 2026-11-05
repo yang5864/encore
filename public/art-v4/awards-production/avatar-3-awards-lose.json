@@ -1,0 +1,125 @@
+{
+  "key": "avatar-3-awards-lose",
+  "avatar": 3,
+  "kind": "strip",
+  "scene": "awards-lose",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/characters/avatar-3/awards-redcarpet/01.png"
+  ],
+  "dest": "public/art-v4/awards-sheets/avatar-3/awards-lose.png",
+  "prompt": "Use case: illustration-story. Cute polished crisp pixel-art, 16-bit JRPG cutscene style, elegant soft lilac mint peach cream palette with warm gold accents, confident clean pixel clusters and restrained dithering, subtle material shading, no blurry edges, no photorealism, no text, no logo, no watermark.\nReference is the EXACT character and outfit to preserve. Same face identity, eyes, hairstyle/color, signature hair ornament, BLACK formal tailored suit with GOLD details, jewelry and shoes. Do NOT redesign or recolor outfit between frames.\nONE horizontal 1x4 character sheet, EXACTLY FOUR sequential animation frames in four EQUAL-WIDTH cells, same scale and camera, full body chibi. Wide4:1 canvas preferred. Every head, garment, hands, shoes and prop is completely inside its own quarter with generous TRANSPARENT gutters. Common fixed ground baseline for all poses, no drawn panel dividers or numbers. Frames: (1) sitting on chair clapping with a soft smile, (2) seated clapping higher, (3) seated nodding with graceful smile, (4) sitting back calmly, hands on lap. SAME chair fixed in all four cells.\nActual transparent alpha background, characters and explicitly requested personal props only. No ground, background, scenery, lettering, watermark, extra person or extra frames. Keep all frames spatially separate. ",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-29de44d8-f2d1-4f0f-a1ae-9abc3b24c84a.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/avatar-3/awards-lose/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 394564,
+      "sha256": "4f008a6c5fb31747a38e9aef563247a18cc1cefb46fd7f664105e3556dcd7384",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        103,
+        34,
+        442,
+        704
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.972376
+      },
+      "animationReferenceHeight": 0.925414
+    },
+    {
+      "url": "/art-v4/characters/avatar-3/awards-lose/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 408443,
+      "sha256": "3cb902e3118e1d1e974cb8006f104060c62cf80d538047714a45c52427237893",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        103,
+        34,
+        441,
+        704
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.972376
+      },
+      "animationReferenceHeight": 0.925414
+    },
+    {
+      "url": "/art-v4/characters/avatar-3/awards-lose/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 398470,
+      "sha256": "3d384b8a9034bc5b6a69dbf9bbf6f4059c709859ff6cb0bef24f2bb24b6b9bf5",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        104,
+        48,
+        458,
+        704
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.972376
+      },
+      "animationReferenceHeight": 0.925414
+    },
+    {
+      "url": "/art-v4/characters/avatar-3/awards-lose/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 393229,
+      "sha256": "5fcfe6a1ed6f245793f02dac4f6fda04b3ba9e091c74261c7cb81cecc2e1858b",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        104,
+        34,
+        442,
+        704
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.972376
+      },
+      "animationReferenceHeight": 0.925414
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-3/awards-lose.png"
+}

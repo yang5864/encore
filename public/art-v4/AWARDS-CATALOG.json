@@ -1,0 +1,1290 @@
+{
+  "awards-redcarpet": {
+    "background": "/art-v3/backgrounds/awards-redcarpet.png",
+    "avatars": {
+      "0": [
+        {
+          "url": "/art-v4/characters/avatar-0/awards-redcarpet/01.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.962707
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-redcarpet/02.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.962707
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-redcarpet/03.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.962707
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-redcarpet/04.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.962707
+        }
+      ],
+      "1": [
+        {
+          "url": "/art-v4/characters/avatar-1/awards-redcarpet/01.png",
+          "height": 0.918508,
+          "x": 0.5,
+          "y": 0.959945
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-redcarpet/02.png",
+          "height": 0.918508,
+          "x": 0.5,
+          "y": 0.959945
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-redcarpet/03.png",
+          "height": 0.918508,
+          "x": 0.5,
+          "y": 0.959945
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-redcarpet/04.png",
+          "height": 0.918508,
+          "x": 0.5,
+          "y": 0.959945
+        }
+      ],
+      "2": [
+        {
+          "url": "/art-v4/characters/avatar-2/awards-redcarpet/01.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.962707
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-redcarpet/02.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.962707
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-redcarpet/03.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.962707
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-redcarpet/04.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.962707
+        }
+      ],
+      "3": [
+        {
+          "url": "/art-v4/characters/avatar-3/awards-redcarpet/01.png",
+          "height": 0.951657,
+          "x": 0.5,
+          "y": 0.968232
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-redcarpet/02.png",
+          "height": 0.951657,
+          "x": 0.5,
+          "y": 0.968232
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-redcarpet/03.png",
+          "height": 0.951657,
+          "x": 0.5,
+          "y": 0.968232
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-redcarpet/04.png",
+          "height": 0.951657,
+          "x": 0.5,
+          "y": 0.968232
+        }
+      ],
+      "4": [
+        {
+          "url": "/art-v4/characters/avatar-4/awards-redcarpet/01.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.957182
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-redcarpet/02.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.957182
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-redcarpet/03.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.957182
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-redcarpet/04.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.957182
+        }
+      ],
+      "5": [
+        {
+          "url": "/art-v4/characters/avatar-5/awards-redcarpet/01.png",
+          "height": 0.947514,
+          "x": 0.5,
+          "y": 0.962707
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-redcarpet/02.png",
+          "height": 0.947514,
+          "x": 0.5,
+          "y": 0.962707
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-redcarpet/03.png",
+          "height": 0.947514,
+          "x": 0.5,
+          "y": 0.962707
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-redcarpet/04.png",
+          "height": 0.947514,
+          "x": 0.5,
+          "y": 0.962707
+        }
+      ]
+    }
+  },
+  "awards-stage": {
+    "background": "/art-v3/backgrounds/awards-stage.png",
+    "avatars": {
+      "0": [
+        {
+          "url": "/art-v4/characters/avatar-0/awards-stage/01.png",
+          "height": 0.89779,
+          "x": 0.5,
+          "y": 0.940608
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-stage/02.png",
+          "height": 0.89779,
+          "x": 0.5,
+          "y": 0.940608
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-stage/03.png",
+          "height": 0.89779,
+          "x": 0.5,
+          "y": 0.940608
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-stage/04.png",
+          "height": 0.89779,
+          "x": 0.5,
+          "y": 0.940608
+        }
+      ],
+      "1": [
+        {
+          "url": "/art-v4/characters/avatar-1/awards-stage/01.png",
+          "height": 0.939227,
+          "x": 0.5,
+          "y": 0.969613
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-stage/02.png",
+          "height": 0.939227,
+          "x": 0.5,
+          "y": 0.969613
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-stage/03.png",
+          "height": 0.939227,
+          "x": 0.5,
+          "y": 0.969613
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-stage/04.png",
+          "height": 0.939227,
+          "x": 0.5,
+          "y": 0.969613
+        }
+      ],
+      "2": [
+        {
+          "url": "/art-v4/characters/avatar-2/awards-stage/01.png",
+          "height": 0.924033,
+          "x": 0.5,
+          "y": 0.961326
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-stage/02.png",
+          "height": 0.924033,
+          "x": 0.5,
+          "y": 0.961326
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-stage/03.png",
+          "height": 0.924033,
+          "x": 0.5,
+          "y": 0.961326
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-stage/04.png",
+          "height": 0.924033,
+          "x": 0.5,
+          "y": 0.961326
+        }
+      ],
+      "3": [
+        {
+          "url": "/art-v4/characters/avatar-3/awards-stage/01.png",
+          "height": 0.928177,
+          "x": 0.5,
+          "y": 0.957182
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-stage/02.png",
+          "height": 0.928177,
+          "x": 0.5,
+          "y": 0.957182
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-stage/03.png",
+          "height": 0.928177,
+          "x": 0.5,
+          "y": 0.957182
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-stage/04.png",
+          "height": 0.928177,
+          "x": 0.5,
+          "y": 0.957182
+        }
+      ],
+      "4": [
+        {
+          "url": "/art-v4/characters/avatar-4/awards-stage/01.png",
+          "height": 0.925414,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-stage/02.png",
+          "height": 0.925414,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-stage/03.png",
+          "height": 0.925414,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-stage/04.png",
+          "height": 0.925414,
+          "x": 0.5,
+          "y": 0.948895
+        }
+      ],
+      "5": [
+        {
+          "url": "/art-v4/characters/avatar-5/awards-stage/01.png",
+          "height": 0.950276,
+          "x": 0.5,
+          "y": 0.968232
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-stage/02.png",
+          "height": 0.950276,
+          "x": 0.5,
+          "y": 0.968232
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-stage/03.png",
+          "height": 0.950276,
+          "x": 0.5,
+          "y": 0.968232
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-stage/04.png",
+          "height": 0.950276,
+          "x": 0.5,
+          "y": 0.968232
+        }
+      ]
+    }
+  },
+  "awards-seat": {
+    "background": "/art-v3/backgrounds/awards-seat.png",
+    "avatars": {
+      "0": [
+        {
+          "url": "/art-v4/characters/avatar-0/awards-seat/01.png",
+          "height": 0.917127,
+          "x": 0.5,
+          "y": 0.95442
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-seat/02.png",
+          "height": 0.917127,
+          "x": 0.5,
+          "y": 0.95442
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-seat/03.png",
+          "height": 0.917127,
+          "x": 0.5,
+          "y": 0.95442
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-seat/04.png",
+          "height": 0.917127,
+          "x": 0.5,
+          "y": 0.95442
+        }
+      ],
+      "1": [
+        {
+          "url": "/art-v4/characters/avatar-1/awards-seat/01.png",
+          "height": 0.88674,
+          "x": 0.5,
+          "y": 0.922652
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-seat/02.png",
+          "height": 0.88674,
+          "x": 0.5,
+          "y": 0.922652
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-seat/03.png",
+          "height": 0.88674,
+          "x": 0.5,
+          "y": 0.922652
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-seat/04.png",
+          "height": 0.88674,
+          "x": 0.5,
+          "y": 0.922652
+        }
+      ],
+      "2": [
+        {
+          "url": "/art-v4/characters/avatar-2/awards-seat/01.png",
+          "height": 0.915746,
+          "x": 0.5,
+          "y": 0.947514
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-seat/02.png",
+          "height": 0.915746,
+          "x": 0.5,
+          "y": 0.947514
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-seat/03.png",
+          "height": 0.915746,
+          "x": 0.5,
+          "y": 0.947514
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-seat/04.png",
+          "height": 0.915746,
+          "x": 0.5,
+          "y": 0.947514
+        }
+      ],
+      "3": [
+        {
+          "url": "/art-v4/characters/avatar-3/awards-seat/01.png",
+          "height": 0.947514,
+          "x": 0.5,
+          "y": 0.968232
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-seat/02.png",
+          "height": 0.947514,
+          "x": 0.5,
+          "y": 0.968232
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-seat/03.png",
+          "height": 0.947514,
+          "x": 0.5,
+          "y": 0.968232
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-seat/04.png",
+          "height": 0.947514,
+          "x": 0.5,
+          "y": 0.968232
+        }
+      ],
+      "4": [
+        {
+          "url": "/art-v4/characters/avatar-4/awards-seat/01.png",
+          "height": 0.957182,
+          "x": 0.5,
+          "y": 0.977901
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-seat/02.png",
+          "height": 0.957182,
+          "x": 0.5,
+          "y": 0.977901
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-seat/03.png",
+          "height": 0.957182,
+          "x": 0.5,
+          "y": 0.977901
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-seat/04.png",
+          "height": 0.957182,
+          "x": 0.5,
+          "y": 0.977901
+        }
+      ],
+      "5": [
+        {
+          "url": "/art-v4/characters/avatar-5/awards-seat/01.png",
+          "height": 0.950276,
+          "x": 0.5,
+          "y": 0.961326
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-seat/02.png",
+          "height": 0.950276,
+          "x": 0.5,
+          "y": 0.961326
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-seat/03.png",
+          "height": 0.950276,
+          "x": 0.5,
+          "y": 0.961326
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-seat/04.png",
+          "height": 0.950276,
+          "x": 0.5,
+          "y": 0.961326
+        }
+      ]
+    }
+  },
+  "awards-announce": {
+    "background": "/art-v3/backgrounds/awards-announce.png",
+    "avatars": {
+      "0": [
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/01.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/02.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/03.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/04.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        }
+      ],
+      "1": [
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/01.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/02.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/03.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/04.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        }
+      ],
+      "2": [
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/01.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/02.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/03.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/04.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        }
+      ],
+      "3": [
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/01.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/02.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/03.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/04.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        }
+      ],
+      "4": [
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/01.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/02.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/03.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/04.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        }
+      ],
+      "5": [
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/01.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/02.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/03.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        },
+        {
+          "url": "/art-v4/characters/presenter/awards-announce/04.png",
+          "height": 0.893646,
+          "x": 0.5,
+          "y": 0.948895
+        }
+      ]
+    }
+  },
+  "awards-win": {
+    "background": "/art-v3/backgrounds/awards-win.png",
+    "avatars": {
+      "0": [
+        {
+          "url": "/art-v4/characters/avatar-0/awards-win/01.png",
+          "height": 0.889503,
+          "x": 0.5,
+          "y": 0.915746
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-win/02.png",
+          "height": 0.889503,
+          "x": 0.5,
+          "y": 0.915746
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-win/03.png",
+          "height": 0.889503,
+          "x": 0.5,
+          "y": 0.915746
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-win/04.png",
+          "height": 0.889503,
+          "x": 0.5,
+          "y": 0.915746
+        }
+      ],
+      "1": [
+        {
+          "url": "/art-v4/characters/avatar-1/awards-win/01.png",
+          "height": 0.89779,
+          "x": 0.5,
+          "y": 0.946133
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-win/02.png",
+          "height": 0.89779,
+          "x": 0.5,
+          "y": 0.946133
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-win/03.png",
+          "height": 0.89779,
+          "x": 0.5,
+          "y": 0.946133
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-win/04.png",
+          "height": 0.89779,
+          "x": 0.5,
+          "y": 0.946133
+        }
+      ],
+      "2": [
+        {
+          "url": "/art-v4/characters/avatar-2/awards-win/01.png",
+          "height": 0.895028,
+          "x": 0.5,
+          "y": 0.93232
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-win/02.png",
+          "height": 0.895028,
+          "x": 0.5,
+          "y": 0.93232
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-win/03.png",
+          "height": 0.895028,
+          "x": 0.5,
+          "y": 0.93232
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-win/04.png",
+          "height": 0.895028,
+          "x": 0.5,
+          "y": 0.93232
+        }
+      ],
+      "3": [
+        {
+          "url": "/art-v4/characters/avatar-3/awards-win/01.png",
+          "height": 0.912983,
+          "x": 0.5,
+          "y": 0.957182
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-win/02.png",
+          "height": 0.912983,
+          "x": 0.5,
+          "y": 0.957182
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-win/03.png",
+          "height": 0.912983,
+          "x": 0.5,
+          "y": 0.957182
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-win/04.png",
+          "height": 0.912983,
+          "x": 0.5,
+          "y": 0.957182
+        }
+      ],
+      "4": [
+        {
+          "url": "/art-v4/characters/avatar-4/awards-win/01.png",
+          "height": 0.906077,
+          "x": 0.5,
+          "y": 0.95442
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-win/02.png",
+          "height": 0.906077,
+          "x": 0.5,
+          "y": 0.95442
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-win/03.png",
+          "height": 0.906077,
+          "x": 0.5,
+          "y": 0.95442
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-win/04.png",
+          "height": 0.906077,
+          "x": 0.5,
+          "y": 0.95442
+        }
+      ],
+      "5": [
+        {
+          "url": "/art-v4/characters/avatar-5/awards-win/01.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.953039
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-win/02.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.953039
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-win/03.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.953039
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-win/04.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.953039
+        }
+      ]
+    }
+  },
+  "awards-cry": {
+    "background": "/art-v3/backgrounds/awards-cry.png",
+    "avatars": {
+      "0": [
+        {
+          "url": "/art-v4/characters/avatar-0/awards-cry/01.png",
+          "height": 0.883978,
+          "x": 0.5,
+          "y": 0.93232
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-cry/02.png",
+          "height": 0.883978,
+          "x": 0.5,
+          "y": 0.93232
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-cry/03.png",
+          "height": 0.883978,
+          "x": 0.5,
+          "y": 0.93232
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-cry/04.png",
+          "height": 0.883978,
+          "x": 0.5,
+          "y": 0.93232
+        }
+      ],
+      "1": [
+        {
+          "url": "/art-v4/characters/avatar-1/awards-cry/01.png",
+          "height": 0.93232,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-cry/02.png",
+          "height": 0.93232,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-cry/03.png",
+          "height": 0.93232,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-cry/04.png",
+          "height": 0.93232,
+          "x": 0.5,
+          "y": 0.955801
+        }
+      ],
+      "2": [
+        {
+          "url": "/art-v4/characters/avatar-2/awards-cry/01.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.959945
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-cry/02.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.959945
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-cry/03.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.959945
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-cry/04.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.959945
+        }
+      ],
+      "3": [
+        {
+          "url": "/art-v4/characters/avatar-3/awards-cry/01.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-cry/02.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-cry/03.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-cry/04.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.955801
+        }
+      ],
+      "4": [
+        {
+          "url": "/art-v4/characters/avatar-4/awards-cry/01.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-cry/02.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-cry/03.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-cry/04.png",
+          "height": 0.936464,
+          "x": 0.5,
+          "y": 0.955801
+        }
+      ],
+      "5": [
+        {
+          "url": "/art-v4/characters/avatar-5/awards-cry/01.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.951657
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-cry/02.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.951657
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-cry/03.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.951657
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-cry/04.png",
+          "height": 0.937845,
+          "x": 0.5,
+          "y": 0.951657
+        }
+      ]
+    }
+  },
+  "awards-speech": {
+    "background": "/art-v3/backgrounds/awards-speech.png",
+    "avatars": {
+      "0": [
+        {
+          "url": "/art-v4/characters/avatar-0/awards-speech/01.png",
+          "height": 0.883978,
+          "x": 0.5,
+          "y": 0.924033
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-speech/02.png",
+          "height": 0.883978,
+          "x": 0.5,
+          "y": 0.924033
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-speech/03.png",
+          "height": 0.883978,
+          "x": 0.5,
+          "y": 0.924033
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-speech/04.png",
+          "height": 0.883978,
+          "x": 0.5,
+          "y": 0.924033
+        }
+      ],
+      "1": [
+        {
+          "url": "/art-v4/characters/avatar-1/awards-speech/01.png",
+          "height": 0.860497,
+          "x": 0.5,
+          "y": 0.90884
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-speech/02.png",
+          "height": 0.860497,
+          "x": 0.5,
+          "y": 0.90884
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-speech/03.png",
+          "height": 0.860497,
+          "x": 0.5,
+          "y": 0.90884
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-speech/04.png",
+          "height": 0.860497,
+          "x": 0.5,
+          "y": 0.90884
+        }
+      ],
+      "2": [
+        {
+          "url": "/art-v4/characters/avatar-2/awards-speech/01.png",
+          "height": 0.84116,
+          "x": 0.5,
+          "y": 0.896409
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-speech/02.png",
+          "height": 0.84116,
+          "x": 0.5,
+          "y": 0.896409
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-speech/03.png",
+          "height": 0.84116,
+          "x": 0.5,
+          "y": 0.896409
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-speech/04.png",
+          "height": 0.84116,
+          "x": 0.5,
+          "y": 0.896409
+        }
+      ],
+      "3": [
+        {
+          "url": "/art-v4/characters/avatar-3/awards-speech/01.png",
+          "height": 0.926796,
+          "x": 0.5,
+          "y": 0.950276
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-speech/02.png",
+          "height": 0.926796,
+          "x": 0.5,
+          "y": 0.950276
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-speech/03.png",
+          "height": 0.926796,
+          "x": 0.5,
+          "y": 0.950276
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-speech/04.png",
+          "height": 0.926796,
+          "x": 0.5,
+          "y": 0.950276
+        }
+      ],
+      "4": [
+        {
+          "url": "/art-v4/characters/avatar-4/awards-speech/01.png",
+          "height": 0.889503,
+          "x": 0.5,
+          "y": 0.910221
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-speech/02.png",
+          "height": 0.889503,
+          "x": 0.5,
+          "y": 0.910221
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-speech/03.png",
+          "height": 0.889503,
+          "x": 0.5,
+          "y": 0.910221
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-speech/04.png",
+          "height": 0.889503,
+          "x": 0.5,
+          "y": 0.910221
+        }
+      ],
+      "5": [
+        {
+          "url": "/art-v4/characters/avatar-5/awards-speech/01.png",
+          "height": 0.901934,
+          "x": 0.5,
+          "y": 0.926796
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-speech/02.png",
+          "height": 0.901934,
+          "x": 0.5,
+          "y": 0.926796
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-speech/03.png",
+          "height": 0.901934,
+          "x": 0.5,
+          "y": 0.926796
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-speech/04.png",
+          "height": 0.901934,
+          "x": 0.5,
+          "y": 0.926796
+        }
+      ]
+    }
+  },
+  "awards-lose": {
+    "background": "/art-v3/backgrounds/awards-lose.png",
+    "avatars": {
+      "0": [
+        {
+          "url": "/art-v4/characters/avatar-0/awards-lose/01.png",
+          "height": 0.924033,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-lose/02.png",
+          "height": 0.924033,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-lose/03.png",
+          "height": 0.924033,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-0/awards-lose/04.png",
+          "height": 0.924033,
+          "x": 0.5,
+          "y": 0.955801
+        }
+      ],
+      "1": [
+        {
+          "url": "/art-v4/characters/avatar-1/awards-lose/01.png",
+          "height": 0.910221,
+          "x": 0.5,
+          "y": 0.95442
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-lose/02.png",
+          "height": 0.910221,
+          "x": 0.5,
+          "y": 0.95442
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-lose/03.png",
+          "height": 0.910221,
+          "x": 0.5,
+          "y": 0.95442
+        },
+        {
+          "url": "/art-v4/characters/avatar-1/awards-lose/04.png",
+          "height": 0.910221,
+          "x": 0.5,
+          "y": 0.95442
+        }
+      ],
+      "2": [
+        {
+          "url": "/art-v4/characters/avatar-2/awards-lose/01.png",
+          "height": 0.872928,
+          "x": 0.5,
+          "y": 0.93232
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-lose/02.png",
+          "height": 0.872928,
+          "x": 0.5,
+          "y": 0.93232
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-lose/03.png",
+          "height": 0.872928,
+          "x": 0.5,
+          "y": 0.93232
+        },
+        {
+          "url": "/art-v4/characters/avatar-2/awards-lose/04.png",
+          "height": 0.872928,
+          "x": 0.5,
+          "y": 0.93232
+        }
+      ],
+      "3": [
+        {
+          "url": "/art-v4/characters/avatar-3/awards-lose/01.png",
+          "height": 0.925414,
+          "x": 0.5,
+          "y": 0.972376
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-lose/02.png",
+          "height": 0.925414,
+          "x": 0.5,
+          "y": 0.972376
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-lose/03.png",
+          "height": 0.925414,
+          "x": 0.5,
+          "y": 0.972376
+        },
+        {
+          "url": "/art-v4/characters/avatar-3/awards-lose/04.png",
+          "height": 0.925414,
+          "x": 0.5,
+          "y": 0.972376
+        }
+      ],
+      "4": [
+        {
+          "url": "/art-v4/characters/avatar-4/awards-lose/01.png",
+          "height": 0.940608,
+          "x": 0.5,
+          "y": 0.964088
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-lose/02.png",
+          "height": 0.940608,
+          "x": 0.5,
+          "y": 0.964088
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-lose/03.png",
+          "height": 0.940608,
+          "x": 0.5,
+          "y": 0.964088
+        },
+        {
+          "url": "/art-v4/characters/avatar-4/awards-lose/04.png",
+          "height": 0.940608,
+          "x": 0.5,
+          "y": 0.964088
+        }
+      ],
+      "5": [
+        {
+          "url": "/art-v4/characters/avatar-5/awards-lose/01.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-lose/02.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-lose/03.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.955801
+        },
+        {
+          "url": "/art-v4/characters/avatar-5/awards-lose/04.png",
+          "height": 0.921271,
+          "x": 0.5,
+          "y": 0.955801
+        }
+      ]
+    }
+  }
+}

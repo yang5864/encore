@@ -1,0 +1,5166 @@
+{
+  "version": "awards-cutscene-art-v1",
+  "generationMode": "built-in image_gen",
+  "sourceBrief": "AWARDS-PROMPTS.md",
+  "runtimeIntegrated": false,
+  "counts": {
+    "backgrounds": 8,
+    "idolCharacterSheets": 42,
+    "presenterSheets": 1,
+    "individualFrames": 172,
+    "finalAssets": 180
+  },
+  "events": [
+    {
+      "id": "awards-redcarpet",
+      "label": "레드카펫",
+      "background": {
+        "url": "/art-v3/backgrounds/awards-redcarpet.png",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "bytes": 2572508,
+        "sha256": "8a5de906625f175e569720aec24a44015d2361a7abe9eb7ccca5810803a53aa1"
+      },
+      "avatars": [
+        {
+          "actor": "avatar-0",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-0/awards-redcarpet/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 375058,
+              "sha256": "03f75a151daa1cfe47c32c41a7f7845392f4b6806a2089d2bd0b3ee6305763d2",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                82,
+                30,
+                460,
+                697
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.921271
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-redcarpet/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 391556,
+              "sha256": "497a5e2556412fd24e8f771be86ba09f047020a6501bae26aadf8640f66c1d7e",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                83,
+                30,
+                460,
+                697
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.921271
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-redcarpet/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 394706,
+              "sha256": "0ac2699018f3b40b6d63b26740fdd68fb33d0df648b7f59624997a601478ff47",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                83,
+                30,
+                460,
+                697
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.921271
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-redcarpet/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 362300,
+              "sha256": "770fa12bdc31969593b10170aeff9ed544597ab229b47d259f3307e315c6646f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                83,
+                53,
+                461,
+                697
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.921271
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-0/awards-redcarpet.png",
+          "fourDistinctFrames": true,
+          "avatar": 0,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-1",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-1/awards-redcarpet/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 358518,
+              "sha256": "1ade2e1faa8a00ef6f2ad309f0b408e143a5f3b8139727abfa9d48b44704297d",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                83,
+                30,
+                454,
+                695
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.959945
+              },
+              "animationReferenceHeight": 0.918508
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-redcarpet/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 386983,
+              "sha256": "7ffba3d2dab733593d42b8edace984ddc489d443555708fb6cd835ea3f805328",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                41,
+                30,
+                455,
+                695
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.959945
+              },
+              "animationReferenceHeight": 0.918508
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-redcarpet/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 375855,
+              "sha256": "8140f8eb4eb1c48e2e6b1ba3a5cf5a2941e170ce7316cc7144a9be60cc1c012a",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                85,
+                30,
+                455,
+                695
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.959945
+              },
+              "animationReferenceHeight": 0.918508
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-redcarpet/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 360928,
+              "sha256": "97fdb8ee38654215d17681f05b8c531705ebac7b0186eea4af771b20cb37b47b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                84,
+                32,
+                456,
+                694
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.959945
+              },
+              "animationReferenceHeight": 0.918508
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-1/awards-redcarpet.png",
+          "fourDistinctFrames": true,
+          "avatar": 1,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-2",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-2/awards-redcarpet/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 443877,
+              "sha256": "6d628663db5d33201215da30e5719b845d7bfe8806983a3ae72af78ae2b263c0",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                59,
+                30,
+                483,
+                696
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.921271
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-redcarpet/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 450803,
+              "sha256": "81549b0f22c39d5a4b0f95b32d00c3b2b39eb98692bb9e29039347c5947b83b9",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                60,
+                30,
+                484,
+                697
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.921271
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-redcarpet/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 451053,
+              "sha256": "a56624d10d304ea6e83774ff110ab2063e396f67215fd623f52feaf12e34dc74",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                59,
+                30,
+                484,
+                696
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.921271
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-redcarpet/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 430799,
+              "sha256": "af64b1b2c9e84793a62e7265903f382edfa39f529a6577d18c268f7b9ad88a2d",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                65,
+                40,
+                482,
+                696
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.921271
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-2/awards-redcarpet.png",
+          "fourDistinctFrames": true,
+          "avatar": 2,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-3",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-3/awards-redcarpet/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 325454,
+              "sha256": "763f159937254d443f6ba0a7d70113ad3a0930aa1e80cb1e64103056c75428d2",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                88,
+                12,
+                457,
+                701
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.951657
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-redcarpet/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 348498,
+              "sha256": "4e4d27c360f9fc45d1b9766c3661c57dd5619edb2d59e96cdfd446d7d3bcaf7b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                43,
+                12,
+                457,
+                701
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.951657
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-redcarpet/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 330452,
+              "sha256": "4bc2e0c96ff3fd91eab428c3d355a31e72887cf3cd65177bf1e3a6eed6fde87d",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                89,
+                12,
+                458,
+                701
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.951657
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-redcarpet/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 292108,
+              "sha256": "194dbd6ce0a169a95c3a0f3b50da6f995d015910d03e0df82657adb3cb3bb5ff",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                92,
+                34,
+                457,
+                701
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.951657
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-3/awards-redcarpet.png",
+          "fourDistinctFrames": true,
+          "avatar": 3,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-4",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-4/awards-redcarpet/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 320715,
+              "sha256": "c2496ad276fa1f4030b03441f7ce1fc64b617737c4f0f0c88c5f018164810a35",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                90,
+                15,
+                462,
+                693
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.936464
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-redcarpet/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 331074,
+              "sha256": "a8d2c290c7cca26ed58f385cc92fbc253417b687e3f1088bc09f5f871e7ede55",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                91,
+                15,
+                462,
+                693
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.936464
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-redcarpet/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 326753,
+              "sha256": "a506a26c3751258a28e7326c41a6233e7011e3ff0f85b8052178703c46314b09",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                91,
+                15,
+                462,
+                693
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.936464
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-redcarpet/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 302099,
+              "sha256": "ce0c9373b7486da2ea1d00d9023a64a96d7705c9b9fa16191f13b0000bd0e2e6",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                81,
+                28,
+                459,
+                693
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.936464
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-4/awards-redcarpet.png",
+          "fourDistinctFrames": true,
+          "avatar": 4,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-5",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-5/awards-redcarpet/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 338940,
+              "sha256": "bf14e742511670845db639f87d59c2eaea4813f98be679e0be76af912f88433a",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                86,
+                11,
+                472,
+                697
+              ],
+              "maxCanvasBorderAlpha": 2,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.947514
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-redcarpet/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 354175,
+              "sha256": "12c278d0afd83fb33ee63d92e5023ca5b619b7d31247f8dfa649191141859932",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                85,
+                11,
+                471,
+                697
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.947514
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-redcarpet/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 348034,
+              "sha256": "b44b1c01fe6d7bbd4f9f57439cc42d519d5e960eb8f59fb636aeded586cc0db2",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                85,
+                11,
+                472,
+                697
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.947514
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-redcarpet/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 322794,
+              "sha256": "2dd68648cb8d38f3c7c0434fb801ddefdbd022ef6ec399b313edc0d2b8cc8c28",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                86,
+                43,
+                475,
+                697
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.962707
+              },
+              "animationReferenceHeight": 0.947514
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-5/awards-redcarpet.png",
+          "fourDistinctFrames": true,
+          "avatar": 5,
+          "gender": "male"
+        }
+      ],
+      "frameCount": 4
+    },
+    {
+      "id": "awards-stage",
+      "label": "연말 무대",
+      "background": {
+        "url": "/art-v3/backgrounds/awards-stage.png",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "bytes": 2435285,
+        "sha256": "6e4d37b8a461b80ab4b81c194e768f6dfc2dd1e8f16eadc3d6e1735d6f27b765"
+      },
+      "avatars": [
+        {
+          "actor": "avatar-0",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-0/awards-stage/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 357522,
+              "sha256": "3c4e9b4d4262871e85440c6e66e1b3db74e96c4609f1cff76e958acf653138e9",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                93,
+                31,
+                454,
+                678
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.940608
+              },
+              "animationReferenceHeight": 0.89779
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-stage/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 363159,
+              "sha256": "87912482417ee7bf1e33280fff2895ddb94d1122d6b0be43646005bce5890493",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                90,
+                31,
+                454,
+                680
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.940608
+              },
+              "animationReferenceHeight": 0.89779
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-stage/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 376933,
+              "sha256": "c57e831195243d7cb620ac39bf5d2e8620c37a413da6a65fbe62a1ab63a485a3",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                85,
+                32,
+                475,
+                681
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.940608
+              },
+              "animationReferenceHeight": 0.89779
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-stage/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 392644,
+              "sha256": "0d1657462c82e253fcacbc5eb9a5fc7629862c9e94e873eb54694b90dfc34e20",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                79,
+                31,
+                466,
+                681
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.940608
+              },
+              "animationReferenceHeight": 0.89779
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-0/awards-stage.png",
+          "fourDistinctFrames": true,
+          "avatar": 0,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-1",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-1/awards-stage/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 385594,
+              "sha256": "61ab3b24a584ff1c4d1ac08ec5e4e3ecc68a6f8a6de0c87f42602a5e68bbb771",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                89,
+                18,
+                449,
+                698
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.969613
+              },
+              "animationReferenceHeight": 0.939227
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-stage/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 399751,
+              "sha256": "92b02325176841cbd0c800ed3f8ea34eb0e083795589ea6c2e5b0789be4d4b21",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                85,
+                18,
+                452,
+                698
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.969613
+              },
+              "animationReferenceHeight": 0.939227
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-stage/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 421988,
+              "sha256": "c7264677222891746b233759fa46c0af6910c117dcd7e6cbeaf6c285fa727c80",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                84,
+                23,
+                472,
+                698
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.969613
+              },
+              "animationReferenceHeight": 0.939227
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-stage/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 413804,
+              "sha256": "9c5acd332fe0fe8ae76a074e1d778cc6328a6d459cc3e113a8be007557408230",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                82,
+                23,
+                449,
+                702
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.969613
+              },
+              "animationReferenceHeight": 0.939227
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-1/awards-stage.png",
+          "fourDistinctFrames": true,
+          "avatar": 1,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-2",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-2/awards-stage/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 428696,
+              "sha256": "1859eb44e909db6a4b9e4442cf120cbabeae888a0f99a86645090e58d91cdd4a",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                83,
+                27,
+                452,
+                696
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.961326
+              },
+              "animationReferenceHeight": 0.924033
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-stage/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 437993,
+              "sha256": "ad377afda1fc4896b343a776351234d182247ea9d6efbc1bc69825314f4ab980",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                68,
+                27,
+                454,
+                696
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.961326
+              },
+              "animationReferenceHeight": 0.924033
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-stage/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 442501,
+              "sha256": "c87d481921e5e26daddb39dfadfdb1a7b044f3015e9cba86d33357b0acb7354b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                65,
+                27,
+                466,
+                696
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.961326
+              },
+              "animationReferenceHeight": 0.924033
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-stage/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 478632,
+              "sha256": "d07e81f94277d0f382d31eb8413b1bc82feb89df4ae8e8cf1237de0c4efa2c65",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                57,
+                27,
+                473,
+                696
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.961326
+              },
+              "animationReferenceHeight": 0.924033
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-2/awards-stage.png",
+          "fourDistinctFrames": true,
+          "avatar": 2,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-3",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-3/awards-stage/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 281151,
+              "sha256": "4a987bf5ff8c16c474fcba9a40132470fe851397490ef16fac9d11028f1f91e5",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                130,
+                21,
+                439,
+                693
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.928177
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-stage/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 298202,
+              "sha256": "28d987821115a61822d06de36796a9ff40c01281fc4e465a746015526d6fc92d",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                131,
+                21,
+                439,
+                693
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.928177
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-stage/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 310308,
+              "sha256": "677c8701d0952ba371f1eb47073ea7769402a46d139a0156eb15b44cefb8d5b6",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                132,
+                21,
+                459,
+                693
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.928177
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-stage/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 303772,
+              "sha256": "87672ca08fa0327801efe21fca4dd629b20dad700ed5cea31db57921aa4e3833",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                109,
+                29,
+                456,
+                693
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.928177
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-3/awards-stage.png",
+          "fourDistinctFrames": true,
+          "avatar": 3,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-4",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-4/awards-stage/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 290742,
+              "sha256": "3ab7986d60add981032c636dc78b4e6e4602509c95192bcce6142a30fa360b82",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                97,
+                17,
+                430,
+                687
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.948895
+              },
+              "animationReferenceHeight": 0.925414
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-stage/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 311439,
+              "sha256": "b9a8aae8721cd1c8199dddf5f2fe6d6d43df7be70c455e3ccca4fa4a9ea53315",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                80,
+                17,
+                431,
+                687
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.948895
+              },
+              "animationReferenceHeight": 0.925414
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-stage/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 326843,
+              "sha256": "ef9c46d3554f50c50d693f00613aafc8701f036861f2af2a57062e090dcfdebe",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                94,
+                17,
+                455,
+                687
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.948895
+              },
+              "animationReferenceHeight": 0.925414
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-stage/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 322438,
+              "sha256": "afae2ca0869a308be86f1dcf5eccc6001efca73e191bd0b69b2bd7021368bcb4",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                99,
+                21,
+                462,
+                687
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.948895
+              },
+              "animationReferenceHeight": 0.925414
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-4/awards-stage.png",
+          "fourDistinctFrames": true,
+          "avatar": 4,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-5",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-5/awards-stage/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 295639,
+              "sha256": "1fc58fe50db800aab3ceb8e978762c24d2a7979b0c9c80b520f84af486319b3d",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                112,
+                13,
+                434,
+                701
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.950276
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-stage/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 307452,
+              "sha256": "fe4e5e6fa73f1a354ac61489145738894511978841bc50e161a3697f2d0dcf01",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                116,
+                14,
+                436,
+                700
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.950276
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-stage/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 321769,
+              "sha256": "2a51e5d528c49151c8692fc39c66677bdcb80fc04db6a4e99f0ddb56d83c48be",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                116,
+                20,
+                451,
+                701
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.950276
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-stage/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 321490,
+              "sha256": "d3e40801f0bfe2d66478559d21633d119ccf4ba81996814ca53877c9711ce781",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                107,
+                13,
+                463,
+                701
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.950276
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-5/awards-stage.png",
+          "fourDistinctFrames": true,
+          "avatar": 5,
+          "gender": "male"
+        }
+      ],
+      "frameCount": 4
+    },
+    {
+      "id": "awards-seat",
+      "label": "발표 전 객석",
+      "background": {
+        "url": "/art-v3/backgrounds/awards-seat.png",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "bytes": 2677100,
+        "sha256": "1e280c6c3b414f56bfab55c8d743ff2087618d47826e4736976ea4830c0deea4"
+      },
+      "avatars": [
+        {
+          "actor": "avatar-0",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-0/awards-seat/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 455875,
+              "sha256": "b72f992e34cb106d0bb727edc06463001815abd5432b704040cc5a3112784feb",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                81,
+                27,
+                460,
+                691
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.917127
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-seat/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 450501,
+              "sha256": "c5b4aab236855ee52231b6ae1e99841356bff615d3e5f921f8b4afcc054a2cf9",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                82,
+                27,
+                461,
+                691
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.917127
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-seat/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 454781,
+              "sha256": "0fcaa2fde96ce91c332d6d39097364e6bbea9bcd07106812348cb6667fc83979",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                81,
+                27,
+                462,
+                691
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.917127
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-seat/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 455313,
+              "sha256": "3780ced3ba557c4b46221e370f4155929fb76bba1c824401993f8cb75870e80c",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                80,
+                27,
+                462,
+                691
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.917127
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-0/awards-seat.png",
+          "fourDistinctFrames": true,
+          "avatar": 0,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-1",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-1/awards-seat/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 420647,
+              "sha256": "27ca6c6e7eb03bb5e5f975a128c16dcbd9eb5c6853d3f0620c1e5143a22a89ee",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                77,
+                26,
+                423,
+                668
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.922652
+              },
+              "animationReferenceHeight": 0.88674
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-seat/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 413818,
+              "sha256": "b86c6d7471b616dab6c01f368a24173ebef6d36946343888d264af4525ec8bbc",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                78,
+                26,
+                423,
+                668
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.922652
+              },
+              "animationReferenceHeight": 0.88674
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-seat/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 420224,
+              "sha256": "1ba0e746d00532e5bc935e9d4d68b556366ab709223546b4c34b349baf7c3231",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                78,
+                28,
+                422,
+                668
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.922652
+              },
+              "animationReferenceHeight": 0.88674
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-seat/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 420730,
+              "sha256": "3fa4e74e62d4cdefbd72ead9b02e9686277b679cad751b550503a80d64d88eba",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                77,
+                26,
+                422,
+                668
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.922652
+              },
+              "animationReferenceHeight": 0.88674
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-1/awards-seat.png",
+          "fourDistinctFrames": true,
+          "avatar": 1,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-2",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-2/awards-seat/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 502309,
+              "sha256": "d9199a7c35f0a0e9f2d7e2a8eff1e2545d942ffeb28b7a3dfc9f42019916fbd8",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                61,
+                23,
+                482,
+                686
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.947514
+              },
+              "animationReferenceHeight": 0.915746
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-seat/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 495650,
+              "sha256": "ec3455380a0d1a043c6ca9647b818f8598ddd3516e99ea2cdaf252988a845997",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                62,
+                23,
+                482,
+                686
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.947514
+              },
+              "animationReferenceHeight": 0.915746
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-seat/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 500161,
+              "sha256": "55a57945136baee69a3ae61c81fc31cb89149a1b9b0b7b6e5d0331fd59e7d820",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                61,
+                26,
+                481,
+                686
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.947514
+              },
+              "animationReferenceHeight": 0.915746
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-seat/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 500501,
+              "sha256": "8d9dac040a280d276c59f60f0e6c7569b579ea7acca9a7e5863efa96606636de",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                61,
+                23,
+                482,
+                686
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.947514
+              },
+              "animationReferenceHeight": 0.915746
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-2/awards-seat.png",
+          "fourDistinctFrames": true,
+          "avatar": 2,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-3",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-3/awards-seat/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 442275,
+              "sha256": "e6511c94c9a9a8f3f1353a069501144a9c0f96b0cd6f2c7ddfa3bc2de465d502",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                89,
+                15,
+                453,
+                701
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.947514
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-seat/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 437735,
+              "sha256": "a6199980b959938000fa32e8c4c8fa7386359f4a5bf0e169054c59a3a231202d",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                90,
+                15,
+                453,
+                701
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.947514
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-seat/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 439039,
+              "sha256": "f06d54c5142930c0fcb255840b3e9bde743ea93db7f000db83f240393b979571",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                89,
+                15,
+                453,
+                701
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.947514
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-seat/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 440939,
+              "sha256": "e2d99f153ace51e1e4693a1c0ac05e65724c3892fb88f3d2bd06eabd20ba76b5",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                90,
+                15,
+                454,
+                701
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.968232
+              },
+              "animationReferenceHeight": 0.947514
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-3/awards-seat.png",
+          "fourDistinctFrames": true,
+          "avatar": 3,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-4",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-4/awards-seat/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 421371,
+              "sha256": "06f57a87301bfb08b21215f32c13c5108575e97f1fef718564596a1fef9d3b78",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                97,
+                17,
+                445,
+                708
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.977901
+              },
+              "animationReferenceHeight": 0.957182
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-seat/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 418800,
+              "sha256": "13af2e01c5d5865331a0964f57598c7789c5204162a9a4388e4ca8fe15052593",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                98,
+                16,
+                448,
+                708
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.977901
+              },
+              "animationReferenceHeight": 0.957182
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-seat/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 421789,
+              "sha256": "6928f24a853364fe78a832cf34ca8c358c0777eff32bc004ad8632de8e2d78e7",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                93,
+                15,
+                445,
+                708
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.977901
+              },
+              "animationReferenceHeight": 0.957182
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-seat/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 422854,
+              "sha256": "1a146d1ace46978bebf0fede9c73722c7b4e035d7680ced28890873ed4bea25f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                98,
+                16,
+                448,
+                708
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.977901
+              },
+              "animationReferenceHeight": 0.957182
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-4/awards-seat.png",
+          "fourDistinctFrames": true,
+          "avatar": 4,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-5",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-5/awards-seat/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 423480,
+              "sha256": "b29bfafbe4f98c1fa914c4736c2001b2d816e936718ffd6afef6d850adf052e9",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                93,
+                8,
+                449,
+                696
+              ],
+              "maxCanvasBorderAlpha": 3,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.961326
+              },
+              "animationReferenceHeight": 0.950276
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-seat/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 423794,
+              "sha256": "df34c29a5995b790d57c87ecc0e946a5e67ba56d139b36b50ddcb15b179f681d",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                93,
+                8,
+                449,
+                696
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.961326
+              },
+              "animationReferenceHeight": 0.950276
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-seat/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 419283,
+              "sha256": "0b9f4e169ff756154c06a437c9f058af7516eb03fdb48875ef809fa9ccdb6267",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                86,
+                10,
+                437,
+                696
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.961326
+              },
+              "animationReferenceHeight": 0.950276
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-seat/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 424755,
+              "sha256": "d15ff9af70278c4b2ad9caf5ad777ea9607551c7364da58bebcbecfa9dc7c887",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                94,
+                8,
+                449,
+                696
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.961326
+              },
+              "animationReferenceHeight": 0.950276
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-5/awards-seat.png",
+          "fourDistinctFrames": true,
+          "avatar": 5,
+          "gender": "male"
+        }
+      ],
+      "frameCount": 4
+    },
+    {
+      "id": "awards-announce",
+      "label": "시상자 발표",
+      "background": {
+        "url": "/art-v3/backgrounds/awards-announce.png",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "bytes": 2432516,
+        "sha256": "905b789fcb9f26203dd13edc3f3ab79d779290b426f5de5e39d484fc9b187a67"
+      },
+      "avatars": [
+        {
+          "actor": "presenter",
+          "frames": [
+            {
+              "url": "/art-v4/characters/presenter/awards-announce/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 268206,
+              "sha256": "49d54e8178604fa42461f2d7935cf9dd43322e8bce70f647d6575773219669a3",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                146,
+                40,
+                440,
+                687
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.948895
+              },
+              "animationReferenceHeight": 0.893646
+            },
+            {
+              "url": "/art-v4/characters/presenter/awards-announce/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 273751,
+              "sha256": "a9ee96e71d3978cfe5fe8e4a596b995367cb7584a0459f7214104812e28cd954",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                145,
+                41,
+                439,
+                687
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.948895
+              },
+              "animationReferenceHeight": 0.893646
+            },
+            {
+              "url": "/art-v4/characters/presenter/awards-announce/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 261232,
+              "sha256": "eec65239ff3354db4256d26e3af14bafa5f9268fb9ff03f3c89e290c6184a86e",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                135,
+                41,
+                429,
+                687
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.948895
+              },
+              "animationReferenceHeight": 0.893646
+            },
+            {
+              "url": "/art-v4/characters/presenter/awards-announce/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 277381,
+              "sha256": "6f95b643ec067baca055dd4bd401597bde6a8938c9050cfa7a8bde7a3197e54f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                115,
+                41,
+                464,
+                687
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.948895
+              },
+              "animationReferenceHeight": 0.893646
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/presenter/awards-announce.png",
+          "fourDistinctFrames": true,
+          "role": "separate adult presenter; intentionally shared across avatar selections"
+        }
+      ],
+      "frameCount": 4
+    },
+    {
+      "id": "awards-win",
+      "label": "호명 · 환호",
+      "background": {
+        "url": "/art-v3/backgrounds/awards-win.png",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "bytes": 2573249,
+        "sha256": "874246d38ca64ad721a944f229f6f67cce8162030edfee8e6bcf69b0ea9e6512"
+      },
+      "avatars": [
+        {
+          "actor": "avatar-0",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-0/awards-win/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 411580,
+              "sha256": "de69e0277154ff911f089cdc68c9a0ad6172e23c4083a7f3c414d8a7e875d41f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                71,
+                83,
+                463,
+                663
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.915746
+              },
+              "animationReferenceHeight": 0.889503
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-win/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 396947,
+              "sha256": "c7882ec4411df70e99a2c2aa0e879a1ea9f9641ba8d6355f66024e31b6b50846",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                80,
+                89,
+                463,
+                663
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.915746
+              },
+              "animationReferenceHeight": 0.889503
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-win/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 443843,
+              "sha256": "89d65e7b549d4e4be1a18d0c32f11a65a3b7e21bbb501eef2cc37ee6100d1239",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                66,
+                56,
+                479,
+                663
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.915746
+              },
+              "animationReferenceHeight": 0.889503
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-win/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 449367,
+              "sha256": "03c9f43db5c32dafa3d90ddaf3cd5b03028bf1f27dbdf7871e344168e3712526",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                62,
+                15,
+                480,
+                659
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.915746
+              },
+              "animationReferenceHeight": 0.889503
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-0/awards-win.png",
+          "fourDistinctFrames": true,
+          "avatar": 0,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-1",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-1/awards-win/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 367934,
+              "sha256": "7887d37c82f6c791e45c4e846c1ab72faf81f1bf9cdf98b70be409a68a5f9138",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                93,
+                134,
+                449,
+                680
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.946133
+              },
+              "animationReferenceHeight": 0.89779
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-win/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 369944,
+              "sha256": "830b32203144d8e7f7a18c29b97feb42030838e69b071202f7f954cb6c9a7c45",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                97,
+                133,
+                456,
+                682
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.946133
+              },
+              "animationReferenceHeight": 0.89779
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-win/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 408975,
+              "sha256": "a5e6de182e6b519542a168c36be144c7db33abea8040872cc202a6260b32cda4",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                72,
+                79,
+                458,
+                685
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.946133
+              },
+              "animationReferenceHeight": 0.89779
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-win/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 426608,
+              "sha256": "dbd495be92ec90c3cff7fc6a2915f11b5ad46783f6d9585f3086342554ad3613",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                70,
+                21,
+                481,
+                671
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.946133
+              },
+              "animationReferenceHeight": 0.89779
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-1/awards-win.png",
+          "fourDistinctFrames": true,
+          "avatar": 1,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-2",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-2/awards-win/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 458953,
+              "sha256": "46aee85b3309e33e8c1f5ff100aae1a366680c7073d6248c9b59493af72a0a0b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                69,
+                85,
+                483,
+                674
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.895028
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-win/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 452813,
+              "sha256": "0ca7eda8e340aefcb8b06a7244ead909084e1a5815e28806b878d7caa6628573",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                50,
+                85,
+                481,
+                675
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.895028
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-win/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 497810,
+              "sha256": "f86a0392eb1733a6adc97bf94f68c5a6c4f46a8f42e30c91aa1c181ecfb5f757",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                35,
+                38,
+                461,
+                675
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.895028
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-win/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 496878,
+              "sha256": "0f8cc7226f0d26725da49f6b0fad22c8b8dae9cd177e7ffaca7445e9c94bbf5f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                36,
+                21,
+                456,
+                669
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.895028
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-2/awards-win.png",
+          "fourDistinctFrames": true,
+          "avatar": 2,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-3",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-3/awards-win/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 344394,
+              "sha256": "1fb0964cd2d9926011ad671e6ebdae6ab9154d687c2fb3947cfd8525052e5d55",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                80,
+                110,
+                424,
+                693
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.912983
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-win/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 346503,
+              "sha256": "d29c7c8ae49c9f5e793d831c65078d740de404b44399d1ef0ae6050ab2f426b1",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                78,
+                107,
+                424,
+                693
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.912983
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-win/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 381214,
+              "sha256": "c3a894ff41191cfdcd8a20fe5c797984366c230bfd74e3220b62f7945029a82f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                61,
+                62,
+                484,
+                693
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.912983
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-win/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 393545,
+              "sha256": "a8e086fd80fa6e3d113022e99c86d5a9eac7fed39831106fda812d9d628a15dc",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                62,
+                25,
+                464,
+                686
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.957182
+              },
+              "animationReferenceHeight": 0.912983
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-3/awards-win.png",
+          "fourDistinctFrames": true,
+          "avatar": 3,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-4",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-4/awards-win/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 436538,
+              "sha256": "fbfc43fa2fe961e09438de241180cd118f54a435a0458e1b7b23051279837fdf",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                79,
+                144,
+                454,
+                691
+              ],
+              "maxCanvasBorderAlpha": 3,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.906077
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-win/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 448895,
+              "sha256": "c5de95fa13460ec90219f25d79307f1df9c1c26fa62f949a9dc9fb10fecc1d59",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                84,
+                130,
+                454,
+                691
+              ],
+              "maxCanvasBorderAlpha": 4,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.906077
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-win/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 490265,
+              "sha256": "f8e16974dd9400bcd38c802837bea1c551b20a2a952df9ee8c89327c2b42c4b5",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                56,
+                71,
+                486,
+                691
+              ],
+              "maxCanvasBorderAlpha": 4,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.906077
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-win/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 491249,
+              "sha256": "97c5e17dacb86c3eafe6cacd7f7e1f07fccbb8017f161d188773acaf7a5c09b0",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                58,
+                24,
+                473,
+                680
+              ],
+              "maxCanvasBorderAlpha": 4,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.906077
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-4/awards-win.png",
+          "fourDistinctFrames": true,
+          "avatar": 4,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-5",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-5/awards-win/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 393348,
+              "sha256": "48002af2602c4076e30d00262853aed1d264f4c5bb6356102c3aabe082148904",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                77,
+                100,
+                474,
+                690
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.953039
+              },
+              "animationReferenceHeight": 0.937845
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-win/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 412552,
+              "sha256": "93dffa6245eb18ea9c8af5690f41b21144cdb6fcc205f30a4aeb54a8ef161016",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                58,
+                86,
+                465,
+                690
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.953039
+              },
+              "animationReferenceHeight": 0.937845
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-win/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 465859,
+              "sha256": "929ba3cddff971e492e1d2b9c264980aa6b289ec9767547a7777acd422107f33",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                50,
+                40,
+                502,
+                689
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.953039
+              },
+              "animationReferenceHeight": 0.937845
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-win/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 443075,
+              "sha256": "3a4df287ed575b5b89fa75b0a702f34d9e738e88d473985f118a96418699ee38",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                31,
+                9,
+                494,
+                688
+              ],
+              "maxCanvasBorderAlpha": 4,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.953039
+              },
+              "animationReferenceHeight": 0.937845
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-5/awards-win.png",
+          "fourDistinctFrames": true,
+          "avatar": 5,
+          "gender": "male"
+        }
+      ],
+      "frameCount": 4
+    },
+    {
+      "id": "awards-cry",
+      "label": "호명 · 눈물",
+      "background": {
+        "url": "/art-v3/backgrounds/awards-cry.png",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "bytes": 2486380,
+        "sha256": "9a6edbedbbb1085d94c13dc9591e8ea0cf9385a6f7755fd0a19dfdefd11a21f4"
+      },
+      "avatars": [
+        {
+          "actor": "avatar-0",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-0/awards-cry/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 364413,
+              "sha256": "66ae1b7a2ce8d9e66677af024c12c73267edd331609c67ca1756a6426c55a7aa",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                90,
+                35,
+                451,
+                675
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.883978
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-cry/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 367970,
+              "sha256": "f8a9895a15152c337a585df7824ab46df00f76fa663dfb694521b493efc93bdc",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                91,
+                35,
+                452,
+                675
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.883978
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-cry/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 369490,
+              "sha256": "2e85453986ed97401292f5312b0f52b837b6cf899b20387b35d0318aa417e6f4",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                91,
+                36,
+                452,
+                675
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.883978
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-cry/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 365695,
+              "sha256": "548ab658c6440cda6d66ce5feb57d825836ee46bc9846aae76518b58d8f75a37",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                91,
+                40,
+                452,
+                675
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.883978
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-0/awards-cry.png",
+          "fourDistinctFrames": true,
+          "avatar": 0,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-1",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-1/awards-cry/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 365709,
+              "sha256": "d4f7ab99e61edf79283b31e933aa0aee58705c3a1bf9507357e4f36f6c00075f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                90,
+                17,
+                449,
+                692
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.93232
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-cry/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 361984,
+              "sha256": "a81f2488cba2325d493be4577665ed54f53e236b5ac256154eb2f0c85ee7d9a9",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                91,
+                17,
+                448,
+                692
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.93232
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-cry/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 365407,
+              "sha256": "af4767322fa87c81470d97f28238e7f926d416b7c3150304cf6e480beb383a6a",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                90,
+                17,
+                448,
+                692
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.93232
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-cry/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 360979,
+              "sha256": "a1615adc4850161546c4697177315acefd502ed1c5362c849e127d74ac016841",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                90,
+                20,
+                453,
+                692
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.93232
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-1/awards-cry.png",
+          "fourDistinctFrames": true,
+          "avatar": 1,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-2",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-2/awards-cry/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 441938,
+              "sha256": "0ff3720c4d158b265b4e40d0aecee9a678183b42fd6e39045dc20a7253a8d731",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                76,
+                16,
+                465,
+                695
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.959945
+              },
+              "animationReferenceHeight": 0.937845
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-cry/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 441414,
+              "sha256": "16514be32c67840946f50806a99e12da4d2dcd1d7c04f5a7ac096ad6b94bf6fb",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                76,
+                16,
+                465,
+                695
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.959945
+              },
+              "animationReferenceHeight": 0.937845
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-cry/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 442500,
+              "sha256": "30f9b1025f7f6e2b4b0de7320d29286c397836c74d251be2247fb9267de7494b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                76,
+                16,
+                465,
+                695
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.959945
+              },
+              "animationReferenceHeight": 0.937845
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-cry/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 433130,
+              "sha256": "bf2d4efb8ec4aec94b5a1ce62aaf65020526e8716b473781edc92f66b5c5d236",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                77,
+                23,
+                466,
+                695
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.959945
+              },
+              "animationReferenceHeight": 0.937845
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-2/awards-cry.png",
+          "fourDistinctFrames": true,
+          "avatar": 2,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-3",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-3/awards-cry/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 290655,
+              "sha256": "66f8c39619b7c3e756c888797504a7a98461b2c5d71724d0c3d44b532f870f49",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                133,
+                14,
+                456,
+                692
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.936464
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-cry/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 289831,
+              "sha256": "6261995c012f8d4d27284c72e26a37796dc51220935621685310aae90b9d3b48",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                120,
+                14,
+                438,
+                692
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.936464
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-cry/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 289968,
+              "sha256": "68d6837b7e200c15e93230577ae789967aac2e3fee6339a5389dc4f5d7b6e58a",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                105,
+                14,
+                428,
+                692
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.936464
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-cry/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 276645,
+              "sha256": "6770d17f122e99369e8f649297e7013a1e12be2c81161de62483eff41db68c7a",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                86,
+                32,
+                405,
+                692
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.936464
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-3/awards-cry.png",
+          "fourDistinctFrames": true,
+          "avatar": 3,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-4",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-4/awards-cry/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 300203,
+              "sha256": "fc7f09fb06ee396f21f3da248a881c0245d974b4eb8c8c51ea52640f0c616d2c",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                100,
+                14,
+                445,
+                691
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.936464
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-cry/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 298461,
+              "sha256": "3f7137d5de7c3fd49fc34b23bc7a63a09018167c1806167b5e41dbb6923ceaa7",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                99,
+                14,
+                445,
+                692
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.936464
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-cry/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 301999,
+              "sha256": "1618cc9564bf204f34cfd50ba8a1ee7d36a27785a01b15876f4fdf7e40ffb8a6",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                102,
+                14,
+                445,
+                691
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.936464
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-cry/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 294476,
+              "sha256": "3e974285a6c5f7c299ffb82f5994e54faba7570133cedc0cdd93d31b639ec48d",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                97,
+                18,
+                445,
+                691
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.936464
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-4/awards-cry.png",
+          "fourDistinctFrames": true,
+          "avatar": 4,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-5",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-5/awards-cry/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 317044,
+              "sha256": "753cc74a1d1dd4f7c4582bb517a15a81547d8f50422278f9df7bd284f32ee832",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                106,
+                10,
+                467,
+                689
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.951657
+              },
+              "animationReferenceHeight": 0.937845
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-cry/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 315357,
+              "sha256": "a05159e7ada36fef9e62978dff9421cdfbf9aebcfc381737ceee8cc9f854396e",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                106,
+                10,
+                467,
+                689
+              ],
+              "maxCanvasBorderAlpha": 2,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.951657
+              },
+              "animationReferenceHeight": 0.937845
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-cry/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 321488,
+              "sha256": "6130ed8490c1fb2521e09880f7c43d1757f276d9f4473030095a9362c18dc192",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                107,
+                10,
+                466,
+                689
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.951657
+              },
+              "animationReferenceHeight": 0.937845
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-cry/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 306887,
+              "sha256": "f1e7b4b5653446ff7ca22ba0ffac5f957a57391e01d1ab2309088c96cd24ebfc",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                105,
+                19,
+                463,
+                689
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.951657
+              },
+              "animationReferenceHeight": 0.937845
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-5/awards-cry.png",
+          "fourDistinctFrames": true,
+          "avatar": 5,
+          "gender": "male"
+        }
+      ],
+      "frameCount": 4
+    },
+    {
+      "id": "awards-speech",
+      "label": "수상소감",
+      "background": {
+        "url": "/art-v3/backgrounds/awards-speech.png",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "bytes": 2418552,
+        "sha256": "9179b1e75abd77874336b591e382da11a047d3113ca1f30f8de9ebf14eed5297"
+      },
+      "avatars": [
+        {
+          "actor": "avatar-0",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-0/awards-speech/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 395178,
+              "sha256": "79ca85bba463a0b72f6e7ea4cd650f38d3a91a30249a05c139ad2d5d4275dba8",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                42,
+                29,
+                460,
+                669
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.924033
+              },
+              "animationReferenceHeight": 0.883978
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-speech/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 385991,
+              "sha256": "c22e880d8856fa092424f658949b0e0825a365ce6c03be09d622344f98ea340a",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                42,
+                29,
+                461,
+                669
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.924033
+              },
+              "animationReferenceHeight": 0.883978
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-speech/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 408365,
+              "sha256": "2fceddaf82bcdcd8c0f6681d479474335f1b3687aa0025810839e1376ee6442d",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                42,
+                29,
+                460,
+                669
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.924033
+              },
+              "animationReferenceHeight": 0.883978
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-speech/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 363768,
+              "sha256": "3aa53da5f107d9c13c90fd828b6817771dc9ea7948ffdf84ebc1368631d8f364",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                42,
+                71,
+                452,
+                669
+              ],
+              "maxCanvasBorderAlpha": 2,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.924033
+              },
+              "animationReferenceHeight": 0.883978
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-0/awards-speech.png",
+          "fourDistinctFrames": true,
+          "avatar": 0,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-1",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-1/awards-speech/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 370207,
+              "sha256": "3308cc6fab89a297f42e725da7048613e1b6590bb8a6342b327b9e18da927c95",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                42,
+                35,
+                461,
+                658
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.90884
+              },
+              "animationReferenceHeight": 0.860497
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-speech/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 351312,
+              "sha256": "1aa429ee8472f6a94529787ab39b0b5633fac1c3b48c8f43bcc340d90a49cc9b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                43,
+                35,
+                461,
+                658
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.90884
+              },
+              "animationReferenceHeight": 0.860497
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-speech/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 370582,
+              "sha256": "8c7ec4345cf36ba8f29f4b7fd8cdb0552154e89bb2db8a15f57ead429b1a147b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                43,
+                35,
+                461,
+                658
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.90884
+              },
+              "animationReferenceHeight": 0.860497
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-speech/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 327623,
+              "sha256": "8379be3ec334a6829972e88f47020ef82e7b4e9c08786ef157c9ed0bf47b5cad",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                43,
+                78,
+                442,
+                658
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.90884
+              },
+              "animationReferenceHeight": 0.860497
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-1/awards-speech.png",
+          "fourDistinctFrames": true,
+          "avatar": 1,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-2",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-2/awards-speech/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 414587,
+              "sha256": "36e598c690dab5d560cbed19575fde2571496f12768294c550fc431d883ccc76",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                42,
+                40,
+                479,
+                649
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.896409
+              },
+              "animationReferenceHeight": 0.84116
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-speech/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 405329,
+              "sha256": "774da3163320a2c4efa7d28b40838976bac425625dd9035b93b57c9ea18645fe",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                42,
+                40,
+                479,
+                649
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.896409
+              },
+              "animationReferenceHeight": 0.84116
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-speech/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 409634,
+              "sha256": "8d9dbb7bc67d3b10049e625860bb650099c859ba94b5e07f457fdb002131f52e",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                42,
+                40,
+                478,
+                649
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.896409
+              },
+              "animationReferenceHeight": 0.84116
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-speech/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 366180,
+              "sha256": "419f97c1597cc482caf581f824f9df8f7897d54ec29e93ed2c3321fd8ef501b3",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                43,
+                98,
+                482,
+                649
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.896409
+              },
+              "animationReferenceHeight": 0.84116
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-2/awards-speech.png",
+          "fourDistinctFrames": true,
+          "avatar": 2,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-3",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-3/awards-speech/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 355680,
+              "sha256": "843cf31eb7c6babe686255b5b5c331ae752ec9c0252d6275a97aaf3f0ca00eb3",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                53,
+                17,
+                476,
+                688
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.950276
+              },
+              "animationReferenceHeight": 0.926796
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-speech/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 317995,
+              "sha256": "3e86ffef5218463bae89a6be55bab3d214f1c9375f4298105d82085696357a2d",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                54,
+                17,
+                464,
+                688
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.950276
+              },
+              "animationReferenceHeight": 0.926796
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-speech/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 344581,
+              "sha256": "ca91d48aad1b99e8ad9c50f60cfec4814ed4c1a08504451283a4ae69757fbcfa",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                54,
+                17,
+                473,
+                688
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.950276
+              },
+              "animationReferenceHeight": 0.926796
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-speech/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 290586,
+              "sha256": "62bee40ac9fcb24f227081b3e1c1e77658c5aab44c956b5381c9d21e310119cf",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                54,
+                99,
+                470,
+                688
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.950276
+              },
+              "animationReferenceHeight": 0.926796
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-3/awards-speech.png",
+          "fourDistinctFrames": true,
+          "avatar": 3,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-4",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-4/awards-speech/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 344706,
+              "sha256": "23bc37893de23044b1d99ae4d9baaae4a729fbb802768142403881a1a4557c1a",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                42,
+                15,
+                462,
+                659
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.910221
+              },
+              "animationReferenceHeight": 0.889503
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-speech/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 304316,
+              "sha256": "a71e803c01e78690994d07912a6a5bcfe65323631ee64dabc9659d41ecfb86a5",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                43,
+                15,
+                462,
+                659
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.910221
+              },
+              "animationReferenceHeight": 0.889503
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-speech/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 335135,
+              "sha256": "59962764b7298baf97a485a2731f7544ebe6942b0f1cb956f36714b3c9fa558f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                44,
+                15,
+                461,
+                659
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.910221
+              },
+              "animationReferenceHeight": 0.889503
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-speech/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 284072,
+              "sha256": "03dd5cb1c55b1bbfec0b2b70c808fca69ece2c89fc6ccd5a85596ba6dc6439a5",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                44,
+                79,
+                461,
+                659
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.910221
+              },
+              "animationReferenceHeight": 0.889503
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-4/awards-speech.png",
+          "fourDistinctFrames": true,
+          "avatar": 4,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-5",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-5/awards-speech/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 353498,
+              "sha256": "f9ee3ee6605b890236c34a2726615b38fa77bce115bc21fd579d8d89aef93294",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                50,
+                18,
+                469,
+                671
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.926796
+              },
+              "animationReferenceHeight": 0.901934
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-speech/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 317630,
+              "sha256": "26a93f77c6b09a83aa5f49565d75afdb0e34b183eab14e7783f1d7ff52c59cb6",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                51,
+                18,
+                469,
+                671
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.926796
+              },
+              "animationReferenceHeight": 0.901934
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-speech/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 341281,
+              "sha256": "d383106264a315cd81ddd8ae0ee4b7e06fca6c612a490f8d3b2b2337dc12668c",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                51,
+                18,
+                470,
+                671
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.926796
+              },
+              "animationReferenceHeight": 0.901934
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-speech/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 286992,
+              "sha256": "e2d1051139055768db84202e1f1020bde2b57dc64d19f66ed5a60ef24d017b9d",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                51,
+                98,
+                471,
+                671
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.926796
+              },
+              "animationReferenceHeight": 0.901934
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-5/awards-speech.png",
+          "fourDistinctFrames": true,
+          "avatar": 5,
+          "gender": "male"
+        }
+      ],
+      "frameCount": 4
+    },
+    {
+      "id": "awards-lose",
+      "label": "다음 기회를 기약",
+      "background": {
+        "url": "/art-v3/backgrounds/awards-lose.png",
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGB",
+        "bytes": 2501882,
+        "sha256": "6fffa41ad4dc9b32662be0305994754ef3ab35c40012a182bab67ab8ddc3418d"
+      },
+      "avatars": [
+        {
+          "actor": "avatar-0",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-0/awards-lose/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 520374,
+              "sha256": "03c193ecca7aa21c7243dc91ece9bb95e73d18d35014c3360272191fc0ef53e0",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                81,
+                23,
+                462,
+                692
+              ],
+              "maxCanvasBorderAlpha": 5,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.924033
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-lose/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 519362,
+              "sha256": "c84b819ebd79632b6f693950000e866e52f6355019cfec59fcb0879f590bbbf4",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                81,
+                23,
+                462,
+                692
+              ],
+              "maxCanvasBorderAlpha": 5,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.924033
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-lose/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 500282,
+              "sha256": "6035a8894c9ffe6268a382b501a82c90314a5f89aa0bde296ec273d6ba72bded",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                82,
+                44,
+                463,
+                692
+              ],
+              "maxCanvasBorderAlpha": 3,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.924033
+            },
+            {
+              "url": "/art-v4/characters/avatar-0/awards-lose/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 511275,
+              "sha256": "c223298b9a2331bce874bfebb88549ad8572027c698fb252ceb9a2f9f2b81ef2",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                81,
+                23,
+                462,
+                692
+              ],
+              "maxCanvasBorderAlpha": 3,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.924033
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-0/awards-lose.png",
+          "fourDistinctFrames": true,
+          "avatar": 0,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-1",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-1/awards-lose/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 434546,
+              "sha256": "a68290bda92d000fca1f9320952a0ef6681ad5124c682fba161dbd6b5a7dee4c",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                88,
+                32,
+                456,
+                691
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.910221
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-lose/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 432793,
+              "sha256": "ae92aa29d6157ddb354ea1aded2fb8a0fd6a5f163629710ff41b06d84e1aac77",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                88,
+                32,
+                455,
+                691
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.910221
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-lose/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 434880,
+              "sha256": "c447b55e07e38297324985ab2345f718699b37613126e55148bda228e7c309e7",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                83,
+                40,
+                456,
+                691
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.910221
+            },
+            {
+              "url": "/art-v4/characters/avatar-1/awards-lose/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 431350,
+              "sha256": "df55be14eb0c94f02d023ebb39845b363d0b4b22b2229c0548a856e0a303188b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                89,
+                32,
+                456,
+                691
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.95442
+              },
+              "animationReferenceHeight": 0.910221
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-1/awards-lose.png",
+          "fourDistinctFrames": true,
+          "avatar": 1,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-2",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-2/awards-lose/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 497501,
+              "sha256": "d7191bfbd938c7eda868ab0bd80fb8cc830050a882f2d2a7c30e0125f3c81939",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                48,
+                43,
+                495,
+                675
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.872928
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-lose/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 500114,
+              "sha256": "622601e3f0d287bdb1a116b78af50d98cbcd8d4ea2ab878a493875ab772be47f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                48,
+                43,
+                496,
+                675
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.872928
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-lose/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 494623,
+              "sha256": "80595f6e8c4e3b2633fdc4291378ac9bf0b68973f321a788006f9330a607fd0a",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                48,
+                51,
+                496,
+                675
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.872928
+            },
+            {
+              "url": "/art-v4/characters/avatar-2/awards-lose/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 498096,
+              "sha256": "48e2d059314a4bfdf1991ab700dbebe4417f2b2abaf522c77613a3124e3ca934",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                48,
+                43,
+                495,
+                675
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.93232
+              },
+              "animationReferenceHeight": 0.872928
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-2/awards-lose.png",
+          "fourDistinctFrames": true,
+          "avatar": 2,
+          "gender": "female"
+        },
+        {
+          "actor": "avatar-3",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-3/awards-lose/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 394564,
+              "sha256": "4f008a6c5fb31747a38e9aef563247a18cc1cefb46fd7f664105e3556dcd7384",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                103,
+                34,
+                442,
+                704
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.972376
+              },
+              "animationReferenceHeight": 0.925414
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-lose/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 408443,
+              "sha256": "3cb902e3118e1d1e974cb8006f104060c62cf80d538047714a45c52427237893",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                103,
+                34,
+                441,
+                704
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.972376
+              },
+              "animationReferenceHeight": 0.925414
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-lose/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 398470,
+              "sha256": "3d384b8a9034bc5b6a69dbf9bbf6f4059c709859ff6cb0bef24f2bb24b6b9bf5",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                104,
+                48,
+                458,
+                704
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.972376
+              },
+              "animationReferenceHeight": 0.925414
+            },
+            {
+              "url": "/art-v4/characters/avatar-3/awards-lose/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 393229,
+              "sha256": "5fcfe6a1ed6f245793f02dac4f6fda04b3ba9e091c74261c7cb81cecc2e1858b",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                104,
+                34,
+                442,
+                704
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.972376
+              },
+              "animationReferenceHeight": 0.925414
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-3/awards-lose.png",
+          "fourDistinctFrames": true,
+          "avatar": 3,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-4",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-4/awards-lose/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 444116,
+              "sha256": "c5f9ac5548c358e1d170a3a3800065bce6b82d8905acaf1a8e549e7ccd0dd02c",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                89,
+                17,
+                452,
+                697
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.964088
+              },
+              "animationReferenceHeight": 0.940608
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-lose/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 460381,
+              "sha256": "2ffe5811e3673a731b7144a5012c0f1d3bb7cf01a679bc900d0efeb6dab0e5e2",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                90,
+                17,
+                452,
+                698
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.964088
+              },
+              "animationReferenceHeight": 0.940608
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-lose/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 444156,
+              "sha256": "505a1196f326c9170fd8e339e97ff354a618b2540a497af1436ea556bef7c027",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                81,
+                21,
+                469,
+                697
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.964088
+              },
+              "animationReferenceHeight": 0.940608
+            },
+            {
+              "url": "/art-v4/characters/avatar-4/awards-lose/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 441893,
+              "sha256": "9de7a7acf55dcf812b6c2fd8260ba6031f378b83d4644d20be1649f14f3916e7",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                90,
+                17,
+                453,
+                697
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.964088
+              },
+              "animationReferenceHeight": 0.940608
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-4/awards-lose.png",
+          "fourDistinctFrames": true,
+          "avatar": 4,
+          "gender": "male"
+        },
+        {
+          "actor": "avatar-5",
+          "frames": [
+            {
+              "url": "/art-v4/characters/avatar-5/awards-lose/01.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 425612,
+              "sha256": "fba2bc96026c4d600e5d67eeaee3fd7267e34dfef70978a07b3ac7c87ddb5698",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                83,
+                25,
+                459,
+                692
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "01",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.921271
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-lose/02.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 426583,
+              "sha256": "57dc7fed370c551f70aeb371c7c666fc4ab0da55b8eecf1a3c434046dce02f57",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                84,
+                25,
+                459,
+                692
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "02",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.921271
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-lose/03.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 419376,
+              "sha256": "61635f7cbf29abc8be0d92c28625f3e211b04c42a8488f68250554ba0ab89c12",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                84,
+                34,
+                459,
+                692
+              ],
+              "maxCanvasBorderAlpha": 1,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "03",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.921271
+            },
+            {
+              "url": "/art-v4/characters/avatar-5/awards-lose/04.png",
+              "width": 543,
+              "height": 724,
+              "mode": "RGBA",
+              "bytes": 425613,
+              "sha256": "8aff300df26d341aa2329ebd10060623e0062872df898d21461efd18aa1aa95f",
+              "alphaRange": [
+                0,
+                255
+              ],
+              "visibleBoundsAlphaAbove128": [
+                84,
+                25,
+                460,
+                692
+              ],
+              "maxCanvasBorderAlpha": 0,
+              "visibleContentTouchesCanvasEdge": false,
+              "status": "ready",
+              "frame": "04",
+              "footAnchor": {
+                "x": 0.5,
+                "y": 0.955801
+              },
+              "animationReferenceHeight": 0.921271
+            }
+          ],
+          "sheet": "/art-v4/awards-sheets/avatar-5/awards-lose.png",
+          "fourDistinctFrames": true,
+          "avatar": 5,
+          "gender": "male"
+        }
+      ],
+      "frameCount": 4
+    }
+  ],
+  "runtimeNote": "Current ArtFrames loads/animates exactly two frames; AWARDS-CATALOG.json is registration-ready data, not merged into the live catalog. Update the player to support four sequential frames before registering. Existing 6 avatars only; newly designed avatars have separate base art in art-v5."
+}

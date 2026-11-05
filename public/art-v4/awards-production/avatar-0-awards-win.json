@@ -1,0 +1,126 @@
+{
+  "key": "avatar-0-awards-win",
+  "avatar": 0,
+  "kind": "strip",
+  "scene": "awards-win",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-0/awards-win.png"
+  ],
+  "dest": "public/art-v4/awards-sheets/avatar-0/awards-win.png",
+  "prompt": "Use case: background-extraction. The supplied image is a four-frame character animation strip. Remove ONLY the white/light background and ground shadows; make all background areas ACTUAL completely transparent alpha=0. Preserve ALL FOUR characters, chairs if present, props, dark clothing, fine hair, expressions, poses, crisp pixels and exact strip layout. Do not redesign or redraw faces or objects. Do not add a checkerboard, white, gray, colored or semi-transparent matte. Actual RGBA PNG cutout, four equal-width cells intact, entire strip with generous original padding. All solid character interiors must be fully opaque alpha=255. No light halo. No text.",
+  "repair": true,
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-bcaef82b-c2f3-4e6e-a2eb-9dc4de07e329.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/avatar-0/awards-win/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 411580,
+      "sha256": "de69e0277154ff911f089cdc68c9a0ad6172e23c4083a7f3c414d8a7e875d41f",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        71,
+        83,
+        463,
+        663
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.915746
+      },
+      "animationReferenceHeight": 0.889503
+    },
+    {
+      "url": "/art-v4/characters/avatar-0/awards-win/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 396947,
+      "sha256": "c7882ec4411df70e99a2c2aa0e879a1ea9f9641ba8d6355f66024e31b6b50846",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        80,
+        89,
+        463,
+        663
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.915746
+      },
+      "animationReferenceHeight": 0.889503
+    },
+    {
+      "url": "/art-v4/characters/avatar-0/awards-win/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 443843,
+      "sha256": "89d65e7b549d4e4be1a18d0c32f11a65a3b7e21bbb501eef2cc37ee6100d1239",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        66,
+        56,
+        479,
+        663
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.915746
+      },
+      "animationReferenceHeight": 0.889503
+    },
+    {
+      "url": "/art-v4/characters/avatar-0/awards-win/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 449367,
+      "sha256": "03c9f43db5c32dafa3d90ddaf3cd5b03028bf1f27dbdf7871e344168e3712526",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        62,
+        15,
+        480,
+        659
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.915746
+      },
+      "animationReferenceHeight": 0.889503
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-0/awards-win.png"
+}

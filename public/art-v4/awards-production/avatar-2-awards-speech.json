@@ -1,0 +1,126 @@
+{
+  "key": "avatar-2-awards-speech",
+  "avatar": 2,
+  "kind": "strip",
+  "scene": "awards-speech",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-2/awards-speech.png"
+  ],
+  "dest": "public/art-v4/awards-sheets/avatar-2/awards-speech.png",
+  "prompt": "Use case: background-extraction. The supplied image is a four-frame character animation strip. Remove ONLY the white/light background and ground shadows; make all background areas ACTUAL completely transparent alpha=0. Preserve ALL FOUR characters, chairs if present, props, dark clothing, fine hair, expressions, poses, crisp pixels and exact strip layout. Do not redesign or redraw faces or objects. Do not add a checkerboard, white, gray, colored or semi-transparent matte. Actual RGBA PNG cutout, four equal-width cells intact, entire strip with generous original padding. All solid character interiors must be fully opaque alpha=255. No light halo. No text.\nEliminate ALL faint white/gray background speckles and any cast shadows too; leave clean alpha0 outside the four complete sprites. Keep transparent gutters completely empty, not translucent.",
+  "repair": true,
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-9498ab41-cf16-435f-aa8c-1192d39c4031.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/avatar-2/awards-speech/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 414587,
+      "sha256": "36e598c690dab5d560cbed19575fde2571496f12768294c550fc431d883ccc76",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        42,
+        40,
+        479,
+        649
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.896409
+      },
+      "animationReferenceHeight": 0.84116
+    },
+    {
+      "url": "/art-v4/characters/avatar-2/awards-speech/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 405329,
+      "sha256": "774da3163320a2c4efa7d28b40838976bac425625dd9035b93b57c9ea18645fe",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        42,
+        40,
+        479,
+        649
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.896409
+      },
+      "animationReferenceHeight": 0.84116
+    },
+    {
+      "url": "/art-v4/characters/avatar-2/awards-speech/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 409634,
+      "sha256": "8d9dbb7bc67d3b10049e625860bb650099c859ba94b5e07f457fdb002131f52e",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        42,
+        40,
+        478,
+        649
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.896409
+      },
+      "animationReferenceHeight": 0.84116
+    },
+    {
+      "url": "/art-v4/characters/avatar-2/awards-speech/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 366180,
+      "sha256": "419f97c1597cc482caf581f824f9df8f7897d54ec29e93ed2c3321fd8ef501b3",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        43,
+        98,
+        482,
+        649
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.896409
+      },
+      "animationReferenceHeight": 0.84116
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-2/awards-speech.png"
+}

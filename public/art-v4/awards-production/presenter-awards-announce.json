@@ -1,0 +1,125 @@
+{
+  "key": "presenter-awards-announce",
+  "scene": "awards-announce",
+  "kind": "strip",
+  "presenter": true,
+  "dest": "public/art-v4/awards-sheets/presenter/awards-announce.png",
+  "prompt": "Use case: illustration-story. Cute polished crisp pixel-art, 16-bit JRPG cutscene style, elegant soft lilac mint peach cream palette with warm gold accents, confident clean pixel clusters and restrained dithering, subtle material shading, no blurry edges, no photorealism, no text, no logo, no watermark.\nCharacter sheet: ONE horizontal 1x4 transparent strip with EXACTLY FOUR sequential animation frames in four EQUAL-WIDTH cells. A distinct elegant ADULT male ceremony presenter, mature friendly face, tidy swept-back dark brown hair, black formal suit with discreet gold details, black tie and dress shoes. Same chibi pixel style as idol references but unmistakably separate host, no idol hair ornaments. (1) holding a sealed gold envelope, (2) opening envelope, (3) reading extracted card, (4) pointing toward audience with a big smile. Exactly same host/outfit/scale across all frames, full body and shoes visible, common baseline, wide4:1 canvas, generous fully transparent gutters between cells, no figure touches a cell boundary. Envelope and card are blank. True transparent background, no podium, floor, ground shadow, scenery, text, logos or other characters.\nReference is chibi rendering/proportions ONLY. The host has swept-back dark brown hair, NO star hairclip, distinct mature facial design; do not copy idol identity.",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/characters/avatar-3/awards/01.png"
+  ],
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-81d70ca7-7d69-4f17-b9a6-37c74f601865.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/presenter/awards-announce/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 268206,
+      "sha256": "49d54e8178604fa42461f2d7935cf9dd43322e8bce70f647d6575773219669a3",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        146,
+        40,
+        440,
+        687
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.948895
+      },
+      "animationReferenceHeight": 0.893646
+    },
+    {
+      "url": "/art-v4/characters/presenter/awards-announce/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 273751,
+      "sha256": "a9ee96e71d3978cfe5fe8e4a596b995367cb7584a0459f7214104812e28cd954",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        145,
+        41,
+        439,
+        687
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.948895
+      },
+      "animationReferenceHeight": 0.893646
+    },
+    {
+      "url": "/art-v4/characters/presenter/awards-announce/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 261232,
+      "sha256": "eec65239ff3354db4256d26e3af14bafa5f9268fb9ff03f3c89e290c6184a86e",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        135,
+        41,
+        429,
+        687
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.948895
+      },
+      "animationReferenceHeight": 0.893646
+    },
+    {
+      "url": "/art-v4/characters/presenter/awards-announce/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 277381,
+      "sha256": "6f95b643ec067baca055dd4bd401597bde6a8938c9050cfa7a8bde7a3197e54f",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        115,
+        41,
+        464,
+        687
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.948895
+      },
+      "animationReferenceHeight": 0.893646
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/presenter/awards-announce.png"
+}

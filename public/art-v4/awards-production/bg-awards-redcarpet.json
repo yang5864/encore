@@ -1,0 +1,19 @@
+{
+  "key": "bg-awards-redcarpet",
+  "scene": "awards-redcarpet",
+  "kind": "background",
+  "dest": "public/art-v3/backgrounds/awards-redcarpet.png",
+  "prompt": "Use case: illustration-story. Cute polished crisp pixel-art, 16-bit JRPG cutscene style, elegant soft lilac mint peach cream palette with warm gold accents, confident clean pixel clusters and restrained dithering, subtle material shading, no blurry edges, no photorealism, no text, no logo, no watermark.\nIndependent wide 4:3 background plate for a Korean year-end music awards ceremony, absolutely no people, no faces, no silhouettes, no lettering. Consistent elegant arena venue. Red carpet entrance at night, photo wall with abstract gold sponsor pattern (NO letters), camera flashes as small white star bursts, velvet ropes. Camera at chibi eye level, clear uncluttered lower-center foreground for a separately overlaid character. No UI. Opaque background.\nInput image is venue architecture/palette reference ONLY: keep the same arena, lilac-mint arch geometry and warm gold accents, but compose this requested different camera/location.",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v3/backgrounds/awards-seat.png"
+  ],
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-3b71168c-76c1-4b72-b8e9-0beb0c2444e5.png",
+  "tool": "built-in image_gen",
+  "background": {
+    "url": "/art-v3/backgrounds/awards-redcarpet.png",
+    "width": 1448,
+    "height": 1086,
+    "bytes": 2572508,
+    "sha256": "8a5de906625f175e569720aec24a44015d2361a7abe9eb7ccca5810803a53aa1"
+  }
+}

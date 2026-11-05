@@ -1,0 +1,125 @@
+{
+  "key": "avatar-1-awards-win",
+  "avatar": 1,
+  "kind": "strip",
+  "scene": "awards-win",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/characters/avatar-1/awards-redcarpet/01.png"
+  ],
+  "dest": "public/art-v4/awards-sheets/avatar-1/awards-win.png",
+  "prompt": "Use case: illustration-story. Cute polished crisp pixel-art, 16-bit JRPG cutscene style, elegant soft lilac mint peach cream palette with warm gold accents, confident clean pixel clusters and restrained dithering, subtle material shading, no blurry edges, no photorealism, no text, no logo, no watermark.\nReference is the EXACT character and outfit to preserve. Same face identity, eyes, hairstyle/color, signature hair ornament, BLACK formal dress with GOLD details, jewelry and shoes. Do NOT redesign or recolor outfit between frames.\nONE horizontal 1x4 character sheet, EXACTLY FOUR sequential animation frames in four EQUAL-WIDTH cells, same scale and camera, full body chibi. Wide4:1 canvas preferred. Every head, garment, hands, shoes and prop is completely inside its own quarter with generous TRANSPARENT gutters. Common fixed ground baseline for all poses, no drawn panel dividers or numbers. Frames: (1) sitting on chair, mouth covered with both hands in shock, (2) half standing up from same chair, (3) fully standing with both arms raised, (4) jumping slightly with celebratory tiny sparkles around. SAME chair stays fixed in each cell, face expresses genuine delighted surprise.\nActual transparent alpha background, characters and explicitly requested personal props only. No ground, background, scenery, lettering, watermark, extra person or extra frames. Keep all frames spatially separate. ",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-b2ed8cd0-241d-4a7c-9bee-1911f695fe02.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/avatar-1/awards-win/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 367934,
+      "sha256": "7887d37c82f6c791e45c4e846c1ab72faf81f1bf9cdf98b70be409a68a5f9138",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        93,
+        134,
+        449,
+        680
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.946133
+      },
+      "animationReferenceHeight": 0.89779
+    },
+    {
+      "url": "/art-v4/characters/avatar-1/awards-win/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 369944,
+      "sha256": "830b32203144d8e7f7a18c29b97feb42030838e69b071202f7f954cb6c9a7c45",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        97,
+        133,
+        456,
+        682
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.946133
+      },
+      "animationReferenceHeight": 0.89779
+    },
+    {
+      "url": "/art-v4/characters/avatar-1/awards-win/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 408975,
+      "sha256": "a5e6de182e6b519542a168c36be144c7db33abea8040872cc202a6260b32cda4",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        72,
+        79,
+        458,
+        685
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.946133
+      },
+      "animationReferenceHeight": 0.89779
+    },
+    {
+      "url": "/art-v4/characters/avatar-1/awards-win/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 426608,
+      "sha256": "dbd495be92ec90c3cff7fc6a2915f11b5ad46783f6d9585f3086342554ad3613",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        70,
+        21,
+        481,
+        671
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.946133
+      },
+      "animationReferenceHeight": 0.89779
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-1/awards-win.png"
+}

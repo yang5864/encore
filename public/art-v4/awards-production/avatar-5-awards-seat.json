@@ -1,0 +1,126 @@
+{
+  "key": "avatar-5-awards-seat",
+  "avatar": 5,
+  "kind": "strip",
+  "scene": "awards-seat",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-5/awards-seat.png"
+  ],
+  "dest": "public/art-v4/awards-sheets/avatar-5/awards-seat.png",
+  "prompt": "Use case: background-extraction. The supplied image is a four-frame character animation strip. Remove ONLY the white/light background and ground shadows; make all background areas ACTUAL completely transparent alpha=0. Preserve ALL FOUR characters, chairs if present, props, dark clothing, fine hair, expressions, poses, crisp pixels and exact strip layout. Do not redesign or redraw faces or objects. Do not add a checkerboard, white, gray, colored or semi-transparent matte. Actual RGBA PNG cutout, four equal-width cells intact, entire strip with generous original padding. All solid character interiors must be fully opaque alpha=255. No light halo. No text.\nEliminate ALL faint white/gray background speckles and any cast shadows too; leave clean alpha0 outside the four complete sprites. Keep transparent gutters completely empty, not translucent.",
+  "repair": true,
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-3054c4a7-2736-4428-bfd6-78998fb84643.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/avatar-5/awards-seat/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 423480,
+      "sha256": "b29bfafbe4f98c1fa914c4736c2001b2d816e936718ffd6afef6d850adf052e9",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        93,
+        8,
+        449,
+        696
+      ],
+      "maxCanvasBorderAlpha": 3,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.961326
+      },
+      "animationReferenceHeight": 0.950276
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-seat/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 423794,
+      "sha256": "df34c29a5995b790d57c87ecc0e946a5e67ba56d139b36b50ddcb15b179f681d",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        93,
+        8,
+        449,
+        696
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.961326
+      },
+      "animationReferenceHeight": 0.950276
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-seat/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 419283,
+      "sha256": "0b9f4e169ff756154c06a437c9f058af7516eb03fdb48875ef809fa9ccdb6267",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        86,
+        10,
+        437,
+        696
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.961326
+      },
+      "animationReferenceHeight": 0.950276
+    },
+    {
+      "url": "/art-v4/characters/avatar-5/awards-seat/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 424755,
+      "sha256": "d15ff9af70278c4b2ad9caf5ad777ea9607551c7364da58bebcbecfa9dc7c887",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        94,
+        8,
+        449,
+        696
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.961326
+      },
+      "animationReferenceHeight": 0.950276
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-5/awards-seat.png"
+}

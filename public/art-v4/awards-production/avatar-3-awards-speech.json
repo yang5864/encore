@@ -1,0 +1,125 @@
+{
+  "key": "avatar-3-awards-speech",
+  "avatar": 3,
+  "kind": "strip",
+  "scene": "awards-speech",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/characters/avatar-3/awards-redcarpet/01.png"
+  ],
+  "dest": "public/art-v4/awards-sheets/avatar-3/awards-speech.png",
+  "prompt": "Use case: illustration-story. Cute polished crisp pixel-art, 16-bit JRPG cutscene style, elegant soft lilac mint peach cream palette with warm gold accents, confident clean pixel clusters and restrained dithering, subtle material shading, no blurry edges, no photorealism, no text, no logo, no watermark.\nReference is the EXACT character and outfit to preserve. Same face identity, eyes, hairstyle/color, signature hair ornament, BLACK formal tailored suit with GOLD details, jewelry and shoes. Do NOT redesign or recolor outfit between frames.\nONE horizontal 1x4 character sheet, EXACTLY FOUR sequential animation frames in four EQUAL-WIDTH cells, same scale and camera, full body chibi. Wide4:1 canvas preferred. Every head, garment, hands, shoes and prop is completely inside its own quarter with generous TRANSPARENT gutters. Common fixed ground baseline for all poses, no drawn panel dividers or numbers. Frames: (1) holding a faceted crystal trophy beside a microphone stand, (2) trophy hugged to chest, (3) speaking with one hand open and other holding trophy, (4) deep 90-degree bow holding trophy securely. SAME slim microphone stand stays fixed beside character in all four frames. Entire bow, trophy and stand remain inside their own cell.\nActual transparent alpha background, characters and explicitly requested personal props only. No ground, background, scenery, lettering, watermark, extra person or extra frames. Keep all frames spatially separate. ",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-d03cdd41-d2d4-4e39-bbcf-129786cde571.png",
+  "tool": "built-in image_gen",
+  "frames": [
+    {
+      "url": "/art-v4/characters/avatar-3/awards-speech/01.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 355680,
+      "sha256": "843cf31eb7c6babe686255b5b5c331ae752ec9c0252d6275a97aaf3f0ca00eb3",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        53,
+        17,
+        476,
+        688
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "01",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.950276
+      },
+      "animationReferenceHeight": 0.926796
+    },
+    {
+      "url": "/art-v4/characters/avatar-3/awards-speech/02.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 317995,
+      "sha256": "3e86ffef5218463bae89a6be55bab3d214f1c9375f4298105d82085696357a2d",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        54,
+        17,
+        464,
+        688
+      ],
+      "maxCanvasBorderAlpha": 1,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "02",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.950276
+      },
+      "animationReferenceHeight": 0.926796
+    },
+    {
+      "url": "/art-v4/characters/avatar-3/awards-speech/03.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 344581,
+      "sha256": "ca91d48aad1b99e8ad9c50f60cfec4814ed4c1a08504451283a4ae69757fbcfa",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        54,
+        17,
+        473,
+        688
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "03",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.950276
+      },
+      "animationReferenceHeight": 0.926796
+    },
+    {
+      "url": "/art-v4/characters/avatar-3/awards-speech/04.png",
+      "width": 543,
+      "height": 724,
+      "mode": "RGBA",
+      "bytes": 290586,
+      "sha256": "62bee40ac9fcb24f227081b3e1c1e77658c5aab44c956b5381c9d21e310119cf",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "visibleBoundsAlphaAbove128": [
+        54,
+        99,
+        470,
+        688
+      ],
+      "maxCanvasBorderAlpha": 0,
+      "visibleContentTouchesCanvasEdge": false,
+      "status": "ready",
+      "frame": "04",
+      "footAnchor": {
+        "x": 0.5,
+        "y": 0.950276
+      },
+      "animationReferenceHeight": 0.926796
+    }
+  ],
+  "validation": "pass",
+  "finalSheet": "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/awards-sheets/avatar-3/awards-speech.png"
+}
