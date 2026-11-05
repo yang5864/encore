@@ -9,7 +9,7 @@ export function createCareer(input: CreateInput, seed: number = newSeed(), id: s
   const name = input.name.trim();
   if (!NAME_PATTERN.test(name)) throw new GameError("이름은 1~12자의 글자와 숫자만 쓸 수 있어요.");
   if (!["female", "male"].includes(input.gender)) throw new GameError("성별을 선택해주세요.");
-  if (!Number.isInteger(input.avatar) || input.avatar < 0 || input.avatar > 5) throw new GameError("캐릭터를 선택해주세요.");
+  if (!Number.isInteger(input.avatar) || input.avatar < 0 || input.avatar > 17) throw new GameError("캐릭터를 선택해주세요.");
   const allocationError = validateAllocation(input.stats);
   if (allocationError) throw new GameError(allocationError);
 

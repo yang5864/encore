@@ -4,10 +4,16 @@ export type ArtFrame = { url: string; height: number; x: number; y: number };
 type SceneArt = { background: string; avatars: Record<string, ArtFrame[]> };
 const scenes: Record<string, SceneArt> = catalog.scenes;
 
+/** 여성 0–2·6–11, 남성 3–5·12–17 */
+export const FEMALE_AVATARS = [0, 1, 2, 6, 7, 8, 9, 10, 11];
+export const MALE_AVATARS = [3, 4, 5, 12, 13, 14, 15, 16, 17];
+export const AVATAR_COUNT = 18;
+export const isFemaleAvatar = (i: number) => FEMALE_AVATARS.includes(i);
+
 export function avatarIndex(index: number, gender?: "female" | "male"): number {
-  const valid = Number.isInteger(index) && index >= 0 && index < 6 ? index : 0;
-  if (gender === "female" && valid >= 3) return 0;
-  if (gender === "male" && valid < 3) return 3;
+  const valid = Number.isInteger(index) && index >= 0 && index < catalog.avatars.length ? index : 0;
+  if (gender === "female" && !isFemaleAvatar(valid)) return 0;
+  if (gender === "male" && isFemaleAvatar(valid)) return 3;
   return valid;
 }
 
@@ -18,8 +24,8 @@ export function idleFrames(index: number): ArtFrame[] {
 export function eventArt(scene: string, index: number, gender?: "female" | "male") {
   const avatar = avatarIndex(index, gender);
   let key = Object.hasOwn(scenes, scene) ? scene : "rest";
-  if (key === "military" && avatar < 3) key = "rest";
-  if (key === "military-concert" && avatar >= 3) key = "festival";
+  if (key === "military" && isFemaleAvatar(avatar)) key = "rest";
+  if (key === "military-concert" && !isFemaleAvatar(avatar)) key = "festival";
   const art = scenes[key];
   const action = ["dance", "challenge"].includes(key) ? "dance"
     : ["album", "vocal", "survival", "tour", "coachella", "festival", "military-concert"].includes(key) ? "sing" : "idle";

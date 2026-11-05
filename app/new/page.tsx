@@ -3,6 +3,7 @@ import { BackButton } from "@/components/ui/BackButton";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/Avatar";
+import { FEMALE_AVATARS, MALE_AVATARS } from "@/lib/art";
 import { Button, FixedCta } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
 import { Logo } from "@/components/Logo";
@@ -95,7 +96,7 @@ export default function NewPage() {
           </div>
           <p className="t-cap mt-6 mb-2">캐릭터</p>
           <div className="grid grid-cols-3 gap-2">
-            {(gender === "female" ? [0, 1, 2] : [3, 4, 5]).map((i) => (
+            {(gender === "female" ? FEMALE_AVATARS : MALE_AVATARS).map((i) => (
               <button key={i} onClick={() => setAvatar(i)} className={cn("press rounded-2xl border-2 bg-card flex items-end justify-center pt-3 overflow-hidden h-[112px]", avatar === i ? "border-primary" : "border-transparent")}>
                 <Avatar index={i} size={72} />
               </button>

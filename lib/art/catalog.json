@@ -263,6 +263,534 @@
           "y": 0.944179
         }
       ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-6/idle-open.png",
+          "height": 0.856459,
+          "x": 0.5,
+          "y": 0.95614
+        },
+        {
+          "url": "/art-v5/characters/avatar-6/idle-closed.png",
+          "height": 0.856459,
+          "x": 0.5,
+          "y": 0.956938
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-6/idle-open.png",
+          "height": 0.856459,
+          "x": 0.5,
+          "y": 0.95614
+        },
+        {
+          "url": "/art-v5/characters/avatar-6/idle-closed.png",
+          "height": 0.856459,
+          "x": 0.5,
+          "y": 0.956938
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-6/idle-open.png",
+          "height": 0.856459,
+          "x": 0.5,
+          "y": 0.95614
+        },
+        {
+          "url": "/art-v5/characters/avatar-6/idle-closed.png",
+          "height": 0.856459,
+          "x": 0.5,
+          "y": 0.956938
+        }
+      ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-7/idle-open.png",
+          "height": 0.886762,
+          "x": 0.5,
+          "y": 0.95614
+        },
+        {
+          "url": "/art-v5/characters/avatar-7/idle-closed.png",
+          "height": 0.888357,
+          "x": 0.5,
+          "y": 0.957735
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-7/idle-open.png",
+          "height": 0.886762,
+          "x": 0.5,
+          "y": 0.95614
+        },
+        {
+          "url": "/art-v5/characters/avatar-7/idle-closed.png",
+          "height": 0.888357,
+          "x": 0.5,
+          "y": 0.957735
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-7/idle-open.png",
+          "height": 0.886762,
+          "x": 0.5,
+          "y": 0.95614
+        },
+        {
+          "url": "/art-v5/characters/avatar-7/idle-closed.png",
+          "height": 0.888357,
+          "x": 0.5,
+          "y": 0.957735
+        }
+      ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-8/idle-open.png",
+          "height": 0.945774,
+          "x": 0.5,
+          "y": 0.969697
+        },
+        {
+          "url": "/art-v5/characters/avatar-8/idle-closed.png",
+          "height": 0.948963,
+          "x": 0.5,
+          "y": 0.970494
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-8/idle-open.png",
+          "height": 0.945774,
+          "x": 0.5,
+          "y": 0.969697
+        },
+        {
+          "url": "/art-v5/characters/avatar-8/idle-closed.png",
+          "height": 0.948963,
+          "x": 0.5,
+          "y": 0.970494
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-8/idle-open.png",
+          "height": 0.945774,
+          "x": 0.5,
+          "y": 0.969697
+        },
+        {
+          "url": "/art-v5/characters/avatar-8/idle-closed.png",
+          "height": 0.948963,
+          "x": 0.5,
+          "y": 0.970494
+        }
+      ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-9/idle-open.png",
+          "height": 0.901116,
+          "x": 0.5,
+          "y": 0.971292
+        },
+        {
+          "url": "/art-v5/characters/avatar-9/idle-closed.png",
+          "height": 0.901116,
+          "x": 0.5,
+          "y": 0.971292
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-9/idle-open.png",
+          "height": 0.901116,
+          "x": 0.5,
+          "y": 0.971292
+        },
+        {
+          "url": "/art-v5/characters/avatar-9/idle-closed.png",
+          "height": 0.901116,
+          "x": 0.5,
+          "y": 0.971292
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-9/idle-open.png",
+          "height": 0.901116,
+          "x": 0.5,
+          "y": 0.971292
+        },
+        {
+          "url": "/art-v5/characters/avatar-9/idle-closed.png",
+          "height": 0.901116,
+          "x": 0.5,
+          "y": 0.971292
+        }
+      ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-10/idle-open.png",
+          "height": 0.88437,
+          "x": 0.5,
+          "y": 0.954545
+        },
+        {
+          "url": "/art-v5/characters/avatar-10/idle-closed.png",
+          "height": 0.883573,
+          "x": 0.5,
+          "y": 0.953748
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-10/idle-open.png",
+          "height": 0.88437,
+          "x": 0.5,
+          "y": 0.954545
+        },
+        {
+          "url": "/art-v5/characters/avatar-10/idle-closed.png",
+          "height": 0.883573,
+          "x": 0.5,
+          "y": 0.953748
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-10/idle-open.png",
+          "height": 0.88437,
+          "x": 0.5,
+          "y": 0.954545
+        },
+        {
+          "url": "/art-v5/characters/avatar-10/idle-closed.png",
+          "height": 0.883573,
+          "x": 0.5,
+          "y": 0.953748
+        }
+      ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-11/idle-open.png",
+          "height": 0.85008,
+          "x": 0.5,
+          "y": 0.946571
+        },
+        {
+          "url": "/art-v5/characters/avatar-11/idle-closed.png",
+          "height": 0.85008,
+          "x": 0.5,
+          "y": 0.946571
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-11/idle-open.png",
+          "height": 0.85008,
+          "x": 0.5,
+          "y": 0.946571
+        },
+        {
+          "url": "/art-v5/characters/avatar-11/idle-closed.png",
+          "height": 0.85008,
+          "x": 0.5,
+          "y": 0.946571
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-11/idle-open.png",
+          "height": 0.85008,
+          "x": 0.5,
+          "y": 0.946571
+        },
+        {
+          "url": "/art-v5/characters/avatar-11/idle-closed.png",
+          "height": 0.85008,
+          "x": 0.5,
+          "y": 0.946571
+        }
+      ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-12/idle-open.png",
+          "height": 0.862839,
+          "x": 0.5,
+          "y": 0.948963
+        },
+        {
+          "url": "/art-v5/characters/avatar-12/idle-closed.png",
+          "height": 0.863636,
+          "x": 0.5,
+          "y": 0.948963
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-12/idle-open.png",
+          "height": 0.862839,
+          "x": 0.5,
+          "y": 0.948963
+        },
+        {
+          "url": "/art-v5/characters/avatar-12/idle-closed.png",
+          "height": 0.863636,
+          "x": 0.5,
+          "y": 0.948963
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-12/idle-open.png",
+          "height": 0.862839,
+          "x": 0.5,
+          "y": 0.948963
+        },
+        {
+          "url": "/art-v5/characters/avatar-12/idle-closed.png",
+          "height": 0.863636,
+          "x": 0.5,
+          "y": 0.948963
+        }
+      ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-13/idle-open.png",
+          "height": 0.857257,
+          "x": 0.5,
+          "y": 0.937799
+        },
+        {
+          "url": "/art-v5/characters/avatar-13/idle-closed.png",
+          "height": 0.857257,
+          "x": 0.5,
+          "y": 0.937799
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-13/idle-open.png",
+          "height": 0.857257,
+          "x": 0.5,
+          "y": 0.937799
+        },
+        {
+          "url": "/art-v5/characters/avatar-13/idle-closed.png",
+          "height": 0.857257,
+          "x": 0.5,
+          "y": 0.937799
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-13/idle-open.png",
+          "height": 0.857257,
+          "x": 0.5,
+          "y": 0.937799
+        },
+        {
+          "url": "/art-v5/characters/avatar-13/idle-closed.png",
+          "height": 0.857257,
+          "x": 0.5,
+          "y": 0.937799
+        }
+      ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-14/idle-open.png",
+          "height": 0.842105,
+          "x": 0.5,
+          "y": 0.933014
+        },
+        {
+          "url": "/art-v5/characters/avatar-14/idle-closed.png",
+          "height": 0.842903,
+          "x": 0.5,
+          "y": 0.933014
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-14/idle-open.png",
+          "height": 0.842105,
+          "x": 0.5,
+          "y": 0.933014
+        },
+        {
+          "url": "/art-v5/characters/avatar-14/idle-closed.png",
+          "height": 0.842903,
+          "x": 0.5,
+          "y": 0.933014
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-14/idle-open.png",
+          "height": 0.842105,
+          "x": 0.5,
+          "y": 0.933014
+        },
+        {
+          "url": "/art-v5/characters/avatar-14/idle-closed.png",
+          "height": 0.842903,
+          "x": 0.5,
+          "y": 0.933014
+        }
+      ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-15/idle-open.png",
+          "height": 0.842903,
+          "x": 0.5,
+          "y": 0.936204
+        },
+        {
+          "url": "/art-v5/characters/avatar-15/idle-closed.png",
+          "height": 0.8437,
+          "x": 0.5,
+          "y": 0.936204
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-15/idle-open.png",
+          "height": 0.842903,
+          "x": 0.5,
+          "y": 0.936204
+        },
+        {
+          "url": "/art-v5/characters/avatar-15/idle-closed.png",
+          "height": 0.8437,
+          "x": 0.5,
+          "y": 0.936204
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-15/idle-open.png",
+          "height": 0.842903,
+          "x": 0.5,
+          "y": 0.936204
+        },
+        {
+          "url": "/art-v5/characters/avatar-15/idle-closed.png",
+          "height": 0.8437,
+          "x": 0.5,
+          "y": 0.936204
+        }
+      ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-16/idle-open.png",
+          "height": 0.858054,
+          "x": 0.5,
+          "y": 0.946571
+        },
+        {
+          "url": "/art-v5/characters/avatar-16/idle-closed.png",
+          "height": 0.858054,
+          "x": 0.5,
+          "y": 0.946571
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-16/idle-open.png",
+          "height": 0.858054,
+          "x": 0.5,
+          "y": 0.946571
+        },
+        {
+          "url": "/art-v5/characters/avatar-16/idle-closed.png",
+          "height": 0.858054,
+          "x": 0.5,
+          "y": 0.946571
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-16/idle-open.png",
+          "height": 0.858054,
+          "x": 0.5,
+          "y": 0.946571
+        },
+        {
+          "url": "/art-v5/characters/avatar-16/idle-closed.png",
+          "height": 0.858054,
+          "x": 0.5,
+          "y": 0.946571
+        }
+      ]
+    },
+    {
+      "idle": [
+        {
+          "url": "/art-v5/characters/avatar-17/idle-open.png",
+          "height": 0.893142,
+          "x": 0.5,
+          "y": 0.96571
+        },
+        {
+          "url": "/art-v5/characters/avatar-17/idle-closed.png",
+          "height": 0.892344,
+          "x": 0.5,
+          "y": 0.96571
+        }
+      ],
+      "sing": [
+        {
+          "url": "/art-v5/characters/avatar-17/idle-open.png",
+          "height": 0.893142,
+          "x": 0.5,
+          "y": 0.96571
+        },
+        {
+          "url": "/art-v5/characters/avatar-17/idle-closed.png",
+          "height": 0.892344,
+          "x": 0.5,
+          "y": 0.96571
+        }
+      ],
+      "dance": [
+        {
+          "url": "/art-v5/characters/avatar-17/idle-open.png",
+          "height": 0.893142,
+          "x": 0.5,
+          "y": 0.96571
+        },
+        {
+          "url": "/art-v5/characters/avatar-17/idle-closed.png",
+          "height": 0.892344,
+          "x": 0.5,
+          "y": 0.96571
+        }
+      ]
     }
   ],
   "scenes": {

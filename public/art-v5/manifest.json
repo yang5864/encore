@@ -1,0 +1,737 @@
+{
+  "version": "avatar-expansion-v1",
+  "generationMode": "built-in image_gen",
+  "runtimeIntegrated": false,
+  "counts": {
+    "newCharacters": 12,
+    "newFemale": 6,
+    "newMale": 6,
+    "newFrames": 24,
+    "totalIncludingExisting": 18,
+    "totalFemale": 9,
+    "totalMale": 9
+  },
+  "existingGenderMap": {
+    "female": [
+      0,
+      1,
+      2
+    ],
+    "male": [
+      3,
+      4,
+      5
+    ]
+  },
+  "characters": [
+    {
+      "avatar": 6,
+      "gender": "female",
+      "name": "흑발 히메컷 · 도도한 고양이상",
+      "design": "ink-black WAIST-LENGTH straight hime-cut hair with distinct blunt cheek-length side locks and NO fringe covering forehead, cool fully-open almond cat eyes in deep brown, straight brows, tiny confident closed-mouth smile; jade geometric barrette on one side, NO flower or star clips",
+      "outfit": "jade green cropped jacket over a cream high-neck top, black tailored wide-leg trousers, white chunky sneakers",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-6/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 751912,
+          "sha256": "9b5706c1c05b3030c75d8b9f261d496a7d380b4c7508fe6d2f155d0b1cf4c00e",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            356,
+            126,
+            899,
+            1198
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.955343
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-6/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 740221,
+          "sha256": "13b2f2816382236fbaa2172ea828354a4533a1cc35b36e9280dc00d03eb41377",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            353,
+            126,
+            901,
+            1199
+          ],
+          "maxCanvasBorderAlpha": 0,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.95614
+          }
+        }
+      }
+    },
+    {
+      "avatar": 7,
+      "gender": "female",
+      "name": "로즈핑크 땋은 머리 · 밝은 토끼상",
+      "design": "dusty ROSE-PINK hair in ONE long loose side braid over shoulder, swept side part, big FULLY OPEN round warm amber eyes, softly curved brows, bright bunny-like smile, one tiny cheek beauty mark, small burgundy ribbon at braid end, NO flower/star/music-note clip",
+      "outfit": "burgundy cardigan over a cream blouse, charcoal pleated knee-length skirt, ankle socks and burgundy loafers",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-7/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 842481,
+          "sha256": "bef532ca797398007a0aabb5ea73b75db1de386e8876e40d6bfbb8e7c72ca1e1",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            339,
+            88,
+            885,
+            1198
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.955343
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-7/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 805739,
+          "sha256": "1841b5d1f4fdea0d4fed08f4397cd746852098fd18d39b065ceffd21c76212dd",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            338,
+            87,
+            886,
+            1200
+          ],
+          "maxCanvasBorderAlpha": 0,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.956938
+          }
+        }
+      }
+    },
+    {
+      "avatar": 8,
+      "gender": "female",
+      "name": "오렌지 포니테일 · 활발한 여우상",
+      "design": "rich COPPER-ORANGE hair in a HIGH swinging ponytail with two thin face-framing wisps, fully-open upturned fox-shaped brown eyes, gently arched brows and cheeky toothy grin, black ponytail cuff, NO decorative hairclips",
+      "outfit": "orange sporty zip jacket over white t-shirt, dark navy cargo trousers, orange-white trainers",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-8/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 952710,
+          "sha256": "407b9ef2b28437b8e3a8368119b065bc7ba875704a12ed4fa18966e1b164cf2d",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            369,
+            31,
+            1023,
+            1216
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.969697
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-8/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 927047,
+          "sha256": "3d64c37c28cee084e958c19ae4aae51e29a714ab75f79efb7551ec7a85d44a08",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            366,
+            28,
+            1025,
+            1216
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.969697
+          }
+        }
+      }
+    },
+    {
+      "avatar": 9,
+      "gender": "female",
+      "name": "흑발 픽시컷 · 시크한 안경",
+      "design": "very short jet-BLACK asymmetrical PIXIE cut with one side neatly tucked behind ear, silver thin oval eyeglasses over FULLY OPEN cool gray-brown eyes, stronger straight eyebrows, small composed closed-mouth smile, NO hairclips",
+      "outfit": "slate-gray short blazer over soft lavender turtleneck, tailored charcoal shorts over opaque tights, black lace-up ankle boots",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-9/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 682908,
+          "sha256": "48866931620ff66b7cf7b5b53e741b50343c771d96938df22afd8028a2ced3a1",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            328,
+            89,
+            904,
+            1217
+          ],
+          "maxCanvasBorderAlpha": 0,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.970494
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-9/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 686026,
+          "sha256": "b981455432ab9c091c48feca1fc8c69f3da9b7d810ba0e4cd0ea73e02bbf275c",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            329,
+            89,
+            903,
+            1216
+          ],
+          "maxCanvasBorderAlpha": 0,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.969697
+          }
+        }
+      }
+    },
+    {
+      "avatar": 10,
+      "gender": "female",
+      "name": "초코 브라운 곱슬 양갈래 · 햇살상",
+      "design": "dark CHOCOLATE BROWN naturally curly hair in TWO compact high puff buns, airy curly forehead wisps, FULLY OPEN round dark green-brown eyes with gentle downturned corners, broad sunny smile and subtle freckles, cream fabric scrunchies, NO flower/star/music-note clip",
+      "outfit": "butter-yellow oversized varsity jacket, denim overalls with straight legs, cream canvas sneakers",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-10/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 958610,
+          "sha256": "4f5112deed9a1b8cb65637b4daa21724fb5f903e65ef95e6fa2137cb156923f3",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            258,
+            89,
+            983,
+            1196
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.953748
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-10/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 926687,
+          "sha256": "20d09948327962a31ab2fe47ca1da0537ed522fa4cafac67967c3e899d6ec4de",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            258,
+            89,
+            982,
+            1195
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.952951
+          }
+        }
+      }
+    },
+    {
+      "avatar": 11,
+      "gender": "female",
+      "name": "백금발 일자 앞머리 · 차분한 인형상",
+      "design": "icy PLATINUM BLOND long straight hair to waist, perfectly blunt thick eyebrow-length fringe, FULLY OPEN slightly elongated violet-brown eyes, delicate low brows and tiny gentle reserved smile, two narrow black ribbon ties near temples, NO flower/star/music-note clip",
+      "outfit": "powder blue knit vest over a white long-sleeve blouse, navy A-line knee-length skirt, white socks and blue Mary Jane shoes",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-11/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 754255,
+          "sha256": "14901cf1e42c6ed7a3bde1b58919bc74fce5ed937146463cdf90afe94960c79c",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            356,
+            121,
+            893,
+            1187
+          ],
+          "maxCanvasBorderAlpha": 0,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.946571
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-11/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 771347,
+          "sha256": "85a1c8fc26c034d71be023bbc06b488ac795b2c9763789587616fe10c63b4c52",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            356,
+            121,
+            893,
+            1187
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.946571
+          }
+        }
+      }
+    },
+    {
+      "avatar": 12,
+      "gender": "male",
+      "name": "금발 울프컷 · 자유로운 록스타",
+      "design": "sandy BLOND medium-long layered WOLF CUT reaching nape with swept-back front and long side layers, forehead visible, FULLY OPEN slanted hazel-brown eyes, bold eyebrows, crooked confident smile, tiny silver ear cuff, NO star/flower/music-note hairclip",
+      "outfit": "cream denim jacket with black collar, charcoal printed-free t-shirt, black slim cargo pants, chunky black sneakers",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-12/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 810389,
+          "sha256": "354c6b7961fa21ade7dfe55caf04c958e97da77ee297bdb9fdb6a7ad8411c734",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            305,
+            109,
+            945,
+            1190
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.948963
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-12/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 798489,
+          "sha256": "f979bb3ac62b82c91f73db4156108b275d981f98a73425239c8db09cc72d7b86",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            307,
+            108,
+            944,
+            1190
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.948963
+          }
+        }
+      }
+    },
+    {
+      "avatar": 13,
+      "gender": "male",
+      "name": "밤색 곱슬 앞머리 · 다정한 강아지상",
+      "design": "warm CHESTNUT BROWN fluffy curly hair with soft rounded curly fringe, FULLY OPEN large soft drooping puppy eyes in amber brown, thick softly curved brows, friendly dimpled smile, NO hair accessory or star clip",
+      "outfit": "forest-green varsity jacket, cream crewneck shirt, beige straight trousers, green-white low-top sneakers",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-13/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 781575,
+          "sha256": "60b21408bff010c29caafb330b7565df2f5ffc621bc924e7d30fc98ebafdf830",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            310,
+            102,
+            941,
+            1176
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.937799
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-13/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 772031,
+          "sha256": "cbb8b27bccdea2f1fbdd3b6a001c4965dd473f3eb768e5fb4d704d62bd5732c6",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            311,
+            103,
+            941,
+            1175
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.937002
+          }
+        }
+      }
+    },
+    {
+      "avatar": 14,
+      "gender": "male",
+      "name": "흑발 언더컷 · 단정한 안경",
+      "design": "neat BLACK undercut with a short straight textured top and tidy short fringe, clear translucent rectangular glasses over FULLY OPEN medium-size charcoal-brown eyes, straight brows, calm subtle smile, NO curtain middle part and NO hairclips",
+      "outfit": "lavender oversized button-up overshirt over white t-shirt, charcoal tapered pants, clean white sneakers",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-14/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 651017,
+          "sha256": "5daed35dee606cfaf20a06697c6683f3238ab5c0a5f99fa666c502057ff9f305",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            359,
+            114,
+            890,
+            1170
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.933014
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-14/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 661405,
+          "sha256": "97300a4e50c7f9f4612a2b422d59c956d031bb3461e2ed830f6b6533c1720a0d",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            360,
+            114,
+            889,
+            1169
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.932217
+          }
+        }
+      }
+    },
+    {
+      "avatar": 15,
+      "gender": "male",
+      "name": "딥블루 비대칭 머리 · 날카로운 고양이상",
+      "design": "DEEP NAVY-BLUE chin-length asymmetrical straight layered hair, longer strand on one side and tucked behind other ear, FULLY OPEN angular cat eyes in dark brown, sharp brows, playful tiny smirk, small black ear stud, NO forehead star or music-note clip",
+      "outfit": "wine-red cropped bomber jacket over charcoal high-neck tee, black wide-leg trousers, burgundy platform sneakers",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-15/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 692639,
+          "sha256": "87c6d0c92e794e7177ae12348edb0398164cd3de44585d4cde75b3891e4ed1f1",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            322,
+            117,
+            916,
+            1173
+          ],
+          "maxCanvasBorderAlpha": 0,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.935407
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-15/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 694651,
+          "sha256": "755bb9dcdb99365ba935f0678680365212358a80a77db2631676755a1833e229",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            322,
+            117,
+            916,
+            1174
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.936204
+          }
+        }
+      }
+    },
+    {
+      "avatar": 16,
+      "gender": "male",
+      "name": "구릿빛 올백 · 건강한 리더상",
+      "design": "warm AUBURN-COPPER short swept-back hair with subtle shaved sides, forehead fully visible, FULLY OPEN broad friendly olive-brown eyes, bold upward brows, warm toothy smile, a few faint nose freckles, NO long bangs or hairclips",
+      "outfit": "navy track jacket with cream stripe, white tee, olive cargo pants, navy running shoes",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-16/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 712988,
+          "sha256": "9749d1383366b0cf4210c3cb2abf755bde3fab04469234c4f077343f7ea77ba2",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            332,
+            111,
+            909,
+            1186
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.945774
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-16/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 722376,
+          "sha256": "dd176ae33984349fe2fc2e59c6352f47238de6b32fba84a399573a1fa0726662",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            333,
+            112,
+            908,
+            1186
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.945774
+          }
+        }
+      }
+    },
+    {
+      "avatar": 17,
+      "gender": "male",
+      "name": "애쉬 퍼플 투블록 · 조용한 여우상",
+      "design": "ASH-LAVENDER short TWO-BLOCK haircut with neat straight airy fringe and dark short sides, NOT middle parted, FULLY OPEN elongated dark-brown fox eyes, slim brows, small shy closed-mouth smile, one small silver hoop earring, NO hairclip",
+      "outfit": "dusty-pink unstructured cardigan over a black crewneck, slate wide-leg jeans, cream black-accent sneakers",
+      "frames": {
+        "open": {
+          "url": "/art-v5/characters/avatar-17/idle-open.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 851920,
+          "sha256": "076438530c062986c22fe89b8f8c37f8ca451ec0c8a7ec0419578487b0f28d80",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            299,
+            92,
+            924,
+            1210
+          ],
+          "maxCanvasBorderAlpha": 1,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.964912
+          }
+        },
+        "closed": {
+          "url": "/art-v5/characters/avatar-17/idle-closed.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 841962,
+          "sha256": "7a40914fb4022267357340466086b834c7651979934b3ab3cf3b4fc716b7bd81",
+          "alphaRange": [
+            0,
+            255
+          ],
+          "visibleBoundsAlphaAbove128": [
+            300,
+            93,
+            924,
+            1210
+          ],
+          "maxCanvasBorderAlpha": 0,
+          "visibleContentTouchesCanvasEdge": false,
+          "status": "ready",
+          "footAnchor": {
+            "x": 0.5,
+            "y": 0.964912
+          }
+        }
+      }
+    }
+  ],
+  "runtimeNote": "Append identities 6–11 female, 12–17 male; existing 0–5 untouched. Selection/runtime currently supports only six avatars. This task creates base open/fully-closed sprites only, not event costumes for new identities."
+}

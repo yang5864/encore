@@ -68,3 +68,21 @@ test("아이템 12종의 두 변형 모두 존재하고 활동 이미지로 연�
   assert.equal(paths.size, 24);
   assert.equal(equipmentPath("rest", "vocal", 0), null);
 });
+
+test("추가 아바타 6–17: 성별 매핑, 모든 장면에서 기본 포즈로 그려진다", async () => {
+  const { FEMALE_AVATARS, MALE_AVATARS, avatarIndex, idleFrames } = await import("../lib/art/index.ts");
+  assert.equal(FEMALE_AVATARS.length, 9);
+  assert.equal(MALE_AVATARS.length, 9);
+  for (const a of [...FEMALE_AVATARS, ...MALE_AVATARS]) {
+    const g = FEMALE_AVATARS.includes(a) ? "female" : "male";
+    assert.equal(avatarIndex(a, g), a, `${a}는 ${g}로 그대로 쓴다`);
+    assert.ok(idleFrames(a).length >= 2);
+    for (const scene of ["fansign", "album", "awards-win", "military", "tour"]) {
+      const art = eventArt(scene, a, g);
+      assert.ok(art.frames.length >= 1 && art.frames.every((f) => f.url), `${a} ${scene}`);
+    }
+  }
+  assert.equal(eventArt("military", 7, "female").scene, "rest", "여성 아바타는 입대 장면 대신 휴식");
+  assert.equal(eventArt("military", 13, "male").scene, "military");
+  assert.equal(avatarIndex(13, "female"), 0, "성별이 다르면 기본 아바타로");
+});
