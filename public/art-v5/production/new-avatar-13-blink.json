@@ -1,0 +1,39 @@
+{
+  "avatar": 13,
+  "gender": "male",
+  "name": "밤색 곱슬 앞머리 · 다정한 강아지상",
+  "look": "warm CHESTNUT BROWN fluffy curly hair with soft rounded curly fringe, FULLY OPEN large soft drooping puppy eyes in amber brown, thick softly curved brows, friendly dimpled smile, NO hair accessory or star clip",
+  "outfit": "forest-green varsity jacket, cream crewneck shirt, beige straight trousers, green-white low-top sneakers",
+  "key": "new-avatar-13-blink",
+  "kind": "avatar",
+  "dest": "public/art-v5/characters/avatar-13/idle-closed.png",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v5/characters/avatar-13/idle-open.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Create the fully CLOSED eye blink counterpart of the supplied single transparent pixel-art game character. Change ONLY BOTH EYES: lids completely shut, drawn as natural soft closed curves with no visible pupil/iris or sclera. This is one blink frame, NOT half-open/sleepy/squinting. Preserve EXACT same face outline, eyebrows, mouth and expression, head/hair/accessories/glasses, outfit, body pose, hands, feet, pixel rendering, position, size, canvas dimensions and transparent padding. Do not redraw outfit or move character. Genuine transparent alpha background (alpha0), no white/gray/checker matte, no shadows, no text, no additional figure.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-e306bd24-90a6-44f4-bae5-aa3a9898d332.png",
+  "tool": "built-in image_gen",
+  "image": {
+    "url": "/art-v5/characters/avatar-13/idle-closed.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 772031,
+    "sha256": "cbb8b27bccdea2f1fbdd3b6a001c4965dd473f3eb768e5fb4d704d62bd5732c6",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBoundsAlphaAbove128": [
+      311,
+      103,
+      941,
+      1175
+    ],
+    "footAnchor": {
+      "x": 0.5,
+      "y": 0.937002
+    },
+    "visibleContentTouchesCanvasEdge": false
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "avatar": 17,
+  "gender": "male",
+  "name": "애쉬 퍼플 투블록 · 조용한 여우상",
+  "look": "ASH-LAVENDER short TWO-BLOCK haircut with neat straight airy fringe and dark short sides, NOT middle parted, FULLY OPEN elongated dark-brown fox eyes, slim brows, small shy closed-mouth smile, one small silver hoop earring, NO hairclip",
+  "outfit": "dusty-pink unstructured cardigan over a black crewneck, slate wide-leg jeans, cream black-accent sneakers",
+  "key": "new-avatar-17-blink",
+  "kind": "avatar",
+  "dest": "public/art-v5/characters/avatar-17/idle-closed.png",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v5/characters/avatar-17/idle-open.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Create the fully CLOSED eye blink counterpart of the supplied single transparent pixel-art game character. Change ONLY BOTH EYES: lids completely shut, drawn as natural soft closed curves with no visible pupil/iris or sclera. This is one blink frame, NOT half-open/sleepy/squinting. Preserve EXACT same face outline, eyebrows, mouth and expression, head/hair/accessories/glasses, outfit, body pose, hands, feet, pixel rendering, position, size, canvas dimensions and transparent padding. Do not redraw outfit or move character. Genuine transparent alpha background (alpha0), no white/gray/checker matte, no shadows, no text, no additional figure.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-31810c64-4a33-4728-b25b-965241934dc5.png",
+  "tool": "built-in image_gen",
+  "image": {
+    "url": "/art-v5/characters/avatar-17/idle-closed.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 841962,
+    "sha256": "7a40914fb4022267357340466086b834c7651979934b3ab3cf3b4fc716b7bd81",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBoundsAlphaAbove128": [
+      300,
+      93,
+      924,
+      1210
+    ],
+    "footAnchor": {
+      "x": 0.5,
+      "y": 0.964912
+    },
+    "visibleContentTouchesCanvasEdge": false
+  }
+}

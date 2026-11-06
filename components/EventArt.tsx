@@ -3,19 +3,20 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import { eventArt } from "@/lib/art";
+import type { ArtMood } from "@/lib/art";
 import { ArtFrames } from "./ArtFrames";
 
-export type ArtMood = "sad" | "happy" | "neutral";
+export type { ArtMood };
 export type ArtGroup = { avatars: number[]; center: boolean };
 
 export function EventArt({ scene, avatar, gender, name = "캐릭터", className = "", mood, group }: {
   scene: string; avatar: number; gender?: "female" | "male"; name?: string; className?: string;
-  /** 나쁜 결과·논란이면 "sad": 표정 대신 분위기로 감정을 보여준다 */
+  /** 나쁜 결과·논란이면 "sad": 표정 프레임이 있으면 바꿔 끼우고, 장면 전용 동작이 있으면 뱃지로 보여준다 */
   mood?: ArtMood;
   /** 무대·공식 행사에서 같이 서는 멤버들. center면 내가 가운데 */
   group?: ArtGroup;
 }) {
-  const art = eventArt(scene, avatar, gender);
+  const art = eventArt(scene, avatar, gender, mood);
   // The audition background has a foreground judging desk; keep feet on the floor behind it.
   const audition = art.scene === "audition";
   // 배경과 캐릭터가 따로 뜨지 않도록, 둘 다 준비될 때까지 숨겼다가 한 번에 보여준다 (최대 1.5초 대기)
@@ -42,13 +43,13 @@ export function EventArt({ scene, avatar, gender, name = "캐릭터", className 
       {groupAvatars ? (
         <>
           {Array.from({ length: total }, (_, i) => i).filter((i) => i !== playerSlot).map((i) => { const m = groupAvatars[memberAt(i)]; return (
-            <ArtFrames key={`m${i}:${art.scene}:${m}`} frames={eventArt(art.scene, m, gender).frames} visibleHeight={groupHeight} sizes="(max-width: 480px) 40vw, 200px" offsetX={slotX(i)} zIndex={1} />
+            <ArtFrames key={`m${i}:${art.scene}:${m}`} frames={eventArt(art.scene, m, gender, mood).frames} visibleHeight={groupHeight} sizes="(max-width: 480px) 40vw, 200px" offsetX={slotX(i)} zIndex={1} />
           ); })}
         </>
       ) : null}
       <ArtFrames key={`${art.scene}:${avatar}`} frames={art.frames} visibleHeight={groupAvatars ? groupHeight * 1.06 : audition ? 33 : 43} sizes="(max-width: 480px) 65vw, 310px" onReady={() => setFg(true)}
         {...(groupAvatars ? { offsetX: slotX(playerSlot), zIndex: 2 } : {})} />
-      {mood === "sad" || mood === "happy" ? (
+      {!art.moodApplied && (mood === "sad" || mood === "happy") ? (
         <span className={`art-mood-badge art-mood-${mood}`} aria-hidden style={{ left: groupAvatars ? `calc(${slotX(playerSlot)}% - 6%)` : undefined }}>{mood === "sad" ? "💧" : "✨"}</span>
       ) : null}
     </div>

@@ -1,0 +1,39 @@
+{
+  "avatar": 10,
+  "gender": "female",
+  "name": "초코 브라운 곱슬 양갈래 · 햇살상",
+  "look": "dark CHOCOLATE BROWN naturally curly hair in TWO compact high puff buns, airy curly forehead wisps, FULLY OPEN round dark green-brown eyes with gentle downturned corners, broad sunny smile and subtle freckles, cream fabric scrunchies, NO flower/star/music-note clip",
+  "outfit": "butter-yellow oversized varsity jacket, denim overalls with straight legs, cream canvas sneakers",
+  "key": "new-avatar-10-blink",
+  "kind": "avatar",
+  "dest": "public/art-v5/characters/avatar-10/idle-closed.png",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v5/characters/avatar-10/idle-open.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Create the fully CLOSED eye blink counterpart of the supplied single transparent pixel-art game character. Change ONLY BOTH EYES: lids completely shut, drawn as natural soft closed curves with no visible pupil/iris or sclera. This is one blink frame, NOT half-open/sleepy/squinting. Preserve EXACT same face outline, eyebrows, mouth and expression, head/hair/accessories/glasses, outfit, body pose, hands, feet, pixel rendering, position, size, canvas dimensions and transparent padding. Do not redraw outfit or move character. Genuine transparent alpha background (alpha0), no white/gray/checker matte, no shadows, no text, no additional figure.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-ba36f33e-a78a-4387-bde6-83860d16634d.png",
+  "tool": "built-in image_gen",
+  "image": {
+    "url": "/art-v5/characters/avatar-10/idle-closed.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 926687,
+    "sha256": "20d09948327962a31ab2fe47ca1da0537ed522fa4cafac67967c3e899d6ec4de",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBoundsAlphaAbove128": [
+      258,
+      89,
+      982,
+      1195
+    ],
+    "footAnchor": {
+      "x": 0.5,
+      "y": 0.952951
+    },
+    "visibleContentTouchesCanvasEdge": false
+  }
+}

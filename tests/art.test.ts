@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
-import { eventArt, equipmentPath, idleFrames } from "../lib/art/index.ts";
+import { eventArt, equipmentPath, idleFrames, moodFrame } from "../lib/art/index.ts";
 import { SCENES } from "../lib/game/events/index.ts";
 
 test("모든 장면에서 선택한 캐릭터의 실제 이미지 파일을 사용한다", () => {
@@ -43,16 +43,18 @@ test("대기 동작은 눈을 뜬 원본과 완전히 감은 전용 프레임을
   }
 });
 
-test("성별에 맞는 34개 이벤트의 396장 모두 완성된 이벤트 의상을 사용한다", () => {
+test("성별에 맞는 35개 이벤트의 402장 모두 완성된 이벤트 의상을 사용한다", () => {
   let count = 0;
   for (const scene of SCENES) for (let avatar = 0; avatar < 6; avatar++) {
-    if (scene === "military" && avatar < 3 || scene === "military-concert" && avatar >= 3) continue;
+    if ((scene === "military" || scene === "military-band") && avatar < 3 || scene === "military-concert" && avatar >= 3) continue;
+    // 아육대·인스타 개설·연습실은 배경만 새로 만들고 캐릭터는 기본 동작을 쓴다
+    if (["isac", "sns-open", "practice"].includes(scene)) continue;
     const art = eventArt(scene, avatar);
     assert.equal(art.frames.length, 2, `${scene}/${avatar}`);
     assert.ok(art.frames.every((f) => f.url.startsWith(`/art-v4/characters/avatar-${avatar}/${scene}/`)));
     count += art.frames.length;
   }
-  assert.equal(count, 396);
+  assert.equal(count, 402);
 });
 
 test("아이템 12종의 두 변형 모두 존재하고 활동 이미지로 연결된다", () => {
@@ -85,4 +87,30 @@ test("추가 아바타 6–17: 성별 매핑, 모든 장면에서 기본 포즈�
   assert.equal(eventArt("military", 7, "female").scene, "rest", "여성 아바타는 입대 장면 대신 휴식");
   assert.equal(eventArt("military", 13, "male").scene, "military");
   assert.equal(avatarIndex(13, "female"), 0, "성별이 다르면 기본 아바타로");
+});
+
+test("새 아바타 6–17도 시상식 7장면 4프레임 의상을 쓰고, 18명 모두 울상·활짝 표정이 있다", () => {
+  const awardScenes = ["awards-redcarpet", "awards-stage", "awards-seat", "awards-win", "awards-cry", "awards-speech", "awards-lose"];
+  for (let avatar = 6; avatar < 18; avatar++) for (const scene of awardScenes) {
+    const art = eventArt(scene, avatar);
+    assert.equal(art.scene, scene, `${scene}/${avatar}`);
+    assert.equal(art.frames.length, 4, `${scene}/${avatar}`);
+    for (const f of art.frames) assert.ok(existsSync(`public${f.url}`), f.url);
+  }
+  for (let avatar = 0; avatar < 18; avatar++) {
+    for (const mood of ["sad", "happy"] as const) {
+      const f = moodFrame(avatar, mood);
+      assert.ok(f && existsSync(`public${f.url}`), `${avatar}/${mood}`);
+    }
+    // 장면 전용 동작이 없는 장면: 슬프면 울상 한 장, 좋으면 서 있을 때만 활짝
+    const sad = eventArt("isac", avatar, undefined, "sad");
+    assert.ok(sad.moodApplied && sad.frames.length === 1 && sad.frames[0].url.endsWith("mood-sad.png"));
+    const dancing = eventArt("isac", avatar, undefined, "happy");
+    assert.ok(!dancing.moodApplied, "춤 동작은 활짝 표정으로 바꾸지 않는다");
+  }
+  // 장면 전용 동작이 있으면 표정으로 바꾸지 않는다 (뱃지로 보여준다)
+  assert.ok(!eventArt("press", 0, undefined, "sad").moodApplied);
+  // 군악대는 남성 9명 전용
+  for (const avatar of [3, 4, 5, 12, 13, 14, 15, 16, 17]) assert.equal(eventArt("military-band", avatar).frames.length, 2);
+  assert.equal(eventArt("military-band", 0).scene, "rest");
 });

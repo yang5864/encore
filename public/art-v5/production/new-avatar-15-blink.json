@@ -1,0 +1,39 @@
+{
+  "avatar": 15,
+  "gender": "male",
+  "name": "딥블루 비대칭 머리 · 날카로운 고양이상",
+  "look": "DEEP NAVY-BLUE chin-length asymmetrical straight layered hair, longer strand on one side and tucked behind other ear, FULLY OPEN angular cat eyes in dark brown, sharp brows, playful tiny smirk, small black ear stud, NO forehead star or music-note clip",
+  "outfit": "wine-red cropped bomber jacket over charcoal high-neck tee, black wide-leg trousers, burgundy platform sneakers",
+  "key": "new-avatar-15-blink",
+  "kind": "avatar",
+  "dest": "public/art-v5/characters/avatar-15/idle-closed.png",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v5/characters/avatar-15/idle-open.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Create the fully CLOSED eye blink counterpart of the supplied single transparent pixel-art game character. Change ONLY BOTH EYES: lids completely shut, drawn as natural soft closed curves with no visible pupil/iris or sclera. This is one blink frame, NOT half-open/sleepy/squinting. Preserve EXACT same face outline, eyebrows, mouth and expression, head/hair/accessories/glasses, outfit, body pose, hands, feet, pixel rendering, position, size, canvas dimensions and transparent padding. Do not redraw outfit or move character. Genuine transparent alpha background (alpha0), no white/gray/checker matte, no shadows, no text, no additional figure.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-61dc8dff-7f23-4a9f-8b94-231177d13df0.png",
+  "tool": "built-in image_gen",
+  "image": {
+    "url": "/art-v5/characters/avatar-15/idle-closed.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 694651,
+    "sha256": "755bb9dcdb99365ba935f0678680365212358a80a77db2631676755a1833e229",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBoundsAlphaAbove128": [
+      322,
+      117,
+      916,
+      1174
+    ],
+    "footAnchor": {
+      "x": 0.5,
+      "y": 0.936204
+    },
+    "visibleContentTouchesCanvasEdge": false
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "avatar": 16,
+  "gender": "male",
+  "name": "구릿빛 올백 · 건강한 리더상",
+  "look": "warm AUBURN-COPPER short swept-back hair with subtle shaved sides, forehead fully visible, FULLY OPEN broad friendly olive-brown eyes, bold upward brows, warm toothy smile, a few faint nose freckles, NO long bangs or hairclips",
+  "outfit": "navy track jacket with cream stripe, white tee, olive cargo pants, navy running shoes",
+  "key": "new-avatar-16-blink",
+  "kind": "avatar",
+  "dest": "public/art-v5/characters/avatar-16/idle-closed.png",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v5/characters/avatar-16/idle-open.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Create the fully CLOSED eye blink counterpart of the supplied single transparent pixel-art game character. Change ONLY BOTH EYES: lids completely shut, drawn as natural soft closed curves with no visible pupil/iris or sclera. This is one blink frame, NOT half-open/sleepy/squinting. Preserve EXACT same face outline, eyebrows, mouth and expression, head/hair/accessories/glasses, outfit, body pose, hands, feet, pixel rendering, position, size, canvas dimensions and transparent padding. Do not redraw outfit or move character. Genuine transparent alpha background (alpha0), no white/gray/checker matte, no shadows, no text, no additional figure.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-81a95691-64e4-4bb8-b467-3b1bee0d48c9.png",
+  "tool": "built-in image_gen",
+  "image": {
+    "url": "/art-v5/characters/avatar-16/idle-closed.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 722376,
+    "sha256": "dd176ae33984349fe2fc2e59c6352f47238de6b32fba84a399573a1fa0726662",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBoundsAlphaAbove128": [
+      333,
+      112,
+      908,
+      1186
+    ],
+    "footAnchor": {
+      "x": 0.5,
+      "y": 0.945774
+    },
+    "visibleContentTouchesCanvasEdge": false
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "avatar": 6,
+  "gender": "female",
+  "name": "흑발 히메컷 · 도도한 고양이상",
+  "look": "ink-black WAIST-LENGTH straight hime-cut hair with distinct blunt cheek-length side locks and NO fringe covering forehead, cool fully-open almond cat eyes in deep brown, straight brows, tiny confident closed-mouth smile; jade geometric barrette on one side, NO flower or star clips",
+  "outfit": "jade green cropped jacket over a cream high-neck top, black tailored wide-leg trousers, white chunky sneakers",
+  "key": "new-avatar-6-blink",
+  "kind": "avatar",
+  "dest": "public/art-v5/characters/avatar-6/idle-closed.png",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v5/characters/avatar-6/idle-open.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Create the fully CLOSED eye blink counterpart of the supplied single transparent pixel-art game character. Change ONLY BOTH EYES: lids completely shut, drawn as natural soft closed curves with no visible pupil/iris or sclera. This is one blink frame, NOT half-open/sleepy/squinting. Preserve EXACT same face outline, eyebrows, mouth and expression, head/hair/accessories/glasses, outfit, body pose, hands, feet, pixel rendering, position, size, canvas dimensions and transparent padding. Do not redraw outfit or move character. Genuine transparent alpha background (alpha0), no white/gray/checker matte, no shadows, no text, no additional figure.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-54aa24eb-d848-4ab2-aaf8-664b23212346.png",
+  "tool": "built-in image_gen",
+  "image": {
+    "url": "/art-v5/characters/avatar-6/idle-closed.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 740221,
+    "sha256": "13b2f2816382236fbaa2172ea828354a4533a1cc35b36e9280dc00d03eb41377",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBoundsAlphaAbove128": [
+      353,
+      126,
+      901,
+      1199
+    ],
+    "footAnchor": {
+      "x": 0.5,
+      "y": 0.95614
+    },
+    "visibleContentTouchesCanvasEdge": false
+  }
+}

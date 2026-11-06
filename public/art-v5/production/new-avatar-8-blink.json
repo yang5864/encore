@@ -1,0 +1,39 @@
+{
+  "avatar": 8,
+  "gender": "female",
+  "name": "오렌지 포니테일 · 활발한 여우상",
+  "look": "rich COPPER-ORANGE hair in a HIGH swinging ponytail with two thin face-framing wisps, fully-open upturned fox-shaped brown eyes, gently arched brows and cheeky toothy grin, black ponytail cuff, NO decorative hairclips",
+  "outfit": "orange sporty zip jacket over white t-shirt, dark navy cargo trousers, orange-white trainers",
+  "key": "new-avatar-8-blink",
+  "kind": "avatar",
+  "dest": "public/art-v5/characters/avatar-8/idle-closed.png",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v5/characters/avatar-8/idle-open.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Create the fully CLOSED eye blink counterpart of the supplied single transparent pixel-art game character. Change ONLY BOTH EYES: lids completely shut, drawn as natural soft closed curves with no visible pupil/iris or sclera. This is one blink frame, NOT half-open/sleepy/squinting. Preserve EXACT same face outline, eyebrows, mouth and expression, head/hair/accessories/glasses, outfit, body pose, hands, feet, pixel rendering, position, size, canvas dimensions and transparent padding. Do not redraw outfit or move character. Genuine transparent alpha background (alpha0), no white/gray/checker matte, no shadows, no text, no additional figure.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-fa6d4af8-48e7-4f3e-882e-a63cb13af3ae.png",
+  "tool": "built-in image_gen",
+  "image": {
+    "url": "/art-v5/characters/avatar-8/idle-closed.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 927047,
+    "sha256": "3d64c37c28cee084e958c19ae4aae51e29a714ab75f79efb7551ec7a85d44a08",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBoundsAlphaAbove128": [
+      366,
+      28,
+      1025,
+      1216
+    ],
+    "footAnchor": {
+      "x": 0.5,
+      "y": 0.969697
+    },
+    "visibleContentTouchesCanvasEdge": false
+  }
+}

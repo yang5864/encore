@@ -1,0 +1,40 @@
+{
+  "avatar": 10,
+  "gender": "female",
+  "name": "초코 브라운 곱슬 양갈래 · 햇살상",
+  "look": "dark CHOCOLATE BROWN naturally curly hair in TWO compact high puff buns, airy curly forehead wisps, FULLY OPEN round dark green-brown eyes with gentle downturned corners, broad sunny smile and subtle freckles, cream fabric scrunchies, NO flower/star/music-note clip",
+  "outfit": "butter-yellow oversized varsity jacket, denim overalls with straight legs, cream canvas sneakers",
+  "key": "new-avatar-10",
+  "kind": "avatar",
+  "dest": "public/art-v5/characters/avatar-10/idle-open.png",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v4/characters/avatar-0/awards/01.png",
+    "/var/folders/94/hcp1z4tn6sx5vmk857wfmg0r0000gn/T/codex-clipboard-0f3bd6a5-8a9d-4aca-a140-ec6631dcaa22.png"
+  ],
+  "prompt": "Use case: stylized-concept. Create ONE brand NEW original female Korean idol character for a cute pixel-art career game. Image 1 is ONLY the pixel rendering and chibi proportions reference: DO NOT copy its existing hairstyle, facial expression, eye shape, colored outfit or hair ornament. Image 2 is broad styling inspiration for the variety of idol hairstyles and personalities, not a person to reproduce. The new fictional character must have a strongly distinct silhouette and face.\nDesign specification: dark CHOCOLATE BROWN naturally curly hair in TWO compact high puff buns, airy curly forehead wisps, FULLY OPEN round dark green-brown eyes with gentle downturned corners, broad sunny smile and subtle freckles, cream fabric scrunchies, NO flower/star/music-note clip.\nOutfit: butter-yellow oversized varsity jacket, denim overalls with straight legs, cream canvas sneakers. Modest age-flexible trainee casual clothing, fully clothed. No stage props. Face is still adorable and chibi, visibly distinguishable through eye/brow/mouth shapes. Both eyes clearly FULLY OPEN with entire iris visible, never half-lidded or squinting. Cute polished CRISP pixel-art, high-quality small-pixel material shading, confident clean pixel clusters, exact same game art family as Image1, no photorealism. Full body neutral standing pose, both arms relaxed at sides, head upright, feet side by side. Entire hair/hands/shoes visible in a square canvas with generous transparent padding all around. Single character only on TRUE alpha transparent background, no shadow, scenery, text, logo, watermark, sprite strip or other figure.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-649ae994-05fa-4d32-843a-eff81796cfb8.png",
+  "tool": "built-in image_gen",
+  "image": {
+    "url": "/art-v5/characters/avatar-10/idle-open.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 958610,
+    "sha256": "4f5112deed9a1b8cb65637b4daa21724fb5f903e65ef95e6fa2137cb156923f3",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBoundsAlphaAbove128": [
+      258,
+      89,
+      983,
+      1196
+    ],
+    "footAnchor": {
+      "x": 0.5,
+      "y": 0.953748
+    },
+    "visibleContentTouchesCanvasEdge": false
+  }
+}

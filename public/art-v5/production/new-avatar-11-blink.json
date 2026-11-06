@@ -1,0 +1,39 @@
+{
+  "avatar": 11,
+  "gender": "female",
+  "name": "백금발 일자 앞머리 · 차분한 인형상",
+  "look": "icy PLATINUM BLOND long straight hair to waist, perfectly blunt thick eyebrow-length fringe, FULLY OPEN slightly elongated violet-brown eyes, delicate low brows and tiny gentle reserved smile, two narrow black ribbon ties near temples, NO flower/star/music-note clip",
+  "outfit": "powder blue knit vest over a white long-sleeve blouse, navy A-line knee-length skirt, white socks and blue Mary Jane shoes",
+  "key": "new-avatar-11-blink",
+  "kind": "avatar",
+  "dest": "public/art-v5/characters/avatar-11/idle-closed.png",
+  "refs": [
+    "/Users/ysh/Desktop/미니 프로젝트/아이돌 키우기/encore-v2/public/art-v5/characters/avatar-11/idle-open.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Create the fully CLOSED eye blink counterpart of the supplied single transparent pixel-art game character. Change ONLY BOTH EYES: lids completely shut, drawn as natural soft closed curves with no visible pupil/iris or sclera. This is one blink frame, NOT half-open/sleepy/squinting. Preserve EXACT same face outline, eyebrows, mouth and expression, head/hair/accessories/glasses, outfit, body pose, hands, feet, pixel rendering, position, size, canvas dimensions and transparent padding. Do not redraw outfit or move character. Genuine transparent alpha background (alpha0), no white/gray/checker matte, no shadows, no text, no additional figure.",
+  "source": "/Users/ysh/.codex/generated_images/01a18bcc-0bbc-7661-b569-a1a3cb415614/exec-6c741c5e-f816-43a5-a47a-cd0564047167.png",
+  "tool": "built-in image_gen",
+  "image": {
+    "url": "/art-v5/characters/avatar-11/idle-closed.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 771347,
+    "sha256": "85a1c8fc26c034d71be023bbc06b488ac795b2c9763789587616fe10c63b4c52",
+    "alphaRange": [
+      0,
+      255
+    ],
+    "visibleBoundsAlphaAbove128": [
+      356,
+      121,
+      893,
+      1187
+    ],
+    "footAnchor": {
+      "x": 0.5,
+      "y": 0.946571
+    },
+    "visibleContentTouchesCanvasEdge": false
+  }
+}

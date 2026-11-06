@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 아트 생성 원본·보관본 (앱이 참조하지 않음)
+/art-archive/
+/public/art-v4/awards-sheets/
+/public/art-v5/qa-sheets/
+/public/art-v5/qa-production/

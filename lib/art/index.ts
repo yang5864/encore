@@ -21,17 +21,28 @@ export function idleFrames(index: number): ArtFrame[] {
   return catalog.avatars[avatarIndex(index)].idle;
 }
 
-export function eventArt(scene: string, index: number, gender?: "female" | "male") {
+export type ArtMood = "sad" | "happy" | "neutral";
+
+/** 표정 프레임(울상·활짝). 장면 전용 동작이 없을 때, 기본 서 있는 동작 대신 쓴다 */
+export function moodFrame(index: number, mood: ArtMood | undefined): ArtFrame | null {
+  if (mood !== "sad" && mood !== "happy") return null;
+  const entry = catalog.avatars[avatarIndex(index)] as { mood?: Record<string, ArtFrame> };
+  return entry.mood?.[mood] ?? null;
+}
+
+export function eventArt(scene: string, index: number, gender?: "female" | "male", mood?: ArtMood) {
   const avatar = avatarIndex(index, gender);
   let key = Object.hasOwn(scenes, scene) ? scene : "rest";
-  if (key === "military" && isFemaleAvatar(avatar)) key = "rest";
+  if ((key === "military" || key === "military-band") && isFemaleAvatar(avatar)) key = "rest";
   if (key === "military-concert" && !isFemaleAvatar(avatar)) key = "festival";
   const art = scenes[key];
-  const action = ["dance", "challenge"].includes(key) ? "dance"
+  const action = ["dance", "challenge", "isac"].includes(key) ? "dance"
     : ["album", "vocal", "survival", "tour", "coachella", "festival", "military-concert"].includes(key) ? "sing" : "idle";
   const available = art.avatars[avatar];
-  return { scene: key, background: art.background,
-    frames: available?.length ? available : catalog.avatars[avatar][action] };
+  // 장면 전용 동작이 없으면: 슬픈 결과는 항상 울상, 좋은 결과는 가만히 서 있을 때만 활짝
+  const expression = available?.length ? null : moodFrame(avatar, mood === "sad" || action === "idle" ? mood : undefined);
+  return { scene: key, background: art.background, moodApplied: !!expression,
+    frames: expression ? [expression] : available?.length ? available : catalog.avatars[avatar][action] };
 }
 
 const EQUIPMENT: Record<string, string[]> = {

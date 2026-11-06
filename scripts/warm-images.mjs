@@ -12,7 +12,8 @@ for (const scene of Object.values(catalog.scenes)) {
   for (const w of WIDTHS.background) urls.add(`${base}/_next/image?url=${encodeURIComponent(scene.background)}&w=${w}&q=75`);
   for (const frames of Object.values(scene.avatars)) for (const f of frames) for (const w of WIDTHS.frame) urls.add(`${base}/_next/image?url=${encodeURIComponent(f.url)}&w=${w}&q=75`);
 }
-for (const av of catalog.avatars) for (const key of Object.keys(av)) for (const f of av[key] ?? []) if (f?.url) for (const w of WIDTHS.frame) urls.add(`${base}/_next/image?url=${encodeURIComponent(f.url)}&w=${w}&q=75`);
+// idle/sing/dance는 프레임 배열, mood는 { sad, happy } 객체
+for (const av of catalog.avatars) for (const v of Object.values(av)) for (const f of Array.isArray(v) ? v : Object.values(v ?? {})) if (f?.url) for (const w of WIDTHS.frame) urls.add(`${base}/_next/image?url=${encodeURIComponent(f.url)}&w=${w}&q=75`);
 const list = [...urls];
 console.log(`warming ${list.length} image variants`);
 let ok = 0, fail = 0;

@@ -1127,7 +1127,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     if (event.id in BAD_EVENT_KIND) commentTone = tone === "good" ? "neutral" : "bad";
   }
   const comments = event.public || reaction.kind !== "generic" ? buildReactions(c, commentTone ?? (tone === "bad" ? "bad" : tone === "neutral" ? "neutral" : "good"), reaction) : [];
-  finish(c, before, headline, text, tone, { scene: event.scene, notes, comments, celebrate, spotlight });
+  finish(c, before, headline, text, tone, { scene: op === "service:band" ? "military-band" : event.scene, notes, comments, celebrate, spotlight });
   return c;
 }
 

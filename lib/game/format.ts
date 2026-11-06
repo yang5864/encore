@@ -96,7 +96,7 @@ export function eraScale(year: number): number {
 }
 
 /** 무대·공식 행사 장면에서만 멤버들을 함께 그린다. */
-const GROUP_SCENES = ["album", "tour", "mc", "debut", "festival", "coachella", "military-concert", "fansign", "showcase"];
+const GROUP_SCENES = ["album", "tour", "mc", "debut", "festival", "coachella", "military-concert", "fansign", "showcase", "isac"];
 export function artGroupFor(lineup: Lineup | null | undefined, scene: string | undefined): { avatars: number[]; center: boolean } | undefined {
   if (!scene || !lineup?.memberAvatars?.length) return undefined;
   if (!scene.startsWith("awards") && !GROUP_SCENES.includes(scene)) return undefined;
