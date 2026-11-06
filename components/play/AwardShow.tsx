@@ -143,7 +143,7 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
 
   return (
     <div className="fixed inset-0 z-[70] bg-[#111113] text-white flex flex-col" role="dialog" aria-label="연말 시상식">
-      <div className="shell flex-1 flex flex-col pt-3 overflow-y-auto no-scrollbar">
+      <div className="shell w-full flex-1 flex flex-col pt-3 overflow-y-auto no-scrollbar">
         <div className="flex items-center justify-between h-12">
           <span className="text-[13px] text-white/50">{cm.year} {show}</span>
           <span className="text-[13px] text-white/40">{i + 1} / {steps.length}</span>

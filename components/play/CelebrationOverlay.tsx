@@ -38,7 +38,7 @@ export function CelebrationOverlay({ career, spot, onDone }: { career: Career; s
   const [l1, l2] = spot.title.split("\n");
   return (
     <div className="fixed inset-0 z-[70] bg-[#111113] text-white flex flex-col" role="dialog" aria-label="대상 수상">
-      <div className="shell flex-1 flex flex-col pt-3">
+      <div className="shell w-full flex-1 flex flex-col pt-3">
         <div className="flex justify-end h-12 items-center">
           <button type="button" onClick={onDone} className="press text-[16px] text-white/50 px-2 py-1">건너뛰기</button>
         </div>

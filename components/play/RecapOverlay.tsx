@@ -47,7 +47,7 @@ export function RecapOverlay({ career, onDone }: { career: Career; onDone: () =>
   const last = i === slides.length - 1;
   return (
     <div className="fixed inset-0 z-[70] bg-[#111113] text-white flex flex-col" role="dialog" aria-label="커리어 회고">
-      <div className="shell flex-1 flex flex-col pt-3 overflow-y-auto no-scrollbar">
+      <div className="shell w-full flex-1 flex flex-col pt-3 overflow-y-auto no-scrollbar">
         <div className="flex gap-1 pt-2" aria-hidden>
           {slides.map((_, k) => (
             <span key={k} className={`h-[3px] flex-1 rounded-full ${k <= i ? "bg-white" : "bg-white/20"}`} />
