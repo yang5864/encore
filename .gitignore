@@ -45,3 +45,14 @@ next-env.d.ts
 /public/art-v4/awards-sheets/
 /public/art-v5/qa-sheets/
 /public/art-v5/qa-production/
+
+# Claude Code Game Studios (local state)
+.claude/settings.local.json
+project.local.yaml
+production/session-logs/
+production/session-state/
+.claude/agent-memory/
+.claude/worktrees/
+# Higgsfield 생성 작업용 (레퍼런스는 기존 자산의 복사본, inbox는 가공 전 원본)
+/public/art-v6/refs/
+/public/art-v6/inbox/

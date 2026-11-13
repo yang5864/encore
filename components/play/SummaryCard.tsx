@@ -46,7 +46,7 @@ function Row({ href, onClick, icon, label, value, sub, tone, highlight }: { href
       <span className="min-w-0 flex-1">
         <span className={cn("block text-[13px]", highlight ? "text-primary font-bold" : "text-ink-3")}>{label}</span>
         <span className="block text-[16px] font-bold truncate">{value}</span>
-        {sub && <span className={cn("block text-[13px] truncate", tone === "up" ? "text-up" : tone === "down" ? "text-down" : "text-ink-3")}>{sub}</span>}
+        {sub && <span className={cn("block text-[13px] line-clamp-2", tone === "up" ? "text-up" : tone === "down" ? "text-down" : "text-ink-3")}>{sub}</span>}
       </span>
       {(href || onClick) && <span className="text-ink-3 text-[16px] shrink-0">›</span>}
     </>

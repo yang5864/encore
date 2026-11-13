@@ -400,13 +400,16 @@ export function advanceTurn(original: Career, focusId: string): Career {
       c.trust = Math.min(100, c.trust + 10);
       c.flags.budgetBonus = 1;
       c.flags.kpiHits = (c.flags.kpiHits ?? 0) + 1;
+      c.flags.kpiMissStreak = 0;
       notes.push(`회사 목표 달성: ${c.kpi.label}. 다음 앨범 제작 지원이 늘어요.`);
     } else {
       c.trust = Math.max(0, c.trust - 8);
       c.flags.budgetCut = 1;
       c.flags.kpiMisses = (c.flags.kpiMisses ?? 0) + 1;
+      // 누적 미달(kpiMisses)은 기록용, 연속 미달(kpiMissStreak)만 페널티를 준다
+      c.flags.kpiMissStreak = (c.flags.kpiMissStreak ?? 0) + 1;
       notes.push(`회사 목표 미달: ${c.kpi.label}. 다음 앨범 제작비가 줄어요.`);
-      if ((c.flags.kpiMisses ?? 0) >= 2) { addReputation(c, -2); notes.push("목표를 두 해 연속 놓쳐 회사 안에서 입지가 흔들려요."); }
+      if (c.flags.kpiMissStreak >= 2) { addReputation(c, -2); notes.push("목표를 두 해 연속 놓쳐 회사 안에서 입지가 흔들려요."); }
     }
     c.kpi = null;
   }
