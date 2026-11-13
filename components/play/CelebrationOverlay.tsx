@@ -37,7 +37,7 @@ export function CelebrationOverlay({ career, spot, onDone }: { career: Career; s
   const stats = spot.stats ?? [];
   const [l1, l2] = spot.title.split("\n");
   return (
-    <div className="fixed inset-0 z-[70] bg-[#111113] text-white flex flex-col" role="dialog" aria-label="대상 수상">
+    <div className="fixed inset-0 z-[70] bg-stage text-white flex flex-col" role="dialog" aria-label="대상 수상">
       <div className="shell w-full flex-1 flex flex-col pt-3">
         <div className="flex justify-end h-12 items-center">
           <button type="button" onClick={onDone} className="press text-[16px] text-white/50 px-2 py-1">건너뛰기</button>
@@ -46,7 +46,7 @@ export function CelebrationOverlay({ career, spot, onDone }: { career: Career; s
           <div className="w-full max-w-[400px] fade-up">
             <EventArt scene={spot.scene ?? "awards"} avatar={career.avatar} gender={career.gender} name={career.name} className="rounded-2xl" />
           </div>
-          <span className="fade-up mt-8 inline-block rounded-full bg-[#3a2b0f] text-[#f5b942] text-[13px] font-bold px-4 py-2" style={{ animationDelay: "120ms" }}>
+          <span className="fade-up mt-8 inline-block rounded-full bg-gold-deep text-gold text-[13px] font-bold px-4 py-2" style={{ animationDelay: "120ms" }}>
             {spot.chip}
           </span>
           <h2 className="fade-up mt-4 text-[32px] leading-[1.25] font-extrabold tracking-[-0.02em]" style={{ animationDelay: "200ms" }}>

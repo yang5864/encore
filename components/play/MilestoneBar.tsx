@@ -16,7 +16,7 @@ export function MilestoneBar({ career, compact = false }: { career: Pick<Career,
           return (
             <div key={label} className="flex-1 flex flex-col items-center gap-1.5 min-w-0">
               <div className="w-full h-1.5 rounded-full bg-chip overflow-hidden">
-                <div className={cn("bar-fill h-full", done ? "bg-primary" : "bg-transparent")} style={{ width: done ? "100%" : "0%" }} />
+                <div className={cn("bar-fill h-full", done ? "bg-primary" : "bg-transparent")} style={{ "--fill": done ? "100%" : "0%" } as React.CSSProperties} />
               </div>
               {!compact && <span className={cn("text-[13px] whitespace-nowrap", done ? "font-bold text-primary" : "font-medium text-ink-3")}>{label}</span>}
             </div>

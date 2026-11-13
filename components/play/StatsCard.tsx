@@ -84,7 +84,7 @@ export function StatsCard({ career, changes }: { career: Career; changes?: Chang
 
       {(career.stage === "idol" || career.stage === "retired" || (career.metrics?.instagram ?? 0) > 0) && !showSns && (
         <button type="button" onClick={() => setShowSns(true)} className="press mt-3 w-full h-10 rounded-xl bg-sub text-[13px] font-bold text-ink-2">
-          SNS · 스트리밍 보기 · 인스타 {countText(career.metrics?.instagram ?? 0)}
+          SNS와 스트리밍 지표 보기 (인스타 {countText(career.metrics?.instagram ?? 0)})
         </button>
       )}
       {(career.stage === "idol" || career.stage === "retired" || (career.metrics?.instagram ?? 0) > 0) && showSns && (

@@ -13,7 +13,7 @@ export function CardTitle({ children, sub, right }: { children: ReactNode; sub?:
   return (
     <div className="flex items-start justify-between gap-3 mb-3">
       <div>
-        <h2 className="t-card">{children}</h2>
+        <h2 className="t-subhead">{children}</h2>
         {sub ? <p className="t-cap mt-0.5">{sub}</p> : null}
       </div>
       {right}

@@ -142,7 +142,7 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
   const canSubmit = isLast && (step.kind === "lose" || (step.kind === "speech" && !!speech && !!reaction));
 
   return (
-    <div className="fixed inset-0 z-[70] bg-[#111113] text-white flex flex-col" role="dialog" aria-label="연말 시상식">
+    <div className="fixed inset-0 z-[70] bg-stage text-white flex flex-col" role="dialog" aria-label="연말 시상식">
       <div className="shell w-full flex-1 flex flex-col pt-3 overflow-y-auto no-scrollbar">
         <div className="flex items-center justify-between h-12">
           <span className="text-[13px] text-white/50">{cm.year} {show}</span>
@@ -153,7 +153,7 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
         </div>
         <PrefetchArt scenes={upcoming} avatar={career.avatar} gender={career.gender} />
         <div className="mt-6 text-center min-h-[220px]">
-          <span key={`chip-${i}`} className="fade-up inline-block rounded-full bg-[#3a2b0f] text-[#f5b942] text-[13px] font-bold px-4 py-2">{caption.chip}</span>
+          <span key={`chip-${i}`} className="fade-up inline-block rounded-full bg-gold-deep text-gold text-[13px] font-bold px-4 py-2">{caption.chip}</span>
           <h2 key={`t-${i}-${revealed}`} className="fade-up mt-4 font-extrabold tracking-[-0.02em] leading-[1.25] text-[22px]">{caption.title}</h2>
           <p key={`p-${i}-${revealed}`} className="fade-up mt-3 text-[16px] text-white/60 leading-relaxed">{caption.text}</p>
         </div>
@@ -168,7 +168,7 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
         {step.kind === "speech" && (
           <div className="mt-6 flex flex-col gap-2 fade-up">
             {event.choices.map((ch) => (
-              <button key={ch.id} onClick={() => setSpeech(ch.id)} className={cn("press w-full text-left rounded-2xl border-2 p-4", speech === ch.id ? "border-[#f5b942] bg-[#f5b942]/10" : "border-transparent bg-white/[0.06]")}>
+              <button key={ch.id} onClick={() => setSpeech(ch.id)} className={cn("press w-full text-left rounded-2xl border-2 p-4", speech === ch.id ? "border-gold bg-gold/10" : "border-transparent bg-white/[0.06]")}>
                 <p className="text-[16px] font-bold">{ch.label}</p>
                 <p className="text-[13px] text-white/60 mt-1">{ch.hint}</p>
               </button>

@@ -46,7 +46,7 @@ export function RecapOverlay({ career, onDone }: { career: Career; onDone: () =>
   const s = slides[i];
   const last = i === slides.length - 1;
   return (
-    <div className="fixed inset-0 z-[70] bg-[#111113] text-white flex flex-col" role="dialog" aria-label="커리어 회고">
+    <div className="fixed inset-0 z-[70] bg-stage text-white flex flex-col" role="dialog" aria-label="커리어 회고">
       <div className="shell w-full flex-1 flex flex-col pt-3 overflow-y-auto no-scrollbar">
         <div className="flex gap-1 pt-2" aria-hidden>
           {slides.map((_, k) => (
@@ -61,7 +61,7 @@ export function RecapOverlay({ career, onDone }: { career: Career; onDone: () =>
             <EventArt scene={s.scene} avatar={career.avatar} gender={career.gender} name={career.name} mood={s.mood} group={s.group ? artGroupFor(career.lineup, s.scene.startsWith("awards") ? "awards" : s.scene) : undefined} />
           </div>
           <div key={i} className="min-h-[200px]">
-            <span className="fade-up mt-8 inline-block rounded-full bg-[#3a2b0f] text-[#f5b942] text-[13px] font-bold px-4 py-2">{s.chip}</span>
+            <span className="fade-up mt-8 inline-block rounded-full bg-gold-deep text-gold text-[13px] font-bold px-4 py-2">{s.chip}</span>
             <h2 className="fade-up mt-4 text-[22px] leading-[1.3] font-extrabold tracking-[-0.02em] whitespace-pre-line">{s.title}</h2>
             <p className="fade-up mt-3 text-[16px] text-white/60 leading-relaxed">{s.text}</p>
           </div>

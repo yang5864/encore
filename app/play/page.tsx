@@ -156,7 +156,7 @@ export default function PlayPage() {
           <div className="fade-up rounded-full bg-ink text-bg text-[13px] font-bold px-4 py-2.5 shadow-lg">{seasonBanner}</div>
         </div>
       )}
-      <div className="top-progress" style={{ width: `${progress}%`, opacity: progress ? 1 : 0 }} />
+      <div className="top-progress" style={{ "--fill": progress / 100, opacity: progress ? 1 : 0 } as React.CSSProperties} />
       <header className="flex items-center justify-between h-12 mb-2">
         <Link href="/" aria-label="홈으로" className="font-extrabold text-[16px] tracking-tight py-2.5 -my-2.5 pr-3">encore<span className="text-primary">.</span></Link>
         <button onClick={() => setMenuOpen(true)} aria-label="메뉴" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center">

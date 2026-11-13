@@ -13,6 +13,7 @@ import { STAT_KEYS, STAT_NAMES } from "@/lib/game/stats";
 import type { Career } from "@/lib/game/types";
 import { suggestAlbumName } from "@/lib/game/album";
 import { AlbumNamePicker } from "./AlbumNamePicker";
+import { Icon } from "@/components/ui/Icon";
 
 export type FocusSelection = { id: string; stat?: string; concept?: string; albumName?: string; customName?: boolean; producer?: string; promo?: string };
 
@@ -56,7 +57,7 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
           </div>
           <p className="text-[13px] text-ink-2 mt-1">{o.disabledReason ?? o.hint}</p>
           {o.id === "comeback" && rival && !o.disabledReason && (
-            <p className="text-[13px] font-bold text-warn mt-1.5">⚠ 이번 시즌 {rival.name} 컴백 예정 · 초동·차트·음방 점수를 나눠 가져요. 이기면 화제성이 붙어요</p>
+            <p className="text-[13px] font-bold text-warn mt-1.5 flex gap-1"><Icon name="alert" size={16} className="shrink-0 mt-px" /><span>이번 시즌 {rival.name}도 컴백해요. 초동과 차트를 나눠 가져요</span></p>
           )}
         </button>
         {selected && o.picker === "stat" && (

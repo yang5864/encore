@@ -30,7 +30,7 @@ export default function GuidePage() {
     <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
         <BackButton href="/" label="홈" />
-        <h1 className="t-card">전체 · 게임 가이드</h1>
+        <h1 className="text-[17px] font-bold tracking-[-0.01em]">게임 가이드</h1>
       </header>
       <div className="flex flex-col gap-3 mt-4">
         <Card><ThemeToggle /></Card>
@@ -46,12 +46,12 @@ export default function GuidePage() {
         </Card>
         {STEPS.map((s) => (
           <Card key={s.title}>
-            <h2 className="t-card">{s.title}</h2>
+            <h2 className="text-[17px] font-bold tracking-[-0.01em] leading-snug">{s.title}</h2>
             <p className="text-[13px] text-ink-2 mt-1.5 leading-relaxed">{s.text}</p>
           </Card>
         ))}
         <Card>
-          <h2 className="t-card">현실 고증 노트</h2>
+          <h2 className="text-[17px] font-bold tracking-[-0.01em] leading-snug">현실 고증 노트</h2>
           <ul className="mt-2 flex flex-col gap-2">
             {NOTES.map((n) => (
               <li key={n} className="text-[13px] text-ink-2 leading-relaxed">· {n}</li>

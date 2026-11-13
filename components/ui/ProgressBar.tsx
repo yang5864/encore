@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import type { CSSProperties } from "react";
 
 type Props = { value: number; color?: string; height?: number; className?: string; label?: string };
 
@@ -21,7 +22,7 @@ export function ProgressBar({ value, color = "var(--primary)", height = 8, class
       aria-valuemax={100}
       aria-label={label}
     >
-      <div className="bar-fill" style={{ width: `${width}%`, background: color }} />
+      <div className="bar-fill" style={{ "--fill": `${width}%`, background: color } as CSSProperties} />
     </div>
   );
 }

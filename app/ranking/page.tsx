@@ -33,7 +33,7 @@ export default function RankingPage() {
       <header className="flex items-start gap-3 min-h-12 py-1">
         <BackButton href="/play" />
         <div className="min-w-0 pt-1.5">
-          <h1 className="t-card">{real ? "아이돌 개인 브랜드평판" : `${year}년 아이돌 인기 순위`}</h1>
+          <h1 className="t-subhead">{real ? "아이돌 개인 브랜드평판" : `${year}년 아이돌 인기 순위`}</h1>
           <p className="text-[13px] text-ink-3 leading-snug">{periodLabel(shown)} 기준 · {r.source.kind === "real" ? `${r.source.label.split(" 아이돌 개인")[0]} 자료 · 한국기업평판연구소` : "게임 추정"}</p>
         </div>
       </header>
@@ -63,6 +63,6 @@ function RankDelta({ value }: { value: number | null | undefined }) {
   const base = "w-11 shrink-0 text-center text-[13px] font-bold tabular-nums";
   if (value === undefined) return <span className={base} />;
   if (value === null) return <span className={cn(base, "text-up")}>NEW</span>;
-  if (value === 0) return <span className={cn(base, "text-ink-3")}>–</span>;
+  if (value === 0) return <span className={cn(base, "text-ink-3")} aria-label="변동 없음">0</span>;
   return <span className={cn(base, value > 0 ? "text-up" : "text-down")}>{value > 0 ? "▲" : "▼"}{Math.abs(value)}</span>;
 }

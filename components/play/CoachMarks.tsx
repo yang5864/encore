@@ -16,7 +16,7 @@ export function CoachMarks({ onDone }: { onDone: () => void }) {
       <div className="w-full max-w-[480px] bg-card rounded-t-[24px] p-6 pb-[calc(env(safe-area-inset-bottom)+24px)] pop-in">
         <div className="flex gap-1.5 mb-4">
           {STEPS.map((_, k) => (
-            <span key={k} className={`h-1.5 rounded-full transition-all duration-300 ${k === i ? "w-6 bg-primary" : "w-1.5 bg-chip"}`} />
+            <span key={k} className={`h-1.5 rounded-full transition-colors duration-300 ${k === i ? "w-6 bg-primary" : "w-1.5 bg-chip"}`} />
           ))}
         </div>
         <p className="t-cap text-primary">{i + 1} / {STEPS.length}</p>

@@ -15,7 +15,7 @@ export default function RecordsPage() {
     <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
         <BackButton href="/" label="홈" />
-        <h1 className="t-card">내 기록 · 명예의 전당</h1>
+        <h1 className="t-subhead">내 기록 · 명예의 전당</h1>
       </header>
       <p className="t-cap mt-2">은퇴한 커리어가 점수순으로 쌓여요. 이 기기에만 저장돼요.</p>
       <div className="flex flex-col gap-2 mt-4">
@@ -33,7 +33,7 @@ export default function RecordsPage() {
             <div className="min-w-0 flex-1">
               <p className="t-body font-bold truncate">{displayName({ name: r.name, groupName: r.groupName, stage: "retired" })}</p>
               <p className="text-[13px] text-ink-3 truncate flex items-center gap-1">{r.agency && <Logo id={agencyById(r.agency)?.logo} label={agencyById(r.agency)?.name ?? ""} color={agencyById(r.agency)?.color} size={14} rounded="full" />}<span className="truncate">{r.ending} · {agencyById(r.agency)?.name ?? "무소속"} · {r.age + KOREAN_AGE_OFFSET}살 은퇴</span></p>
-              <p className="text-[13px] text-ink-2 mt-0.5">팬 {fanText(r.fans)} · 음방 1위 {r.wins}회 · 수상 {r.awards}회 · 앨범 {r.albums}장</p>
+              <p className="text-[13px] text-ink-2 mt-0.5 flex flex-wrap gap-x-2.5"><span>팬 {fanText(r.fans)}</span><span>음방 1위 {r.wins}회</span><span>수상 {r.awards}회</span><span>앨범 {r.albums}장</span></p>
             </div>
             <div className="text-right">
               <p className="text-[13px] text-ink-3 font-bold">OVR</p>

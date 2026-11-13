@@ -15,6 +15,7 @@ import { overall } from "@/lib/game/stats";
 import type { Career } from "@/lib/game/types";
 import { loadCareer, loadRecords, type CareerRecord } from "@/lib/storage";
 import { cn } from "@/lib/cn";
+import { Icon } from "@/components/ui/Icon";
 
 export default function HomePage() {
   const router = useRouter();
@@ -67,7 +68,7 @@ export default function HomePage() {
             </div>
             <div className="min-w-0 flex-1">
               <p className="t-cap">{career.stage === "retired" ? "완성된 인생" : "진행 중인 인생"}</p>
-              <p className="t-card truncate">{career.groupName ? `${career.groupName} ${career.name}` : career.name}</p>
+              <p className="t-subhead truncate">{career.groupName ? `${career.groupName} ${career.name}` : career.name}</p>
               <p className="text-[13px] text-ink-2 flex items-center gap-1.5 truncate">
                 {career.agencyId && <Logo id={agencyById(career.agencyId)?.logo} label={agencyById(career.agencyId)?.name ?? ""} color={agencyById(career.agencyId)?.color} size={16} rounded="full" />}
                 <span className="truncate">{periodLabel(career)} · {STAGE_NAMES[career.stage]} · OVR {overall(career.stats, career.position)}</span>
@@ -83,8 +84,8 @@ export default function HomePage() {
       {/* 내 기록 */}
       <Card className="mt-3 fade-up" style={{ animationDelay: "200ms" }}>
         <div className="flex items-center justify-between">
-          <h2 className="t-card">내 기록</h2>
-          <Link href="/records" className="text-[13px] font-semibold text-ink-3 py-2.5 -my-2.5 pl-3">전체 보기 ›</Link>
+          <h2 className="t-subhead">내 기록</h2>
+          <Link href="/records" className="text-[13px] font-semibold text-ink-3 py-2.5 -my-2.5 pl-3 inline-flex items-center gap-0.5">전체 보기<Icon name="chevron-right" size={16} /></Link>
         </div>
         {records.length === 0 ? (
           <p className="t-cap mt-3">은퇴한 커리어가 여기에 쌓여요.</p>
@@ -100,7 +101,7 @@ export default function HomePage() {
                   <p className="t-body font-bold truncate">{r.groupName ? `${r.groupName} ${r.name}` : r.name}</p>
                   <p className="text-[13px] text-ink-3 truncate">{r.ending} · {agencyById(r.agency)?.name ?? "무소속"} · 팬 {fanText(r.fans)}</p>
                 </div>
-                <span className="text-[13px] font-bold text-ink-2 whitespace-nowrap">🏆 {r.awards} · OVR {r.ovr}</span>
+                <span className="text-[13px] font-bold text-ink-2 whitespace-nowrap flex items-center gap-2"><span className="inline-flex items-center gap-0.5"><Icon name="trophy" size={14} />{r.awards}</span><span>OVR {r.ovr}</span></span>
               </div>
             ))}
           </div>
@@ -109,8 +110,8 @@ export default function HomePage() {
 
       {/* 기획사 로고 스트립 */}
       <Card className="mt-3 fade-up" style={{ animationDelay: "260ms" }}>
-        <h2 className="t-card">지원할 수 있는 기획사</h2>
-        <p className="t-cap mt-1">2026 종합 순위 순 · 대형 4 · 중견 5 · 레이블 4 · 해외 3</p>
+        <h2 className="t-subhead">지원할 수 있는 기획사</h2>
+        <p className="t-cap mt-1">2026 종합 순위 순서, 대형 4곳과 중견 5곳, 레이블 4곳, 해외 3곳</p>
         <AgencyMarquee />
       </Card>
 

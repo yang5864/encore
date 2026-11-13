@@ -8,6 +8,7 @@ import { EventArt } from "@/components/EventArt";
 import { likeText } from "@/lib/game/reactions";
 import { countText } from "@/lib/game/metrics";
 import type { Change, Lineup, TurnResult } from "@/lib/game/types";
+import { Icon } from "@/components/ui/Icon";
 
 const PRIORITY = ["fans", "popularity", "instagram", "ovr", "reputation", "settled", "spotify", "youtube", "condition"];
 
@@ -100,7 +101,7 @@ export function ResultSheet({ result, avatar, gender, name, lineup, open, onClos
                   <div key={i} className="rounded-2xl bg-sub p-3.5">
                     <p className="text-[13px] font-bold text-ink-3">{cm.author}</p>
                     <p className="text-[13px] mt-0.5">{cm.text}</p>
-                    <p className="text-[13px] text-ink-3 mt-1">♡ {likeText(cm.likes)}</p>
+                    <p className="text-[13px] text-ink-3 mt-1 inline-flex items-center gap-1"><Icon name="heart" size={14} />{likeText(cm.likes)}</p>
                   </div>
                 ))}
               </div>

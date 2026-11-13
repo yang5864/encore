@@ -18,6 +18,7 @@ import { POSITIONS, STAT_COLORS, STAT_KEYS, STAT_NAMES, overall } from "@/lib/ga
 import type { Career, Gender, Tier } from "@/lib/game/types";
 import { GameError } from "@/lib/game/types";
 import { saveCareer } from "@/lib/storage";
+import { Icon } from "@/components/ui/Icon";
 
 const STEPS = ["프로필", "스타일", "첫 지원"];
 const TONE: Record<string, "danger" | "warn" | "neutral" | "ok" | "info"> = { "매우 낮음": "danger", 낮음: "warn", 보통: "neutral", 높음: "ok", "매우 높음": "info" };
@@ -124,11 +125,11 @@ export default function NewPage() {
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="t-card">{c.name}</p>
+                      <p className="t-subhead">{c.name}</p>
                       <p className="text-[13px] text-ink-2 mt-0.5">{c.summary}</p>
                     </div>
                     <span className={cn("shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center", selected ? "border-primary bg-primary text-white" : "border-line")} aria-hidden>
-                      {selected ? "✓" : ""}
+                      {selected ? <Icon name="check" size={16} strokeWidth={2.25} /> : null}
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-1.5 mt-3">

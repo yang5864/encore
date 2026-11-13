@@ -80,7 +80,7 @@ export function MenuSheet({ career, open, onClose, onExport, onImport, onRetire,
           {career.albums.length === 0 && <p className="t-cap">아직 앨범이 없어요.</p>}
           {[...career.albums].reverse().map((a) => (
             <div key={a.id} className="rounded-2xl bg-sub p-4 flex gap-3">
-              <span className="w-12 h-12 rounded-xl shrink-0" style={{ background: `linear-gradient(135deg, #c4b2df, ${["#9bb5a5", "#d9a78d", "#9faed0", "#c9ba94"][a.quality % 4]})` }} />
+              <span className="w-12 h-12 rounded-xl shrink-0" style={{ background: `linear-gradient(135deg, var(--album-a), var(--album-${(a.quality % 4) + 1}))` }} />
               <div className="min-w-0">
                 <p className="text-[13px] text-ink-3">{periodLabel({ turn: a.turn })}</p>
                 <p className="t-body font-bold truncate">{a.name}</p>
@@ -118,7 +118,7 @@ function MenuItem({ label, sub, onClick, danger }: { label: string; sub: string;
 function Confirm({ title, text, label, onYes, onNo }: { title: string; text: string; label: string; onYes: () => void; onNo: () => void }) {
   return (
     <div className="fade-up">
-      <h3 className="t-card">{title}</h3>
+      <h3 className="t-subhead">{title}</h3>
       <p className="t-body text-ink-2 mt-2">{text}</p>
       <div className="flex gap-2 mt-6">
         <Button variant="ghost" onClick={onNo}>취소</Button>

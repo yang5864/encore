@@ -9,6 +9,7 @@ import { rankingFor } from "@/lib/game/brand-rank";
 import { settlement } from "@/lib/game/economy";
 import type { Career } from "@/lib/game/types";
 import { cn } from "@/lib/cn";
+import { Icon } from "@/components/ui/Icon";
 
 /** 은퇴한 커리어의 최종 요약: 결말 · 수상 · 순위 그래프 · 디스코그래피 · 인생 타임라인 */
 export function CareerSummary({ career }: { career: Career }) {
@@ -28,7 +29,7 @@ export function CareerSummary({ career }: { career: Career }) {
             <span className="block text-[13px] text-ink-3">최종 브랜드평판 순위 · {periodLabel(finalTurn)}</span>
             <span className="block text-[22px] font-extrabold text-primary leading-tight">{finalRank.outside ? (finalRank.source.kind === "real" ? "50위 밖" : "순위 밖") : `${finalRank.me.rank}위`}</span>
           </span>
-          <span className="text-[13px] font-bold text-primary shrink-0">전체 순위 보기 ›</span>
+          <span className="text-[13px] font-bold text-primary shrink-0 inline-flex items-center gap-0.5">전체 순위 보기<Icon name="chevron-right" size={16} /></span>
         </Link>
         {(career.flags.grammy || career.flags.stadiumTour || career.peakBillboard === 1) && (
           <div className="flex flex-wrap gap-1.5 mt-3">
@@ -56,7 +57,7 @@ export function CareerSummary({ career }: { career: Career }) {
             {[...career.awards].sort((x, y) => x.year - y.year).map((aw, i) => (
               <div key={i} className="flex items-center gap-3">
                 <span className="w-12 text-[13px] text-ink-3 tabular-nums">{aw.year}</span>
-                <span className="text-[16px]" aria-hidden>{aw.kind === "daesang" ? "🏆" : aw.kind === "rookie" ? "🌱" : "🎖️"}</span>
+                <Icon name={aw.kind === "daesang" ? "trophy" : aw.kind === "rookie" ? "sprout" : "medal"} size={18} className={aw.kind === "daesang" ? "text-warn shrink-0" : "text-ink-3 shrink-0"} />
                 <span className="min-w-0 flex-1 text-[13px] font-bold truncate">{aw.show} <span className="text-ink-2 font-medium">{aw.name}</span></span>
                 {aw.kind === "daesang" && <Chip tone="info">대상</Chip>}
               </div>

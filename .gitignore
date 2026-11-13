@@ -56,3 +56,6 @@ production/session-state/
 # Higgsfield 생성 작업용 (레퍼런스는 기존 자산의 복사본, inbox는 가공 전 원본)
 /public/art-v6/refs/
 /public/art-v6/inbox/
+
+# Hallmark 검사 기록·스크린샷 (로컬 전용)
+/.hallmark/

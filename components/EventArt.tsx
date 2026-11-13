@@ -5,6 +5,7 @@ import type { CSSProperties } from "react";
 import { eventArt } from "@/lib/art";
 import type { ArtMood } from "@/lib/art";
 import { ArtFrames } from "./ArtFrames";
+import { Icon } from "@/components/ui/Icon";
 
 export type { ArtMood };
 export type ArtGroup = { avatars: number[]; center: boolean };
@@ -72,7 +73,7 @@ export function EventArt({ scene, avatar, gender, name = "캐릭터", className 
       <ArtFrames key={`${art.scene}:${avatar}`} frames={art.frames} visibleHeight={groupAvatars ? groupHeight * 1.06 : baseHeight} sizes="(max-width: 480px) 65vw, 310px" onReady={() => setFg(true)}
         {...(groupAvatars ? { offsetX: slotX(playerSlot), zIndex: 2 } : {})} />
       {!art.moodApplied && (mood === "sad" || mood === "happy") ? (
-        <span className={`art-mood-badge art-mood-${mood}`} aria-hidden style={{ left: groupAvatars ? `calc(${slotX(playerSlot)}% - 6%)` : undefined }}>{mood === "sad" ? "💧" : "✨"}</span>
+        <span className={`art-mood-badge art-mood-${mood}`} aria-hidden style={{ left: groupAvatars ? `calc(${slotX(playerSlot)}% - 6%)` : undefined }}><Icon name={mood === "sad" ? "droplet" : "sparkle"} size={16} /></span>
       ) : null}
     </div>
   );

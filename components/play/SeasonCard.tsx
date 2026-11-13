@@ -5,6 +5,7 @@ import { pickTop } from "./ResultSheet";
 import { fanText, periodLabel, wonText } from "@/lib/game/format";
 import { countText } from "@/lib/game/metrics";
 import type { Career, Change } from "@/lib/game/types";
+import { Icon } from "@/components/ui/Icon";
 
 function deltaText(ch: Change) {
   const d = ch.after - ch.before;
@@ -32,7 +33,7 @@ export function SeasonCard({ career }: { career: Career }) {
       {highlights.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mt-2">
           {highlights.map((h) => (
-            <Chip key={h} tone="warn">🏆 {h}</Chip>
+            <Chip key={h} tone="warn"><span className="inline-flex items-center gap-1"><Icon name="trophy" size={14} />{h}</span></Chip>
           ))}
         </div>
       )}
