@@ -16,7 +16,7 @@ import { BUDGET_PRESETS, budgetOf, rivalFor } from "./team.ts";
 import type { Production } from "./types.ts";
 import type { Award } from "./types.ts";
 import { yearEndAwards, SHOW_FULL, YEAR_END_STAGES } from "./awards.ts";
-import { DEBUT_COST, TRAINEE_COST_PER_TURN, updateSettlement } from "./economy.ts";
+import { debutCost, traineeCost, updateSettlement } from "./economy.ts";
 import { checkMilestones } from "./milestones.ts";
 import { endingFor } from "./endings.ts";
 import { buildReactions } from "./reactions.ts";
@@ -223,7 +223,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
       log(c, "포텐 폭발", "실력과 잠재력이 한꺼번에 뛰었어요.", "milestone");
     }
     if (c.stage === "trainee") {
-      c.money.invested += Math.round(TRAINEE_COST_PER_TURN * eraScale(yearOf(c)) * 10) / 10;
+      c.money.invested += Math.round(traineeCost(agencyById(c.agencyId)) * eraScale(yearOf(c)) * 10) / 10;
       c.trust = Math.min(100, c.trust + 4);
     }
   } else if (c.stage === "idol") {
@@ -747,7 +747,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     c.stage = "idol";
     c.debutTurn = c.turn;
     c.contractEnd = c.turn + 14;
-    c.money.invested += Math.round(DEBUT_COST * a.budget * eraScale(yearOf(c)) * 10) / 10;
+    c.money.invested += Math.round(debutCost(a) * eraScale(yearOf(c)) * 10) / 10;
     c.fans += Math.round(DEBUT_FANS[a.tier] * eraScale(yearOf(c)) * (0.8 + rng(c) * 0.4));
     c.popularity = Math.max(c.popularity, a.tier === "major" ? 30 : a.tier === "indie" ? 10 : 20);
     c.trust = Math.min(100, c.trust + 10);

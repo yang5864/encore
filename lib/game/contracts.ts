@@ -1,6 +1,6 @@
 import type { ActiveEvent, Career, ChoiceDef } from "./types.ts";
 import { agencyById, AGENCIES, TIERS, type Agency } from "./agencies.ts";
-import { DEBUT_COST, memberShare } from "./economy.ts";
+import { debutCost, memberShare } from "./economy.ts";
 import { wonText } from "./format.ts";
 import { decodeEta, etaLabel, lineupRoles } from "./debut.ts";
 
@@ -76,7 +76,7 @@ export function contractTerms(c: Career, event: ActiveEvent, choice: ChoiceDef):
               { label: "내 역할", value: lineupRoles(c.lineup).join(" · "), accent: true },
             ]
           : []),
-        { label: "데뷔 제작비", value: `${eok(DEBUT_COST * a.budget)} 회사 선투자` },
+        { label: "데뷔 제작비", value: `${eok(debutCost(a))} 회사 선투자` },
         { label: "정산", value: `회수 후 순이익의 ${share}% 중 멤버 몫` },
         { label: "활동 범위", value: "음반 · 공연 · 방송 · 광고" },
       ],
