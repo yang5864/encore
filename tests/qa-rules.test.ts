@@ -7,7 +7,7 @@ import { eventById } from "../lib/game/events/index.ts";
 import { activate } from "../lib/game/schedule.ts";
 import { awardName, yearEndAwards } from "../lib/game/awards.ts";
 import { CONCEPTS, MAIN_STAT } from "../lib/game/focus.ts";
-import { MUSIC_SHOWS, winChance, melonRank, isBtsRival, BTS_RIVAL_BONUS } from "../lib/game/metrics-model.ts";
+import { MUSIC_SHOWS, winChance, melonRank, isBtsRival, BTS_RIVAL_BONUS, activityScores } from "../lib/game/metrics-model.ts";
 import { rivalFor } from "../lib/game/team.ts";
 import { metricTargets } from "../lib/game/metrics.ts";
 import { shopOffers, SHOP_ITEMS, PREMIUM_ID, priceOf } from "../lib/game/shop.ts";
@@ -129,12 +129,24 @@ test("시상식별 실제 부문 이름", () => {
 });
 
 // ───────── 5. 시상식 초청 ─────────
-test("연말 시상식 초청장에는 참석만 있다", () => {
+test("연말 시상식은 초청 확인 없이 바로 시상식으로 가고, 참석 효과가 붙는다", () => {
   const base = idol(7);
   base.turn = 21; base.lastReleaseTurn = 21; base.popularity = 70; base.contractEnd = 40;
   const n = advanceTurn(base, "fanmeet");
-  assert.equal(n.pending?.id, "awards-invite");
-  assert.deepEqual(n.pending!.choices.map((x) => x.id), ["attend"]);
+  assert.equal(n.pending?.id, "ceremony");
+  assert.equal(n.ceremony?.attended, true);
+  assert.ok(n.result!.notes.some((x) => x.includes("초청")), "초청 정보는 결과 메모로 남는다");
+});
+
+test("시상식이 끝난 시즌엔 돌발 사건·이야기 이벤트가 이어지지 않는다", () => {
+  for (let k = 0; k < 40; k++) {
+    const base = idol(7);
+    base.turn = 21; base.lastReleaseTurn = 21; base.popularity = 70; base.contractEnd = 40; base.rngState = k;
+    let n = advanceTurn(base, "fanmeet");
+    assert.equal(n.pending?.id, "ceremony");
+    n = resolveChoice(n, n.pending!.choices[0].id, { reaction: "joy" });
+    assert.ok(n.pending === null || ["budget", "contract7", "military"].includes(n.pending.id), `시상식 뒤 ${n.pending?.id}`);
+  }
 });
 
 // ───────── 6. 콘셉트 이름 ─────────
@@ -322,4 +334,31 @@ test("멤버가 탈퇴하면 팀 인원과 아바타가 줄어든다", () => {
   const d = idol(8);
   d.lineup = { members: 2, leader: false, center: false, maknae: false, parts: [], memberAvatars: [1] };
   assert.equal(resolveChoice(give(d, "member-leave"), "reorg").lineup!.members, 2);
+});
+
+test("시상식 시즌의 홍보 예산 선택은 다음 시즌으로 미뤄진다", () => {
+  let deferred = 0;
+  for (let k = 0; k < 20; k++) {
+    const base = idol(7);
+    base.turn = 21; base.lastReleaseTurn = 21; base.popularity = 70; base.contractEnd = 40; base.rngState = k;
+    let n = advanceTurn(base, "fanmeet");
+    n = resolveChoice(n, n.pending!.choices[0].id, { reaction: "joy" });
+    if (n.pending) continue; // 계약 등 예약 이벤트가 이어진 경우
+    assert.notEqual(n.flags.budgetDue, undefined, "예산 선택이 남아 있다");
+    const next = advanceTurn(n, "rest");
+    if (next.pending?.id === "budget") {
+      deferred++;
+      const chosen = resolveChoice(next, next.pending.choices[0].id);
+      assert.equal(chosen.flags.budgetDue, undefined);
+    }
+  }
+  assert.ok(deferred > 0, "다음 시즌에 예산 시트가 뜨는 경우가 있다");
+});
+
+test("콘셉트 피로는 음원 점수를 깎고, 두 번 이어간 콘셉트를 바꾸면 변신 보너스가 붙는다", () => {
+  const base = { quality: 70, production: { producer: "inhouse" as const, promo: "balanced" as const }, hype: 1, budget: { mv: 25, digital: 25, global: 25, fan: 25 }, rival: false };
+  const c = idol(4);
+  const plain = activityScores(c, base).digital;
+  assert.equal(activityScores(c, { ...base, chartMod: 5 }).digital, Math.min(100, plain + 5));
+  assert.equal(activityScores(c, { ...base, chartMod: -6 }).digital, Math.max(0, plain - 6));
 });

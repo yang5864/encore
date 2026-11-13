@@ -70,8 +70,8 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
   const fatigue = Math.min(3, Math.max(0, streak - 1));
   quality = Math.max(10, quality - fatigue * 4);
   // 제작 방식
-  if (production.producer === "star") quality = Math.min(100, quality + 8);
-  if (production.producer === "self") quality = Math.max(10, quality + (c.stats.producing >= 70 ? 6 : c.stats.producing >= 55 ? 1 : -6));
+  if (production.producer === "star") quality = Math.min(100, quality + 10);
+  if (production.producer === "self") quality = Math.max(10, quality + (c.stats.producing >= 70 ? 6 : c.stats.producing >= 55 ? 3 : -6));
   let cost = albumCost(c, quality);
   if (production.producer === "star") cost = Math.round(cost * 1.6 * 10) / 10;
   if (production.producer === "self") cost = Math.round(cost * 0.7 * 10) / 10;
@@ -100,9 +100,11 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
   const sales = Math.min(4500000, Math.round((c.fans * 0.85 + (Math.pow(quality, 1.7) * 4 + c.popularity * 300) * era) * hype * Math.pow(reach, 0.35)));
 
   // ── 다섯 점수 → 멜론 · 빌보드 · 음악방송 6개 (방송별 집계 비율이 다르다)
-  const scores = activityScores(c, { quality, production, hype, budget, rival: !!rival });
+  // 매너리즘은 차트에서도 식고(−3/회), 두 번 이상 이어간 콘셉트를 바꾸면 변신 화제로 차트가 반응한다(+5)
+  const activity = { quality, production, hype, budget, rival: !!rival, chartMod: (switched ? 5 : 0) - fatigue * 3 };
+  const scores = activityScores(c, activity);
   const melon = melonRank(c, scores, !!rival, rng(c));
-  const billboard = billboardRank(c, scores, { quality, production, hype, budget, rival: !!rival }, rng(c));
+  const billboard = billboardRank(c, scores, activity, rng(c));
   const rookie = c.albums.length; // 0: 데뷔 앨범, 1: 두 번째
   const shows = MUSIC_SHOWS.filter((show) => rng(c) < winChance(c, scores, show, !!rival, rookie) * (1 + (c.flags.stageBonus ?? 0))).map((show) => show.name);
   if (rival) c.flags.rivalClash = c.turn; // 결과 문구용

@@ -81,7 +81,7 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
                 const tag = streak >= 2 ? `연속 ${streak}번째 · 매너리즘` : career.albums.length > 0 && streak === 0 && conceptStreak(career, career.albums[career.albums.length - 1].concept) >= 2 ? "변신 보너스" : null;
                 return (
                   <button key={x.id} onClick={() => onChange({ ...value, concept: x.id })} className={cn("press text-left rounded-xl p-3", value.concept === x.id ? "bg-ink text-bg" : "bg-chip")}>
-                    <p className="text-[13px] font-bold">{x.name}{tag && <span className={cn("ml-1.5 font-semibold", streak >= 2 ? "text-down" : "text-up")}>{tag}</span>}</p>
+                    <p className="text-[13px] font-bold">{x.name}{tag && <span className={cn("ml-1.5 font-semibold", value.concept === x.id ? "text-bg" : streak >= 2 ? "text-down" : "text-up")}>{tag}</span>}</p>
                     <p className={cn("text-[13px] mt-0.5", value.concept === x.id ? "text-bg/70" : "text-ink-3")}>{x.description}</p>
                   </button>
                 );

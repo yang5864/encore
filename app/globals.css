@@ -9,8 +9,8 @@
   --primary-press: #1b64da;
   --primary-soft: #e8f3ff;
   --text: #191f28;
-  --text-2: #6b7684;
-  --text-3: #8b95a1;
+  --text-2: #4e5968;
+  --text-3: #606b78;
   --line: #e5e8eb;
   --up: #f04452;
   --up-soft: #ffeeef;
@@ -24,6 +24,13 @@
   --ok-soft: #e6f9ee;
   --radius: 20px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* 13px 글자용 진한 색: 배경·버튼은 브랜드 색 그대로, 작은 글자만 대비 4.5:1 이상 */
+  --primary-text: #1b64da;
+  --up-text: #d91f2f;
+  --down-text: #1b64da;
+  --warn-text: #b35c00;
+  --danger-text: #d91f2f;
+  --ok-text: #028a3e;
   --scheme: light;
 }
 
@@ -37,7 +44,13 @@
     --primary-soft: rgba(49, 130, 246, 0.18);
     --text: #f2f4f6;
     --text-2: #b0b8c1;
-    --text-3: #8b95a1;
+    --text-3: #9aa4af;
+    --primary-text: #5aa0ff;
+    --up-text: #ff7a84;
+    --down-text: #5aa0ff;
+    --warn-text: #ff9500;
+    --danger-text: #ff7a84;
+    --ok-text: #04c75a;
     --line: #2e2e36;
     --up: #ff5a66;
     --up-soft: rgba(240, 68, 82, 0.18);
@@ -58,7 +71,13 @@
   --primary-soft: rgba(49, 130, 246, 0.18);
   --text: #f2f4f6;
   --text-2: #b0b8c1;
-  --text-3: #8b95a1;
+  --text-3: #9aa4af;
+  --primary-text: #5aa0ff;
+  --up-text: #ff7a84;
+  --down-text: #5aa0ff;
+  --warn-text: #ff9500;
+  --danger-text: #ff7a84;
+  --ok-text: #04c75a;
   --line: #2e2e36;
   --up: #ff5a66;
   --up-soft: rgba(240, 68, 82, 0.18);
@@ -293,3 +312,11 @@
 .art-mood-badge { position: absolute; left: 42%; top: 22%; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 16px; line-height: 1; background: rgba(255,255,255,0.88); box-shadow: 0 1px 4px rgba(0,0,0,0.25); z-index: 5; pointer-events: none; animation: art-mood-in 600ms ease-out both; }
 @keyframes art-mood-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .art-mood-badge { animation: none; } }
+
+/* 작은 글자 대비: 같은 이름의 글자색 유틸리티만 진한 토큰으로 돌린다 (배경 유틸리티는 그대로) */
+.text-primary { color: var(--primary-text); }
+.text-up { color: var(--up-text); }
+.text-down { color: var(--down-text); }
+.text-warn { color: var(--warn-text); }
+.text-danger { color: var(--danger-text); }
+.text-ok { color: var(--ok-text); }

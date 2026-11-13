@@ -84,7 +84,7 @@ export default function HomePage() {
       <Card className="mt-3 fade-up" style={{ animationDelay: "200ms" }}>
         <div className="flex items-center justify-between">
           <h2 className="t-card">내 기록</h2>
-          <Link href="/records" className="text-[13px] font-semibold text-ink-3">전체 보기 ›</Link>
+          <Link href="/records" className="text-[13px] font-semibold text-ink-3 py-2.5 -my-2.5 pl-3">전체 보기 ›</Link>
         </div>
         {records.length === 0 ? (
           <p className="t-cap mt-3">은퇴한 커리어가 여기에 쌓여요.</p>

@@ -96,8 +96,8 @@ export default function NewPage() {
           </div>
           <p className="t-cap mt-6 mb-2">캐릭터</p>
           <div className="grid grid-cols-3 gap-2">
-            {(gender === "female" ? FEMALE_AVATARS : MALE_AVATARS).map((i) => (
-              <button key={i} onClick={() => setAvatar(i)} className={cn("press rounded-2xl border-2 bg-card flex items-end justify-center pb-1 overflow-hidden h-[104px]", avatar === i ? "border-primary" : "border-transparent")}>
+            {(gender === "female" ? FEMALE_AVATARS : MALE_AVATARS).map((i, n) => (
+              <button key={i} onClick={() => setAvatar(i)} aria-label={`캐릭터 ${n + 1}`} aria-pressed={avatar === i} className={cn("press rounded-2xl border-2 bg-card flex items-end justify-center pb-1 overflow-hidden h-[104px]", avatar === i ? "border-primary" : "border-transparent")}>
                 <Avatar index={i} size={72} />
               </button>
             ))}

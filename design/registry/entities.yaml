@@ -54,7 +54,7 @@
 #   in any other shape is reported as unsupported layout, with its number.
 
 version: 1
-last_updated: ""
+last_updated: "2026-11-13"
 
 # ─── ENTITIES ────────────────────────────────────────────────────────────────
 # Named game-world objects: enemies, NPCs, characters, factions, bosses.
@@ -123,7 +123,64 @@ items: []
 #   output_range[min, max], added
 # Optional: expression (the actual formula), notes
 
-formulas: []
+formulas:
+  - name: audition_chance
+    status: active
+    source: design/gdd/career-progression.md
+    referenced_by:
+      - design/gdd/career-progression.md
+      - design/gdd/economy.md
+    variables:
+      - tier_base
+      - ovr
+    output_range: [0.03, 0.95]
+    expression: "clamp(tier_base + (ovr - 45) * 0.015, 0.03, 0.95)"
+    added: 2026-11-13
+    revised: ""
+  - name: melon_peak_rank
+    status: active
+    source: design/gdd/comeback-metrics.md
+    referenced_by:
+      - design/gdd/comeback-metrics.md
+      - design/gdd/event-flow.md
+      - design/gdd/fandom-team.md
+    variables:
+      - digital
+      - social
+      - era_bar
+      - rival
+    output_range: [1, 100]
+    expression: "round(100 * exp(-edge / 8.5)), edge = digital + 0.15 * social + 10 * noise - (62 + era_bar + rival)"
+    added: 2026-11-13
+    revised: ""
+  - name: member_settlement
+    status: active
+    source: design/gdd/economy.md
+    referenced_by:
+      - design/gdd/economy.md
+      - design/gdd/fandom-team.md
+    variables:
+      - revenue
+      - invested
+      - share
+      - member_cut
+    output_range: [0, 9999]
+    expression: "max(0, revenue - invested) * share * member_cut"
+    added: 2026-11-13
+    revised: ""
+  - name: incident_chance
+    status: active
+    source: design/gdd/event-flow.md
+    referenced_by:
+      - design/gdd/event-flow.md
+      - design/gdd/fandom-team.md
+    variables:
+      - popularity
+      - loyalty
+    output_range: [0.06, 0.38]
+    expression: "clamp(0.17 + popularity / 400 + (loyalty < 30 ? 0.04 : 0), 0.12, 0.38)"
+    added: 2026-11-13
+    revised: ""
 
 # Example:
 #
@@ -156,7 +213,101 @@ formulas: []
 #
 # Required fields: name, status, source, referenced_by, value, unit, added
 
-constants: []
+constants:
+  - name: target_pop26_median
+    status: active
+    source: design/gdd/career-progression.md
+    referenced_by:
+      - design/gdd/career-progression.md
+      - design/gdd/comeback-metrics.md
+    value: [50, 62]
+    unit: popularity
+    notes: "26세 인기 중앙값 목표. 근거: 기획서 8.24(61, 더 어렵게 요청) → 8.25 재조정(55)"
+    added: 2026-11-13
+    revised: ""
+  - name: target_first_settlement_months
+    status: active
+    source: design/gdd/economy.md
+    referenced_by:
+      - design/gdd/economy.md
+    value: [24, 36]
+    unit: months
+    notes: "데뷔 후 첫 정산 중앙값. 근거: 기획서 4.6(1~2년) → 8.24에서 36개월로 의도적 상향"
+    added: 2026-11-13
+    revised: ""
+  - name: target_strategy_dominance
+    status: active
+    source: design/gdd/comeback-metrics.md
+    referenced_by:
+      - design/gdd/comeback-metrics.md
+      - design/gdd/fandom-team.md
+    value: 0
+    unit: strategies
+    notes: "인기·팬·음방 1위·정산 네 축을 모두 앞서는 전략 수. 근거: 기획서 8.21"
+    added: 2026-11-13
+    revised: ""
+  - name: target_idol_events_per_season
+    status: active
+    source: design/gdd/event-flow.md
+    referenced_by:
+      - design/gdd/event-flow.md
+    value: [0.8, 1.1]
+    unit: events
+    notes: "근거: 기획서 2장 목표(한 턴 결정 최대 2개), 4.5(한 시즌 이벤트 1개)"
+    added: 2026-11-13
+    revised: ""
+  - name: target_idol_multi_event_share
+    status: active
+    source: design/gdd/event-flow.md
+    referenced_by:
+      - design/gdd/event-flow.md
+    value: [0, 0.10]
+    unit: share
+    notes: "이벤트 2개 이상 시즌 비율. 데뷔·시상식+재계약만 예외"
+    added: 2026-11-13
+    revised: ""
+  - name: target_incident_share
+    status: active
+    source: design/gdd/event-flow.md
+    referenced_by:
+      - design/gdd/event-flow.md
+      - design/gdd/fandom-team.md
+    value: [0.18, 0.30]
+    unit: share
+    notes: "아이돌 시즌 중 돌발 사건 비율. 근거: 기획서 8.24(약 23%, 잦지만 너무 많지 않게)"
+    added: 2026-11-13
+    revised: ""
+  - name: target_reputation22_label
+    status: active
+    source: design/gdd/career-progression.md
+    referenced_by:
+      - design/gdd/career-progression.md
+    value: 25
+    unit: reputation
+    notes: "22세 평균 플레이어가 호감(25+)에 닿는다. 근거: 기획서 4.2"
+    added: 2026-11-13
+    revised: ""
+  - name: star_producer_cost_multiplier
+    status: active
+    source: design/gdd/comeback-metrics.md
+    referenced_by:
+      - design/gdd/comeback-metrics.md
+      - design/gdd/economy.md
+    value: 1.6
+    unit: x
+    notes: "2026-11-13 검토: 1.4로 낮추면 콘셉트 로테이션을 네 축 모두 앞서서 1.6 유지, 대신 음원 점수 +3과 완성도 +10(이전 +8)으로 차트 빌드 강화"
+    added: 2026-11-13
+    revised: ""
+  - name: story_chance
+    status: active
+    source: design/gdd/event-flow.md
+    referenced_by:
+      - design/gdd/event-flow.md
+    value: 0.85
+    unit: probability
+    notes: "2026-11-13 0.7에서 올림 (시상식 시즌 이야기 제거 보전)"
+    added: 2026-11-13
+    revised: ""
 
 # Example:
 #

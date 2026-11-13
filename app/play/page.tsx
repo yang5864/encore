@@ -146,7 +146,7 @@ export default function PlayPage() {
 
   if (!ready || !career) return <div className="shell" />;
   const FOCUS_SCENE: Record<string, string> = { comeback: "album", promo: "variety", fanmeet: "fansign", overseas: "tour", rest: "rest", "solo:acting": "drama", "solo:solo": "songwriting", "solo:variety": "variety", "solo:producing": "songwriting", train: "dance" };
-  const ceremonySoon = career.pending?.id === "awards-invite" || career.pending?.id === "ceremony" || (career.stage === "idol" && career.turn % 2 === 1);
+  const ceremonySoon = career.pending?.id === "ceremony" || (career.stage === "idol" && career.turn % 2 === 1);
   const prefetchScenes = [career.pending?.scene ?? "", FOCUS_SCENE[focus.id] ?? FOCUS_SCENE[focus.id.split(":")[0]] ?? "", ...(ceremonySoon ? AWARD_SCENES.slice(0, 4) : career.stage === "idol" ? ["awards"] : [])];
 
   return (
@@ -158,7 +158,7 @@ export default function PlayPage() {
       )}
       <div className="top-progress" style={{ width: `${progress}%`, opacity: progress ? 1 : 0 }} />
       <header className="flex items-center justify-between h-12 mb-2">
-        <Link href="/" className="font-extrabold text-[16px] tracking-tight">encore<span className="text-primary">.</span></Link>
+        <Link href="/" aria-label="홈으로" className="font-extrabold text-[16px] tracking-tight py-2.5 -my-2.5 pr-3">encore<span className="text-primary">.</span></Link>
         <button onClick={() => setMenuOpen(true)} aria-label="메뉴" className="press w-10 h-10 rounded-xl bg-card flex items-center justify-center">
           <span className="block w-4 h-[2px] bg-ink rounded-full shadow-[0_5px_0_var(--text),0_-5px_0_var(--text)]" />
         </button>

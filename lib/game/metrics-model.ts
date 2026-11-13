@@ -42,6 +42,8 @@ export type ActivityInput = {
   hype: number; // 기대감 배수 (바이럴/실패/결속 반영)
   budget: { mv: number; digital: number; global: number; fan: number };
   rival: boolean;
+  /** 콘셉트 피로(−3/회)와 변신 보너스(+5)처럼 음원 차트 반응에만 붙는 보정 */
+  chartMod?: number;
 };
 
 /** 한 활동의 다섯 점수. */
@@ -54,7 +56,8 @@ export function activityScores(c: Career, a: ActivityInput): Scores {
 
   const digital = clamp(
     0.42 * a.quality + 0.22 * c.popularity + 0.2 * c.buzz + 0.16 * fandom * (0.6 + 0.4 * loyal)
-      + (a.production.promo === "digital" ? 6 : a.production.promo === "physical" ? -3 : 0) + (a.budget.digital - 25) / 5 + hypeBoost * 0.6,
+      // 유명 프로듀서 곡은 음원 차트에서 먼저 반응한다 (히트메이커 프리미엄)
+      + (a.production.promo === "digital" ? 6 : a.production.promo === "physical" ? -3 : 0) + (a.production.producer === "star" ? 3 : 0) + (a.chartMod ?? 0) + (a.budget.digital - 25) / 5 + hypeBoost * 0.6,
   );
   const physical = clamp(0.55 * fandom + 25 * loyal + 10 * (a.hype - 0.85) + (a.production.promo === "physical" ? 10 : a.production.promo === "digital" ? -4 : 0) + (a.budget.mv - 25) / 8);
   const broadcast = clamp(35 + 25 * Math.pow(reach / 1.9, 0.5) + 0.3 * c.popularity + (a.production.promo === "global" ? -8 : 0));

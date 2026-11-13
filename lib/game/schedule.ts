@@ -11,7 +11,7 @@ import { rng } from "./rng.ts";
 export const SCOUT_CHANCE = 0.06;
 export const MIRACLE_CHANCE = 0.02;
 export const ENDGAME_CHANCE = 0.025;
-export const STORY_CHANCE = 0.7;
+export const STORY_CHANCE = 0.85;
 export const REPEAT_GAP = 4;
 
 /** 막 계약한 직후(두 시즌 안)에는 또 다른 계약 제안이 뜨지 않는다. */
@@ -58,8 +58,12 @@ export function debutEvaluation(c: Career): "offer" | "cut" | "miss" | "warn" | 
   return "feedback";
 }
 
-/** Picks at most one event for the new period, by spec priority. Mutates `seen`. */
-export function scheduleEvent(c: Career): ActiveEvent | null {
+/**
+ * Picks at most one event for the new period, by spec priority. Mutates `seen`.
+ * `reservedOnly`: 이미 큰 이벤트(연말 시상식)를 치른 시즌. 계약·입대 같은 예약 이벤트만 잇고
+ * 돌발 사건과 이야기는 뽑지 않는다 (한 시즌에 시트가 줄줄이 뜨지 않게).
+ */
+export function scheduleEvent(c: Career, opts: { reservedOnly?: boolean } = {}): ActiveEvent | null {
   if (c.stage === "retired") return null;
 
   // 1. 예약
@@ -93,6 +97,12 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
     if (a.tier === "indie" && overall(c.stats, c.position) < a.threshold - 10 && rng(c) < 0.06) return agencyClosedEvent(a.name);
   }
 
+  if (opts.reservedOnly) {
+    // 시상식 시즌에 터질 돌발 사건은 다음 시즌 첫 이벤트로 미룬다 (빈도는 그대로, 한 시즌에 몰리지 않게)
+    if (c.stage === "idol" && c.turn - (c.flags.lastIncident ?? -99) > INCIDENT_GLOBAL_GAP && rng(c) < incidentChance(c)) c.flags.incidentOwed = 1;
+    return null;
+  }
+
   // 2. 상태 (이야기 흐름상 바로 이어져야 하는 것)
   for (const id of ["showcase", "musicshow", "feud", "hiatus-health"]) {
     const def = eventById(id)!;
@@ -100,7 +110,9 @@ export function scheduleEvent(c: Career): ActiveEvent | null {
   }
 
   // 2-1. 돌발 사건: 인기가 높을수록 자주, 같은 사건은 3시즌 쿨다운, 사건 직후 시즌은 조용
-  if (c.turn - (c.flags.lastIncident ?? -99) > INCIDENT_GLOBAL_GAP && rng(c) < incidentChance(c)) {
+  const owed = !!c.flags.incidentOwed;
+  delete c.flags.incidentOwed;
+  if (owed || (c.turn - (c.flags.lastIncident ?? -99) > INCIDENT_GLOBAL_GAP && rng(c) < incidentChance(c))) {
     const pool = INCIDENT_IDS.filter((id) => {
       const def = eventById(id);
       if (!def || !stageMatches(def, c)) return false;

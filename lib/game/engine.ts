@@ -140,7 +140,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   let tone: Tone = "neutral";
   let scene: string | undefined;
   let comments: Comment[] = [];
-  let wonAwards: Award[] = [];
+  const wonAwards: Award[] = [];
   let celebrate: TurnResult["celebrate"];
   let spotlight: TurnResult["spotlight"];
 
@@ -478,10 +478,15 @@ export function advanceTurn(original: Career, focusId: string): Career {
     if (walletOf(c) >= cheapest) notes.push("정산금으로 이번 시즌 상점 아이템을 살 수 있어요. 홈의 상점 줄에서 골라요.");
   }
   if (c.flags.ceremonyDue === c.turn && c.ceremony) {
-    c.pending = inviteEvent(c);
+    // 연말 시상식은 빠질 수 없으니 초청 확인 시트 없이 바로 시상식으로 간다
+    attendCeremony(c);
+    notes.push(`${c.ceremony.year} ${SHOW_FULL[c.ceremony.show] ?? c.ceremony.show} 초청 · ${c.ceremony.stages.join(" · ")} 무대`);
+    c.pending = ceremonyEvent(c);
   } else {
     c.pending = scheduleEvent(c);
-    if (!c.pending && c.flags.budgetDue === c.turn) c.pending = budgetEvent(c);
+    // 연초 홍보 예산: 그 시즌에 다른 이벤트(시상식 등)가 있었으면 다음 시즌으로 한 번 미룬다
+    if (c.flags.budgetDue !== undefined && c.turn - c.flags.budgetDue > 1) delete c.flags.budgetDue;
+    if (!c.pending && c.flags.budgetDue !== undefined) c.pending = budgetEvent(c);
   }
   finish(c, before, headline, text, tone, { scene, notes, comments, awards: wonAwards, celebrate, spotlight });
   c.lastResult = c.result;
@@ -519,21 +524,15 @@ function writeOffIfBankrupt(c: Career) {
   delete c.flags.bankruptTurn;
 }
 
-/** 연말 시상식 초청장. 참석해야 무대와 시상이 진행된다. */
-function inviteEvent(c: Career): ActiveEvent {
-  const cm = c.ceremony!;
-  return {
-    id: "awards-invite",
-    title: `${cm.year} ${SHOW_FULL[cm.show] ?? cm.show} 초청장`,
-    text: `${cm.year} ${SHOW_FULL[cm.show] ?? cm.show} 측에서 ${c.groupName || c.name}을(를) 초청했어요. ${cm.stages.join(" · ")} 무대 출연 요청도 같이 왔어요. 연말 일정이 빡빡하지만, 시상식은 한 해의 결산이에요.`,
-    scene: "awards",
-    public: true,
-    // 연말 시상식은 빠질 수 없다. awards:skip 처리는 예전 저장 데이터 호환을 위해 남겨둔다
-    choices: [
-      { id: "attend", label: "시상식에 참석한다", hint: "연말 무대에 서고 시상 결과를 현장에서 들어요. 체력이 조금 떨어져요", risk: "safe", op: "awards:attend" },
-    ],
-  };
+/** 시상식 참석 효과: 연말 무대 체력 소모, 노출로 인기·팬 소폭 상승. */
+function attendCeremony(c: Career) {
+  c.ceremony!.attended = true;
+  c.health = Math.max(0, c.health - 6);
+  c.popularity += 2;
+  applyEffects(c, { fansMul: 1.03 });
 }
+
+// 예전 저장본에 남은 초청 시트(id "awards-invite", op "awards:attend")는 아래 선택 처리에서 그대로 받는다.
 
 /** 입대 직후 한 번 뜨는 복무 계획. 고른 길이 전역 결과에 남는다. */
 function militaryEvent(c: Career): ActiveEvent {
@@ -1026,10 +1025,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     log(c, headline, text, "milestone");
   } else if (op === "awards:attend") {
     const cm = c.ceremony!;
-    cm.attended = true;
-    c.health = Math.max(0, c.health - 6);
-    c.popularity += 2;
-    applyEffects(c, { fansMul: 1.03 });
+    attendCeremony(c);
     headline = `${cm.year} ${SHOW_FULL[cm.show] ?? cm.show} 참석`;
     text = `${cm.stages.join(" · ")} 무대를 마치고 시상식장에 앉았어요.`;
     c.pending = ceremonyEvent(c);
@@ -1043,7 +1039,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     text = cm.awards.length ? "참석하지 않은 자리에서 이름이 불렸어요. 소속사 대표가 대신 트로피를 받았어요. 팬들은 아쉬워했어요." : "연말을 조용히 보냈어요. 팬들은 무대를 기다렸어요.";
     tone = cm.awards.length ? "neutral" : "bad";
     reaction = { kind: cm.awards.length ? "award" : "generic" };
-    c.pending = scheduleEvent(c) ?? (c.flags.budgetDue === c.turn ? budgetEvent(c) : null);
+    c.pending = scheduleEvent(c, { reservedOnly: true }); // 홍보 예산은 다음 시즌에 묻는다
   } else if (op === "awards:none") {
     const cm = c.ceremony!;
     commitAwards(c, true);
@@ -1051,7 +1047,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     text = "무대는 잘 마쳤지만 트로피는 없었어요. 객석에서 박수를 보내며 내년을 생각했어요.";
     c.mental = Math.max(0, c.mental - 4);
     reaction = { kind: "award-miss" };
-    c.pending = scheduleEvent(c) ?? (c.flags.budgetDue === c.turn ? budgetEvent(c) : null);
+    c.pending = scheduleEvent(c, { reservedOnly: true }); // 홍보 예산은 다음 시즌에 묻는다
   } else if (op.startsWith("speech:")) {
     const cm = c.ceremony!;
     const kind = op.slice(7);
@@ -1076,7 +1072,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     text = `${rx === "cry" ? "눈물을 닦으며 " : rx === "calm" ? "담담하게 " : "환하게 웃으며 "}마이크를 잡았어요. "${speech}"`;
     tone = "milestone";
     reaction = { kind: top.kind === "daesang" ? "daesang" : "award" };
-    c.pending = scheduleEvent(c) ?? (c.flags.budgetDue === c.turn ? budgetEvent(c) : null);
+    c.pending = scheduleEvent(c, { reservedOnly: true }); // 홍보 예산은 다음 시즌에 묻는다
   } else if (op.startsWith("budget:")) {
     const p = BUDGET_PRESETS.find((x) => x.id === op.slice(7))!;
     c.budget = { ...p.split };

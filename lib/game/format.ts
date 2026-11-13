@@ -38,10 +38,10 @@ export function wonText(eok: number): string {
 
 export type ReputationBand = { id: "scandal" | "caution" | "normal" | "liked" | "national"; label: string; min: number; max: number; color: string };
 export const REPUTATION_BANDS: ReputationBand[] = [
-  { id: "scandal", label: "논란", min: -100, max: -20, color: "#f04452" },
-  { id: "caution", label: "주의", min: -20, max: 0, color: "#ff9500" },
-  { id: "normal", label: "보통", min: 0, max: 25, color: "#8b95a1" },
-  { id: "liked", label: "호감", min: 25, max: 60, color: "#3182f6" },
+  { id: "scandal", label: "논란", min: -100, max: -20, color: "var(--danger-text)" },
+  { id: "caution", label: "주의", min: -20, max: 0, color: "var(--warn-text)" },
+  { id: "normal", label: "보통", min: 0, max: 25, color: "var(--text-3)" },
+  { id: "liked", label: "호감", min: 25, max: 60, color: "var(--primary-text)" },
   { id: "national", label: "국민호감", min: 60, max: 100, color: "#7c5cff" },
 ];
 
@@ -58,9 +58,9 @@ export function reputationProgress(v: number): number {
 export type Condition = { level: "good" | "tired" | "danger"; label: string; color: string; value: number };
 export function conditionOf(c: Pick<Career, "health" | "mental">): Condition {
   const value = Math.round(Math.min(c.health, c.mental));
-  if (value >= 55) return { level: "good", label: "좋음", color: "#04c75a", value };
-  if (value >= 30) return { level: "tired", label: "지침", color: "#ff9500", value };
-  return { level: "danger", label: "위험", color: "#f04452", value };
+  if (value >= 55) return { level: "good", label: "좋음", color: "var(--ok-text)", value };
+  if (value >= 30) return { level: "tired", label: "지침", color: "var(--warn-text)", value };
+  return { level: "danger", label: "위험", color: "var(--danger-text)", value };
 }
 
 /** 그룹명 + 이름. 솔로로 전향해도 데뷔한 그룹명을 함께 보여준다. */
