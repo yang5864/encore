@@ -216,7 +216,8 @@
   margin: 0 auto;
   min-height: 100dvh;
   padding: 0 20px;
-  padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
+  /* 고정 버튼 영역(FixedCta)이 알려 준 실제 높이만큼 비운다. 없으면 기본 96px */
+  padding-bottom: max(calc(env(safe-area-inset-bottom) + 96px), calc(var(--cta-h, 0px) + 12px));
 }
 
 .t-title { font-size: var(--fs-lg); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; }
