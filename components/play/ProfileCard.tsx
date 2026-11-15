@@ -18,7 +18,7 @@ export function ProfileCard({ career, onAgency }: { career: Career; onAgency: ()
     <Card className="fade-up">
       <div className="flex items-center gap-4">
         <div className="w-[72px] h-[90px] rounded-2xl bg-chip flex items-end justify-center overflow-hidden">
-          <Avatar index={career.avatar} size={64} name={career.name} />
+          <Avatar index={career.avatar} size={72} name={career.name} />
         </div>
         <div className="min-w-0 flex-1">
           <p className="t-cap">{career.stage === "retired" ? `커리어 완성 · ${ageText({ turn: Math.min(career.turn, MAX_TURN) })} 은퇴` : periodLabel(career)}</p>

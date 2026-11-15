@@ -11,7 +11,7 @@ export function Avatar({ index = 0, size = 64, name = "캐릭터", className = "
       className={`avatar-art shrink-0 ${className}`}
       style={{ width: size, height: size * 1.25 }}
     >
-      <ArtFrames key={artwork[0].url} frames={artwork} visibleHeight={112} sizes={`${Math.ceil(size * 1.5)}px`} blink={!frames} />
+      <ArtFrames key={artwork[0].url} frames={artwork} visibleHeight={118} sizes={`${Math.ceil(size * 1.5)}px`} blink={!frames} />
     </span>
   );
 }

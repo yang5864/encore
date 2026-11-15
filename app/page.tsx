@@ -64,7 +64,7 @@ export default function HomePage() {
         <Card className="mt-3 fade-up" style={{ animationDelay: "140ms" }}>
           <div className="flex items-center gap-3">
             <div className="w-12 h-[60px] rounded-xl bg-chip flex items-end justify-center overflow-hidden">
-              <Avatar index={career.avatar} size={40} name={career.name} />
+              <Avatar index={career.avatar} size={48} name={career.name} />
             </div>
             <div className="min-w-0 flex-1">
               <p className="t-cap">{career.stage === "retired" ? "완성된 인생" : "진행 중인 인생"}</p>
@@ -95,7 +95,7 @@ export default function HomePage() {
               <div key={r.id} className="flex items-center gap-3 py-3">
                 <span className={cn("w-5 text-center font-extrabold", i === 0 ? "text-warn" : "text-ink-3")}>{i + 1}</span>
                 <div className="w-10 h-12 rounded-lg bg-chip flex items-end justify-center overflow-hidden">
-                  <Avatar index={r.avatar} size={32} name={r.name} />
+                  <Avatar index={r.avatar} size={40} name={r.name} />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="t-body font-bold truncate">{r.groupName ? `${r.groupName} ${r.name}` : r.name}</p>
