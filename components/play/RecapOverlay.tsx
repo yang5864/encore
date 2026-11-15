@@ -6,6 +6,7 @@ import { agencyById } from "@/lib/game/agencies";
 import { lineupRoles } from "@/lib/game/debut";
 import { artGroupFor, displayName, fanText, koreanAge } from "@/lib/game/format";
 import type { Career } from "@/lib/game/types";
+import { lookalikeFor } from "@/lib/game/lookalike";
 
 type Slide = { chip: string; title: string; text: string; scene: string; mood?: "sad" | "happy"; group?: boolean };
 
@@ -34,10 +35,15 @@ export function RecapOverlay({ career, onDone }: { career: Career; onDone: () =>
       mood: "happy",
       group: true,
     });
-    const moments = career.history.filter((h) => h.kind === "award" || h.kind === "milestone");
-    const picked = moments.length <= 4 ? moments : [0, 1, 2, 3].map((k) => moments[Math.round((k * (moments.length - 1)) / 3)]);
-    if (picked.length) {
-      out.push({ chip: "가장 빛난 순간", title: picked.map((h) => h.title).join("\n"), text: `${picked.length}번의 순간이 이야기를 만들었어요.`, scene: "tour", group: true });
+    // 가장 빛난 순간은 하나만: 대상 > 빌보드 1위 > 첫 음방 1위 > 다른 수상 > 데뷔 이후 마일스톤
+    const rankOf = (t: string, kind: string) => (/대상/.test(t) ? 5 : /빌보드|Hot 100/.test(t) ? 4 : /1위/.test(t) ? 3 : kind === "award" ? 2 : 1);
+    const moment = career.history.filter((h) => h.kind === "award" || h.kind === "milestone").sort((x, y) => rankOf(y.title, y.kind) - rankOf(x.title, x.kind) || x.turn - y.turn)[0];
+    if (moment) {
+      out.push({ chip: "가장 빛난 순간", title: moment.title, text: `${koreanAge({ turn: moment.turn })}살의 그날을 팬들이 가장 오래 기억해요.`, scene: "tour", group: true, mood: "happy" });
+    }
+    const look = lookalikeFor(career);
+    if (look) {
+      out.push({ chip: "나와 닮은 실제 아이돌", title: `${look.group} ${look.name}`, text: look.note, scene: "press" });
     }
     out.push({ chip: career.ending?.subtitle ?? "커리어 완성", title: career.ending?.title ?? "은퇴", text: career.ending?.text ?? `${displayName(career)}의 이야기가 여기서 마무리돼요.`, scene: "retirement" });
     return out;

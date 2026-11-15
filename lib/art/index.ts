@@ -30,7 +30,14 @@ export function moodFrame(index: number, mood: ArtMood | undefined): ArtFrame | 
   return entry.mood?.[mood] ?? null;
 }
 
-export function eventArt(scene: string, index: number, gender?: "female" | "male", mood?: ArtMood) {
+/** 이 장면 전용 동작 그림이 있는 아바타인가 */
+export function hasSceneFrames(scene: string, index: number, gender?: "female" | "male"): boolean {
+  const art = scenes[Object.hasOwn(scenes, scene) ? scene : "rest"];
+  return !!art.avatars[avatarIndex(index, gender)]?.length;
+}
+
+/** `uniform`: 그룹 중 누구 하나라도 장면 전용 그림이 없으면 모두 같은 기본 동작(노래·춤·서 있기)으로 맞춘다 */
+export function eventArt(scene: string, index: number, gender?: "female" | "male", mood?: ArtMood, uniform = false) {
   const avatar = avatarIndex(index, gender);
   let key = Object.hasOwn(scenes, scene) ? scene : "rest";
   if ((key === "military" || key === "military-band") && isFemaleAvatar(avatar)) key = "rest";
@@ -38,7 +45,7 @@ export function eventArt(scene: string, index: number, gender?: "female" | "male
   const art = scenes[key];
   const action = ["dance", "challenge", "isac"].includes(key) ? "dance"
     : ["album", "vocal", "survival", "tour", "coachella", "festival", "military-concert"].includes(key) ? "sing" : "idle";
-  const available = art.avatars[avatar];
+  const available = uniform ? undefined : art.avatars[avatar];
   // 장면 전용 동작이 없으면: 슬픈 결과는 항상 울상, 좋은 결과는 가만히 서 있을 때만 활짝
   const expression = available?.length ? null : moodFrame(avatar, mood === "sad" || action === "idle" ? mood : undefined);
   return { scene: key, background: art.background, moodApplied: !!expression,

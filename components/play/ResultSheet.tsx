@@ -49,7 +49,7 @@ export function ResultSheet({ result, avatar, gender, name, lineup, open, onClos
     <Sheet open={open} onOpenChange={(o) => !o && onClose()} footer={<Button onClick={onClose}>{ctaLabel}</Button>}>
       {result.scene && (
         <div className="-mx-5 -mt-3">
-          <EventArt scene={result.scene} avatar={avatar} gender={gender} name={name} mood={result.tone === "bad" ? "sad" : result.tone === "good" || result.tone === "milestone" ? "happy" : undefined} group={artGroupFor(lineup, result.scene)} />
+          <EventArt scene={result.scene} avatar={avatar} gender={gender} name={name} mood={result.mood ?? (result.tone === "bad" ? "sad" : result.tone === "good" || result.tone === "milestone" ? "happy" : undefined)} group={artGroupFor(lineup, result.scene)} />
         </div>
       )}
       <p className={`t-cap mt-4 ${toneColor}`}>{result.tone === "bad" ? "아쉬운 결과" : result.tone === "good" ? "좋은 결과" : result.tone === "milestone" ? "중요한 순간" : "이번 반기"}</p>

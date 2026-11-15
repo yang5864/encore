@@ -98,6 +98,8 @@ export type TurnResult = {
   celebrate?: "win" | "daesang" | "award";
   /** 전체 화면 축하 연출 내용 (대상·그래미·스타디움 투어) */
   spotlight?: { chip: string; title: string; subtitle: string; stats?: string[] };
+  /** 장면 표정 지정: 논란·사고는 잘 수습해도 웃지 않는다 */
+  mood?: "sad" | "happy" | "neutral";
 };
 
 export type Album = {

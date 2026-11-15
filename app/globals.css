@@ -45,8 +45,6 @@
   --album-2: #d9a78d;
   --album-3: #9faed0;
   --album-4: #c9ba94;
-  --badge-bg: rgb(255 255 255 / 0.9);
-  --badge-shadow: rgb(0 0 0 / 0.25);
   --focus: #1b64da;
   --scheme: light;
 }
@@ -337,10 +335,6 @@
 
 /* 그룹 장면: 슬롯별 가로 위치 */
 .art-frame { left: var(--art-x, 50%); }
-/* 감정 배지 */
-.art-mood-badge { position: absolute; left: 42%; top: 22%; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 16px; line-height: 1; background: var(--badge-bg); box-shadow: 0 1px 4px var(--badge-shadow); color: var(--text-2); z-index: 5; pointer-events: none; animation: art-mood-in 600ms ease-out both; }
-@keyframes art-mood-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .art-mood-badge { animation: none; } }
 
 /* 작은 글자 대비: 같은 이름의 글자색 유틸리티만 진한 토큰으로 돌린다 (배경 유틸리티는 그대로) */
 .text-primary { color: var(--primary-text); }
@@ -359,3 +353,9 @@
 input, textarea { caret-color: var(--primary); }
 /* 가로 넘침은 잘라내되 스크롤 컨테이너를 만들지 않는다 (sticky·fixed 유지) */
 html, body { overflow-x: clip; }
+
+/* 바텀시트가 닫히는 동안(약 0.5초) 사라지는 시트와 배경막이 다음 탭을 삼키지 않게:
+   닫히는 중인 시트·배경막은 터치를 통과시키고, 시트가 걸어둔 페이지 잠금도 풀어준다 */
+[data-vaul-drawer][data-state="closed"],
+[data-vaul-overlay][data-state="closed"] { pointer-events: none !important; }
+body:not(:has([data-vaul-drawer][data-state="open"])) { pointer-events: auto !important; }

@@ -70,6 +70,11 @@ export function displayName(c: { name: string; groupName?: string; stage?: Caree
   return `${group} ${c.name}`;
 }
 
+/** 무대·수상에서 불리는 이름: 그룹 활동 중이면 그룹명, 솔로가 되면 내 이름 */
+export function actName(c: { name: string; groupName?: string; flags?: Record<string, number> }): string {
+  return c.flags?.solo ? c.name : (c.groupName || "").trim() || c.name;
+}
+
 export const STAGE_NAMES: Record<Career["stage"], string> = { free: "지망생", trainee: "연습생", idol: "아이돌", retired: "은퇴" };
 
 export const pct = (n: number) => `${Math.round(n)}%`;

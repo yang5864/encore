@@ -28,7 +28,7 @@ export default function RecordsPage() {
           <Card key={r.id} className="fade-up flex items-center gap-3 !p-4" style={{ animationDelay: `${Math.min(i, 8) * 40}ms` }}>
             <span className="w-7 text-center font-extrabold text-primary text-[16px]">{i + 1}</span>
             <div className="w-12 h-[60px] rounded-xl bg-chip flex items-end justify-center overflow-hidden">
-              <Avatar index={r.avatar} size={40} name={r.name} />
+              <Avatar index={r.avatar} size={48} name={r.name} />
             </div>
             <div className="min-w-0 flex-1">
               <p className="t-body font-bold truncate">{displayName({ name: r.name, groupName: r.groupName, stage: "retired" })}</p>

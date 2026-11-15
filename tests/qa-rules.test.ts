@@ -131,7 +131,7 @@ test("시상식별 실제 부문 이름", () => {
 // ───────── 5. 시상식 초청 ─────────
 test("연말 시상식은 초청 확인 없이 바로 시상식으로 가고, 참석 효과가 붙는다", () => {
   const base = idol(7);
-  base.turn = 21; base.lastReleaseTurn = 21; base.popularity = 70; base.contractEnd = 40;
+  base.turn = 21; base.lastReleaseTurn = 21; base.popularity = 70; base.contractEnd = 40; base.albums = [{ id: "a", turn: 21, name: "X", concept: "fresh", quality: 70, sales: 100000, melon: 20, billboard: null, wins: 0, shows: [], cost: 10, revenue: 20 }] as never;
   const n = advanceTurn(base, "fanmeet");
   assert.equal(n.pending?.id, "ceremony");
   assert.equal(n.ceremony?.attended, true);
@@ -141,7 +141,7 @@ test("연말 시상식은 초청 확인 없이 바로 시상식으로 가고, �
 test("시상식이 끝난 시즌엔 돌발 사건·이야기 이벤트가 이어지지 않는다", () => {
   for (let k = 0; k < 40; k++) {
     const base = idol(7);
-    base.turn = 21; base.lastReleaseTurn = 21; base.popularity = 70; base.contractEnd = 40; base.rngState = k;
+    base.turn = 21; base.lastReleaseTurn = 21; base.popularity = 70; base.contractEnd = 40; base.albums = [{ id: "a", turn: 21, name: "X", concept: "fresh", quality: 70, sales: 100000, melon: 20, billboard: null, wins: 0, shows: [], cost: 10, revenue: 20 }] as never; base.rngState = k;
     let n = advanceTurn(base, "fanmeet");
     assert.equal(n.pending?.id, "ceremony");
     n = resolveChoice(n, n.pending!.choices[0].id, { reaction: "joy" });
@@ -218,7 +218,10 @@ test("상점: 더 큰 상위 단계와 전용 연습실", () => {
   assert.equal(SHOP_ITEMS.find((x) => x.id === "headphones-01")!.amount, 3);
   assert.equal(SHOP_ITEMS.find((x) => x.id === "headphones-02")!.amount, 5);
   const m = SHOP_ITEMS.find((x) => x.id === "headphones-03")!;
-  assert.deepEqual([m.amount, m.price, m.image], [7, 30, "/art-v3/items/headphones-02.png"]);
+  assert.deepEqual([m.amount, m.price, m.tier], [7, 24, 3]);
+  assert.ok(m.perk && m.perk.stat === "vocal" && m.perk.amount === 2, "마스터는 덤 효과도 두 배");
+  const prices = new Set(SHOP_ITEMS.filter((x) => x.tier === 1).map((x) => x.price));
+  assert.ok(prices.size >= 10, "일반 단계 가격이 물건마다 다르다");
   let masters = 0;
   for (let seed = 1; seed <= 60; seed++) {
     const c = idol(seed);
@@ -340,7 +343,7 @@ test("시상식 시즌의 홍보 예산 선택은 다음 시즌으로 미뤄진�
   let deferred = 0;
   for (let k = 0; k < 20; k++) {
     const base = idol(7);
-    base.turn = 21; base.lastReleaseTurn = 21; base.popularity = 70; base.contractEnd = 40; base.rngState = k;
+    base.turn = 21; base.lastReleaseTurn = 21; base.popularity = 70; base.contractEnd = 40; base.albums = [{ id: "a", turn: 21, name: "X", concept: "fresh", quality: 70, sales: 100000, melon: 20, billboard: null, wins: 0, shows: [], cost: 10, revenue: 20 }] as never; base.rngState = k;
     let n = advanceTurn(base, "fanmeet");
     n = resolveChoice(n, n.pending!.choices[0].id, { reaction: "joy" });
     if (n.pending) continue; // 계약 등 예약 이벤트가 이어진 경우
@@ -361,4 +364,49 @@ test("콘셉트 피로는 음원 점수를 깎고, 두 번 이어간 콘셉트�
   const plain = activityScores(c, base).digital;
   assert.equal(activityScores(c, { ...base, chartMod: 5 }).digital, Math.min(100, plain + 5));
   assert.equal(activityScores(c, { ...base, chartMod: -6 }).digital, Math.max(0, plain - 6));
+});
+
+test("연말 시상식은 그해 앨범이 있어야 초청되고, 자숙 중이면 초청이 없다", () => {
+  const none = idol(7);
+  none.turn = 21; none.lastReleaseTurn = 19; none.popularity = 80; none.contractEnd = 40; none.albums = [];
+  const a = advanceTurn(none, "fanmeet");
+  assert.equal(a.ceremony ?? null, null, "앨범 없는 해는 초청 없음");
+  assert.ok(a.result!.notes.some((x) => x.includes("앨범이 없어")));
+  const calm = idol(7);
+  calm.turn = 21; calm.lastReleaseTurn = 21; calm.popularity = 80; calm.contractEnd = 40;
+  calm.albums = [{ id: "a", turn: 21, name: "X", concept: "fresh", quality: 70, sales: 100000, melon: 20, billboard: null, wins: 0, shows: [], cost: 10, revenue: 20 }] as never;
+  calm.flags.scandalCooldown = calm.turn + 3;
+  const b = advanceTurn(calm, "rest");
+  assert.equal(b.ceremony ?? null, null, "자숙 중엔 시상식에 가지 않는다");
+  assert.ok(b.result!.notes.some((x) => x.includes("자숙")));
+});
+
+test("솔로가 되면 장면에 멤버가 나오지 않고, 상 이름과 호명은 내 이름", async () => {
+  const { actName, artGroupFor } = await import("../lib/game/format.ts");
+  const c = idol(3);
+  c.lineup = { members: 5, leader: false, center: true, maknae: false, parts: [], memberAvatars: [6, 7, 8, 9] };
+  assert.equal(actName(c), "LUMINA");
+  const ev = give(c, "contract7");
+  const solo = resolveChoice(ev, ev.pending!.choices.find((x) => x.op === "solo")?.id ?? "solo");
+  if (solo.flags.solo) {
+    assert.equal(artGroupFor(solo.lineup, "album"), undefined);
+    assert.equal(actName(solo), solo.name);
+  }
+});
+
+test("논란을 잘 수습해도 결과 장면은 웃지 않는다", () => {
+  const ev = give(idol(5), "live-controversy");
+  const n = resolveChoice(ev, ev.pending!.choices[0].id);
+  assert.ok(n.result!.mood === "neutral" || n.result!.mood === "sad");
+});
+
+test("닮은 실제 아이돌: 같은 성별·포지션에서 커리어 규모가 맞는 사람", async () => {
+  const { lookalikeFor } = await import("../lib/game/lookalike.ts");
+  const c = idol(2);
+  c.position = "vocal"; c.gender = "female"; c.musicWins = 0; c.awards = []; c.flags.bestRank = 40;
+  assert.equal(lookalikeFor(c)!.name, "솔라");
+  c.awards = [{ year: 2020, show: "MAMA", name: "Artist of the Year", kind: "daesang" }];
+  assert.equal(lookalikeFor(c)!.name, "태연");
+  c.debutTurn = null;
+  assert.equal(lookalikeFor(c), null);
 });

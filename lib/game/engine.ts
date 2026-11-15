@@ -2,7 +2,7 @@ import type { ActiveEvent, Career, ChoiceDef, Comment, Concept, Effects, Milesto
 import { GameError } from "./types.ts";
 import { AGENCIES, agencyById, auditionChance, TIERS } from "./agencies.ts";
 import { STAT_KEYS, STAT_NAMES, overall } from "./stats.ts";
-import { ageOf, ageText, conditionOf, displayName, eraScale, fanText, isSecondHalf, MAX_TURN, periodLabel, yearOf } from "./format.ts";
+import { actName, ageOf, ageText, conditionOf, displayName, eraScale, fanText, isSecondHalf, MAX_TURN, periodLabel, yearOf } from "./format.ts";
 
 const hasBatchim = (w: string) => { const ch = w.charCodeAt(w.length - 1); return ch >= 0xac00 && ch <= 0xd7a3 && (ch - 0xac00) % 28 !== 0; };
 import { rng, between, pick } from "./rng.ts";
@@ -45,7 +45,7 @@ function billboardSpotlight(c: Career, album: { name: string; billboard: number 
   return {
     chip: `${yearOf(c)} BILLBOARD HOT 100`,
     title: "빌보드 Hot 100\n1위에 올랐어요",
-    subtitle: `${displayName(c)}의 '${album.name}'${hasBatchim(album.name) ? "이" : "가"} 미국 종합 싱글 차트 정상에 섰어요`,
+    subtitle: `${actName(c)}의 '${album.name}'${hasBatchim(album.name) ? "이" : "가"} 미국 종합 싱글 차트 정상에 섰어요`,
     stats: [`초동 ${album.sales >= 10000 ? `${Math.round(album.sales / 10000)}만` : album.sales.toLocaleString("ko-KR")}장`, `코어 팬덤 ${fanText(c.fans)}`],
   };
 }
@@ -89,7 +89,10 @@ function popularityTarget(c: Career): number {
   return Math.max(0, Math.min(100, t));
 }
 
-function buildResult(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; milestones?: MilestoneId[]; awards?: Award[]; celebrate?: TurnResult["celebrate"]; spotlight?: TurnResult["spotlight"] } = {}): TurnResult {
+/** 결과 장면에서 웃지 않는 사건들: 논란·사고·건강·불화·탈락·폐업 */
+const TROUBLE_EVENTS = ["member-bullying", "dating", "member-dui", "live-controversy", "chartfraud", "hate", "hiatus-health", "injury", "feud", "debut-cut", "agency-bankrupt", "trainee-dismiss", "warning", "agency-closed", "member-leave"];
+
+function buildResult(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; milestones?: MilestoneId[]; awards?: Award[]; celebrate?: TurnResult["celebrate"]; spotlight?: TurnResult["spotlight"]; mood?: TurnResult["mood"] } = {}): TurnResult {
   const after = snapshot(c);
   return {
     headline,
@@ -103,10 +106,11 @@ function buildResult(c: Career, before: Snapshot, headline: string, text: string
     awards: opts.awards?.length ? opts.awards : undefined,
     celebrate: opts.celebrate,
     spotlight: opts.spotlight,
+    mood: opts.mood,
   };
 }
 
-function finish(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; awards?: Award[]; celebrate?: TurnResult["celebrate"]; spotlight?: TurnResult["spotlight"] } = {}) {
+function finish(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; awards?: Award[]; celebrate?: TurnResult["celebrate"]; spotlight?: TurnResult["spotlight"]; mood?: TurnResult["mood"] } = {}) {
   updateSettlement(c);
   updateMetrics(c);
   c.popularity = Math.max(0, Math.min(100, c.popularity));
@@ -424,14 +428,15 @@ export function advanceTurn(original: Career, focusId: string): Career {
     const year = yearOf({ turn: c.turn - 1 });
     const won = yearEndAwards(c, year, [c.turn - 2, c.turn - 1]);
     const releasedThisYear = c.albums.some((a) => a.turn === c.turn - 2 || a.turn === c.turn - 1);
-    if (releasedThisYear || c.popularity >= 35) {
+    // 음원·음반 활동이 있던 해만 초청된다. 논란 뒤 자숙 중이면 초청도 없다
+    if (releasedThisYear && !inCooldown(c)) {
       // 수상은 시상식에 참석해 호명될 때 확정된다. 초청장을 먼저 받는다
       const show = won[0]?.show ?? (c.popularity >= 60 ? "MAMA" : c.popularity >= 45 ? "MMA" : "골든디스크");
       const stages = YEAR_END_STAGES.slice(0, c.popularity >= 70 ? 3 : c.popularity >= 55 ? 2 : 1);
       c.ceremony = { year, show, awards: won, stages };
       c.flags.ceremonyDue = c.turn;
       notes.push(`${year} 연말 시상식 초청장이 도착했어요.`);
-    } else notes.push(`${year} 연말 시상식: 올해는 초청받지 못했어요.`);
+    } else notes.push(inCooldown(c) ? `${year} 연말 시상식: 자숙 중이라 참석하지 않았어요.` : `${year} 연말 시상식: 올해 낸 앨범이 없어 초청받지 못했어요.`);
   }
 
   // ── 데뷔 평가 ──
@@ -587,7 +592,7 @@ function commitAwards(c: Career, attended: boolean): { celebrate: TurnResult["ce
   let spotlight: TurnResult["spotlight"];
   if (daesang && attended) {
     const count = c.awards.filter((a) => a.kind === "daesang").length;
-    spotlight = { chip: `${daesang.year} ${daesang.show}`, title: `${count <= 1 ? "첫" : `${count}번째`} 대상을\n받았어요`, subtitle: `${displayName(c)}${hasBatchim(displayName(c)) ? "이" : "가"} ${daesang.name.replace(/\s*\(대상\)$/, "")}${hasBatchim(daesang.name.replace(/\s*\(대상\)$/, "")) ? "으로" : "로"} 뽑혔어요`, stats: [`음방 1위 ${c.musicWins}회`, c.peakMelon === 1 ? "멜론 1위" : c.peakMelon ? `멜론 최고 ${c.peakMelon}위` : ""].filter(Boolean) };
+    spotlight = { chip: `${daesang.year} ${daesang.show}`, title: `${count <= 1 ? "첫" : `${count}번째`} 대상을\n받았어요`, subtitle: `${actName(c)}${hasBatchim(actName(c)) ? "이" : "가"} ${daesang.name.replace(/\s*\(대상\)$/, "")}${hasBatchim(daesang.name.replace(/\s*\(대상\)$/, "")) ? "으로" : "로"} 뽑혔어요`, stats: [`음방 1위 ${c.musicWins}회`, c.peakMelon === 1 ? "멜론 1위" : c.peakMelon ? `멜론 최고 ${c.peakMelon}위` : ""].filter(Boolean) };
   }
   const celebrate: TurnResult["celebrate"] = !cm.awards.length ? undefined : !attended ? undefined : daesang ? "daesang" : "award";
   if (cm.awards.length) notes.push(`${cm.year} ${SHOW_FULL[cm.show] ?? cm.show}: ${cm.awards.map((a) => a.name).join(" · ")}`);
@@ -995,6 +1000,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     c.flags.renewed = 1;
     c.flags.solo = 1;
     c.flags.independent = 1;
+    if (c.lineup) c.lineup = { ...c.lineup, memberAvatars: [] }; // 무대·시상식 장면에 멤버가 더 나오지 않는다
     // 그룹 인기에 기대던 팬은 떠나고, 개인 인기가 높을수록 많이 남는다
     const keep = Math.max(0.5, Math.min(0.9, 0.45 + c.popularity / 200 + rng(c) * 0.1));
     c.fans = Math.round(c.fans * keep);
@@ -1010,7 +1016,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     tone = "milestone";
     celebrate = "daesang";
     reaction = { kind: "grammy" };
-    spotlight = { chip: `${yearOf(c)} GRAMMY AWARDS`, title: "그래미 어워드에\n노미네이트됐어요", subtitle: `${displayName(c)}의 이름이 레코딩 아카데미 후보에 올랐어요`, stats: [c.peakBillboard !== null ? `빌보드 Hot 100 최고 ${c.peakBillboard}위` : "", `음방 1위 ${c.musicWins}회`].filter(Boolean) };
+    spotlight = { chip: `${yearOf(c)} GRAMMY AWARDS`, title: "그래미 어워드에\n노미네이트됐어요", subtitle: `${actName(c)}의 이름이 레코딩 아카데미 후보에 올랐어요`, stats: [c.peakBillboard !== null ? `빌보드 Hot 100 최고 ${c.peakBillboard}위` : "", `음방 1위 ${c.musicWins}회`].filter(Boolean) };
     log(c, headline, text, "award");
   } else if (op === "stadium") {
     c.flags.stadiumTour = 1;
@@ -1021,7 +1027,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     tone = "milestone";
     celebrate = "daesang";
     reaction = { kind: "stadium" };
-    spotlight = { chip: `${yearOf(c)} WORLD STADIUM TOUR`, title: "전 세계 스타디움을\n매진시켰어요", subtitle: `${displayName(c)}${hasBatchim(displayName(c)) ? "이" : "가"} 세계에서 몇 팀뿐인 스타디움 투어를 마쳤어요`, stats: ["12개 도시 · 회당 5만 명", `코어 팬덤 ${fanText(c.fans)}`] };
+    spotlight = { chip: `${yearOf(c)} WORLD STADIUM TOUR`, title: "전 세계 스타디움을\n매진시켰어요", subtitle: `${actName(c)}${hasBatchim(actName(c)) ? "이" : "가"} 세계에서 몇 팀뿐인 스타디움 투어를 마쳤어요`, stats: ["12개 도시 · 회당 5만 명", `코어 팬덤 ${fanText(c.fans)}`] };
     log(c, headline, text, "milestone");
   } else if (op === "awards:attend") {
     const cm = c.ceremony!;
@@ -1126,7 +1132,9 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     if (event.id in BAD_EVENT_KIND) commentTone = tone === "good" ? "neutral" : "bad";
   }
   const comments = event.public || reaction.kind !== "generic" ? buildReactions(c, commentTone ?? (tone === "bad" ? "bad" : tone === "neutral" ? "neutral" : "good"), reaction) : [];
-  finish(c, before, headline, text, tone, { scene: op === "service:band" ? "military-band" : event.scene, notes, comments, celebrate, spotlight });
+  // 논란·사고·부상 같은 일은 잘 수습해도 웃는 얼굴로 그리지 않는다
+  const troubled = TROUBLE_EVENTS.includes(event.id) || op === "scandal";
+  finish(c, before, headline, text, tone, { scene: op === "service:band" ? "military-band" : event.scene, notes, comments, celebrate, spotlight, mood: troubled ? (tone === "bad" ? "sad" : "neutral") : undefined });
   return c;
 }
 
@@ -1196,7 +1204,20 @@ export function buyItem(original: Career, itemId: string): Career {
   c.stats[item.stat] = Math.min(99, c.stats[item.stat] + item.amount);
   c.flags.shopTurn = c.turn;
   c.items = [...(c.items ?? []), item.id];
-  log(c, `${item.name} 구매`, `${STAT_NAMES[item.stat]}이(가) ${item.amount} 올랐어요.`, "growth");
+  // 물건마다 다른 덤 효과
+  const perk = item.perk;
+  if (perk) {
+    if (perk.stat && perk.amount) {
+      c.potential[perk.stat] = Math.min(99, c.potential[perk.stat] + perk.amount);
+      c.stats[perk.stat] = Math.min(99, c.stats[perk.stat] + perk.amount);
+    }
+    if (perk.health) c.health = Math.min(100, c.health + perk.health);
+    if (perk.mental) c.mental = Math.min(100, c.mental + perk.mental);
+    if (perk.buzz) addBuzz(c, perk.buzz);
+    if (perk.fansPct) c.fans = Math.round(c.fans * (1 + perk.fansPct / 100));
+    if (perk.reputation) addReputation(c, perk.reputation);
+  }
+  log(c, `${item.name} 구매`, `${STAT_NAMES[item.stat]}이(가) ${item.amount} 올랐어요.${perk ? ` 덤: ${perk.label}.` : ""}`, "growth");
   // 시즌 정산·SNS 갱신은 돌리지 않는다: 아이템은 명시된 능력치만 바꾼다
   c.result = buildResult(c, before, `${item.name} 구매`, `${item.description}. ${STAT_NAMES[item.stat]} 실력이 늘었어요.`, "good");
   return c;

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { EventArt, PrefetchArt } from "@/components/EventArt";
 import { eventArt } from "@/lib/art";
-import { artGroupFor } from "@/lib/game/format";
+import { actName, artGroupFor } from "@/lib/game/format";
 import { brandTable } from "@/lib/game/brand-rank";
 import { SHOW_FULL } from "@/lib/game/awards";
 import type { ActiveEvent, Award, Career } from "@/lib/game/types";
@@ -123,7 +123,7 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
   // 다음 장면(과 반응 분기)을 미리 받아 둔다
   const upcoming = [steps[i + 1], steps[i + 2]].filter(Boolean).flatMap((s) => (s.kind === "win" ? ["awards-win", "awards-cry", "awards-lose"] : [stepScene(s, reaction)]));
   const show = SHOW_FULL[cm.show] ?? cm.show;
-  const name = career.groupName || career.name;
+  const name = actName(career);
 
   const caption = (() => {
     switch (step.kind) {
@@ -149,7 +149,7 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
           <span className="text-[13px] text-white/40">{i + 1} / {steps.length}</span>
         </div>
         <div className="rounded-2xl overflow-hidden bg-black/40 aspect-[3/2] w-full shrink-0">
-          <EventArt scene={sceneId} avatar={career.avatar} gender={career.gender} name={career.name} mood={step.kind === "lose" ? "sad" : step.kind === "win" || step.kind === "speech" ? "happy" : undefined} group={artGroupFor(career.lineup, "awards")} />
+          <EventArt scene={sceneId} avatar={career.avatar} gender={career.gender} name={career.name} mood={step.kind === "lose" ? "sad" : step.kind === "win" || step.kind === "speech" ? "happy" : undefined} group={step.kind === "announce" ? undefined : artGroupFor(career.lineup, "awards")} />
         </div>
         <PrefetchArt scenes={upcoming} avatar={career.avatar} gender={career.gender} />
         <div className="mt-6 text-center min-h-[220px]">

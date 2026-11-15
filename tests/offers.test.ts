@@ -218,17 +218,18 @@ test("음방 1위는 꽃가루, 대상은 금빛 가루 연출로 표시된다",
   assert.ok(won > 5, `1위 ${won}/20`);
 });
 
-test("아이템 구매는 명시된 능력치만 바꾼다 (SNS·팬·정산 변동 없음)", () => {
+test("아이템 구매는 명시된 능력치와 그 물건의 덤 효과만 바꾼다 (SNS·정산 변동 없음)", () => {
   const c = idol(6);
   c.money.revenue = 500; c.money.invested = 50;
   c.metrics = { instagram: 120000, youtube: 80000, spotify: 50000 };
   const item = shopOffers(c)[0];
   const n = buyItem(c, item.id);
   assert.deepEqual(n.metrics, c.metrics);
-  assert.equal(n.fans, c.fans);
+  assert.equal(n.fans, item.perk?.fansPct ? Math.round(c.fans * (1 + item.perk.fansPct / 100)) : c.fans);
   assert.equal(n.popularity, c.popularity);
+  const allowed = new Set<string>([item.stat, "ovr", ...(item.perk?.stat ? [item.perk.stat] : []), ...(item.perk?.fansPct ? ["fans"] : []), ...(item.perk?.reputation ? ["reputation"] : []), ...(item.perk?.health || item.perk?.mental ? ["health", "mental", "condition"] : [])]);
   const changed = n.result!.changes.map((x) => x.key);
-  assert.ok(changed.every((k) => k === item.stat || k === "ovr"), `변경 항목 ${changed.join(",")}`);
+  assert.ok(changed.every((k) => allowed.has(k)), `변경 항목 ${changed.join(",")}`);
   assert.ok(!shopOffers(n).some((x) => x.id === item.id) || n.flags.shopTurn === n.turn, "이번 시즌엔 구매 완료로 남는다");
   n.turn += 1;
   assert.ok(!shopOffers(n).some((x) => x.id === item.id), "다음 시즌부터는 가진 물건이 진열되지 않는다");

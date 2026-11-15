@@ -49,16 +49,21 @@ export default function PlayPage() {
   const [seasonBanner, setSeasonBanner] = useState<string | null>(null);
   const [recapDone, setRecapDone] = useState(true);
   const hadResult = useRef(false);
+  const seenTurn = useRef<number | null>(null);
 
   // 결과 시트를 닫고 새 시즌 계획 카드가 나오면 맨 위로 올리고 안내한다
   useEffect(() => {
     if (!career) return;
+    // 처음 불러온 시즌은 기억만 한다. 상점 구매처럼 시즌이 그대로인 결과에서는 맨 위로 올리지 않는다
+    if (seenTurn.current === null) seenTurn.current = career.turn;
     if (career.result) {
       hadResult.current = true;
       return;
     }
     if (hadResult.current && !career.pending && career.stage !== "retired") {
       hadResult.current = false;
+      if (career.turn === seenTurn.current) return;
+      seenTurn.current = career.turn;
       window.scrollTo({ top: 0, behavior: "smooth" });
       setSeasonBanner(`새 시즌 시작 · ${periodLabel(career)}`);
     }

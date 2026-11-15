@@ -3,6 +3,9 @@ import { eraScale, yearOf } from "./format.ts";
 import { settlement } from "./economy.ts";
 import { MAIN_STAT } from "./focus.ts";
 
+/** 물건마다 다른 덤 효과. 주 능력치 말고 이 물건만의 특색 */
+export type Perk = { label: string; stat?: StatKey; amount?: number; health?: number; mental?: number; buzz?: number; fansPct?: number; reputation?: number };
+
 export type ShopItem = {
   id: string;
   name: string;
@@ -13,33 +16,59 @@ export type ShopItem = {
   price: number;
   image: string;
   description: string;
+  /** 1 일반 · 2 프로 · 3 마스터 */
+  tier?: 1 | 2 | 3;
+  perk?: Perk;
   /** 전용 연습실처럼 주력 능력치를 따라가는 특별 상품 */
   premium?: boolean;
 };
 
-type Kind = { key: string; name: string; stat: StatKey; description: string };
+type Kind = { key: string; name: string; stat: StatKey; description: string; base: number; perk: Perk };
+/** base: 일반 단계 가격(억). 싼 소모품부터 장비까지 값이 고르게 퍼진다 */
 const KINDS: Kind[] = [
-  { key: "studio-microphone", name: "스튜디오 마이크", stat: "vocal", description: "숨소리까지 담기는 녹음용 마이크" },
-  { key: "vocal-booth", name: "개인 보컬 부스", stat: "vocal", description: "집에서도 녹음실처럼 연습해요" },
-  { key: "in-ear-monitor", name: "커스텀 인이어", stat: "vocal", description: "라이브 음정이 흔들리지 않아요" },
-  { key: "dance-sneakers", name: "댄스화", stat: "dance", description: "턴과 슬라이드가 가벼워져요" },
-  { key: "practice-room-pass", name: "연습실 이용권", stat: "dance", description: "새벽에도 쓸 수 있는 개인 연습실" },
-  { key: "wireless-in-ear", name: "무선 인이어", stat: "dance", description: "격한 안무 중에도 박자를 놓치지 않아요" },
-  { key: "headphones", name: "모니터 헤드폰", stat: "rap", description: "비트를 쪼개 듣는 귀가 생겨요" },
-  { key: "songwriter-notebook", name: "가사 노트", stat: "rap", description: "떠오른 라임을 바로 적어둬요" },
-  { key: "ring-light", name: "링라이트", stat: "visual", description: "셀카와 라이브 방송 화면이 달라져요" },
-  { key: "full-length-mirror", name: "전신 거울", stat: "visual", description: "표정과 라인을 매일 점검해요" },
-  { key: "vlog-camera", name: "브이로그 카메라", stat: "variety", description: "자체 콘텐츠로 입담이 늘어요" },
-  { key: "midi-keyboard", name: "마스터 키보드", stat: "producing", description: "멜로디를 바로 찍어볼 수 있어요" },
-  { key: "audio-interface", name: "오디오 인터페이스", stat: "producing", description: "홈 레코딩으로 데모를 만들어요" },
+  { key: "songwriter-notebook", name: "가사 노트", stat: "rap", description: "떠오른 라임을 바로 적어둬요", base: 1.5, perk: { label: "작사 감각 · 프로듀싱 +1", stat: "producing", amount: 1 } },
+  { key: "full-length-mirror", name: "전신 거울", stat: "visual", description: "표정과 라인을 매일 점검해요", base: 2, perk: { label: "동작 점검 · 댄스 +1", stat: "dance", amount: 1 } },
+  { key: "dance-sneakers", name: "댄스화", stat: "dance", description: "턴과 슬라이드가 가벼워져요", base: 2.5, perk: { label: "부상 예방 · 체력 +4", health: 4 } },
+  { key: "headphones", name: "모니터 헤드폰", stat: "rap", description: "비트를 쪼개 듣는 귀가 생겨요", base: 3, perk: { label: "음정 체크 · 보컬 +1", stat: "vocal", amount: 1 } },
+  { key: "ring-light", name: "링라이트", stat: "visual", description: "셀카와 라이브 방송 화면이 달라져요", base: 3.5, perk: { label: "SNS 반응 · 화제성 +6", buzz: 6 } },
+  { key: "practice-room-pass", name: "연습실 이용권", stat: "dance", description: "새벽에도 쓸 수 있는 개인 연습실", base: 4, perk: { label: "혼자만의 시간 · 멘탈 +3", mental: 3 } },
+  { key: "vlog-camera", name: "브이로그 카메라", stat: "variety", description: "자체 콘텐츠로 입담이 늘어요", base: 4.5, perk: { label: "자체 콘텐츠 · 팬 +2%", fansPct: 2 } },
+  { key: "studio-microphone", name: "스튜디오 마이크", stat: "vocal", description: "숨소리까지 담기는 녹음용 마이크", base: 5, perk: { label: "홈 레코딩 · 프로듀싱 +1", stat: "producing", amount: 1 } },
+  { key: "wireless-in-ear", name: "무선 인이어", stat: "dance", description: "격한 안무 중에도 박자를 놓치지 않아요", base: 5.5, perk: { label: "라이브 안정 · 보컬 +1", stat: "vocal", amount: 1 } },
+  { key: "in-ear-monitor", name: "커스텀 인이어", stat: "vocal", description: "라이브 음정이 흔들리지 않아요", base: 6, perk: { label: "무대 긴장 완화 · 멘탈 +4", mental: 4 } },
+  { key: "midi-keyboard", name: "MIDI 키보드", stat: "producing", description: "멜로디를 바로 찍어볼 수 있어요", base: 6.5, perk: { label: "화성 감각 · 보컬 +1", stat: "vocal", amount: 1 } },
+  { key: "audio-interface", name: "오디오 인터페이스", stat: "producing", description: "홈 레코딩으로 데모를 만들어요", base: 7, perk: { label: "데모 퀄리티 · 평판 +2", reputation: 2 } },
+  { key: "vocal-booth", name: "개인 보컬 부스", stat: "vocal", description: "집에서도 녹음실처럼 연습해요", base: 8, perk: { label: "방음 연습 · 멘탈 +3", mental: 3 } },
 ];
 
-/** 01 일반(+3) · 02 프로(+5) · 03 마스터(+7, 모아야 살 수 있다). 03은 프로 이미지를 쓴다. */
-export const SHOP_ITEMS: ShopItem[] = KINDS.flatMap((k) => [
-  { id: `${k.key}-01`, name: k.name, stat: k.stat, amount: 3, price: 3, image: `/art-v3/items/${k.key}-01.png`, description: k.description },
-  { id: `${k.key}-02`, name: `${k.name} 프로`, stat: k.stat, amount: 5, price: 9, image: `/art-v3/items/${k.key}-02.png`, description: k.description },
-  { id: `${k.key}-03`, name: `${k.name} 마스터`, stat: k.stat, amount: 7, price: 30, image: `/art-v3/items/${k.key}-02.png`, description: k.description },
-]);
+/** 단계별 배율: 가격 ×1 · ×3 · ×8, 덤 효과 ×1 · ×1.5 · ×2 */
+const TIER = [
+  { suffix: "01", label: "", amount: 3, price: 1, perk: 1 },
+  { suffix: "02", label: " 프로", amount: 5, price: 3, perk: 1.5 },
+  { suffix: "03", label: " 마스터", amount: 7, price: 8, perk: 2 },
+] as const;
+
+const scalePerk = (p: Perk, m: number): Perk => {
+  const r = (v?: number) => (v === undefined ? undefined : Math.max(1, Math.round(v * m)));
+  const out: Perk = { label: p.label, stat: p.stat, amount: r(p.amount), health: r(p.health), mental: r(p.mental), buzz: r(p.buzz), fansPct: r(p.fansPct), reputation: r(p.reputation) };
+  // 라벨의 숫자도 단계에 맞게
+  const n = out.amount ?? out.health ?? out.mental ?? out.buzz ?? out.fansPct ?? out.reputation;
+  out.label = p.label.replace(/\+\d+/, `+${n}`);
+  return out;
+};
+
+/** 01 일반 · 02 프로 · 03 마스터(모아야 살 수 있다). 03 그림은 전용 이미지가 나오기 전까지 프로 그림을 쓴다. */
+export const SHOP_ITEMS: ShopItem[] = KINDS.flatMap((k) => TIER.map((t, i) => ({
+  id: `${k.key}-${t.suffix}`,
+  name: `${k.name}${t.label}`,
+  stat: k.stat,
+  amount: t.amount,
+  price: Math.round(k.base * t.price * 10) / 10,
+  image: `/art-v3/items/${k.key}-${i === 0 ? "01" : "02"}.png`,
+  description: k.description,
+  tier: (i + 1) as 1 | 2 | 3,
+  perk: scalePerk(k.perk, t.perk),
+})));
 
 export const PREMIUM_ID = "studio-premium";
 export const PREMIUM_PRICE = 120;
@@ -52,6 +81,8 @@ export const premiumItem = (position: Career["position"]): ShopItem => ({
   price: PREMIUM_PRICE,
   image: "/art-v3/items/practice-room-pass-02.png",
   description: "회사와 따로 쓰는 나만의 연습실. 주력 능력이 크게 올라요",
+  tier: 3,
+  perk: { label: "컨디션 관리 · 체력 +8 · 멘탈 +8", health: 8, mental: 8 },
   premium: true,
 });
 
@@ -93,7 +124,7 @@ export function shopOffers(c: Pick<Career, "seed" | "turn"> & Partial<Pick<Caree
     const boughtNow = c.flags.shopTurn === c.turn && c.items?.[c.items.length - 1] === PREMIUM_ID;
     if (boughtNow || walletOf(c as Career) >= premium.price * eraScale(yearOf(c)) * 0.5) picked[2] = premium;
   }
-  return picked;
+  return picked.sort((x, y) => x.price - y.price);
 }
 
 export const boughtThisSeason = (c: Pick<Career, "flags" | "turn">) => c.flags.shopTurn === c.turn;

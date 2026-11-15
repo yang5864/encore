@@ -2,10 +2,9 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
-import { eventArt } from "@/lib/art";
+import { eventArt, hasSceneFrames } from "@/lib/art";
 import type { ArtMood } from "@/lib/art";
 import { ArtFrames } from "./ArtFrames";
-import { Icon } from "@/components/ui/Icon";
 
 export type { ArtMood };
 export type ArtGroup = { avatars: number[]; center: boolean };
@@ -36,7 +35,10 @@ export function EventArt({ scene, avatar, gender, name = "캐릭터", className 
   /** 무대·공식 행사에서 같이 서는 멤버들. center면 내가 가운데 */
   group?: ArtGroup;
 }) {
-  const art = eventArt(scene, avatar, gender, mood);
+  const groupList = group && group.avatars.length >= 1 ? group.avatars : null;
+  // 멤버마다 그림 세트가 달라 포즈가 제각각이 되지 않게: 한 명이라도 장면 전용 그림이 없으면 모두 기본 동작으로
+  const uniform = !!groupList && [avatar, ...groupList].some((a) => !hasSceneFrames(scene, a, gender));
+  const art = eventArt(scene, avatar, gender, mood, uniform);
   const layout = SCENE_LAYOUT[art.scene] ?? {};
   const footY = layout.footY ?? 86;
   const baseHeight = layout.height ?? 43;
@@ -52,7 +54,7 @@ export function EventArt({ scene, avatar, gender, name = "캐릭터", className 
   }, [art.scene, art.background, avatar]);
   const ready = (bg && fg) || timedOut;
   // 그룹 배치: 나 + 멤버를 무대 바닥에 나란히. 슬롯 i의 중심은 (i + 0.5) / N
-  const groupAvatars = group && group.avatars.length >= 1 ? group.avatars : null;
+  const groupAvatars = groupList;
   const total = groupAvatars ? groupAvatars.length + 1 : 1;
   const playerSlot = group?.center ? Math.ceil(total / 2) - 1 : Math.floor(total / 3);
   const groupHeight = Math.min(baseHeight, baseHeight * 3 / total);
@@ -66,15 +68,12 @@ export function EventArt({ scene, avatar, gender, name = "캐릭터", className 
       {groupAvatars ? (
         <>
           {Array.from({ length: total }, (_, i) => i).filter((i) => i !== playerSlot).map((i) => { const m = groupAvatars[memberAt(i)]; return (
-            <ArtFrames key={`m${i}:${art.scene}:${m}`} frames={eventArt(art.scene, m, gender, mood).frames} visibleHeight={groupHeight} sizes="(max-width: 480px) 40vw, 200px" offsetX={slotX(i)} zIndex={1} />
+            <ArtFrames key={`m${i}:${art.scene}:${m}`} frames={eventArt(art.scene, m, gender, mood, uniform).frames} visibleHeight={groupHeight} sizes="(max-width: 480px) 40vw, 200px" offsetX={slotX(i)} zIndex={1} />
           ); })}
         </>
       ) : null}
       <ArtFrames key={`${art.scene}:${avatar}`} frames={art.frames} visibleHeight={groupAvatars ? groupHeight * 1.06 : baseHeight} sizes="(max-width: 480px) 65vw, 310px" onReady={() => setFg(true)}
         {...(groupAvatars ? { offsetX: slotX(playerSlot), zIndex: 2 } : {})} />
-      {!art.moodApplied && (mood === "sad" || mood === "happy") ? (
-        <span className={`art-mood-badge art-mood-${mood}`} aria-hidden style={{ left: groupAvatars ? `calc(${slotX(playerSlot)}% - 6%)` : undefined }}><Icon name={mood === "sad" ? "droplet" : "sparkle"} size={16} /></span>
-      ) : null}
     </div>
   );
 }
