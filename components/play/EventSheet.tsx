@@ -50,7 +50,7 @@ export function EventSheet({ career, open, onChoose }: Props) {
   };
 
   return (
-    <Sheet open={open} dismissible={false} tall footer={contract && choice ? undefined : <Button disabled={!canSubmit} onClick={submit}>{choice ? (choice.sign ? "계약서 보기" : "이 선택으로 진행") : "선택지를 골라주세요"}</Button>}>
+    <Sheet open={open} dismissible={false} tall chained footer={contract && choice ? undefined : <Button disabled={!canSubmit} onClick={submit}>{choice ? (choice.sign ? "계약서 보기" : "이 선택으로 진행") : "선택지를 골라주세요"}</Button>}>
       {contract && choice ? (
         <ContractView
           career={career}

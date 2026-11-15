@@ -359,3 +359,19 @@ html, body { overflow-x: clip; }
 [data-vaul-drawer][data-state="closed"],
 [data-vaul-overlay][data-state="closed"] { pointer-events: none !important; }
 body:not(:has([data-vaul-drawer][data-state="open"])) { pointer-events: auto !important; }
+
+/* 바텀시트 등장: 0.5초 꼬리가 긴 곡선 대신 0.26초에 깔끔하게 멈춘다.
+   iOS는 손가락을 대고 떼는 사이 버튼이 몇 픽셀이라도 움직이면 탭을 버리기 때문에, 시트가 오래 미끄러지면 첫 탭이 씹힌다 */
+[data-vaul-drawer][data-vaul-drawer-direction="bottom"][data-state="open"] {
+  animation-duration: 0.26s !important;
+  animation-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+/* 다른 시트 바로 다음에 이어지는 시트는 움직이지 않고 제자리에서 나타난다 */
+[data-vaul-drawer][data-sheet-chained][data-state="open"] {
+  animation-name: sheet-fade-in !important;
+  animation-duration: 0.16s !important;
+}
+@keyframes sheet-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  [data-vaul-drawer][data-state="open"] { animation-duration: 0.01ms !important; }
+}

@@ -12,16 +12,19 @@ type Props = {
   dismissible?: boolean;
   /** 스크롤 영역 밖에 항상 보이는 하단 버튼 영역 */
   footer?: ReactNode;
+  /** 다른 시트 바로 다음에 이어 열리는 시트: 미끄러지지 않고 제자리에서 나타난다 (움직이는 버튼은 iOS가 탭을 버린다) */
+  chained?: boolean;
   children: ReactNode;
 };
 
 /** Toss-style bottom sheet. All overlays in the app go through this. */
-export function Sheet({ open, onOpenChange, title, description, tall, dismissible = true, footer, children }: Props) {
+export function Sheet({ open, onOpenChange, title, description, tall, dismissible = true, footer, chained, children }: Props) {
   return (
     <Drawer.Root open={open} onOpenChange={onOpenChange} dismissible={dismissible} repositionInputs={false} handleOnly>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-50 bg-black/40" />
         <Drawer.Content
+          data-sheet-chained={chained ? "" : undefined}
           className={cn(
             // iOS 키보드가 올라오면 시트 아래로 뒤 화면이 비친다: 시트 배경을 아래로 길게 이어 틈을 덮는다
             "fixed left-0 right-0 bottom-0 z-50 mx-auto max-w-[480px] rounded-t-[24px] bg-card outline-none flex flex-col after:absolute after:top-full after:inset-x-0 after:h-[100dvh] after:bg-card after:content-['']",

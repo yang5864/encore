@@ -49,6 +49,8 @@ export default function PlayPage() {
   const [seasonBanner, setSeasonBanner] = useState<string | null>(null);
   const [recapDone, setRecapDone] = useState(true);
   const hadResult = useRef(false);
+  // 선택지를 고른 직후의 결과 시트는 이벤트 시트 자리에 바로 나타난다
+  const resultFromChoice = useRef(false);
   const seenTurn = useRef<number | null>(null);
 
   // 결과 시트를 닫고 새 시즌 계획 카드가 나오면 맨 위로 올리고 안내한다
@@ -125,6 +127,7 @@ export default function PlayPage() {
 
   const [advancing, setAdvancing] = useState(false);
   const runAdvance = () => {
+    resultFromChoice.current = false;
     if (!career || advancing) return;
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     const focusId = focusIdOf(focus);
@@ -204,14 +207,14 @@ export default function PlayPage() {
 
       {daesang && <CelebrationOverlay career={career} spot={daesang} onDone={() => setDaesang(null)} />}
       <MilestoneSheet career={career} id={pendingMilestone} open={!!pendingMilestone && !daesang} onClose={() => setMilestoneQueue((q) => q.slice(1))} />
-      {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} avatar={career.avatar} gender={career.gender} name={career.name} lineup={career.lineup} open={showResult} onClose={() => {
+      {career.result && <ResultSheet key={resultKey ?? "r"} result={career.result} avatar={career.avatar} gender={career.gender} name={career.name} lineup={career.lineup} open={showResult} chained={resultFromChoice.current} onClose={() => {
         dismissResult();
         if (afterApply) {
           setAfterApply(false);
           if (!career.pending && career.stage !== "idol" && appliedThisSeason(career) < APPLY_PER_SEASON) setAgencyOpen(true);
         }
       }} ctaLabel={career.pending ? "다음 선택 보기" : afterApply && !career.pending && career.stage !== "idol" && appliedThisSeason(career) < APPLY_PER_SEASON ? "다른 기획사 지원하기" : "확인"} />}
-      <EventSheet key={career.pending?.id ?? "none"} career={career} open={showEvent} onChoose={choose} />
+      <EventSheet key={career.pending?.id ?? "none"} career={career} open={showEvent} onChoose={(id, extra) => { resultFromChoice.current = true; choose(id, extra); }} />
       <Sheet open={detail === "settlement"} onOpenChange={(o) => !o && setDetail(null)} title="정산 현황">
         <SettlementBody career={career} />
       </Sheet>
