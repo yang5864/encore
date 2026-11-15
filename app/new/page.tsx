@@ -13,7 +13,7 @@ import { cn } from "@/lib/cn";
 import { AGENCIES, TIERS, TIER_ORDER, auditionChance, chanceLabel } from "@/lib/game/agencies";
 import { generateCandidates, type Candidate } from "@/lib/game/candidates";
 import { createCareer } from "@/lib/game/create";
-import { applyToAgency } from "@/lib/game/engine";
+import { APPLY_PER_SEASON, applyToAgency } from "@/lib/game/engine";
 import { POSITIONS, STAT_COLORS, STAT_KEYS, STAT_NAMES, overall } from "@/lib/game/stats";
 import type { Career, Gender, Tier } from "@/lib/game/types";
 import { GameError } from "@/lib/game/types";
@@ -36,6 +36,10 @@ export default function NewPage() {
   const [agencyId, setAgencyId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<Career | null>(null);
+  // 첫 지원 때 만든 커리어. 떨어져도 같은 화면에서 이 커리어로 시즌 한도(3곳)까지 다시 지원한다
+  const [career, setCareer] = useState<Career | null>(null);
+  const [failed, setFailed] = useState<string[]>([]);
+  const triesLeft = APPLY_PER_SEASON - failed.length;
 
   useEffect(() => {
     const list = generateCandidates(3);
@@ -59,9 +63,11 @@ export default function NewPage() {
     if (step === 2) {
       if (!agencyId || !candidate) return setError("지원할 기획사를 골라주세요.");
       try {
-        const c = createCareer({ name, gender, avatar, position: candidate.position, stats: candidate.stats });
+        const c = career ?? createCareer({ name, gender, avatar, position: candidate.position, stats: candidate.stats });
         const applied = applyToAgency(c, agencyId);
         saveCareer(applied);
+        setCareer({ ...applied, result: null });
+        if (!applied.pending) setFailed((f) => [...f, agencyId]);
         setResult(applied);
       } catch (e) {
         setError(e instanceof GameError ? e.message : "문제가 생겼어요.");
@@ -71,10 +77,22 @@ export default function NewPage() {
     setStep(step + 1);
   };
 
+  // 합격(계약 제안이 기다림)·기회 소진·무소속 선택이면 게임으로, 아니면 이 화면에서 다른 곳에 지원한다
+  const startGame = (c: Career) => {
+    saveCareer({ ...c, result: null });
+    router.replace("/play");
+  };
+  const closeResult = () => {
+    if (!result) return;
+    if (result.pending || triesLeft <= 0) return startGame(result);
+    setResult(null);
+    setAgencyId(null);
+  };
+
   return (
     <main className="shell pt-3">
       <header className="flex items-center h-12 gap-3">
-        <BackButton onClick={() => (step ? setStep(step - 1) : router.back())} />
+        <BackButton onClick={() => (career ? startGame(career) : step ? setStep(step - 1) : router.back())} />
         <div className="flex-1">
           <ProgressBar value={((step + 1) / STEPS.length) * 100} height={4} label="진행" />
         </div>
@@ -162,8 +180,19 @@ export default function NewPage() {
 
       {step === 2 && (
         <section className="fade-up mt-6">
-          <h1 className="t-title">어디에 지원할까요?</h1>
-          <p className="t-cap mt-2">대형은 문이 좁고 중소는 넓어요. 떨어져도 무소속으로 시작해 언제든 다시 지원할 수 있어요.</p>
+          <h1 className="t-title">{failed.length ? "다른 곳에 지원해볼까요?" : "어디에 지원할까요?"}</h1>
+          <p className="t-cap mt-2">대형은 문이 좁고 중소는 넓어요. 이번 시즌에 {APPLY_PER_SEASON}곳까지 지원할 수 있어요.</p>
+          {failed.length > 0 && (
+            <div className="mt-4 rounded-2xl bg-card p-4" role="status">
+              <p className="t-body font-bold">{triesLeft > 0 ? `지원 기회가 ${triesLeft}번 남았어요` : "이번 시즌 지원 기회를 모두 썼어요"}</p>
+              <div className="flex gap-1.5 mt-2" aria-hidden>
+                {Array.from({ length: APPLY_PER_SEASON }, (_, n) => (
+                  <span key={n} className={cn("h-1.5 flex-1 rounded-full", n < failed.length ? "bg-danger" : "bg-line")} />
+                ))}
+              </div>
+              <p className="text-[13px] text-ink-3 mt-2">불합격: {failed.map((id) => AGENCIES.find((a) => a.id === id)?.name ?? id).join(" · ")}</p>
+            </div>
+          )}
           <div className="flex gap-1.5 overflow-x-auto no-scrollbar -mx-5 px-5 mt-5">
             {TIER_ORDER.map((t) => (
               <button key={t} onClick={() => setTier(t)} className={cn("press shrink-0 h-9 px-3.5 rounded-full text-[13px] font-bold", tier === t ? "bg-ink text-bg" : "bg-card text-ink-2")}>{TIERS[t].short}</button>
@@ -173,14 +202,15 @@ export default function NewPage() {
           <div className="flex flex-col gap-2 mt-3">
             {candidate && AGENCIES.filter((a) => a.tier === tier).map((a) => {
               const label = chanceLabel(auditionChance({ stats: candidate.stats, position: candidate.position }, a.id));
+              const out = failed.includes(a.id);
               return (
-                <button key={a.id} onClick={() => setAgencyId(a.id)} className={cn("press text-left rounded-2xl border-2 bg-card p-4 flex items-center gap-3", agencyId === a.id ? "border-primary" : "border-transparent")}>
+                <button key={a.id} disabled={out} onClick={() => setAgencyId(a.id)} className={cn("press text-left rounded-2xl border-2 bg-card p-4 flex items-center gap-3", agencyId === a.id ? "border-primary" : "border-transparent", out && "opacity-45")}>
                   <Logo id={a.logo} label={a.name} color={a.color} size={44} />
                   <div className="min-w-0 flex-1">
                     <p className="t-body font-bold truncate">{a.name}</p>
                     <p className="text-[13px] text-ink-3 truncate">{a.rank ? `2026 기획사 순위 ${a.rank}위 · ` : ""}{a.strength}</p>
                   </div>
-                  <Chip tone={TONE[label]}>{label}</Chip>
+                  {out ? <Chip tone="danger">불합격</Chip> : <Chip tone={TONE[label]}>{label}</Chip>}
                 </button>
               );
             })}
@@ -190,7 +220,10 @@ export default function NewPage() {
 
       <FixedCta>
         {error && <p className="mb-2 rounded-xl bg-danger-soft text-danger text-[13px] font-bold py-2.5 px-3">{error}</p>}
-        <Button onClick={next}>{step === 2 ? "지원하기" : step === 1 ? "이 스타일로 할게요" : "다음"}</Button>
+        <Button onClick={next}>{step === 2 ? (failed.length ? `지원하기 (${failed.length + 1}/${APPLY_PER_SEASON})` : "지원하기") : step === 1 ? "이 스타일로 할게요" : "다음"}</Button>
+        {step === 2 && career && (
+          <Button variant="ghost" className="mt-2" onClick={() => startGame(career)}>무소속으로 시작하기</Button>
+        )}
       </FixedCta>
 
       {result?.result && (
@@ -200,11 +233,8 @@ export default function NewPage() {
           gender={result.gender}
           name={result.name}
           open
-          onClose={() => {
-            saveCareer({ ...result, result: null });
-            router.replace("/play");
-          }}
-          ctaLabel="플레이 시작"
+          onClose={closeResult}
+          ctaLabel={result.pending ? "플레이 시작" : triesLeft > 0 ? `다른 기획사에 지원하기 (${triesLeft}번 남음)` : "무소속으로 시작하기"}
         />
       )}
     </main>
