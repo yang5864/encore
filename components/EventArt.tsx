@@ -21,6 +21,7 @@ const SCENE_LAYOUT: Record<string, SceneLayout> = {
   "awards-win": { footY: 94, spread: 0.6 },
   "awards-cry": { footY: 94, spread: 0.6 },
   "awards-lose": { footY: 94, spread: 0.6 },
+  "awards-announce": { footY: 94, spread: 0.6 },
   // 수상 소감: 무대 위 포디움 옆에 선다
   "awards-speech": { footY: 63, height: 34, spread: 0.5, bgPosition: "50% 0%" },
   "awards-redcarpet": { spread: 0.8 },

@@ -157,7 +157,7 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
           <span className="text-[13px] text-white/40">{i + 1} / {steps.length}</span>
         </div>
         <div className="rounded-2xl overflow-hidden bg-black/40 aspect-[3/2] w-full shrink-0">
-          <EventArt scene={sceneId} avatar={career.avatar} gender={career.gender} name={career.name} mood={step.kind === "lose" ? "sad" : step.kind === "win" || step.kind === "speech" ? "happy" : undefined} group={step.kind === "announce" ? undefined : artGroupFor(career.lineup, "awards")} />
+          <EventArt scene={sceneId} avatar={career.avatar} gender={career.gender} name={career.name} mood={step.kind === "lose" ? "sad" : step.kind === "win" || step.kind === "speech" ? "happy" : undefined} group={artGroupFor(career.lineup, "awards")} />
         </div>
         <PrefetchArt scenes={upcoming} avatar={career.avatar} gender={career.gender} />
         <div className="mt-6 text-center min-h-[220px]">

@@ -43,7 +43,8 @@ export function hasSceneFrames(scene: string, index: number, gender?: "female" |
  * 시상식 의자 그림은 쓰지 않는다: 프레임이 넘어갈 때 의자가 좌우로 흔들려 보인다.
  * 객석 장면은 서서 박수 치는 프레임(수상 없음 세트의 1~3)을, 호명·박수 장면은 서 있는 프레임만 쓴다.
  */
-const FRAMES_FROM: Record<string, string> = { "awards-seat": "awards-lose" };
+// 의자 없이 서서 두 손을 모은 수상 실패 1~3프레임을 객석 대기·대상 발표 장면에도 쓴다 (발표 장면은 전용 그림이 없어 평상복 기본 포즈로 나왔다)
+const FRAMES_FROM: Record<string, string> = { "awards-seat": "awards-lose", "awards-announce": "awards-lose" };
 const FRAME_PICK: Record<string, number[]> = { "awards-win": [2, 3], "awards-lose": [0, 1, 2] };
 function sceneFrames(key: string, avatar: number): ArtFrame[] | undefined {
   const source = FRAMES_FROM[key] ?? key;
