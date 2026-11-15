@@ -5,7 +5,7 @@
 | 작업 | 수량 | 저장 경로 |
 |---|---|---|
 | 1. 상점 아이템 3단계 그림 | 13종 × 3단계 = 39 | `public/art-v6/inbox/items/<key>-01.png` · `-02` · `-03` |
-| 2. 시상식 객석 의자 통일 (아바타 0~5) | 6명 × 4프레임 = 24 | `public/art-v6/inbox/awards-seat/avatar-<N>/01.png`~`04.png` |
+| ~~2. 시상식 객석 의자 통일~~ | — | [캐릭터 0~5 리메이크](REMAKE-0-5-PROMPTS.md)에 포함돼서 따로 뽑지 않아요 |
 
 모델: `nano_banana_2_1`, `resolution: "2k"`, `aspect_ratio: "1:1"`, `use_unlim: true`. 배경은 흰색(#FFFFFF)이면 Claude Code가 지워요.
 
@@ -57,7 +57,9 @@ Tier 03 (master): luxurious master edition in polished gold and black lacquer wi
 
 ---
 
-## 2. 시상식 객석 의자 통일
+## 2. 시상식 객석 의자 통일 (리메이크로 대체)
+
+> 캐릭터 0~5를 새 비율로 다시 그리는 [리메이크](REMAKE-0-5-PROMPTS.md)에서 의자도 같이 통일돼요. 리메이크를 하면 아래는 건너뛰어요.
 
 새 아바타 6~17은 가는 금색 의자에, 기존 0~5는 푹신한 안락의자에 앉아 있어서 나란히 앉으면 의자가 제각각이에요. 0~5만 6~17과 같은 의자로 다시 뽑아요.
 
