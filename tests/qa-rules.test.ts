@@ -237,7 +237,7 @@ test("상점: 더 큰 상위 단계와 전용 연습실", () => {
   const premium = offers.find((o) => o.id === PREMIUM_ID)!;
   assert.ok(premium);
   assert.equal(premium.stat, MAIN_STAT[rich.position]);
-  assert.deepEqual([premium.amount, premium.price, premium.image], [12, 120, "/art-v3/items/practice-room-pass-02.png"]);
+  assert.deepEqual([premium.amount, premium.price, premium.image], [12, 120, "/art-v6/items/practice-room-pass-03.png"]);
   assert.ok(priceOf(rich, premium) > 0);
   const bought = buyItem(rich, PREMIUM_ID);
   assert.equal(bought.stats[premium.stat], Math.min(99, rich.stats[premium.stat] + 12));

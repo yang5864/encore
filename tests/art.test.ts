@@ -25,7 +25,8 @@ test("입대는 남성만, 위문공연은 여성만 표시하며 잘못된 장�
   }
   assert.equal(eventArt("unknown", -1).scene, "rest");
   assert.equal(eventArt("constructor", 0).scene, "rest");
-  assert.ok(eventArt("military", 0, "male").frames[0].url.includes("avatar-3/military/"));
+  // 리메이크 캐릭터(0~5)는 옛 비율 장면 그림을 쓰지 않고 기본 동작으로 그린다
+  assert.ok(eventArt("military", 0, "male").frames[0].url.includes("avatar-3/"));
 });
 
 test("미완성 이벤트는 있는 한 프레임 또는 같은 캐릭터의 기본 동작으로 표시한다", () => {
@@ -37,24 +38,25 @@ test("대기 동작은 눈을 뜬 원본과 완전히 감은 전용 프레임을
   for (let avatar = 0; avatar < 6; avatar++) {
     const frames = idleFrames(avatar);
     assert.equal(frames.length, 2);
-    assert.equal(frames[0].url, `/art-v3/characters/avatar-${avatar}/idle-01.png`);
-    assert.equal(frames[1].url, `/art-v3/characters/avatar-${avatar}/blink-closed.png`);
-    assert.ok(existsSync(`public${frames[1].url}`));
+    assert.equal(frames[0].url, `/art-v6/characters/avatar-${avatar}/idle-open.png`);
+    assert.equal(frames[1].url, `/art-v6/characters/avatar-${avatar}/idle-closed.png`);
+    assert.ok(frames.every((f) => existsSync(`public${f.url}`)));
   }
 });
 
-test("성별에 맞는 35개 이벤트의 402장 모두 완성된 이벤트 의상을 사용한다", () => {
-  let count = 0;
-  for (const scene of SCENES) for (let avatar = 0; avatar < 6; avatar++) {
-    if ((scene === "military" || scene === "military-band") && avatar < 3 || scene === "military-concert" && avatar >= 3) continue;
-    // 아육대·인스타 개설·연습실은 배경만 새로 만들고 캐릭터는 기본 동작을 쓴다
-    if (["isac", "sns-open", "practice"].includes(scene)) continue;
-    const art = eventArt(scene, avatar);
-    assert.equal(art.frames.length, 2, `${scene}/${avatar}`);
-    assert.ok(art.frames.every((f) => f.url.startsWith(`/art-v4/characters/avatar-${avatar}/${scene}/`)));
-    count += art.frames.length;
+test("18명 모두 같은 규칙: 시상식 7장면은 전용 4프레임, 그 밖의 장면은 기본 동작", () => {
+  const awards = ["awards-redcarpet", "awards-stage", "awards-seat", "awards-win", "awards-cry", "awards-speech", "awards-lose"];
+  for (let avatar = 0; avatar < 18; avatar++) {
+    for (const scene of awards) {
+      const art = eventArt(scene, avatar);
+      assert.equal(art.frames.length, 4, `${scene}/${avatar}`);
+      assert.ok(art.frames.every((f) => existsSync(`public${f.url}`)));
+    }
+    for (const scene of ["album", "tour", "debut", "grammy", "press"]) {
+      const art = eventArt(scene, avatar);
+      assert.ok(art.frames.every((f) => !f.url.includes(`/${scene}/`)), `${scene}/${avatar}는 기본 동작`);
+    }
   }
-  assert.equal(count, 402);
 });
 
 test("아이템 12종의 두 변형 모두 존재하고 활동 이미지로 연결된다", () => {
@@ -108,8 +110,8 @@ test("새 아바타 6–17도 시상식 7장면 4프레임 의상을 쓰고, 18�
     const dancing = eventArt("isac", avatar, undefined, "happy");
     assert.ok(!dancing.moodApplied, "춤 동작은 활짝 표정으로 바꾸지 않는다");
   }
-  // 장면 전용 동작이 있으면 표정으로 바꾸지 않는다 (뱃지로 보여준다)
-  assert.ok(!eventArt("press", 0, undefined, "sad").moodApplied);
+  // 장면 전용 동작(시상식)이 있으면 표정 그림으로 바꾸지 않는다
+  assert.ok(!eventArt("awards-seat", 0, undefined, "sad").moodApplied);
   // 군악대는 남성 9명 전용
   for (const avatar of [3, 4, 5, 12, 13, 14, 15, 16, 17]) assert.equal(eventArt("military-band", avatar).frames.length, 2);
   assert.equal(eventArt("military-band", 0).scene, "rest");

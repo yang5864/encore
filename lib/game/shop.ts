@@ -57,14 +57,14 @@ const scalePerk = (p: Perk, m: number): Perk => {
   return out;
 };
 
-/** 01 일반 · 02 프로 · 03 마스터(모아야 살 수 있다). 03 그림은 전용 이미지가 나오기 전까지 프로 그림을 쓴다. */
+/** 01 일반 · 02 프로 · 03 마스터(모아야 살 수 있다). 단계마다 재질이 다른 그림: 파스텔 · 은색 · 금과 보석 */
 export const SHOP_ITEMS: ShopItem[] = KINDS.flatMap((k) => TIER.map((t, i) => ({
   id: `${k.key}-${t.suffix}`,
   name: `${k.name}${t.label}`,
   stat: k.stat,
   amount: t.amount,
   price: Math.round(k.base * t.price * 10) / 10,
-  image: `/art-v3/items/${k.key}-${i === 0 ? "01" : "02"}.png`,
+  image: `/art-v6/items/${k.key}-${t.suffix}.png`,
   description: k.description,
   tier: (i + 1) as 1 | 2 | 3,
   perk: scalePerk(k.perk, t.perk),
@@ -79,7 +79,7 @@ export const premiumItem = (position: Career["position"]): ShopItem => ({
   stat: MAIN_STAT[position],
   amount: 12,
   price: PREMIUM_PRICE,
-  image: "/art-v3/items/practice-room-pass-02.png",
+  image: "/art-v6/items/practice-room-pass-03.png",
   description: "회사와 따로 쓰는 나만의 연습실. 주력 능력이 크게 올라요",
   tier: 3,
   perk: { label: "컨디션 관리 · 체력 +8 · 멘탈 +8", health: 8, mental: 8 },

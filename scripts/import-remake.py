@@ -8,7 +8,7 @@
 
 하는 일:
   1. 흰 배경을 가장자리부터 지운다 (외곽선 안쪽 흰색은 남는다)
-  2. 기존 규칙대로 1254px 정사각 캔버스에 놓는다: 기본 포즈는 키 84%·발 93%, 시상식은 장면마다 4프레임이 같은 배율·같은 발 높이
+  2. 기존 규칙대로 1254px 정사각 캔버스에 놓는다: 기본 포즈는 새 캐릭터와 같은 키 86%·발 95.2%, 시상식은 장면마다 4프레임이 같은 배율·같은 발 높이
   3. lib/art/catalog.json을 고친다: 기본 포즈·표정·시상식 7장면을 새 그림으로, 그 밖의 장면 전용 그림은 빼서 새 캐릭터 12명처럼 기본 포즈를 쓰게 한다
 
 사용: python3 scripts/import-remake.py [--avatars 0,1,2] [--dry-run]
@@ -26,6 +26,9 @@ CANVAS = 1254
 SINGLES = ["idle-open", "idle-closed", "sing", "dance", "mood-sad", "mood-happy"]
 AWARDS = ["redcarpet", "stage", "seat", "win", "cry", "speech", "lose"]
 KEEP_SCENES = {"military-band"}  # 이번 리메이크와 같은 비율로 이미 그려진 장면
+# 새 캐릭터 6~17의 카탈로그 중앙값에 맞춘다 (서 있는 키·발 높이, 시상식 4프레임 공통 키·발 높이)
+BASE_H, BASE_FOOT = 0.86, 0.952
+AWARD_H, AWARD_FOOT = 0.878, 0.95
 
 
 def key_white(im: Image.Image, threshold=238) -> Image.Image:
@@ -109,10 +112,10 @@ def main():
         # 기본 포즈: idle-open 키를 기준으로 같은 배율을 모든 단일 그림에 쓴다
         singles = {s: key_white(Image.open(os.path.join(src, f"{s}.png"))) for s in SINGLES}
         ref_h = singles["idle-open"].getbbox()
-        scale = 0.84 * CANVAS / (ref_h[3] - ref_h[1])
+        scale = BASE_H * CANVAS / (ref_h[3] - ref_h[1])
         metas = {}
         for s, im in singles.items():
-            canvas, meta = place(im, scale, 0.93)
+            canvas, meta = place(im, scale, BASE_FOOT)
             metas[s] = meta
             if not args.dry_run:
                 canvas.save(os.path.join(out, f"{s}.png"), optimize=True)
@@ -129,11 +132,11 @@ def main():
             fw = strip.width // 4
             frames = [key_white(strip.crop((k * fw, 0, (k + 1) * fw, strip.height))) for k in range(4)]
             tallest = max(f.getbbox()[3] - f.getbbox()[1] for f in frames)
-            sc = 0.86 * CANVAS / tallest
+            sc = AWARD_H * CANVAS / tallest
             entries = []
             os.makedirs(os.path.join(out, f"awards-{scene}"), exist_ok=True)
             for k, f in enumerate(frames, 1):
-                canvas, meta = place(f, sc, 0.94)
+                canvas, meta = place(f, sc, AWARD_FOOT)
                 if not args.dry_run:
                     canvas.save(os.path.join(out, f"awards-{scene}", f"{k:02d}.png"), optimize=True)
                 entries.append(frame_entry(f"{OUT_URL}/avatar-{n}/awards-{scene}/{k:02d}.png", meta))
