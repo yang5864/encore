@@ -6,6 +6,7 @@ import { eventArt } from "@/lib/art";
 import { actName, artGroupFor } from "@/lib/game/format";
 import { brandTable } from "@/lib/game/brand-rank";
 import { SHOW_FULL } from "@/lib/game/awards";
+import { realDaesang } from "@/lib/game/daesang";
 import type { ActiveEvent, Award, Career } from "@/lib/game/types";
 import { cn } from "@/lib/cn";
 
@@ -82,7 +83,14 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
   const cm = career.ceremony!;
   const awards = useMemo(() => [...cm.awards].sort((a, b) => rank(a) - rank(b)), [cm.awards]); // 작은 상부터, 대상은 마지막
   const top = awards[awards.length - 1] ?? null;
-  const rival = useMemo(() => brandTable(cm.year).filter((e) => e.name !== career.groupName)[0]?.name ?? "다른 팀", [cm.year, career.groupName]);
+  // 그 해 실제 대상 수상자가 경쟁 상대. 아직 열리지 않은 해는 그 해 가장 인기 있는 팀
+  const rivalFor = useMemo(() => (kind: "album" | "digital") => {
+    const real = realDaesang(cm.show, cm.year, kind);
+    if (real && real !== career.groupName && real !== career.name) return real;
+    return brandTable(cm.year).map((e) => (e.name.includes(" ") ? e.name.slice(0, e.name.indexOf(" ")) : e.name)).find((g) => g !== career.groupName && g !== career.name) ?? "다른 팀";
+  }, [cm.show, cm.year, career.groupName, career.name]);
+  const rival = rivalFor("album");
+  const lostPrize = cm.show === "골든디스크" ? "음반 대상" : "대상";
   const steps = useMemo<Step[]>(() => {
     const s: Step[] = [{ kind: "redcarpet" }];
     for (const name of cm.stages.slice(0, 1)) s.push({ kind: "stage", name });
@@ -130,8 +138,8 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
       case "redcarpet": return { chip: `${cm.year} ${show}`, title: "레드카펫에 섰어요", text: `카메라 플래시가 쏟아져요. ${cm.stages.join(" · ")} 무대까지, 올해 가장 긴 밤이 시작돼요.` };
       case "stage": return { chip: step.name, title: "연말 무대", text: "올해의 타이틀곡을 특별 편곡으로 올렸어요. 객석의 응원봉이 한 색으로 물들었어요." };
       case "seat": return { chip: step.award ? step.award.name : "시상", title: step.award ? `${step.award.name} 발표를 앞두고` : "시상 부문 발표", text: "시상자가 봉투를 들고 무대에 올랐어요. 멤버들 손이 서로를 찾아요." };
-      case "announce": return { chip: step.award ? step.award.name : "시상", title: revealed ? (step.award ? `${name}!` : `${rival}!`) : "두구두구두구…", text: revealed ? (step.award ? `"${cm.year} ${step.award.show} ${step.award.name}… ${name}!"` : `"${cm.year} ${show} 대상… ${rival}!" 객석에서 박수를 보냈어요.`) : `"올해 ${step.award ? step.award.name : "대상"}의 주인공은…"` };
-      case "win": return { chip: step.award.name, title: "이름이 불렸어요", text: "멤버들이 서로를 끌어안았어요. 무대로 올라가는 길이 길게 느껴져요." };
+      case "announce": return { chip: step.award ? step.award.name : "시상", title: revealed ? (step.award ? `${name}!` : `${rival}!`) : "두구두구두구…", text: revealed ? (step.award ? `"${cm.year} ${step.award.show} ${step.award.name}… ${name}!"` : `"${cm.year} ${show} ${lostPrize}… ${rival}!" 객석에서 박수를 보냈어요.`) : `"올해 ${step.award ? step.award.name : "대상"}의 주인공은…"` };
+      case "win": return { chip: step.award.name, title: "이름이 불렸어요", text: step.award.kind === "daesang" ? `쟁쟁한 대상 후보 ${rivalFor(step.award.name.includes("음원") ? "digital" : "album")}까지 제쳤어요. 무대로 올라가는 길이 길게 느껴져요.` : "멤버들이 서로를 끌어안았어요. 무대로 올라가는 길이 길게 느껴져요." };
       case "lose": return { chip: "수상 없음", title: "올해는 아니었어요", text: "수상자에게 박수를 보냈어요. 내년엔 저 무대에 서기로 했어요." };
       case "speech": return { chip: step.award.name, title: "수상소감", text: "마이크 앞에 섰어요. 첫 마디가 내년을 정해요." };
     }

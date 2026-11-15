@@ -41,10 +41,31 @@ const ROSTER: Record<number, [number, string]> = {
 
 const GAPS = [2, 1, 3, 2, 2, 1, 3, 2, 1, 2, 3, 1, 2, 2, 1, 3, 2, 1, 2, 2, 3, 1, 2, 1, 2, 2, 1, 2, 1];
 
+/** 같은 그룹의 다음 멤버가 밀리는 정도 (그룹 순위 한 칸 = 1). 실제 월간 순위처럼 한 그룹이 상위권을 연달아 차지하지 않게 한다. */
+const MEMBER_STEP = 2.6;
+const groupOf = (name: string) => (name.includes(" ") ? name.slice(0, name.indexOf(" ")) : name);
+
+/**
+ * 명단은 그룹 인기순으로 적혀 있다. 그룹마다 대표 멤버가 그룹 순위 자리에 서고, 나머지 멤버는 MEMBER_STEP씩 뒤로 흩어진다.
+ * 한국기업평판연구소 월간 개인 순위에서 1위 그룹 멤버가 10위 안에 2~3명, 나머지는 20~30위권에 퍼지는 모양을 따른다.
+ */
+function spreadByGroup(names: string[]): string[] {
+  const groupRank = new Map<string, number>();
+  const seen = new Map<string, number>();
+  const keyed = names.map((name, i) => {
+    const g = groupOf(name);
+    if (!groupRank.has(g)) groupRank.set(g, groupRank.size);
+    const k = seen.get(g) ?? 0;
+    seen.set(g, k + 1);
+    return { name, key: groupRank.get(g)! + k * MEMBER_STEP, i };
+  });
+  return keyed.sort((a, b) => a.key - b.key || a.i - b.i).map((e) => e.name);
+}
+
 export const BRAND_RANKS: Record<number, BrandEntry[]> = Object.fromEntries(
   Object.entries(ROSTER).map(([year, [top, names]]) => {
     let index = top;
-    return [Number(year), names.split(",").map((name, i) => { if (i > 0) index -= GAPS[i - 1]; return { name, index }; })];
+    return [Number(year), spreadByGroup(names.split(",")).map((name, i) => { if (i > 0) index -= GAPS[i - 1]; return { name, index }; })];
   }),
 );
 
