@@ -28,7 +28,7 @@ export default function NewPage() {
   const [step, setStep] = useState(0);
   const [name, setName] = useState("");
   const [gender, setGender] = useState<Gender>("female");
-  const [avatar, setAvatar] = useState(0);
+  const [avatar, setAvatar] = useState(FEMALE_AVATARS[0]);
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [candidateId, setCandidateId] = useState<string | null>(null);
   const [rerolls, setRerolls] = useState(0);
@@ -90,7 +90,7 @@ export default function NewPage() {
           <p className="t-cap mt-6 mb-2">성별</p>
           <div className="grid grid-cols-2 gap-2">
             {(["female", "male"] as Gender[]).map((g) => (
-              <button key={g} onClick={() => { setGender(g); setAvatar(g === "female" ? 0 : 3); }} className={cn("press h-14 rounded-2xl font-bold border-2", gender === g ? "border-primary bg-primary-soft/60 text-primary" : "border-transparent bg-card")}>
+              <button key={g} onClick={() => { setGender(g); setAvatar(g === "female" ? FEMALE_AVATARS[0] : MALE_AVATARS[0]); }} className={cn("press h-14 rounded-2xl font-bold border-2", gender === g ? "border-primary bg-primary-soft/60 text-primary" : "border-transparent bg-card")}>
                 {g === "female" ? "여성" : "남성"}
               </button>
             ))}
@@ -98,8 +98,8 @@ export default function NewPage() {
           <p className="t-cap mt-6 mb-2">캐릭터</p>
           <div className="grid grid-cols-3 gap-2">
             {(gender === "female" ? FEMALE_AVATARS : MALE_AVATARS).map((i, n) => (
-              <button key={i} onClick={() => setAvatar(i)} aria-label={`캐릭터 ${n + 1}`} aria-pressed={avatar === i} className={cn("press rounded-2xl border-2 bg-card flex items-end justify-center pb-1 overflow-hidden h-[104px]", avatar === i ? "border-primary" : "border-transparent")}>
-                <Avatar index={i} size={80} />
+              <button key={i} onClick={() => setAvatar(i)} aria-label={`캐릭터 ${n + 1}`} aria-pressed={avatar === i} className={cn("press rounded-2xl border-2 bg-card flex items-center justify-center overflow-hidden h-[104px]", avatar === i ? "border-primary" : "border-transparent")}>
+                <Avatar index={i} size={72} />
               </button>
             ))}
           </div>

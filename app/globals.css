@@ -304,7 +304,8 @@
 
 .event-art { position: relative; aspect-ratio: 3 / 2; overflow: hidden; isolation: isolate; background: var(--sub); }
 .art-frame { position: absolute; display: block; aspect-ratio: 1; left: 50%; top: var(--art-foot-y, 86%); pointer-events: none; }
-.avatar-art .art-frame { top: 96%; }
+/* 상자 높이 1.25·캐릭터 키 1.18(가로 대비): 발을 97.2%에 두면 머리 위·발 아래 여백이 0.035로 같다 */
+.avatar-art .art-frame { top: 97.2%; }
 .art-frame-next { visibility: hidden; }
 .art-frame-first.art-animated { animation: art-first 1.2s steps(1, end) infinite; }
 .art-frame-next.art-animated { visibility: visible; animation: art-next 1.2s steps(1, end) infinite; }
