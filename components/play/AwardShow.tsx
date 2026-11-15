@@ -132,7 +132,7 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
       case "seat": return { chip: step.award ? step.award.name : "시상", title: step.award ? `${step.award.name} 발표를 앞두고` : "시상 부문 발표", text: "시상자가 봉투를 들고 무대에 올랐어요. 멤버들 손이 서로를 찾아요." };
       case "announce": return { chip: step.award ? step.award.name : "시상", title: revealed ? (step.award ? `${name}!` : `${rival}!`) : "두구두구두구…", text: revealed ? (step.award ? `"${cm.year} ${step.award.show} ${step.award.name}… ${name}!"` : `"${cm.year} ${show} 대상… ${rival}!" 객석에서 박수를 보냈어요.`) : `"올해 ${step.award ? step.award.name : "대상"}의 주인공은…"` };
       case "win": return { chip: step.award.name, title: "이름이 불렸어요", text: "멤버들이 서로를 끌어안았어요. 무대로 올라가는 길이 길게 느껴져요." };
-      case "lose": return { chip: "수상 없음", title: "올해는 아니었어요", text: "박수를 보내며 자리에 앉았어요. 내년엔 저 자리에 서기로 했어요." };
+      case "lose": return { chip: "수상 없음", title: "올해는 아니었어요", text: "수상자에게 박수를 보냈어요. 내년엔 저 무대에 서기로 했어요." };
       case "speech": return { chip: step.award.name, title: "수상소감", text: "마이크 앞에 섰어요. 첫 마디가 내년을 정해요." };
     }
   })();

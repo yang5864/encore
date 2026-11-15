@@ -6,6 +6,7 @@ import { Card, CardTitle } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import { cn } from "@/lib/cn";
 import { CONCEPTS, PRODUCERS, PROMOS, focusOptions, type FocusOption } from "@/lib/game/focus";
+import { kpiPromo } from "@/lib/game/kpi";
 import { conceptStreak } from "@/lib/game/album";
 import { rivalFor } from "@/lib/game/team";
 import { periodLabel } from "@/lib/game/format";
@@ -101,10 +102,14 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
             <div className="grid grid-cols-2 gap-1.5 mt-1.5 px-1">
               {PROMOS.map((x) => {
                 const locked = x.id === "global" && career.popularity < 55;
+                const picked = (value.promo ?? "balanced") === x.id;
+                // 회사 목표와 같은 방향의 프로모션을 표시해 둔다
+                const recommended = !locked && !!career.kpi && kpiPromo(career.kpi) === x.id;
                 return (
-                  <button key={x.id} disabled={locked} onClick={() => onChange({ ...value, promo: x.id })} className={cn("press text-left rounded-xl p-3", (value.promo ?? "balanced") === x.id ? "bg-ink text-bg" : "bg-chip", locked && "opacity-45")}>
+                  <button key={x.id} disabled={locked} onClick={() => onChange({ ...value, promo: x.id })} className={cn("press text-left rounded-xl p-3", picked ? "bg-ink text-bg" : recommended ? "bg-primary-soft ring-2 ring-primary" : "bg-chip", locked && "opacity-45")}>
                     <p className="text-[13px] font-bold">{x.name}</p>
-                    <p className={cn("text-[13px] mt-0.5", (value.promo ?? "balanced") === x.id ? "text-bg/70" : "text-ink-3")}>{x.description}</p>
+                    <p className={cn("text-[13px] mt-0.5", picked ? "text-bg/70" : "text-ink-3")}>{x.description}</p>
+                    {recommended && <p className={cn("text-[13px] font-bold mt-1", picked ? "text-bg" : "text-primary")}>회사 목표와 맞아 추천해요</p>}
                   </button>
                 );
               })}

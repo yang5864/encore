@@ -1,4 +1,4 @@
-import type { Career, Kpi } from "./types.ts";
+import type { Career, Kpi, Promo } from "./types.ts";
 import { agencyById } from "./agencies.ts";
 import { eraScale, yearOf } from "./format.ts";
 import { rng } from "./rng.ts";
@@ -38,4 +38,9 @@ export function kpiMet(c: Career, k: Kpi, since: number): boolean {
     case "fans": return c.fans >= k.target;
     case "billboard": return year.some((al) => al.billboard !== null);
   }
+}
+
+/** 회사 목표에 가장 잘 맞는 프로모션: 초동·팬은 음반, 멜론·음방은 음원, 빌보드는 해외 */
+export function kpiPromo(k: Pick<Kpi, "kind">): Promo {
+  return k.kind === "sales" || k.kind === "fans" ? "physical" : k.kind === "billboard" ? "global" : "digital";
 }

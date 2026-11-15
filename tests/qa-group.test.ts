@@ -13,7 +13,7 @@ function mk(seed: number, gender: "female" | "male", avatar: number) {
 
 test("makeLineup: 멤버 아바타는 같은 성별·서로 다름·내 아바타 제외", () => {
   for (let seed = 1; seed <= 40; seed++) {
-    for (const [gender, avatar, set] of [["female", 1, FEMALE_AVATARS], ["male", 13, MALE_AVATARS]] as const) {
+    for (const [gender, avatar, set] of [["female", 7, FEMALE_AVATARS], ["male", 13, MALE_AVATARS]] as const) {
       const c = mk(seed, gender, avatar);
       const l = makeLineup(c);
       assert.equal(l.memberAvatars?.length, l.members - 1);

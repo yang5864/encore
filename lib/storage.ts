@@ -2,6 +2,7 @@ import type { Career } from "./game/types.ts";
 import { GameError } from "./game/types.ts";
 import { scoreOf } from "./game/endings.ts";
 import { overall } from "./game/stats.ts";
+import { FEMALE_AVATARS, LEGACY_AVATAR, MALE_AVATARS } from "./art/index.ts";
 
 export const KEYS = { career: "encore2:career", records: "encore2:records", settings: "encore2:settings" } as const;
 
@@ -64,6 +65,18 @@ export function parseCareer(text: string): Career {
   const flags = c.flags as Record<string, number> | undefined;
   const lineup = c.lineup as { memberAvatars?: number[] } | null | undefined;
   if (flags?.solo && lineup?.memberAvatars?.length) lineup.memberAvatars = [];
+  // 폐기한 초기 아바타 0~5: 닮은 새 아바타로 바꾸고, 멤버와 겹치면 같은 성별의 남은 아바타로 채운다
+  if (typeof c.avatar === "number" && c.avatar in LEGACY_AVATAR) c.avatar = LEGACY_AVATAR[c.avatar];
+  if (lineup?.memberAvatars?.some((a) => a in LEGACY_AVATAR)) {
+    const pool = (c.gender === "male" ? MALE_AVATARS : FEMALE_AVATARS).filter((a) => a !== c.avatar && !lineup.memberAvatars!.includes(a));
+    const used = new Set<number>([c.avatar as number]);
+    lineup.memberAvatars = lineup.memberAvatars.map((a) => {
+      const next = LEGACY_AVATAR[a] ?? a;
+      const pick = used.has(next) ? (pool.shift() ?? next) : next;
+      used.add(pick);
+      return pick;
+    });
+  }
   // 예전 솔로 전향은 그룹명을 내 이름으로 덮어썼다: 데뷔 기록에서 되찾는다
   if (c.groupName === c.name && Array.isArray(c.history)) {
     const debut = (c.history as { title: string }[]).find((h) => h.title.endsWith(" 데뷔 확정"));

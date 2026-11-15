@@ -2,6 +2,7 @@ import type { Career, CreateInput, Stats } from "./types.ts";
 import { GameError } from "./types.ts";
 import { STAT_KEYS, validateAllocation } from "./stats.ts";
 import { newSeed, rng } from "./rng.ts";
+import { LEGACY_AVATAR } from "../art/index.ts";
 
 export const NAME_PATTERN = /^[\p{L}\p{N} _·-]{1,12}$/u;
 
@@ -20,7 +21,7 @@ export function createCareer(input: CreateInput, seed: number = newSeed(), id: s
     rngState: seed >>> 0,
     name,
     gender: input.gender,
-    avatar: input.avatar,
+    avatar: LEGACY_AVATAR[input.avatar] ?? input.avatar, // 폐기한 초기 아바타 0~5는 닮은 새 아바타로
     position: input.position,
     stats: { ...input.stats },
     potential: {} as Stats,
