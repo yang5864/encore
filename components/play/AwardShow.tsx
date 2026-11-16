@@ -152,7 +152,7 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
 
   return (
     <div className="fixed inset-0 z-[70] bg-stage text-white flex flex-col" role="dialog" aria-label="연말 시상식">
-      <div className="shell w-full flex-1 flex flex-col pt-3 overflow-y-auto no-scrollbar">
+      <div className="shell w-full flex-1 flex flex-col pt-3 !pb-0 overflow-y-auto no-scrollbar">
         <div className="flex items-center justify-between h-12">
           <span className="text-[13px] text-white/50">{cm.year} {show}</span>
           <span className="text-[13px] text-white/40">{i + 1} / {steps.length}</span>
@@ -166,7 +166,8 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
           )}
         </div>
         <PrefetchArt scenes={upcoming} avatar={career.avatar} gender={career.gender} />
-        <div className="mt-6 text-center min-h-[220px]">
+        {/* 선택지가 있는 장면(반응·소감)은 문구 높이를 고정하지 않아 선택지가 바로 아래에 붙는다 */}
+        <div className={cn("mt-6 text-center", step.kind !== "win" && step.kind !== "speech" && "min-h-[220px]")}>
           <span key={`chip-${i}`} className="fade-up inline-block rounded-full bg-gold-deep text-gold text-[13px] font-bold px-4 py-2">{caption.chip}</span>
           <h2 key={`t-${i}-${revealed}`} className="fade-up mt-4 font-extrabold tracking-[-0.02em] leading-[1.25] text-[22px]">{caption.title}</h2>
           <p key={`p-${i}-${revealed}`} className="fade-up mt-3 text-[16px] text-white/60 leading-relaxed">{caption.text}</p>
@@ -190,7 +191,8 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
           </div>
         )}
 
-        <div className="mt-auto pt-6 pb-[calc(env(safe-area-inset-bottom)+16px)]">
+        {/* 버튼은 화면 아래에 붙어 있다: 선택지가 길어도 스크롤하지 않고 누를 수 있다 */}
+        <div className="sticky bottom-0 mt-auto -mx-5 px-5 pt-4 pb-[calc(env(safe-area-inset-bottom)+16px)] bg-stage">
           {isLast ? (
             <Button disabled={!canSubmit} onClick={() => onChoose(step.kind === "speech" ? speech! : event.choices[0].id, { reaction: reaction ?? undefined })}>
               {step.kind === "speech" ? (speech ? "소감을 말한다" : "소감을 골라주세요") : "시상식을 마친다"}
