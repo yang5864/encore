@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { Sheet } from "@/components/ui/Sheet";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
@@ -41,7 +40,6 @@ export function pickTop(changes: Change[], n = 3): Change[] {
 }
 
 export function ResultSheet({ result, avatar, gender, name, lineup, open, onClose, ctaLabel = "확인", chained }: { result: TurnResult; lineup?: Lineup | null; avatar: number; gender: "female" | "male"; name: string; open: boolean; onClose: () => void; ctaLabel?: string; chained?: boolean }) {
-  const [more, setMore] = useState(false);
   const top = pickTop(result.changes);
   const rest = result.changes.filter((c) => !top.includes(c));
   const toneColor = result.tone === "bad" ? "text-danger" : result.tone === "good" || result.tone === "milestone" ? "text-primary" : "text-ink";
@@ -74,13 +72,9 @@ export function ResultSheet({ result, avatar, gender, name, lineup, open, onClos
         </ul>
       )}
 
+      {/* 결과는 전체 화면이라 자리가 넉넉하다: 세부 변화와 반응을 접지 않고 바로 보여준다 */}
       {(rest.length > 0 || result.comments.length > 0) && (
-        <button onClick={() => setMore((m) => !m)} className="press mt-4 w-full h-11 rounded-xl bg-chip text-ink-2 text-[13px] font-bold">
-          {more ? "접기" : "자세히 보기"}
-        </button>
-      )}
-      {more && (
-        <div className="mt-3 fade-up">
+        <div className="mt-4">
           {rest.length > 0 && (
             <div className="rounded-2xl bg-sub p-4 flex flex-col gap-2">
               {rest.map((ch) => (
