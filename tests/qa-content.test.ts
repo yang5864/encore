@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { createCareer } from "../lib/game/create.ts";
 import { DEFAULT_ALLOCATION } from "../lib/game/stats.ts";
 import { BRAND_RANKS, SOLO_NAMES, brandTable, rivalGroups } from "../lib/game/brand-rank.ts";
-import { ERA, S, buildReactions } from "../lib/game/reactions.ts";
+import { EVENT_LINES, S, TONE, buildReactions } from "../lib/game/reactions.ts";
 import type { Career } from "../lib/game/types.ts";
 
 const base = { name: "하린", gender: "female" as const, avatar: 0, position: "vocal" as const, stats: DEFAULT_ALLOCATION.vocal };
@@ -47,9 +47,28 @@ test("학폭 반응에 티저·기대·트친이 섞이지 않는다", () => {
 
 test("어떤 풀에도 트친이 없고 새 상황 풀은 8줄 이상", () => {
   for (const [kind, pool] of Object.entries(S)) for (const t of pool) assert.ok(!t.includes("트친"), `${kind}: ${t}`);
-  for (const era of Object.values(ERA)) for (const lines of Object.values(era)) for (const t of lines) assert.ok(!t.includes("트친"), t);
+  for (const lines of Object.values(TONE)) for (const t of lines) assert.ok(!t.includes("트친"), t);
   for (const k of ["scandal-bullying", "scandal-dating", "scandal-dui", "scandal-live", "scandal-chart", "hate-sasaeng", "health", "injury", "feud", "cut", "isac", "military-enlist", "military-discharge", "sns-open", "kpi-hit", "kpi-miss", "comeback-after-scandal"] as const) {
     assert.ok(S[k].length >= 8, k);
   }
   for (const k of ["album", "win", "fanmeet", "variety", "tour", "award", "daesang"] as const) assert.ok(S[k].length >= 12, k);
+});
+
+test("댓글은 요즘 말투로 쓴다: 유행이 지난 말이 없고, 이야기 이벤트마다 좋은·나쁜 반응이 따로 있다", () => {
+  const DATED = ["지못미", "안습", "엄친아", "레알", "개이득", "심쿵", "멘붕", "존예", "존잘", "오지고", "지리고", "갑분싸", "소확행", "알잘딱", "어쩔티비", "저쩔티비", "무물보", "스불재", "럭키비키", "중꺾마", "꺾이지 않는 마음", "제곧내", "미니홈피", "싸이", "실검", "네이트판", "~삼", "하겠삼", "킹받", "갓갓", "핵좋", "쩐다", "극혐", "노답", "ㅇㅈ?"];
+  const all = [...Object.values(S).flat(), ...Object.values(TONE).flat(), ...Object.values(EVENT_LINES).flatMap((x) => [...x.good, ...x.bad])];
+  for (const t of all) for (const w of DATED) assert.ok(!t.includes(w), `"${w}" in "${t}"`);
+  for (const [id, x] of Object.entries(EVENT_LINES)) {
+    assert.ok(x.good.length >= 6 && x.bad.length >= 6, id);
+    assert.equal(new Set([...x.good, ...x.bad]).size, x.good.length + x.bad.length, `${id} 중복`);
+  }
+  // OST 성공은 OST 이야기를 한다 (예전엔 모든 이벤트가 같은 일반 댓글이었다)
+  for (let seed = 1; seed <= 20; seed++) {
+    const lines = buildReactions(idol(seed), "good", { kind: "generic", event: "ost" }).map((x) => x.text);
+    assert.ok(lines.filter((t) => EVENT_LINES.ost.good.includes(t)).length >= 2, lines.join(" / "));
+    const authors = buildReactions(idol(seed), "good", { kind: "generic", event: "ost" }).map((x) => x.author);
+    assert.equal(new Set(authors).size, 3, "한 번에 같은 계정이 두 번 나오지 않는다");
+  }
+  const flop = buildReactions(idol(3), "bad", { kind: "generic", event: "ost" }).map((x) => x.text);
+  assert.ok(flop.filter((t) => EVENT_LINES.ost.bad.includes(t)).length >= 2, "실패하면 실패 반응");
 });

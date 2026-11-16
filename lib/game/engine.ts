@@ -1188,7 +1188,7 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
       BAD_EVENT_KIND[event.id] ?? (event.id === "isac" ? "isac" : event.id === "sns-open" ? "sns-open" : op.startsWith("military:") ? "military-enlist"
       : op === "debut" ? "debut" : op.startsWith("showcase:") ? "showcase" : op === "renew" ? "renew" : op.startsWith("move:") ? "move" : op === "independent" ? "own-label" : op === "solo" ? "leave"
       : op === "retire" ? "disband" : event.id === "agency-bankrupt" ? "bankrupt" : op === "scandal" || event.id.includes("controversy") ? "scandal" : op === "hiatus" ? "hiatus" : "generic");
-    reaction = { kind };
+    reaction = { kind, event: event.id };
     if (event.id in BAD_EVENT_KIND) commentTone = tone === "good" ? "neutral" : "bad";
   }
   const comments = event.public || reaction.kind !== "generic" ? buildReactions(c, commentTone ?? (tone === "bad" ? "bad" : tone === "neutral" ? "neutral" : "good"), reaction) : [];

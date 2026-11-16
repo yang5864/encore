@@ -190,10 +190,8 @@ test("간혹 데뷔조에서 밀리고, 데뷔 시점과 이적 선택지가 나
   assert.ok(cuts >= 10 && cuts <= 70, `탈락 ${cuts}/119`);
 });
 
-test("네티즌 반응은 상황과 시대에 맞는 문장으로 나온다", async () => {
-  const { buildReactions, eraOf } = await import("../lib/game/reactions.ts");
-  assert.equal(eraOf(2008), "cyworld");
-  assert.equal(eraOf(2024), "now");
+test("네티즌 반응은 상황에 맞는 문장으로 나온다", async () => {
+  const { buildReactions } = await import("../lib/game/reactions.ts");
   const c = idol(3);
   c.turn = 4; // 2008
   const old = buildReactions(c, "good", { kind: "win", show: "뮤직뱅크", album: "BLOOM" });
