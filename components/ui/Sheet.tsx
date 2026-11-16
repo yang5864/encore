@@ -58,7 +58,7 @@ export function Sheet({ open, onOpenChange, title, description, tall, dismissibl
   const page = variant === "page";
   return (
     <div className="fixed inset-0 z-50" data-sheet={variant}>
-      {!page && <div className="sheet-in absolute inset-0 bg-black/40" onClick={close} aria-hidden />}
+      {!page && <div className="sheet-in absolute inset-0 bg-black/40 touch-none" onClick={close} aria-hidden />}
       <div
         ref={panel}
         role="dialog"
@@ -74,7 +74,7 @@ export function Sheet({ open, onOpenChange, title, description, tall, dismissibl
         {/* 장면은 화면 폭 전체를 배경색으로 덮는다 (넓은 화면에서 뒤 화면이 비치지 않게) */}
         {page && <div className="fixed inset-0 -z-10 bg-bg" aria-hidden />}
         {(title || (!page && dismissible)) && (
-          <div className={cn("px-5 shrink-0 flex items-start gap-3", page ? "pt-[calc(env(safe-area-inset-top)+16px)]" : "pt-5")}>
+          <div className={cn("px-5 shrink-0 flex items-start gap-3 touch-none", page ? "pt-[calc(env(safe-area-inset-top)+16px)]" : "pt-5")}>
             <div className="min-w-0 flex-1">
               {title && <h2 id={titleId} className="t-title">{title}</h2>}
               {description && <p className="t-cap mt-1">{description}</p>}
@@ -86,10 +86,10 @@ export function Sheet({ open, onOpenChange, title, description, tall, dismissibl
             )}
           </div>
         )}
-        <div className={cn("sheet-content px-5 overflow-y-auto no-scrollbar grow", page && !title ? "pt-[calc(env(safe-area-inset-top)+12px)]" : "pt-3", footer ? "pb-4" : "pb-[calc(env(safe-area-inset-bottom)+20px)]")}>{children}</div>
+        <div className={cn("sheet-content px-5 overflow-y-auto overscroll-contain no-scrollbar grow min-h-0", page && !title ? "pt-[calc(env(safe-area-inset-top)+12px)]" : "pt-3", footer ? "pb-4" : "pb-[calc(env(safe-area-inset-bottom)+20px)]")}>{children}</div>
         {footer && (
-          // 주 버튼은 항상 같은 자리에 있다
-          <div className={cn("shrink-0 px-5 pt-2 pb-[calc(env(safe-area-inset-bottom)+16px)] border-t border-line", page ? "bg-bg" : "bg-card")}>{footer}</div>
+          // 주 버튼은 항상 같은 자리에 있다. 이 영역에서 시작한 터치는 화면을 끌거나 튕기지 않는다
+          <div className={cn("shrink-0 px-5 pt-2 pb-[calc(env(safe-area-inset-bottom)+16px)] border-t border-line touch-none", page ? "bg-bg" : "bg-card")}>{footer}</div>
         )}
       </div>
     </div>
