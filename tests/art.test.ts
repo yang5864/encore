@@ -133,3 +133,23 @@ test("대상 발표 장면은 시상자(MC)가 선다: 멤버와 다른 성별, 
     assert.ok(art.frames.every((f) => f.url.includes("/awards-stage/") && existsSync(`public${f.url}`)));
   }
 });
+
+test("모든 장면 그림에 화면용 WebP가 있다 (scripts/build-art-web.mjs를 돌렸는지)", async () => {
+  const { webSrc, artUrlsFor } = await import("../lib/art/index.ts");
+  const { createHash } = await import("node:crypto");
+  const { readFileSync } = await import("node:fs");
+  const catalog = (await import("../lib/art/catalog.json", { with: { type: "json" } })).default as { scenes: Record<string, { background: string; avatars: Record<string, { url: string }[]> }> };
+  const manifest = (await import("../lib/art/web-manifest.json", { with: { type: "json" } })).default as Record<string, string>;
+  for (const scene of Object.values(catalog.scenes)) {
+    for (const url of [scene.background, ...Object.values(scene.avatars).flat().map((f) => f.url)]) {
+      const src = webSrc(url);
+      assert.ok(src.startsWith("/art-web/") && src.includes(".webp?v="), `${url} 의 WebP가 없다`);
+      assert.ok(existsSync(`public${src.split("?")[0]}`), src);
+      assert.equal(manifest[url], createHash("sha1").update(readFileSync(`public${url}`)).digest("hex").slice(0, 8), `${url} 이 바뀌었다: node scripts/build-art-web.mjs`);
+    }
+  }
+  const urls = artUrlsFor([8, 10, 9], "female", ["awards-redcarpet"]);
+  assert.ok(urls[0].includes("awards-redcarpet"), "지금 장면을 먼저 받는다");
+  assert.equal(new Set(urls).size, urls.length);
+  assert.ok(urls.every((u) => u.startsWith("/art-web/")));
+});

@@ -1,4 +1,5 @@
 import catalog from "./catalog.json" with { type: "json" };
+import webManifest from "./web-manifest.json" with { type: "json" };
 
 export type ArtFrame = { url: string; height: number; x: number; y: number };
 type SceneArt = { background: string; avatars: Record<string, ArtFrame[]> };
@@ -100,4 +101,29 @@ export function equipmentPath(focus: string, stat: string, turn: number): string
   if (!items) return null;
   const season = Math.max(0, Math.trunc(turn));
   return `/art-v3/items/${items[season % items.length]}-0${1 + (Math.floor(season / items.length) % 2)}.png`;
+}
+
+/**
+ * 화면에 쓰는 주소: 미리 만들어 둔 화면 크기 WebP (scripts/build-art-web.mjs).
+ * 런타임 이미지 최적화를 거치지 않아 첫 요청도 바로 온다. 내용 해시를 붙여 그림이 바뀌면 캐시가 갈린다.
+ */
+export function webSrc(url: string): string {
+  const hash = (webManifest as Record<string, string>)[url];
+  return hash ? `/art-web${url.replace(/\.png$/, ".webp")}?v=${hash}` : url;
+}
+
+/** 이 캐릭터들이 게임에서 볼 수 있는 모든 장면 그림 주소 (배경 먼저, 그다음 캐릭터 프레임). 미리 받아 두는 데 쓴다 */
+export function artUrlsFor(avatars: number[], gender: "female" | "male", first: string[] = []): string[] {
+  const keys = [...new Set([...first.filter((k) => Object.hasOwn(scenes, k)), ...Object.keys(scenes)])];
+  const out = new Set<string>();
+  const add = (scene: string) => {
+    out.add(webSrc(eventArt(scene, avatars[0], gender).background));
+    for (const a of avatars) for (const uniform of [false, true]) for (const f of eventArt(scene, a, gender, undefined, uniform).frames) out.add(webSrc(f.url));
+  };
+  for (const k of first) if (Object.hasOwn(scenes, k)) add(k);
+  for (const k of keys) out.add(webSrc(scenes[k].background));
+  for (const k of keys) add(k);
+  for (const a of avatars) for (const mood of ["sad", "happy"] as const) { const f = moodFrame(a, mood); if (f) out.add(webSrc(f.url)); }
+  for (const f of eventArt("awards-announce", presenterAvatar(gender, 0), gender === "female" ? "male" : "female").frames) out.add(webSrc(f.url));
+  return [...out];
 }

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { CSSProperties } from "react";
-import type { ArtFrame } from "@/lib/art";
+import { webSrc, type ArtFrame } from "@/lib/art";
 
 /**
  * 모든 캐릭터가 같은 시계를 본다: 그룹 장면에서 멤버들이 같은 박자에 같은 동작을 한다.
@@ -40,7 +40,7 @@ export function ArtFrames({ frames, visibleHeight, sizes, blink = false, onReady
     <span key={frame.url} className={`art-frame ${multi ? (i === cur ? "art-frame-first" : "art-frame-next") : i ? "art-frame-next" : "art-frame-first"} ${animated ? "art-animated" : ""} ${blink ? "art-blink" : ""}`}
       style={{ width: `${visibleHeight / frame.height}%`, transform: `translate(${-frame.x * 100}%, ${-frame.y * 100}%)`,
         ...(offsetX !== undefined ? { "--art-x": `${offsetX}%` } : {}), ...(zIndex !== undefined ? { zIndex } : {}) } as CSSProperties} ref={(el) => { spans.current[i] = el; }}>
-      <Image src={frame.url} alt="" fill sizes={sizes} className="object-contain" loading="eager" onLoad={() => { if (i === 0) onReady?.(); setLoaded((mask) => mask | (1 << i)); }} />
+      <Image src={webSrc(frame.url)} alt="" fill sizes={sizes} unoptimized className="object-contain" loading="eager" onLoad={() => { if (i === 0) onReady?.(); setLoaded((mask) => mask | (1 << i)); }} />
     </span>
   ));
 }

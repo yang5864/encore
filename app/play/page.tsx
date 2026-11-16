@@ -17,7 +17,7 @@ import { SettlementBody } from "@/components/play/SettlementCard";
 import { ShopBody } from "@/components/play/ShopCard";
 import { FocusCard, focusIdOf, type FocusSelection } from "@/components/play/FocusCard";
 import { EventSheet } from "@/components/play/EventSheet";
-import { PrefetchArt } from "@/components/EventArt";
+import { PrefetchArt, PreloadArt } from "@/components/EventArt";
 import { AWARD_SCENES } from "@/components/play/AwardShow";
 import { ResultSheet } from "@/components/play/ResultSheet";
 import { MilestoneSheet } from "@/components/play/MilestoneSheet";
@@ -254,6 +254,8 @@ export default function PlayPage() {
       )}
       {fireworks && <Fireworks kind={fireworks} onDone={() => setFireworks(null)} />}
       <PrefetchArt scenes={prefetchScenes} avatar={career.avatar} gender={career.gender} />
+      {/* 이 커리어에서 볼 수 있는 장면 그림 전체를 한가할 때 미리 받아 둔다 (지금 이벤트·활동 장면부터) */}
+      <PreloadArt avatars={[career.avatar, ...(career.lineup?.memberAvatars ?? [])]} gender={career.gender} first={prefetchScenes} />
       {coach && (
         <CoachMarks
           onDone={() => {

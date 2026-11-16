@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
-import { eventArt, hasSceneFrames } from "@/lib/art";
+import { artUrlsFor, eventArt, hasSceneFrames, webSrc } from "@/lib/art";
 import type { ArtMood } from "@/lib/art";
 import { ArtFrames } from "./ArtFrames";
 
@@ -43,13 +43,13 @@ export function EventArt({ scene, avatar, gender, name = "캐릭터", className 
   const footY = layout.footY ?? 86;
   const baseHeight = layout.height ?? 43;
   const spread = layout.spread ?? 1;
-  // 배경과 캐릭터가 따로 뜨지 않도록, 둘 다 준비될 때까지 숨겼다가 한 번에 보여준다 (최대 1.5초 대기)
+  // 배경과 캐릭터가 따로 뜨지 않도록, 둘 다 준비될 때까지 숨겼다가 한 번에 보여준다 (최대 0.4초 대기: 미리 받아 둔 그림은 바로 뜬다)
   const [bg, setBg] = useState(false);
   const [fg, setFg] = useState(false);
   const [timedOut, setTimedOut] = useState(false);
   useEffect(() => {
     setBg(false); setFg(false); setTimedOut(false);
-    const t = window.setTimeout(() => setTimedOut(true), 1500);
+    const t = window.setTimeout(() => setTimedOut(true), 400);
     return () => window.clearTimeout(t);
   }, [art.scene, art.background, avatar]);
   const ready = (bg && fg) || timedOut;
@@ -64,7 +64,7 @@ export function EventArt({ scene, avatar, gender, name = "캐릭터", className 
   const memberAt = (i: number) => (i < playerSlot ? i : i - 1);
   return (
     <div role="img" aria-label={`${name}의 이벤트 장면`} className={`event-art ${className}`} data-scene={art.scene} style={{ "--art-foot-y": `${footY}%`, opacity: ready ? 1 : 0, ...(mood === "sad" || mood === "happy" ? { filter: mood === "sad" ? "saturate(0.85) brightness(0.95)" : undefined } : {}) } as CSSProperties}>
-      <Image src={art.background} alt="" fill sizes="(max-width: 480px) 100vw, 480px" className="object-cover" style={layout.bgPosition ? { objectPosition: layout.bgPosition } : undefined} loading="eager" priority onLoad={() => setBg(true)} />
+      <Image src={webSrc(art.background)} alt="" fill sizes="(max-width: 480px) 100vw, 480px" unoptimized className="object-cover" style={layout.bgPosition ? { objectPosition: layout.bgPosition } : undefined} loading="eager" priority onLoad={() => setBg(true)} />
       {groupAvatars ? (
         <>
           {Array.from({ length: total }, (_, i) => i).filter((i) => i !== playerSlot).map((i) => { const m = groupAvatars[memberAt(i)]; return (
@@ -91,4 +91,35 @@ export function PrefetchArt({ scenes, avatar, gender }: { scenes: string[]; avat
       ))}
     </div>
   );
+}
+
+// 이미 받기 시작한 주소 (화면을 오가도 다시 받지 않는다)
+const preloaded = new Set<string>();
+
+/**
+ * 이 커리어에서 볼 수 있는 장면 그림을 한가할 때 미리 받아 둔다: 이벤트가 뜨는 순간 배경과 캐릭터가 캐시에서 바로 나온다.
+ * `first` 장면(지금 이벤트·고른 활동)을 먼저 받고, 한 번에 4개씩만 받는다. 데이터 절약 모드에서는 받지 않는다.
+ */
+export function PreloadArt({ avatars, gender, first }: { avatars: number[]; gender: "female" | "male"; first: string[] }) {
+  const key = `${avatars.join(",")}|${gender}|${first.join(",")}`;
+  useEffect(() => {
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    if (conn?.saveData || conn?.effectiveType === "2g" || conn?.effectiveType === "slow-2g") return;
+    const queue = artUrlsFor(avatars, gender, first).filter((u) => !preloaded.has(u));
+    let stopped = false;
+    const pump = () => {
+      if (stopped) return;
+      const url = queue.shift();
+      if (!url) return;
+      preloaded.add(url);
+      const img = new window.Image();
+      img.decoding = "async";
+      img.onload = img.onerror = pump;
+      img.src = url;
+    };
+    const start = window.setTimeout(() => { for (let i = 0; i < 4; i++) pump(); }, 300);
+    return () => { stopped = true; window.clearTimeout(start); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
+  return null;
 }

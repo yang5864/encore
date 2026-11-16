@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     // public/ 정적 자산은 파일명이 바뀌지 않으면 내용도 바뀌지 않는다: 1년 캐시
-    return ["/fonts/:path*", "/logos/:path*", "/art-v3/:path*", "/art-v4/:path*", "/scenes/:path*", "/sprites.webp", "/favicon.svg"].map((source) => ({
+    return ["/fonts/:path*", "/logos/:path*", "/art-v3/:path*", "/art-v4/:path*", "/art-v5/:path*", "/art-v6/:path*", "/art-web/:path*", "/scenes/:path*", "/sprites.webp", "/favicon.svg"].map((source) => ({
       source,
       headers: [{ key: "Cache-Control", value: YEAR }],
     }));
