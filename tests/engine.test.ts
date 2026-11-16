@@ -118,6 +118,7 @@ test("이야기 이벤트는 커리어당 한 번, repeatable만 4턴 뒤 재등
 test("데뷔 평가는 소속 후 2턴마다, 기준 OVR을 넘으면 제안", () => {
   const c = trainee(2);
   c.schoolId = "general";
+  c.turn = 6; c.agencyJoinedTurn = 6; c.traineeContractEnd = 12; // 17살(만 15세)부터 데뷔조에 들 수 있다
   c.stats = { vocal: 80, dance: 70, rap: 60, visual: 70, variety: 60, producing: 60 };
   assert.ok(overall(c.stats, c.position) >= 56);
   const n1 = advanceTurn(c, "train:vocal");
@@ -158,6 +159,8 @@ test("소속이 생기면 지원 팝업은 뜨지 않고 직접 지원만 가능
     if (c.stage !== "trainee") break;
   }
   const t = trainee(8);
+  assert.throws(() => applyToAgency(t, "jyp"), /OVR 58부터/, "실력이 모자라면 대형은 서류에서 걸러진다");
+  t.stats = { vocal: 70, dance: 70, rap: 60, visual: 66, variety: 60, producing: 62 };
   const applied = applyToAgency(t, "jyp");
   assert.ok(applied.result?.headline.includes("JYP"));
   if (applied.pending?.id === "trainee-offer") assert.equal(applied.agencyId, "starship", "서명 전에는 기존 소속 유지");

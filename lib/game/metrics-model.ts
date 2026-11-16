@@ -88,7 +88,7 @@ export function winChance(c: Career, s: Scores, show: ShowDef, rival: boolean, r
   const eraBar = year >= 2016 ? 6 : year >= 2012 ? 3 : 0;
   const bts = rival && isBtsRival(rivalNameOf(c, rival, rivalName)) ? BTS_RIVAL_BONUS.show : 0;
   const bar = show.bar + eraBar + (rival ? 9 : 0) + bts + (rookie === 0 ? 10 : rookie === 1 ? 5 : 0);
-  const gap = showScore(s, show) - bar - 4;
+  const gap = showScore(s, show) - bar - 7; // 1위는 그 주 경쟁자를 확실히 앞서야 한다
   return clamp(1 / (1 + Math.exp(-gap / 5)), 0.01, 0.9);
 }
 
@@ -140,7 +140,7 @@ export function brandIndex(c: Career, topIndex: number): number {
   // 참여 30 · 미디어 30 · 소통 15 · 커뮤니티 25, 모두 높아야 1위권. 보통 때는 하위 두 지수가 작아 지수가 크게 꺼진다
   const composite = 0.3 * participation + 0.3 * media + 0.15 * comm + 0.25 * community;
   const pop = c.popularity / 100;
-  const raw = topIndex * Math.pow(composite, 1.35) * (0.55 + 0.45 * pop) * 1.25;
+  const raw = topIndex * Math.pow(composite, 1.35) * (0.55 + 0.45 * pop) * 1.2;
   // 같은 값이 겹치지 않도록 시드·시즌 기반의 작은 흔들림
   const jitter = 0.94 + ((c.seed * 7 + c.turn * 13) % 97) / 97 * 0.12;
   return Math.round(raw * jitter);

@@ -11,13 +11,14 @@ import type { Career, Signature } from "@/lib/game/types";
 import { ContractView } from "./ContractView";
 import { AlbumNamePicker } from "./AlbumNamePicker";
 import { AwardShow } from "./AwardShow";
+import { ArtsAudition } from "./ArtsAudition";
 import { suggestAlbumName } from "@/lib/game/album";
 import { artGroupFor, SAD_EVENTS } from "@/lib/game/format";
 
 type Props = {
   career: Career;
   open: boolean;
-  onChoose: (choiceId: string, extra?: { groupName?: string; signature?: Signature; albumName?: string; reaction?: string }) => void;
+  onChoose: (choiceId: string, extra?: { groupName?: string; signature?: Signature; albumName?: string; reaction?: string; score?: number }) => void;
 };
 
 export function EventSheet({ career, open, onChoose }: Props) {
@@ -30,6 +31,8 @@ export function EventSheet({ career, open, onChoose }: Props) {
   if (!event) return null;
   // 시상식은 시트가 아니라 전체 화면 장면으로 진행한다
   if (event.id === "ceremony" && career.ceremony) return open ? <AwardShow career={career} event={event} onChoose={(id, extra) => onChoose(id, extra)} /> : null;
+  // 예고 실기도 전체 화면 미니게임으로 본다
+  if (event.id === "arts-audition") return open ? <ArtsAudition career={career} event={event} onChoose={(id, extra) => onChoose(id, extra)} /> : null;
   const isAlbum = event.id === "debut-concept";
   const choice = event.choices.find((c) => c.id === selected) ?? null;
   const needsName = choice?.op === "debut" && !choice.sign;
@@ -50,7 +53,7 @@ export function EventSheet({ career, open, onChoose }: Props) {
   };
 
   return (
-    <Sheet open={open} dismissible={false} tall chained footer={contract && choice ? undefined : <Button disabled={!canSubmit} onClick={submit}>{choice ? (choice.sign ? "계약서 보기" : "이 선택으로 진행") : "선택지를 골라주세요"}</Button>}>
+    <Sheet open={open} dismissible={false} variant="page" footer={contract && choice ? undefined : <Button disabled={!canSubmit} onClick={submit}>{choice ? (choice.sign ? "계약서 보기" : "이 선택으로 진행") : "선택지를 골라주세요"}</Button>}>
       {contract && choice ? (
         <ContractView
           career={career}
@@ -87,7 +90,7 @@ export function EventSheet({ career, open, onChoose }: Props) {
                   key={ch.id}
                   disabled={!!locked}
                   onClick={() => setSelected(ch.id)}
-                  className={cn("press fade-up w-full text-left rounded-2xl border-2 p-4", active ? "border-primary bg-primary-soft/50" : "border-transparent bg-sub", locked && "opacity-45")}
+                  className={cn("press fade-in w-full text-left rounded-2xl border-2 p-4", active ? "border-primary bg-primary-soft/50" : "border-transparent bg-sub", locked && "opacity-45")}
                   style={{ animationDelay: `${i * 60}ms` }}
                 >
                   <div className="flex items-center justify-between gap-2">

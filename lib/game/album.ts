@@ -2,7 +2,8 @@ import type { Album, Career, Concept, Production } from "./types.ts";
 import { agencyById } from "./agencies.ts";
 import { CONCEPTS } from "./focus.ts";
 import { rng } from "./rng.ts";
-import { eraScale, yearOf } from "./format.ts";
+import { gainStat } from "./aging.ts";
+import { ageOf, eraScale, yearOf } from "./format.ts";
 import { budgetOf, chemistryQuality, rivalFor } from "./team.ts";
 import { activityScores, melonRank, billboardRank, winChance, addBuzz, MUSIC_SHOWS } from "./metrics-model.ts";
 
@@ -138,7 +139,7 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
   addBuzz(c, 14 + (melon !== null ? Math.max(0, 40 - melon) / 2 : 0) + wins * 5 + (billboard !== null ? 20 : 0) + (viral ? 30 : flop ? -8 : 0) + (budget.mv - 25) / 5);
   c.flags.mediaHeat = Math.min(100, (c.flags.mediaHeat ?? 0) + 25 + wins * 6 + (melon !== null && melon <= 10 ? 15 : 0) + (viral ? 25 : 0) + (billboard !== null ? 20 : 0));
   c.reputation += 2;
-  if (production.producer === "self") { c.reputation += c.stats.producing >= 55 ? 3 : -2; c.stats.producing = Math.min(99, c.stats.producing + 2); }
+  if (production.producer === "self") { c.reputation += c.stats.producing >= 55 ? 3 : -2; gainStat(c, "producing", 2); }
   // 음반 집중은 팬을 챙기는 활동, 그 외 컴백은 팬덤이 조금 식는다. 1위·바이럴은 팬덤을 다시 묶는다
   c.loyalty = Math.max(0, Math.min(100, c.loyalty + (production.promo === "physical" ? 3 : -2) + (wins > 0 ? 2 : 0) + (viral ? 4 : 0)));
   delete c.flags.budgetBonus;
@@ -147,7 +148,8 @@ export function makeAlbum(c: Career, concept: Concept, customName?: string, prod
   c.mental -= 6;
   if (prevSales > 0 && sales > prevSales * 4 && sales > 100000 && rng(c) < 0.5) c.flags.salesSpike = c.turn + 1;
   if (concept === "ballad" && c.stats.vocal < 45) c.flags.liveRisk = c.turn + 1;
-  for (const k of CONCEPTS.find((x) => x.id === concept)!.stats) c.stats[k] = Math.min(99, c.stats[k] + (rng(c) < 0.5 ? 2 : 1));
+  // 활동하며 느는 실력: 29살(만 27)부터는 무대 경험으로 더 늘지 않는다
+  for (const k of CONCEPTS.find((x) => x.id === concept)!.stats) { const g = rng(c) < 0.5 ? 2 : 1; if (ageOf(c) < 27) gainStat(c, k, g); }
   return album;
 }
 

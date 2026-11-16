@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createCareer } from "../lib/game/create.ts";
-import { auditionChance, chanceLabel, AGENCIES } from "../lib/game/agencies.ts";
+import { applyGate, auditionChance, chanceLabel, AGENCIES } from "../lib/game/agencies.ts";
 import { DEFAULT_ALLOCATION, overall, validateAllocation, STAT_KEYS } from "../lib/game/stats.ts";
 import { fanText, wonText, reputationLabel, reputationProgress, conditionOf, ageOf, periodLabel } from "../lib/game/format.ts";
 import { applyToAgency, resolveChoice } from "../lib/game/engine.ts";
@@ -29,10 +29,15 @@ test("오디션 확률: 대형은 낮고 중소는 높다, 0.03~0.95로 제한",
   const c = createCareer(base, 1);
   const major = auditionChance(c, "sm");
   const indie = auditionChance(c, "dawn");
-  assert.ok(major < 0.25 && major > 0.03, `${major}`);
-  assert.ok(indie > 0.7, `${indie}`);
+  assert.equal(major, 0, "시작 능력으로는 대형에 지원 자격이 없다");
+  assert.match(applyGate(c, "sm") ?? "", /OVR 58부터/);
+  assert.equal(applyGate(c, "dawn"), null, "중소는 문턱이 없다");
+  assert.ok(indie > 0.55, `${indie}`);
+  const decent = { ...c, stats: { vocal: 62, dance: 62, rap: 62, visual: 62, variety: 62, producing: 62 } };
+  assert.ok(auditionChance(decent, "sm") > 0.1 && auditionChance(decent, "sm") < 0.2, "자격을 넘겨도 대형은 좁은 문");
+  assert.ok(auditionChance(decent, "starship") > auditionChance(decent, "sm"));
   const strong = { ...c, stats: { vocal: 99, dance: 99, rap: 99, visual: 99, variety: 99, producing: 99 } };
-  assert.equal(auditionChance(strong, "dawn"), 0.95);
+  assert.equal(auditionChance(strong, "dawn"), 0.9);
   assert.equal(chanceLabel(0.1), "매우 낮음");
   assert.equal(chanceLabel(0.85), "매우 높음");
   assert.equal(AGENCIES.length, 16);

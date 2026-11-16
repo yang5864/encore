@@ -120,11 +120,16 @@ test("새 아바타 6–17도 시상식 7장면 4프레임 의상을 쓰고, 18�
   assert.equal(eventArt("military-band", 6).scene, "rest");
 });
 
-test("대상 발표 장면도 시상식 의상으로 서서 기다린다 (평상복 기본 포즈가 아니다)", () => {
+test("대상 발표 장면은 시상자(MC)가 선다: 멤버와 다른 성별, 시상식 의상, 트로피 없는 무대 프레임", async () => {
+  const { presenterAvatar, FEMALE_AVATARS, MALE_AVATARS } = await import("../lib/art/index.ts");
+  for (let year = 2006; year <= 2026; year++) {
+    assert.ok(MALE_AVATARS.includes(presenterAvatar("female", year)));
+    assert.ok(FEMALE_AVATARS.includes(presenterAvatar("male", year)));
+  }
   for (let avatar = 6; avatar < 18; avatar++) {
     const art = eventArt("awards-announce", avatar);
     assert.equal(art.scene, "awards-announce");
-    assert.equal(art.frames.length, 3, `${avatar}`);
-    assert.ok(art.frames.every((f) => f.url.includes("/awards-lose/") && existsSync(`public${f.url}`)));
+    assert.equal(art.frames.length, 2, `${avatar}`);
+    assert.ok(art.frames.every((f) => f.url.includes("/awards-stage/") && existsSync(`public${f.url}`)));
   }
 });

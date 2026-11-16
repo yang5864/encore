@@ -5,7 +5,7 @@ import { advanceTurn, applyToAgency, buyItem, resolveChoice, focusOptions } from
 import { DEFAULT_ALLOCATION } from "../lib/game/stats.ts";
 import { eventById } from "../lib/game/events/index.ts";
 import { activate } from "../lib/game/schedule.ts";
-import { awardName, yearEndAwards } from "../lib/game/awards.ts";
+import { awardName, daesangChance, yearEndAwards } from "../lib/game/awards.ts";
 import { CONCEPTS, MAIN_STAT } from "../lib/game/focus.ts";
 import { MUSIC_SHOWS, winChance, melonRank, isBtsRival, BTS_RIVAL_BONUS, activityScores } from "../lib/game/metrics-model.ts";
 import { rivalFor } from "../lib/game/team.ts";
@@ -95,20 +95,27 @@ function awardsFor(over: Partial<Career>, album: Partial<Career["albums"][number
   return yearEndAwards(c, 2018, [20, 21]);
 }
 
-test("시상식이 어려워졌다: 인기 65 미만은 본상 없음, 스타도 놓치는 해가 있고, 본상은 해마다 하나", () => {
-  for (let s = 1; s <= 40; s++) assert.ok(!awardsFor({ popularity: 60 }, { melon: 5, wins: 2 }, s).some((a) => a.kind === "bonsang"));
+test("시상식: 인기 50 미만은 본상 없음, 스타도 놓치는 해가 있고, 본상은 해마다 하나. 음방을 휩쓴 해는 대상 유력", () => {
+  for (let s = 1; s <= 40; s++) assert.ok(!awardsFor({ popularity: 45 }, { melon: 5, wins: 2 }, s).some((a) => a.kind === "bonsang"));
   let bonsang = 0, miss = 0;
   for (let s = 1; s <= 200; s++) {
     const won = awardsFor({ popularity: 70, fans: 1500000 }, { melon: 5, wins: 2, sales: 300000 }, s);
     assert.ok(won.filter((a) => a.kind === "bonsang").length <= 1);
     if (won.some((a) => a.kind === "bonsang")) bonsang++; else miss++;
   }
-  assert.ok(bonsang > 20 && miss > 60, `본상 ${bonsang} / 미수상 ${miss}`);
-  // 대상: 1위 3회 이상이 아니면 없다
-  for (let s = 1; s <= 60; s++) assert.ok(!awardsFor({ popularity: 95, fans: 9000000 }, { melon: 1, wins: 2, sales: 2000000 }, s).some((a) => a.kind === "daesang"));
+  assert.ok(bonsang > 100 && miss > 20, `본상 ${bonsang} / 미수상 ${miss}`);
+  // 대상: 후보 조건(휩쓴 해 · 멜론 1위+1위 3회 · 초동 150만)을 못 채우면 없다
+  for (let s = 1; s <= 60; s++) assert.ok(!awardsFor({ popularity: 95, fans: 9000000 }, { melon: 1, wins: 2, sales: 1000000 }, s).some((a) => a.kind === "daesang"));
+  assert.equal(daesangChance({ fansEra: 150000, bestSales: 50000, melonOne: false, winsThisYear: 6 }), 0, "팬덤이 20만도 안 되면 후보가 아니다");
+  // 음악방송을 휩쓴 해(1위 5회 이상)는 유력 후보: 절반 가까이 받는다
+  assert.ok(daesangChance({ fansEra: 400000, bestSales: 200000, melonOne: false, winsThisYear: 5 }) >= 0.45);
+  assert.ok(daesangChance({ fansEra: 400000, bestSales: 200000, melonOne: true, winsThisYear: 8 }) >= 0.75);
+  let sweep = 0;
+  for (let s = 1; s <= 200; s++) if (awardsFor({ popularity: 70, fans: 500000 }, { melon: 3, wins: 6, sales: 300000 }, s).some((a) => a.kind === "daesang")) sweep++;
+  assert.ok(sweep > 80, `휩쓴 해 대상 ${sweep}/200`);
   let daesang = 0;
   for (let s = 1; s <= 300; s++) if (awardsFor({ popularity: 95, fans: 9000000 }, { melon: 1, wins: 4, sales: 2000000 }, s).some((a) => a.kind === "daesang")) daesang++;
-  assert.ok(daesang > 30 && daesang < 200, `대상 ${daesang}/300`);
+  assert.ok(daesang > 60 && daesang < 270, `대상 ${daesang}/300`);
   // 신인상: 성적이 약하면 없다
   for (let s = 1; s <= 40; s++) assert.ok(!awardsFor({ popularity: 40, fans: 100000 }, { melon: 60, wins: 1, sales: 80000 }, s).some((a) => a.kind === "rookie"));
 });
@@ -342,13 +349,20 @@ test("멤버가 탈퇴하면 팀 인원과 아바타가 줄어든다", () => {
 test("시상식 시즌의 홍보 예산 선택은 다음 시즌으로 미뤄진다", () => {
   let deferred = 0;
   for (let k = 0; k < 20; k++) {
-    const base = idol(7);
+    const base = idol(7 + k); // 시드마다 다음 시즌의 돌발 사건 여부가 다르다
     base.turn = 21; base.lastReleaseTurn = 21; base.popularity = 70; base.contractEnd = 40; base.albums = [{ id: "a", turn: 21, name: "X", concept: "fresh", quality: 70, sales: 100000, melon: 20, billboard: null, wins: 0, shows: [], cost: 10, revenue: 20 }] as never; base.rngState = k;
     let n = advanceTurn(base, "fanmeet");
     n = resolveChoice(n, n.pending!.choices[0].id, { reaction: "joy" });
+    if (n.pending?.id === "ceremony") n = resolveChoice(n, n.pending.choices[0].id, { reaction: "joy" }); // 상을 받으면 수상소감이 이어진다
     if (n.pending) continue; // 계약 등 예약 이벤트가 이어진 경우
     assert.notEqual(n.flags.budgetDue, undefined, "예산 선택이 남아 있다");
-    const next = advanceTurn(n, "rest");
+    // 다른 이벤트가 낀 시즌은 건너뛰고, 빈 시즌이 오면 예산 선택이 뜬다
+    let next = advanceTurn(n, "rest");
+    for (let t = 0; t < 2 && next.pending && next.pending.id !== "budget"; t++) {
+      while (next.pending && next.pending.id !== "budget") next = resolveChoice(next, next.pending.choices[0].id, { reaction: "joy" });
+      if (next.stage === "retired") break;
+      if (!next.pending) next = advanceTurn(next, "rest");
+    }
     if (next.pending?.id === "budget") {
       deferred++;
       const chosen = resolveChoice(next, next.pending.choices[0].id);

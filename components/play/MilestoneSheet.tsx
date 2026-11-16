@@ -10,7 +10,7 @@ export function MilestoneSheet({ career, id, open, onClose }: { career: Career; 
   const m = MILESTONES.find((x) => x.id === id);
   if (!m) return null;
   return (
-    <Sheet open={open} dismissible={false} tall>
+    <Sheet open={open} dismissible={false} variant="page">
       <div className="flex flex-col items-center text-center h-full justify-center pb-10">
         <EventArt scene={id === "debut" ? "debut" : id === "legend" ? "tour" : id === "firstSettlement" ? "contract" : "awards"} avatar={career.avatar} gender={career.gender} name={career.name} className="w-full rounded-2xl mb-5" />
         <p className="t-cap text-primary pop-in">새로운 기록</p>

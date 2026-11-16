@@ -46,7 +46,7 @@ export function ResultSheet({ result, avatar, gender, name, lineup, open, onClos
   const rest = result.changes.filter((c) => !top.includes(c));
   const toneColor = result.tone === "bad" ? "text-danger" : result.tone === "good" || result.tone === "milestone" ? "text-primary" : "text-ink";
   return (
-    <Sheet open={open} onOpenChange={(o) => !o && onClose()} chained={chained} footer={<Button onClick={onClose}>{ctaLabel}</Button>}>
+    <Sheet open={open} onOpenChange={(o) => !o && onClose()} dismissible={false} variant="page" footer={<Button onClick={onClose}>{ctaLabel}</Button>}>
       {result.scene && (
         <div className="-mx-5 -mt-3">
           <EventArt scene={result.scene} avatar={avatar} gender={gender} name={name} mood={result.mood ?? (result.tone === "bad" ? "sad" : result.tone === "good" || result.tone === "milestone" ? "happy" : undefined)} group={artGroupFor(lineup, result.scene)} />

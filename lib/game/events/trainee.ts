@@ -75,10 +75,10 @@ export const TRAINEE_EVENTS: GameEventDef[] = [
     stage: "any",
     kind: "scheduled",
     title: "고등학교 진학 — 어디로 갈까?",
-    text: "중학교 졸업이 다가와요. 예술고는 실기와 무대 경험이 쌓이고, 일반고는 생활이 안정적이에요. 검정고시는 연습 시간이 가장 많아요.",
+    text: "중학교 졸업이 다가와요. 예술고는 실기 오디션에 붙어야 갈 수 있고, 일반고는 생활이 안정적이에요. 검정고시는 연습 시간이 가장 많아요.",
     scene: "school",
     choices: [
-      { id: "arts", label: "예술고등학교", hint: "댄스와 비주얼 성장이 빨라요. 실기 전형이 있어요", risk: "bold", op: "school:arts", requires: { stat: "dance", value: 40 } },
+      { id: "arts", label: "예술고등학교 입시", hint: "전공을 고르고 실기 오디션을 봐요. 붙으면 전공 능력이 빨리 자라요", risk: "bold", op: "school:arts-apply" },
       { id: "general", label: "일반고등학교", hint: "컨디션이 안정적이고 친구들과 평범한 학교생활을 해요", risk: "safe", op: "school:general" },
       { id: "ged", label: "검정고시 · 홈스쿨링", hint: "연습 시간이 많아 모든 능력이 빨리 올라요. 멘탈 회복은 느려요", risk: "bold", op: "school:ged" },
     ],

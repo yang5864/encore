@@ -1,6 +1,7 @@
 import type { Career, Change, Effects, Log, LogKind, StatKey } from "./types.ts";
 import { STAT_KEYS, STAT_NAMES, clampStat, overall } from "./stats.ts";
 import { conditionOf } from "./format.ts";
+import { gainStat } from "./aging.ts";
 
 export function log(c: Career, title: string, text: string, kind: LogKind = "story") {
   const entry: Log = { turn: c.turn, title, text, kind };
@@ -16,7 +17,8 @@ export function addReputation(c: Career, delta: number) {
 
 export function applyEffects(c: Career, e: Effects | undefined) {
   if (!e) return;
-  for (const k of STAT_KEYS) if (e[k]) c.stats[k] = clampStat(Math.round(c.stats[k] + e[k]!));
+  // 능력 보상은 잠재력 상한에서 멈춘다. 깎이는 건 그대로
+  for (const k of STAT_KEYS) if (e[k]) { if (e[k]! > 0) gainStat(c, k, Math.round(e[k]!)); else c.stats[k] = clampStat(Math.round(c.stats[k] + e[k]!)); }
   if (e.health) c.health = Math.max(0, Math.min(100, c.health + e.health));
   if (e.mental) c.mental = Math.max(0, Math.min(100, c.mental + e.mental));
   if (e.trust) c.trust = Math.max(0, Math.min(100, c.trust + e.trust));

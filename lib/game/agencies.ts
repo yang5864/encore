@@ -60,12 +60,30 @@ export const agencyById = (id: string | null | undefined) => (id ? AGENCIES.find
 export const TIER_ORDER: Tier[] = ["major", "mid", "indie", "global"];
 export const tierRank = (t: Tier) => (t === "major" ? 3 : t === "mid" ? 2 : t === "global" ? 2 : 1);
 
-/** Spec: tier base + (OVR-45)×0.015, clamp 0.03–0.95. */
+/** 지원 자격: 이 OVR에 못 미치면 서류에서 걸러진다 */
+export const TIER_GATE: Record<Tier, number> = { major: 58, mid: 50, global: 50, indie: 0 };
+const TIER_ODDS: Record<Tier, { base: number; from: number; slope: number }> = {
+  major: { base: 0.06, from: 58, slope: 0.02 },
+  mid: { base: 0.25, from: 50, slope: 0.025 },
+  global: { base: 0.2, from: 50, slope: 0.025 },
+  indie: { base: 0.6, from: 45, slope: 0.02 },
+};
+
+/** 지원할 수 없는 이유. 지원할 수 있으면 null */
+export function applyGate(c: Pick<Career, "stats" | "position">, agencyId: string): string | null {
+  const a = agencyById(agencyId);
+  if (!a) return "기획사를 골라주세요.";
+  const gate = TIER_GATE[a.tier];
+  return overall(c.stats, c.position) < gate ? `OVR ${gate}부터 지원할 수 있어요` : null;
+}
+
+/** 합격 확률: 티어별 기본 확률 + 자격선을 넘긴 만큼. 자격 미달이면 0. */
 export function auditionChance(c: Pick<Career, "stats" | "position">, agencyId: string): number {
   const a = agencyById(agencyId);
   if (!a) return 0;
-  const p = TIERS[a.tier].base + (overall(c.stats, c.position) - 45) * 0.015;
-  return Math.max(0.03, Math.min(0.95, p));
+  if (applyGate(c, agencyId)) return 0;
+  const o = TIER_ODDS[a.tier];
+  return Math.max(0.03, Math.min(0.9, o.base + (overall(c.stats, c.position) - o.from) * o.slope));
 }
 
 export function chanceLabel(p: number): string {

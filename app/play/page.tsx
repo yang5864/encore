@@ -101,7 +101,7 @@ export default function PlayPage() {
     const opts = focusOptions(career);
     if (!opts.some((o) => o.id === focus.id && !o.disabledReason)) {
       const first = opts.find((o) => !o.disabledReason);
-      setFocus({ id: first?.id ?? "", stat: "vocal", concept: "fresh" });
+      setFocus((f) => ({ id: first?.id ?? "", stat: "vocal", concept: "fresh", stats: f.stats }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [career?.turn, career?.stage, career?.pending?.id]);

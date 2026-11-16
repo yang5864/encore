@@ -18,7 +18,7 @@ function idol(seed = 5): Career {
 
 test("기획사 지원은 시즌마다 세 곳까지", () => {
   let c = createCareer(base, 11);
-  const ids = ["sm", "yg", "jyp", "hybe"];
+  const ids = ["rbw", "aomg", "pnation", "dawn"];
   let applied = 0;
   for (const id of ids) {
     if (applied === APPLY_PER_SEASON) {
@@ -52,7 +52,7 @@ test("포텐 폭발은 드물게 일어나고, 터지면 대형 기획사가 먼
   for (let seed = 1; seed <= N; seed++) {
     let c = createCareer(base, seed);
     c.schoolId = "general";
-    for (let i = 0; i < 14 && c.stage === "free"; i++) {
+    for (let i = 0; i < 10 && c.stage === "free"; i++) { // 19살 하반기 전까지 (그 뒤엔 졸업 전 마지막 오디션)
       c = advanceTurn(c, "train:all");
       if (c.flags.burst) {
         bursts++;
@@ -65,7 +65,7 @@ test("포텐 폭발은 드물게 일어나고, 터지면 대형 기획사가 먼
     }
   }
   const rate = bursts / N;
-  assert.ok(rate > 0.08 && rate < 0.25, `포텐 폭발 비율 ${rate}`);
+  assert.ok(rate > 0.06 && rate < 0.25, `포텐 폭발 비율 ${rate}`);
 });
 
 test("재계약 오퍼는 실력과 인기에 따라 다르게 온다", () => {

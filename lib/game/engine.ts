@@ -1,13 +1,15 @@
 import type { ActiveEvent, Career, ChoiceDef, Comment, Concept, Effects, MilestoneId, StatKey, Tone, TurnResult } from "./types.ts";
 import { GameError } from "./types.ts";
-import { AGENCIES, agencyById, auditionChance, TIERS } from "./agencies.ts";
+import { AGENCIES, agencyById, applyGate, auditionChance, TIERS } from "./agencies.ts";
+import { applyAging, applyRust, gainStat, skillFactor, RUST_CHANCE_IDOL } from "./aging.ts";
+import { ARTS_GROWTH, ARTS_MAJORS, ARTS_PASS, artsMajorById, artsMajorOf, artsTotal } from "./school.ts";
 import { STAT_KEYS, STAT_NAMES, overall } from "./stats.ts";
 import { actName, ageOf, ageText, conditionOf, displayName, eraScale, fanText, isSecondHalf, MAX_TURN, periodLabel, yearOf } from "./format.ts";
 
 const hasBatchim = (w: string) => { const ch = w.charCodeAt(w.length - 1); return ch >= 0xac00 && ch <= 0xd7a3 && (ch - 0xac00) % 28 !== 0; };
 import { rng, between, pick } from "./rng.ts";
 import { applyEffects, addReputation, diff, log, snapshot, type Snapshot } from "./effects.ts";
-import { CONCEPTS, DANGER_LOCK, MAIN_STAT, inCooldown, isPublicFocus, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
+import { CONCEPTS, DANGER_LOCK, MAIN_STAT, TRAIN_AMOUNT, trainPicks, inCooldown, isPublicFocus, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
 import { makeAlbum, albumSummary, addShowWin, ALBUM_NAME_PATTERN, DEFAULT_PRODUCTION } from "./album.ts";
 import { MUSIC_SHOWS, winChance, addBuzz, BUZZ_DECAY, INCIDENT_IDS } from "./metrics-model.ts";
 import { PRODUCERS, PROMOS } from "./focus.ts";
@@ -70,14 +72,14 @@ function ageMultiplier(age: number) {
 function grow(c: Career, stat: StatKey, amount: number) {
   const a = agencyById(c.agencyId);
   const agencyMul = c.stage === "trainee" ? (a?.training ?? 1) * (a?.stat === stat ? 1.1 : 1) : c.stage === "free" ? 0.6 : 0.5;
-  const school = c.schoolId === "arts" && (stat === "dance" || stat === "visual") ? 1.15 : c.schoolId === "ged" ? 1.1 : 1;
+  const school = artsMajorOf(c)?.stats.includes(stat) ? ARTS_GROWTH : c.schoolId === "ged" ? 1.1 : 1;
   const headroom = Math.max(0.12, Math.min(1, (c.potential[stat] - c.stats[stat]) / 28));
   const roleMul = MAIN_STAT[c.position] === stat ? 1.12 : 1; // 역할의 주력 능력은 조금 더 빨리 자란다
   const gain = amount * ageMultiplier(ageOf(c)) * agencyMul * school * headroom * roleMul * (0.9 + rng(c) * 0.2);
   // 능력치는 정수만 쓴다: 소수 부분은 확률로 올림해 평균 성장량을 유지한다
   const whole = Math.floor(gain);
   const extra = rng(c) < gain - whole ? 1 : 0;
-  c.stats[stat] = Math.min(99, c.stats[stat] + whole + extra);
+  gainStat(c, stat, whole + extra); // 잠재력 상한에서 멈춘다
 }
 
 function popularityTarget(c: Career): number {
@@ -85,7 +87,8 @@ function popularityTarget(c: Career): number {
   const base = 8.3 * Math.log10(c.fans / eraScale(yearOf(c)) + 1) + Math.max(0, c.reputation) * 0.12;
   const recent = c.albums.filter((a) => c.turn - a.turn <= 2);
   const chart = Math.min(18, recent.reduce((s, a) => s + (a.melon !== null ? Math.max(0, 50 - a.melon) / 4 : 0) + a.wins * 1 + (a.billboard !== null ? 5 : 0), 0));
-  const t = (base + chart + (c.buzz ?? 0) * 0.12) * (c.stage === "idol" ? 1 : 0.5);
+  // 인기는 실력에 비례한다: 실력이 꺾이면 같은 팬덤으로도 대중 인기가 식는다
+  const t = (base + chart + (c.buzz ?? 0) * 0.12) * (c.stage === "idol" ? skillFactor(overall(c.stats, c.position)) : 0.5);
   return Math.max(0, Math.min(100, t));
 }
 
@@ -194,19 +197,15 @@ export function advanceTurn(original: Career, focusId: string): Career {
   const period = periodLabel(c);
 
   if (c.stage === "free" || c.stage === "trainee") {
-    if (kind === "train" && arg && arg !== "all") {
-      const stat = arg as StatKey;
-      if (!STAT_KEYS.includes(stat)) throw new GameError("훈련할 능력을 골라주세요.");
-      grow(c, stat, 6);
-      for (const k of STAT_KEYS) if (k !== stat) grow(c, k, 1.5);
+    if (kind === "train") {
+      // 고른 능력(1~3개)만 오른다. 적게 고를수록 한 능력이 빨리 자라고, 고르지 않은 능력은 가끔 녹슨다
+      const picks = trainPicks(c.position, arg);
+      for (const k of picks) grow(c, k, TRAIN_AMOUNT[picks.length]);
+      applyRust(c, picks);
       c.health -= 10;
       c.mental -= 5;
-      text = `${period}, ${STAT_NAMES[stat]}에 집중했어요.`;
-    } else if (kind === "train") {
-      for (const k of STAT_KEYS) grow(c, k, 3);
-      c.health -= 8;
-      c.mental -= 4;
-      text = `${period}, 모든 능력을 고르게 다듬었어요.`;
+      headline = focusLabel(`train:${picks.join("+")}`);
+      text = `${period}, ${picks.map((k) => STAT_NAMES[k]).join("·")}에 집중했어요.`;
     } else if (kind === "rest") {
       c.health += 35;
       c.mental += 30;
@@ -339,6 +338,12 @@ export function advanceTurn(original: Career, focusId: string): Career {
       scene = "rest";
     } else throw new GameError("선택할 수 없는 계획이에요.");
     c.trust = Math.min(100, c.trust + 2);
+    // 이번 시즌 활동에 쓰지 않은 능력은 가끔 녹슨다
+    {
+      const concept = kind === "comeback" ? CONCEPTS.find((x) => x.id === arg)?.stats ?? [] : [];
+      const used: StatKey[] = kind === "comeback" ? [...concept, MAIN_STAT[c.position]] : kind === "promo" ? ["variety", "visual"] : kind === "fanmeet" ? ["variety"] : kind === "overseas" ? ["dance", "vocal"] : kind === "solo" ? [soloStat(c, arg as SoloKind)] : STAT_KEYS;
+      applyRust(c, used, RUST_CHANCE_IDOL);
+    }
 
     // ── 자숙 기간: 논란이 가라앉기 전에 공개 활동을 하면 여론이 돌아선다 ──
     if (inCooldown({ flags: c.flags, turn: c.turn })) {
@@ -391,9 +396,16 @@ export function advanceTurn(original: Career, focusId: string): Career {
       c.fans = Math.round(c.fans * 0.95);
       notes.push("오랜 공백으로 관심이 줄었어요. 컴백을 준비해보세요.");
     }
+    // 말년: 29살(만 27)부터 대중의 관심이 식고, 31살부터는 팬도 조금씩 떠난다
     const age = ageOf(c);
-    if (age >= 32) c.popularity -= 2;
-    else if (age >= 28) c.popularity -= 1;
+    c.popularity -= age >= 31 ? 6 : age >= 29 ? 3.5 : age >= 27 ? 1.5 : 0;
+    if (age >= 29) c.fans = Math.round(c.fans * 0.98);
+  }
+  // 29살부터 능력이 떨어지고 그 폭이 시즌마다 커진다
+  {
+    const ovrBefore = overall(c.stats, c.position);
+    applyAging(c);
+    if (ageOf(c) >= 27 && overall(c.stats, c.position) < ovrBefore && !c.flags.agingNoted) { c.flags.agingNoted = 1; notes.push("예전 같지 않은 날이 생겼어요. 29살부터는 실력이 조금씩 떨어지고, 해가 갈수록 빨라져요."); }
   }
   c.popularity = Math.round(Math.max(0, Math.min(100, c.popularity * 0.65 + popularityTarget(c) * 0.35)) * 10) / 10;
 
@@ -451,7 +463,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
     else notes.push(`데뷔 평가 피드백: OVR ${ovr}, 데뷔조 기준 ${a.threshold}. ${a.stat === MAIN_STAT[c.position] ? "회사 강점과 포지션이 잘 맞아요." : `${STAT_NAMES[a.stat]}을(를) 보강하면 빨라져요.`}`);
   }
   if (c.stage === "free") {
-    const best = AGENCIES.map((a) => ({ a, p: auditionChance(c, a.id) })).filter((x) => (c.flags[`apply:${x.a.id}`] ?? -9) <= c.turn - 2).sort((x, y) => y.p - x.p)[0];
+    const best = AGENCIES.map((a) => ({ a, p: auditionChance(c, a.id) })).filter((x) => x.p > 0 && (c.flags[`apply:${x.a.id}`] ?? -9) <= c.turn - 2).sort((x, y) => y.p - x.p)[0];
     if (best) notes.push(`지금 ${best.a.name} 합격 가능성이 가장 높아요. 홈의 소속 카드에서 지원할 수 있어요.`);
   }
 
@@ -489,8 +501,8 @@ export function advanceTurn(original: Career, focusId: string): Career {
     c.pending = ceremonyEvent(c);
   } else {
     c.pending = scheduleEvent(c);
-    // 연초 홍보 예산: 그 시즌에 다른 이벤트(시상식 등)가 있었으면 다음 시즌으로 한 번 미룬다
-    if (c.flags.budgetDue !== undefined && c.turn - c.flags.budgetDue > 1) delete c.flags.budgetDue;
+    // 연초 홍보 예산: 그 시즌에 다른 이벤트(시상식·돌발 사건)가 있으면 빈 시즌이 올 때까지 미룬다 (세 시즌 넘기면 올해 예산은 그대로 둔다)
+    if (c.flags.budgetDue !== undefined && c.turn - c.flags.budgetDue > 3) delete c.flags.budgetDue;
     if (!c.pending && c.flags.budgetDue !== undefined) c.pending = budgetEvent(c);
   }
   finish(c, before, headline, text, tone, { scene, notes, comments, awards: wonAwards, celebrate, spotlight });
@@ -540,6 +552,30 @@ function attendCeremony(c: Career) {
 // 예전 저장본에 남은 초청 시트(id "awards-invite", op "awards:attend")는 아래 선택 처리에서 그대로 받는다.
 
 /** 입대 직후 한 번 뜨는 복무 계획. 고른 길이 전역 결과에 남는다. */
+/** 예고 입시: 전공을 고르고 실기 오디션(리듬 미니게임)을 본다 */
+function artsAuditionEvent(): ActiveEvent {
+  return {
+    id: "arts-audition",
+    title: "예술고 실기 오디션",
+    text: `전공을 고르고 실기를 봐요. 전공 능력과 실기 점수를 반씩 더해 ${ARTS_PASS}점을 넘으면 합격이에요.`,
+    scene: "audition",
+    choices: ARTS_MAJORS.map((m) => ({ id: m.id, label: m.name, hint: m.description, risk: "bold" as const, op: `artsaudition:${m.id}` })),
+  };
+}
+
+function schoolFallbackEvent(): ActiveEvent {
+  return {
+    id: "school-fallback",
+    title: "예고에 떨어졌어요 — 어디로 갈까?",
+    text: "입시는 끝났지만 길은 남아 있어요. 일반고는 생활이 안정적이고, 검정고시는 연습 시간이 가장 많아요.",
+    scene: "school",
+    choices: [
+      { id: "general", label: "일반고등학교", hint: "컨디션이 안정적이고 친구들과 평범한 학교생활을 해요", risk: "safe", op: "school:general" },
+      { id: "ged", label: "검정고시 · 홈스쿨링", hint: "연습 시간이 많아 모든 능력이 빨리 올라요. 멘탈 회복은 느려요", risk: "bold", op: "school:ged" },
+    ],
+  };
+}
+
 function militaryEvent(c: Career): ActiveEvent {
   return {
     id: "military-service",
@@ -646,7 +682,7 @@ function joinAgency(c: Career, agencyId: string) {
   c.flags.contractTurn = c.turn;
 }
 
-export function resolveChoice(original: Career, choiceId: string, extra: { groupName?: string; albumName?: string; reaction?: string } = {}): Career {
+export function resolveChoice(original: Career, choiceId: string, extra: { groupName?: string; albumName?: string; reaction?: string; /** 실기 미니게임 점수 0~100 */ score?: number } = {}): Career {
   const c = clone(original);
   if (c.stage === "retired") throw new GameError("이미 완성된 인생예요.");
   const event = c.pending;
@@ -823,9 +859,33 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
     reaction = { kind: album.wins > 0 ? "win" : c.flags.albumViral === c.turn ? "album-viral" : c.flags.albumFlop === c.turn ? "album-flop" : "album", album: album.name, show: album.shows?.[0], melon: album.melon };
     log(c, headline, text, "release");
     if (album.wins > 0) log(c, `음악방송 1위 ${album.wins}회`, `${album.name} 활동으로 1위 트로피를 들었어요.`, "award");
+  } else if (op === "school:arts-apply") {
+    headline = "예술고 입시 준비";
+    text = "원서를 냈어요. 전공을 고르고 실기 오디션을 봐요.";
+    c.pending = artsAuditionEvent();
+  } else if (op.startsWith("artsaudition:")) {
+    const major = artsMajorById(op.slice(13))!;
+    // 실기 점수: 미니게임 정확도. 건너뛰면 그날 컨디션에 맡긴다
+    const score = extra.score === undefined ? Math.round(30 + rng(c) * 40) : Math.max(0, Math.min(100, Math.round(extra.score)));
+    const total = artsTotal(c, major, score);
+    if (total >= ARTS_PASS) {
+      c.schoolId = "arts";
+      c.flags.artsMajor = ARTS_MAJORS.indexOf(major) + 1;
+      headline = `예술고 ${major.name} 합격`;
+      text = `실기 ${score}점, 총점 ${total}점으로 합격했어요 (합격선 ${ARTS_PASS}점). ${major.stats.map((k) => STAT_NAMES[k]).join("·")}이(가) 빨리 자라요.`;
+      tone = "good";
+      log(c, headline, text, "milestone");
+    } else {
+      headline = `예술고 ${major.name} 불합격`;
+      text = `실기 ${score}점, 총점 ${total}점으로 합격선 ${ARTS_PASS}점에 못 미쳤어요. 다른 길을 골라요.`;
+      tone = "bad";
+      c.mental = Math.max(0, c.mental - 6);
+      log(c, headline, text, "system");
+      c.pending = schoolFallbackEvent();
+    }
   } else if (op.startsWith("school:")) {
     c.schoolId = op.slice(7) as Career["schoolId"];
-    headline = { arts: "예술고 진학", general: "일반고 진학", ged: "검정고시 준비" }[op.slice(7)] ?? headline;
+    headline = { general: "일반고 진학", ged: "검정고시 준비" }[op.slice(7)] ?? headline;
     text = "다음 몇 년의 생활이 정해졌어요.";
     log(c, headline, text, "milestone");
   } else if (op === "trainee:renew") {
@@ -1150,10 +1210,14 @@ export function applyToAgency(original: Career, agencyId: string): Career {
   if (c.agencyId === agencyId) throw new GameError("이미 소속된 회사예요.");
   const last = c.flags[`apply:${agencyId}`];
   if (last !== undefined && c.turn - last < 2) throw new GameError("같은 회사에는 1년 뒤 다시 지원할 수 있어요.");
+  const gate = applyGate(c, agencyId);
+  if (gate) throw new GameError(`${a.name}: ${gate}.`);
+  if (a.tier === "major" && c.flags.majorApplyTurn === c.turn) throw new GameError("대형 기획사 공개 오디션은 시즌에 한 곳만 볼 수 있어요.");
   if (appliedThisSeason(c) >= APPLY_PER_SEASON) throw new GameError(`기획사 지원은 시즌마다 ${APPLY_PER_SEASON}곳까지예요. 다음 시즌에 다시 지원해주세요.`);
   c.result = null;
   const before = snapshot(c);
   c.flags[`apply:${agencyId}`] = c.turn;
+  if (a.tier === "major") c.flags.majorApplyTurn = c.turn;
   c.flags.appliedCount = appliedThisSeason(c) + 1;
   c.flags.appliedTurn = c.turn;
   const p = auditionChance(c, agencyId);

@@ -1,5 +1,6 @@
 import type { Career, Concept, Risk, StatKey } from "./types.ts";
-import { STAT_KEYS, STAT_NAMES } from "./stats.ts";
+import { STAT_KEYS, STAT_NAMES, statWeight } from "./stats.ts";
+import { GameError } from "./types.ts";
 import { conditionOf } from "./format.ts";
 
 export type FocusOption = {
@@ -8,7 +9,7 @@ export type FocusOption = {
   hint: string;
   risk: Risk;
   /** stat selector or concept selector shown under the option */
-  picker?: "stat" | "concept";
+  picker?: "stats" | "concept";
   disabledReason?: string;
   /** "group" | "solo" — idol options are shown in two sections */
   group?: "group" | "solo";
@@ -114,15 +115,13 @@ function baseOptions(c: Career): FocusOption[] {
   }
   if (c.stage === "free") {
     return [
-      { id: "train", label: "학원 수업", hint: "고른 능력이 오르고 나머지도 조금 자라요. 소속 연습생보다 느려요", risk: "safe", picker: "stat" },
-      { id: "train:all", label: "독학 올라운드", hint: "모든 능력이 조금씩 올라요", risk: "safe" },
+      { id: "train", label: "학원 수업", hint: "고른 능력(최대 3개)만 올라요. 적게 고를수록 빨리 자라요. 소속 연습생보다 느려요", risk: "safe", picker: "stats" },
       { id: "rest", label: "휴식", hint: "컨디션을 회복해요. 실력은 오르지 않아요", risk: "safe", disabledReason: cond.level === "good" ? "컨디션이 좋을 땐 필요 없어요" : undefined },
     ];
   }
   if (c.stage === "trainee") {
     return [
-      { id: "train", label: "집중 트레이닝", hint: "고른 능력이 크게 오르고 나머지도 조금 자라요. 컨디션이 조금 떨어져요", risk: "safe", picker: "stat" },
-      { id: "train:all", label: "올라운드 트레이닝", hint: "모든 능력이 고르게 올라요", risk: "safe" },
+      { id: "train", label: "집중 트레이닝", hint: "고른 능력(최대 3개)만 올라요. 적게 고를수록 빨리 자라요. 컨디션이 조금 떨어져요", risk: "safe", picker: "stats" },
       { id: "rest", label: "휴식", hint: "컨디션을 크게 회복해요. 실력은 오르지 않아요", risk: "safe", disabledReason: cond.level === "good" ? "컨디션이 좋을 땐 필요 없어요" : undefined },
     ];
   }
@@ -146,8 +145,25 @@ function baseOptions(c: Career): FocusOption[] {
 
 export function focusLabel(focusId: string): string {
   const [kind, arg] = focusId.split(":");
-  if (kind === "train") return arg === "all" || !arg ? "올라운드 트레이닝" : `${STAT_NAMES[arg as StatKey]} 집중 트레이닝`;
+  if (kind === "train") return arg && arg !== "all" ? `${arg.split("+").map((k) => STAT_NAMES[k as StatKey] ?? k).join("·")} 집중 트레이닝` : "집중 트레이닝";
   if (kind === "comeback") return `컴백 · ${CONCEPTS.find((x) => x.id === arg)?.name ?? ""}`;
   if (kind === "solo") return SOLO_LABELS[arg as SoloKind]?.label ?? focusId;
   return { promo: "방송 · 예능 활동", fanmeet: "팬미팅 · 콘텐츠", overseas: "해외 활동", rest: "휴식" }[kind] ?? focusId;
+}
+
+/** 한 시즌에 집중할 수 있는 능력 수와, 고른 수에 따른 능력별 성장량 */
+export const TRAIN_MAX = 3;
+export const TRAIN_AMOUNT: Record<number, number> = { 1: 8, 2: 5.2, 3: 4 };
+
+/** 포지션에 가장 중요한 능력 3개 (기본 선택·옛 올라운드 훈련 대체) */
+export function defaultTrainPicks(position: Career["position"]): StatKey[] {
+  return [...STAT_KEYS].sort((a, b) => statWeight(position, b) - statWeight(position, a)).slice(0, TRAIN_MAX);
+}
+
+/** `train:vocal+dance` 의 능력 목록. 비었거나 옛 `all`이면 포지션 기본 3개. */
+export function trainPicks(position: Career["position"], arg: string | undefined): StatKey[] {
+  if (!arg || arg === "all") return defaultTrainPicks(position);
+  const picks = [...new Set(arg.split("+"))] as StatKey[];
+  if (!picks.length || picks.length > TRAIN_MAX || picks.some((k) => !STAT_KEYS.includes(k))) throw new GameError(`훈련할 능력을 1~${TRAIN_MAX}개 골라주세요.`);
+  return picks;
 }

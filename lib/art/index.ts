@@ -43,14 +43,23 @@ export function hasSceneFrames(scene: string, index: number, gender?: "female" |
  * 시상식 의자 그림은 쓰지 않는다: 프레임이 넘어갈 때 의자가 좌우로 흔들려 보인다.
  * 객석 장면은 서서 박수 치는 프레임(수상 없음 세트의 1~3)을, 호명·박수 장면은 서 있는 프레임만 쓴다.
  */
-// 의자 없이 서서 두 손을 모은 수상 실패 1~3프레임을 객석 대기·대상 발표 장면에도 쓴다 (발표 장면은 전용 그림이 없어 평상복 기본 포즈로 나왔다)
-const FRAMES_FROM: Record<string, string> = { "awards-seat": "awards-lose", "awards-announce": "awards-lose" };
-const FRAME_PICK: Record<string, number[]> = { "awards-win": [2, 3], "awards-lose": [0, 1, 2] };
+// 객석 대기는 서서 두 손을 모은 수상 실패 1~3프레임을, 대상 발표는 시상자(MC)가 마이크를 든 무대 프레임(1·3번, 트로피 없음)을 쓴다
+const SCENE_SOURCE: Record<string, { from?: string; pick?: number[] }> = {
+  "awards-seat": { from: "awards-lose", pick: [0, 1, 2] },
+  "awards-lose": { pick: [0, 1, 2] },
+  "awards-win": { pick: [2, 3] },
+  "awards-announce": { from: "awards-stage", pick: [0, 2] },
+};
 function sceneFrames(key: string, avatar: number): ArtFrame[] | undefined {
-  const source = FRAMES_FROM[key] ?? key;
-  const frames = scenes[source]?.avatars[avatar];
-  const pick = FRAME_PICK[source];
-  return frames && pick ? pick.map((i) => frames[i]).filter(Boolean) : frames;
+  const src = SCENE_SOURCE[key];
+  const frames = scenes[src?.from ?? key]?.avatars[avatar];
+  return frames && src?.pick ? src.pick.map((i) => frames[i]).filter(Boolean) : frames;
+}
+
+/** 시상자(MC): 멤버가 아닌 다른 성별 캐릭터가 해마다 돌아가며 선다 */
+export function presenterAvatar(gender: "female" | "male", year: number): number {
+  const pool = gender === "female" ? MALE_AVATARS : FEMALE_AVATARS;
+  return pool[((year % pool.length) + pool.length) % pool.length];
 }
 
 export function eventArt(scene: string, index: number, gender?: "female" | "male", mood?: ArtMood, uniform = false) {

@@ -171,11 +171,6 @@
     padding-right: 0 !important;
     margin-right: 0 !important;
   }
-  /* vaul도 시트가 열릴 때 html에 인라인 padding-right를 넣는다 */
-  html {
-    padding-right: 0 !important;
-  }
-
   html {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
@@ -320,9 +315,6 @@
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 
-[data-vaul-drawer] {
-  will-change: transform;
-}
 
 @media (prefers-reduced-motion: reduce) {
   .art-frame.art-animated.art-blink { animation: none; }
@@ -356,24 +348,8 @@ input, textarea { caret-color: var(--primary); }
 /* 가로 넘침은 잘라내되 스크롤 컨테이너를 만들지 않는다 (sticky·fixed 유지) */
 html, body { overflow-x: clip; }
 
-/* 바텀시트가 닫히는 동안(약 0.5초) 사라지는 시트와 배경막이 다음 탭을 삼키지 않게:
-   닫히는 중인 시트·배경막은 터치를 통과시키고, 시트가 걸어둔 페이지 잠금도 풀어준다 */
-[data-vaul-drawer][data-state="closed"],
-[data-vaul-overlay][data-state="closed"] { pointer-events: none !important; }
-body:not(:has([data-vaul-drawer][data-state="open"])) { pointer-events: auto !important; }
-
-/* 바텀시트 등장: 0.5초 꼬리가 긴 곡선 대신 0.26초에 깔끔하게 멈춘다.
-   iOS는 손가락을 대고 떼는 사이 버튼이 몇 픽셀이라도 움직이면 탭을 버리기 때문에, 시트가 오래 미끄러지면 첫 탭이 씹힌다 */
-[data-vaul-drawer][data-vaul-drawer-direction="bottom"][data-state="open"] {
-  animation-duration: 0.26s !important;
-  animation-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-}
-/* 다른 시트 바로 다음에 이어지는 시트는 움직이지 않고 제자리에서 나타난다 */
-[data-vaul-drawer][data-sheet-chained][data-state="open"] {
-  animation-name: sheet-fade-in !important;
-  animation-duration: 0.16s !important;
-}
+/* 오버레이(Sheet): 드래그·미끄러짐 없이 제자리에서 나타난다. 버튼이 움직이지 않아야 iOS가 첫 탭을 버리지 않는다 */
+.sheet-in { animation: sheet-fade-in 0.14s ease-out both; }
 @keyframes sheet-fade-in { from { opacity: 0; } to { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) {
-  [data-vaul-drawer][data-state="open"] { animation-duration: 0.01ms !important; }
-}
+/* 장면 안에서 순서대로 나타나는 요소: 위치는 그대로, 투명도만 */
+.fade-in { animation: sheet-fade-in 0.2s ease-out both; }

@@ -23,6 +23,18 @@ export function awardName(show: string, kind: Award["kind"], x: AwardCtx): strin
   return x.melonOne ? "디지털 음원 대상" : "음반 대상";
 }
 
+export const BONSANG_POPULARITY = 50;
+/** 한 해 음악방송 1위가 이만큼이면 "휩쓴 해" */
+export const DAESANG_SWEEP_WINS = 5;
+/** 대상 확률. 후보 조건을 못 채우면 0 */
+export function daesangChance(x: { fansEra: number; bestSales: number; melonOne: boolean; winsThisYear: number }): number {
+  // 음악방송을 휩쓴 해(1위 5회 이상)는 팬덤이 20만만 넘어도 유력 후보
+  if (x.winsThisYear >= DAESANG_SWEEP_WINS && x.fansEra >= 200000) return Math.min(0.85, 0.45 + (x.winsThisYear - DAESANG_SWEEP_WINS) * 0.06 + (x.melonOne ? 0.15 : 0) + x.fansEra / 10000000);
+  // 그 밖에는 큰 팬덤 + 멜론 1위(와 1위 3회) 또는 초동 150만
+  if (x.fansEra < 1000000 || !((x.melonOne && x.winsThisYear >= 3) || x.bestSales >= 1500000)) return 0;
+  return Math.min(0.7, 0.2 + x.winsThisYear * 0.05 + (x.melonOne ? 0.15 : 0) + x.fansEra / 10000000);
+}
+
 /** Called once per finished year (after 하반기). Returns awards won this season. */
 export function yearEndAwards(c: Career, year: number, lastTwoTurns: [number, number]): Award[] {
   if (c.stage !== "idol" || c.debutTurn === null) return [];
@@ -45,18 +57,15 @@ export function yearEndAwards(c: Career, year: number, lastTwoTurns: [number, nu
   const rookieEligible = c.turn - c.debutTurn <= 3 && !c.awards.some((a) => a.kind === "rookie");
   if (rookieEligible && (bestSales >= 150000 || winsThisYear >= 2 || melonBest <= 10) && rng(c) < 0.6) add("rookie");
 
-  // 본상: 인기도 65 이상 + 올해의 성과가 있어야 하고, 스타여도 못 받는 해가 있다. 해마다 하나까지
-  if (thisYear.length >= 1 && c.popularity >= 65 && (melonBest <= 30 || winsThisYear >= 1)) {
-    const p = Math.min(0.6, 0.25 + (c.popularity - 65) / 100);
+  // 본상: 인기도 50 이상 + 올해의 성과(멜론 30위 안 또는 음방 1위). 1위를 많이 할수록 확실해진다. 해마다 하나까지
+  if (thisYear.length >= 1 && c.popularity >= BONSANG_POPULARITY && (melonBest <= 30 || winsThisYear >= 1)) {
+    const p = Math.min(0.85, 0.4 + (c.popularity - BONSANG_POPULARITY) / 80 + winsThisYear * 0.04);
     if (rng(c) < p && !won.some((a) => a.kind === "bonsang")) add("bonsang");
   }
 
-  // 대상: 팬덤·음반·1위 횟수를 모두 갖춘 해에도 확률이 낮다
-  const fansEra = c.fans / era;
-  if (fansEra >= 2500000 && (bestSales >= 1500000 || melonOne) && winsThisYear >= 3) {
-    const p = Math.min(0.45, 0.12 + fansEra / 15000000 + (melonOne ? 0.1 : 0));
-    if (rng(c) < p) add("daesang");
-  }
+  // 대상: 음악방송을 휩쓴 해는 유력 후보다 (daesangChance)
+  const p = daesangChance({ fansEra: c.fans / era, bestSales, melonOne, winsThisYear });
+  if (p > 0 && rng(c) < p) add("daesang");
   return won;
 }
 

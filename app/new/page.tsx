@@ -10,7 +10,7 @@ import { Logo } from "@/components/Logo";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { ResultSheet } from "@/components/play/ResultSheet";
 import { cn } from "@/lib/cn";
-import { AGENCIES, TIERS, TIER_ORDER, auditionChance, chanceLabel } from "@/lib/game/agencies";
+import { AGENCIES, TIERS, TIER_GATE, TIER_ORDER, applyGate, auditionChance, chanceLabel } from "@/lib/game/agencies";
 import { generateCandidates, type Candidate } from "@/lib/game/candidates";
 import { createCareer } from "@/lib/game/create";
 import { APPLY_PER_SEASON, applyToAgency } from "@/lib/game/engine";
@@ -32,7 +32,7 @@ export default function NewPage() {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [candidateId, setCandidateId] = useState<string | null>(null);
   const [rerolls, setRerolls] = useState(0);
-  const [tier, setTier] = useState<Tier>("mid");
+  const [tier, setTier] = useState<Tier>("indie");
   const [agencyId, setAgencyId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<Career | null>(null);
@@ -181,7 +181,7 @@ export default function NewPage() {
       {step === 2 && (
         <section className="fade-up mt-6">
           <h1 className="t-title">{failed.length ? "다른 곳에 지원해볼까요?" : "어디에 지원할까요?"}</h1>
-          <p className="t-cap mt-2">대형은 문이 좁고 중소는 넓어요. 이번 시즌에 {APPLY_PER_SEASON}곳까지 지원할 수 있어요.</p>
+          <p className="t-cap mt-2">대형과 중견은 실력(OVR)이 돼야 지원할 수 있어요. 지금은 중소부터 시작하거나, 무소속으로 실력을 쌓고 다시 도전해요. 이번 시즌에 {APPLY_PER_SEASON}곳까지 지원할 수 있어요.</p>
           {failed.length > 0 && (
             <div className="mt-4 rounded-2xl bg-card p-4" role="status">
               <p className="t-body font-bold">{triesLeft > 0 ? `지원 기회가 ${triesLeft}번 남았어요` : "이번 시즌 지원 기회를 모두 썼어요"}</p>
@@ -198,11 +198,12 @@ export default function NewPage() {
               <button key={t} onClick={() => setTier(t)} className={cn("press shrink-0 h-9 px-3.5 rounded-full text-[13px] font-bold", tier === t ? "bg-ink text-bg" : "bg-card text-ink-2")}>{TIERS[t].short}</button>
             ))}
           </div>
-          <p className="t-cap mt-3">{TIERS[tier].description}</p>
+          <p className="t-cap mt-3">{TIERS[tier].description}{TIER_GATE[tier] ? ` · 지원 자격 OVR ${TIER_GATE[tier]}` : " · 지원 자격 없음"}</p>
           <div className="flex flex-col gap-2 mt-3">
             {candidate && AGENCIES.filter((a) => a.tier === tier).map((a) => {
               const label = chanceLabel(auditionChance({ stats: candidate.stats, position: candidate.position }, a.id));
-              const out = failed.includes(a.id);
+              const gate = applyGate({ stats: candidate.stats, position: candidate.position }, a.id);
+              const out = failed.includes(a.id) || !!gate;
               return (
                 <button key={a.id} disabled={out} onClick={() => setAgencyId(a.id)} className={cn("press text-left rounded-2xl border-2 bg-card p-4 flex items-center gap-3", agencyId === a.id ? "border-primary" : "border-transparent", out && "opacity-45")}>
                   <Logo id={a.logo} label={a.name} color={a.color} size={44} />
@@ -210,7 +211,7 @@ export default function NewPage() {
                     <p className="t-body font-bold truncate">{a.name}</p>
                     <p className="text-[13px] text-ink-3 truncate">{a.rank ? `2026 기획사 순위 ${a.rank}위 · ` : ""}{a.strength}</p>
                   </div>
-                  {out ? <Chip tone="danger">불합격</Chip> : <Chip tone={TONE[label]}>{label}</Chip>}
+                  {gate ? <Chip tone="neutral">OVR {TIER_GATE[a.tier]}부터</Chip> : out ? <Chip tone="danger">불합격</Chip> : <Chip tone={TONE[label]}>{label}</Chip>}
                 </button>
               );
             })}
@@ -221,8 +222,8 @@ export default function NewPage() {
       <FixedCta>
         {error && <p className="mb-2 rounded-xl bg-danger-soft text-danger text-[13px] font-bold py-2.5 px-3">{error}</p>}
         <Button onClick={next}>{step === 2 ? (failed.length ? `지원하기 (${failed.length + 1}/${APPLY_PER_SEASON})` : "지원하기") : step === 1 ? "이 스타일로 할게요" : "다음"}</Button>
-        {step === 2 && career && (
-          <Button variant="ghost" className="mt-2" onClick={() => startGame(career)}>무소속으로 시작하기</Button>
+        {step === 2 && candidate && (
+          <Button variant="ghost" className="mt-2" onClick={() => { try { startGame(career ?? createCareer({ name, gender, avatar, position: candidate.position, stats: candidate.stats })); } catch (e) { setError(e instanceof GameError ? e.message : "문제가 생겼어요."); } }}>무소속으로 시작하기</Button>
         )}
       </FixedCta>
 

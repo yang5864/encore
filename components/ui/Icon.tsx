@@ -6,7 +6,7 @@ import type { SVGProps } from "react";
  */
 export type IconName =
   | "trophy" | "target" | "chart" | "wallet" | "bag" | "chevron-right" | "check"
-  | "sprout" | "medal" | "droplet" | "sparkle" | "alert" | "heart";
+  | "sprout" | "medal" | "droplet" | "sparkle" | "alert" | "heart" | "close";
 
 const PATHS: Record<IconName, string[]> = {
   trophy: ["M8 4h8v5a4 4 0 0 1-8 0V4Z", "M8 6H5v1.5A3.5 3.5 0 0 0 8.5 11", "M16 6h3v1.5A3.5 3.5 0 0 1 15.5 11", "M12 13v4", "M8.5 20h7", "M9.5 17h5v3h-5z"],
@@ -21,6 +21,7 @@ const PATHS: Record<IconName, string[]> = {
   droplet: ["M12 3.5c3 3.6 5.5 6.6 5.5 9.5a5.5 5.5 0 0 1-11 0c0-2.9 2.5-5.9 5.5-9.5Z"],
   sparkle: ["M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z", "M19 16l.7 1.8 1.8.7-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7L19 16Z"],
   alert: ["M12 4l9 16H3l9-16Z", "M12 10v4", "M12 17h.01"],
+  close: ["M6 6l12 12", "M18 6L6 18"],
   heart: ["M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"],
 };
 

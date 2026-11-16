@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { EventArt, PrefetchArt } from "@/components/EventArt";
-import { eventArt } from "@/lib/art";
+import { eventArt, presenterAvatar } from "@/lib/art";
 import { actName, artGroupFor } from "@/lib/game/format";
 import { brandTable } from "@/lib/game/brand-rank";
 import { SHOW_FULL } from "@/lib/game/awards";
@@ -131,6 +131,7 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
   // 다음 장면(과 반응 분기)을 미리 받아 둔다
   const upcoming = [steps[i + 1], steps[i + 2]].filter(Boolean).flatMap((s) => (s.kind === "win" ? ["awards-win", "awards-cry", "awards-lose"] : [stepScene(s, reaction)]));
   const show = SHOW_FULL[cm.show] ?? cm.show;
+  const mc = presenterAvatar(career.gender, cm.year);
   const name = actName(career);
 
   const caption = (() => {
@@ -138,7 +139,7 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
       case "redcarpet": return { chip: `${cm.year} ${show}`, title: "레드카펫에 섰어요", text: `카메라 플래시가 쏟아져요. ${cm.stages.join(" · ")} 무대까지, 올해 가장 긴 밤이 시작돼요.` };
       case "stage": return { chip: step.name, title: "연말 무대", text: "올해의 타이틀곡을 특별 편곡으로 올렸어요. 객석의 응원봉이 한 색으로 물들었어요." };
       case "seat": return { chip: step.award ? step.award.name : "시상", title: step.award ? `${step.award.name} 발표를 앞두고` : "시상 부문 발표", text: "시상자가 봉투를 들고 무대에 올랐어요. 멤버들 손이 서로를 찾아요." };
-      case "announce": return { chip: step.award ? step.award.name : "시상", title: revealed ? (step.award ? `${name}!` : `${rival}!`) : "두구두구두구…", text: revealed ? (step.award ? `"${cm.year} ${step.award.show} ${step.award.name}… ${name}!"` : `"${cm.year} ${show} ${lostPrize}… ${rival}!" 객석에서 박수를 보냈어요.`) : `"올해 ${step.award ? step.award.name : "대상"}의 주인공은…"` };
+      case "announce": return { chip: `시상자 · ${step.award ? step.award.name : "대상"}`, title: revealed ? (step.award ? `${name}!` : `${rival}!`) : "두구두구두구…", text: revealed ? (step.award ? `"${cm.year} ${step.award.show} ${step.award.name}… ${name}!"` : `"${cm.year} ${show} ${lostPrize}… ${rival}!" 객석에서 박수를 보냈어요.`) : `"올해 ${step.award ? step.award.name : "대상"}의 주인공은…"` };
       case "win": return { chip: step.award.name, title: "이름이 불렸어요", text: step.award.kind === "daesang" ? `쟁쟁한 대상 후보 ${rivalFor(step.award.name.includes("음원") ? "digital" : "album")}까지 제쳤어요. 무대로 올라가는 길이 길게 느껴져요.` : "멤버들이 서로를 끌어안았어요. 무대로 올라가는 길이 길게 느껴져요." };
       case "lose": return { chip: "수상 없음", title: "올해는 아니었어요", text: "수상자에게 박수를 보냈어요. 내년엔 저 무대에 서기로 했어요." };
       case "speech": return { chip: step.award.name, title: "수상소감", text: "마이크 앞에 섰어요. 첫 마디가 내년을 정해요." };
@@ -157,7 +158,12 @@ export function AwardShow({ career, event, onChoose }: { career: Career; event: 
           <span className="text-[13px] text-white/40">{i + 1} / {steps.length}</span>
         </div>
         <div className="rounded-2xl overflow-hidden bg-black/40 aspect-[3/2] w-full shrink-0">
-          <EventArt scene={sceneId} avatar={career.avatar} gender={career.gender} name={career.name} mood={step.kind === "lose" ? "sad" : step.kind === "win" || step.kind === "speech" ? "happy" : undefined} group={artGroupFor(career.lineup, "awards")} />
+          {step.kind === "announce" ? (
+            // 발표 장면: 무대에는 시상자(MC)만 선다. 멤버는 앞뒤 장면(객석·환호)에 나온다
+            <EventArt key="mc" scene="awards-announce" avatar={mc} gender={career.gender === "female" ? "male" : "female"} name="시상자" />
+          ) : (
+            <EventArt scene={sceneId} avatar={career.avatar} gender={career.gender} name={career.name} mood={step.kind === "lose" ? "sad" : step.kind === "win" || step.kind === "speech" ? "happy" : undefined} group={artGroupFor(career.lineup, "awards")} />
+          )}
         </div>
         <PrefetchArt scenes={upcoming} avatar={career.avatar} gender={career.gender} />
         <div className="mt-6 text-center min-h-[220px]">

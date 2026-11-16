@@ -5,7 +5,7 @@ import { equipmentPath } from "@/lib/art";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import { cn } from "@/lib/cn";
-import { CONCEPTS, PRODUCERS, PROMOS, focusOptions, type FocusOption } from "@/lib/game/focus";
+import { CONCEPTS, PRODUCERS, PROMOS, TRAIN_AMOUNT, TRAIN_MAX, defaultTrainPicks, focusOptions, type FocusOption } from "@/lib/game/focus";
 import { kpiPromo } from "@/lib/game/kpi";
 import { conceptStreak } from "@/lib/game/album";
 import { rivalFor } from "@/lib/game/team";
@@ -16,7 +16,7 @@ import { suggestAlbumName } from "@/lib/game/album";
 import { AlbumNamePicker } from "./AlbumNamePicker";
 import { Icon } from "@/components/ui/Icon";
 
-export type FocusSelection = { id: string; stat?: string; concept?: string; albumName?: string; customName?: boolean; producer?: string; promo?: string };
+export type FocusSelection = { id: string; stat?: string; /** 집중 훈련할 능력 (1~3개) */ stats?: string[]; concept?: string; albumName?: string; customName?: boolean; producer?: string; promo?: string };
 
 export function FocusCard({ career, value, onChange }: { career: Career; value: FocusSelection; onChange: (v: FocusSelection) => void }) {
   const options = focusOptions(career);
@@ -32,7 +32,7 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
   const switchTab = (next: "group" | "solo") => {
     setTab(next);
     const first = (next === "solo" ? soloOptions : groupOptions).find((o) => !o.disabledReason);
-    onChange({ id: first?.id ?? "", stat: value.stat ?? STAT_KEYS[0], concept: value.concept ?? CONCEPTS[0].id });
+    onChange({ id: first?.id ?? "", stat: value.stat ?? STAT_KEYS[0], stats: value.stats, concept: value.concept ?? CONCEPTS[0].id });
   };
 
   const rival = rivalFor(career);
@@ -44,7 +44,7 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
       <div key={o.id}>
         <button
           disabled={disabled}
-          onClick={() => onChange({ id: o.id, stat: value.stat ?? STAT_KEYS[0], concept: value.concept ?? CONCEPTS[0].id })}
+          onClick={() => onChange({ id: o.id, stat: value.stat ?? STAT_KEYS[0], stats: value.stats, concept: value.concept ?? CONCEPTS[0].id })}
           className={cn(
             "press w-full text-left rounded-2xl border-2 p-4 transition-colors",
             selected ? "border-primary bg-primary-soft/50" : "border-transparent bg-sub",
@@ -61,15 +61,31 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
             <p className="text-[13px] font-bold text-warn mt-1.5 flex gap-1"><Icon name="alert" size={16} className="shrink-0 mt-px" /><span>이번 시즌 {rival.name}도 컴백해요. 초동과 차트를 나눠 가져요</span></p>
           )}
         </button>
-        {selected && o.picker === "stat" && (
-          <div className="flex flex-wrap gap-1.5 mt-2 px-1">
-            {STAT_KEYS.map((k) => (
-              <button key={k} onClick={() => onChange({ ...value, stat: k })} className={cn("press h-9 px-3 rounded-full text-[13px] font-bold", value.stat === k ? "bg-ink text-bg" : "bg-chip text-ink-2")}>
-                {STAT_NAMES[k]}
-              </button>
-            ))}
-          </div>
-        )}
+        {selected && o.picker === "stats" && (() => {
+          // 고른 능력만 오른다: 1~3개, 적게 고를수록 한 능력이 빨리 자란다
+          const picks = value.stats?.length ? value.stats : defaultTrainPicks(career.position);
+          const toggle = (k: string) => {
+            const next = picks.includes(k) ? picks.filter((x) => x !== k) : picks.length < TRAIN_MAX ? [...picks, k] : picks;
+            if (next.length) onChange({ ...value, stats: next });
+          };
+          return (
+            <div className="mt-2 mb-3 rounded-2xl border border-primary/40 bg-primary-soft/20 p-3">
+              <p className="text-[13px] font-bold text-primary px-1">집중할 능력 {picks.length}/{TRAIN_MAX}</p>
+              <div className="grid grid-cols-3 gap-1.5 mt-2">
+                {STAT_KEYS.map((k) => {
+                  const on = picks.includes(k);
+                  const full = !on && picks.length >= TRAIN_MAX;
+                  return (
+                    <button key={k} aria-pressed={on} disabled={full} onClick={() => toggle(k)} className={cn("press h-12 rounded-xl text-[13px] font-bold tabular-nums", on ? "bg-ink text-bg" : "bg-chip text-ink-2", full && "opacity-45")}>
+                      {STAT_NAMES[k]} {career.stats[k]}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-[13px] text-ink-3 mt-2 px-1">{picks.length === 1 ? "한 능력에 몰아서 가장 빨리 키워요." : picks.length === 2 ? `두 능력을 각각 ${Math.round((TRAIN_AMOUNT[2] / TRAIN_AMOUNT[1]) * 100)}% 속도로 키워요.` : `세 능력을 각각 ${Math.round((TRAIN_AMOUNT[3] / TRAIN_AMOUNT[1]) * 100)}% 속도로 키워요.`} 고르지 않은 능력은 오르지 않고 가끔 조금 떨어져요.</p>
+            </div>
+          );
+        })()}
         {selected && o.picker === "concept" && (
           <div className="mt-2 mb-3 rounded-2xl border border-primary/40 bg-primary-soft/20 p-3">
             <p className="text-[13px] font-bold text-primary px-1">컴백 설정</p>
@@ -145,7 +161,7 @@ export function FocusCard({ career, value, onChange }: { career: Career; value: 
 }
 
 export function focusIdOf(v: FocusSelection): string {
-  if (v.id === "train") return `train:${v.stat ?? "vocal"}`;
+  if (v.id === "train") return v.stats?.length ? `train:${v.stats.join("+")}` : "train";
   if (v.id === "comeback") return `comeback:${v.concept ?? "fresh"}:${v.producer ?? "inhouse"}:${v.promo ?? "balanced"}:${v.customName && v.albumName?.trim() ? encodeURIComponent(v.albumName.trim()) : ""}`;
   return v.id;
 }
