@@ -153,6 +153,15 @@ export const INCIDENT_IDS = ["live-controversy", "chartfraud", "hate", "dating",
 export const INCIDENT_COOLDOWN = 4; // 같은 사건은 4시즌 뒤에나 (반복 가능한 사건만)
 export const INCIDENT_GLOBAL_GAP = 1; // 사건 직후 다음 시즌은 조용하다
 export function incidentChance(c: Career): number {
-  if (c.stage !== "idol") return 0.06;
-  return clamp(0.17 + c.popularity / 400 + (c.loyalty < 30 ? 0.04 : 0), 0.12, 0.38);
+  if (c.stage !== "idol") return 0.04;
+  // 팀 케미가 낮을수록 사고가 잦다 (케미 50 이하부터 최대 +8%)
+  const team = c.flags.solo ? 0 : Math.max(0, 50 - (c.chemistry ?? 60)) / 625;
+  return clamp(0.08 + c.popularity / 600 + (c.loyalty < 30 ? 0.03 : 0) + team, 0.06, 0.28);
+}
+
+/** 사건 고르기 가중치: 팀 케미가 낮을수록 멤버 음주운전·학교폭력이 잘 터지고, 높으면 드물다 */
+export function incidentWeight(c: Career, id: string): number {
+  if (c.flags.solo || (id !== "member-dui" && id !== "member-bullying")) return 1;
+  const chem = c.chemistry ?? 60;
+  return chem < 30 ? 3 : chem < 45 ? 1.8 : chem >= 80 ? 0.35 : chem >= 65 ? 0.6 : 1;
 }

@@ -4,7 +4,8 @@ import { AGENCIES, agencyById, auditionChance, tierRank } from "./agencies.ts";
 import { ageOf, isSecondHalf } from "./format.ts";
 import { renewalEvent } from "./renewal.ts";
 import { cutChance, debutCutEvent, makeLineup, rivalOfferEvent } from "./debut.ts";
-import { INCIDENT_IDS, INCIDENT_COOLDOWN, INCIDENT_GLOBAL_GAP, incidentChance } from "./metrics-model.ts";
+import { INCIDENT_IDS, INCIDENT_COOLDOWN, INCIDENT_GLOBAL_GAP, incidentChance, incidentWeight } from "./metrics-model.ts";
+import { inCooldown } from "./focus.ts";
 import { overall } from "./stats.ts";
 import { rng } from "./rng.ts";
 
@@ -105,7 +106,7 @@ export function scheduleEvent(c: Career, opts: { reservedOnly?: boolean } = {}):
 
   if (opts.reservedOnly) {
     // 시상식 시즌에 터질 돌발 사건은 다음 시즌 첫 이벤트로 미룬다 (빈도는 그대로, 한 시즌에 몰리지 않게)
-    if (c.stage === "idol" && c.turn - (c.flags.lastIncident ?? -99) > INCIDENT_GLOBAL_GAP && rng(c) < incidentChance(c)) c.flags.incidentOwed = 1;
+    if (c.stage === "idol" && !inCooldown(c) && c.turn - (c.flags.lastIncident ?? -99) > INCIDENT_GLOBAL_GAP && rng(c) < incidentChance(c)) c.flags.incidentOwed = 1;
     return null;
   }
 
@@ -116,9 +117,10 @@ export function scheduleEvent(c: Career, opts: { reservedOnly?: boolean } = {}):
   }
 
   // 2-1. 돌발 사건: 인기가 높을수록 자주, 같은 사건은 3시즌 쿨다운, 사건 직후 시즌은 조용
-  const owed = !!c.flags.incidentOwed;
+  // 자숙 중에는 새 사건이 겹쳐 터지지 않는다
+  const owed = !!c.flags.incidentOwed && !inCooldown(c);
   delete c.flags.incidentOwed;
-  if (owed || (c.turn - (c.flags.lastIncident ?? -99) > INCIDENT_GLOBAL_GAP && rng(c) < incidentChance(c))) {
+  if (owed || (!inCooldown(c) && c.turn - (c.flags.lastIncident ?? -99) > INCIDENT_GLOBAL_GAP && rng(c) < incidentChance(c))) {
     const pool = INCIDENT_IDS.filter((id) => {
       const def = eventById(id);
       if (!def || !stageMatches(def, c)) return false;
@@ -127,7 +129,18 @@ export function scheduleEvent(c: Career, opts: { reservedOnly?: boolean } = {}):
       if (seenAt === undefined) return true;
       return !!def.repeatable && c.turn - seenAt >= INCIDENT_COOLDOWN; // 한 번뿐인 사건은 다시 안 온다
     });
-    if (pool.length) return take(c, pool[Math.floor(rng(c) * pool.length)]);
+    if (pool.length) {
+      const total = pool.reduce((s, id) => s + incidentWeight(c, id), 0);
+      let r = rng(c) * total;
+      for (const id of pool) { r -= incidentWeight(c, id); if (r <= 0) return take(c, id); }
+      return take(c, pool[pool.length - 1]);
+    }
+  }
+
+  // 2-2. 팬덤 결속·평판이 극단이면 그에 맞는 일이 생긴다 (같은 일은 2년에 한 번)
+  for (const [id, p] of [["fandom-unrest", 0.4], ["fandom-support", 0.2], ["rep-backlash", 0.4], ["rep-praise", 0.2]] as const) {
+    const def = eventById(id);
+    if (def && eligible(def, c) && rng(c) < p) return take(c, id);
   }
 
   // 3. 숨은 이벤트 · 스카우트
@@ -150,7 +163,8 @@ export function scheduleEvent(c: Career, opts: { reservedOnly?: boolean } = {}):
 
   // 4. 이야기
   if (rng(c) >= STORY_CHANCE) return null;
-  const pool = EVENTS.filter((e) => e.kind === "story" && eligible(e, c));
+  // 사건은 위의 사건 굴림으로만 온다. 자숙 중에는 공개 활동 제안(광고·예능·투어 등)이 오지 않는다
+  const pool = EVENTS.filter((e) => e.kind === "story" && !INCIDENT_IDS.includes(e.id) && !(inCooldown(c) && e.public) && eligible(e, c));
   if (!pool.length) return null;
   const total = pool.reduce((s, e) => s + (e.weight ?? 1), 0);
   let r = rng(c) * total;

@@ -25,41 +25,90 @@ function idol(seed = 5): Career {
 const give = (c: Career, id: string): Career => ({ ...structuredClone(c), pending: activate(eventById(id)!) });
 
 // ───────── 1. 자숙 ─────────
-test("논란 뒤 두 시즌 자숙: 공개 활동은 대부분 역효과, 휴식·팬미팅은 자숙을 앞당긴다", () => {
+test("논란이 터지면 1년 자숙: 공개 활동이 막히고, 그 해 연말 시상식에 초청받지 않는다", () => {
   const dui = give(idol(3), "member-dui");
   const after = resolveChoice(dui, "remove");
   assert.equal(after.flags.scandalCooldown, dui.turn + 2);
+  assert.ok(after.result?.notes.some((x) => x.includes("1년 동안 자숙")));
 
   const calm = idol(3);
   calm.lastReleaseTurn = 15;
   calm.flags.scandalCooldown = calm.turn + 2;
   const opts = focusOptions(calm);
-  assert.ok(opts.find((o) => o.id === "comeback")!.hint.startsWith("⚠ 논란 직후 · 역효과 80%"));
-  assert.ok(opts.find((o) => o.id === "overseas")!.hint.startsWith("⚠ 논란 직후"));
-  assert.ok(!opts.find((o) => o.id === "fanmeet")!.hint.includes("역효과"));
-  assert.ok(!opts.find((o) => o.id === "rest")!.hint.includes("역효과"));
-  assert.equal(opts.find((o) => o.id === "comeback")!.disabledReason, undefined);
+  for (const id of ["comeback", "overseas"]) assert.match(opts.find((o) => o.id === id)!.disabledReason ?? "", /자숙 중/, id);
+  assert.equal(opts.find((o) => o.id === "fanmeet")!.disabledReason, undefined, "팬 소통은 할 수 있다");
+  assert.equal(opts.find((o) => o.id === "rest")!.disabledReason, undefined);
+  assert.throws(() => advanceTurn(calm, "comeback:fresh"), /자숙 중/);
+  assert.throws(() => advanceTurn(calm, "overseas"), /자숙 중/);
   delete calm.flags.scandalCooldown;
-  assert.ok(!focusOptions(calm).find((o) => o.id === "comeback")!.hint.includes("역효과"));
+  assert.equal(focusOptions(calm).find((o) => o.id === "comeback")!.disabledReason, undefined);
 
-  let backlash = 0, reversal = 0;
-  const N = 200;
-  for (let i = 1; i <= N; i++) {
-    const c = idol(3);
-    c.rngState = i * 977;
-    c.turn = 21; c.lastReleaseTurn = 15; c.flags.scandalCooldown = 23; c.flags.lastIncident = 21;
-    const n = advanceTurn(c, "overseas");
-    if (n.result?.notes.some((x) => x.includes("강행"))) backlash++;
-    if (n.result?.notes.some((x) => x.includes("정면 돌파"))) { reversal++; assert.equal(n.flags.scandalCooldown, undefined); }
+  // 상반기에 터진 논란도 그 해 연말 시상식을 막는다 (예전엔 자숙이 연말 결산 직전에 끝나 초청이 왔다)
+  for (const scandalTurn of [20, 21]) {
+    let c = idol(5);
+    c.turn = scandalTurn; c.popularity = 75; c.fans = 2000000; c.contractEnd = 40;
+    c.albums.push({ id: "y", turn: 20, name: "Y", concept: "fresh", quality: 80, sales: 500000, melon: 3, billboard: null, wins: 3, shows: [], cost: 10, revenue: 50 });
+    c.lastReleaseTurn = 20;
+    c = resolveChoice(give(c, "member-dui"), "remove");
+    c.pending = null; c.result = null;
+    while (c.turn < 22) { c = advanceTurn(c, c.turn % 2 === 0 ? "fanmeet" : "rest"); while (c.pending && c.pending.id !== "ceremony") c = resolveChoice(c, c.pending.choices[0].id); c.result = null; }
+    assert.equal(c.ceremony ?? null, null, `${scandalTurn}턴 논란 → 연말 시상식 없음`);
+    assert.ok(c.lastResult?.notes.some((x) => x.includes("자숙 중이라")), `${scandalTurn}: ${c.lastResult?.notes.join(" / ")}`);
   }
-  assert.equal(backlash + reversal, N);
-  assert.ok(backlash / N > 0.7 && backlash / N < 0.9, `역효과 ${backlash}/${N}`);
+});
 
-  const quiet = idol(3);
-  quiet.flags.scandalCooldown = quiet.turn + 2;
-  const rested = advanceTurn(quiet, "fanmeet");
-  assert.equal(rested.flags.scandalCooldown, quiet.turn + 1, "팬미팅은 자숙을 한 시즌 앞당긴다");
-  assert.ok(!rested.result?.notes.some((x) => x.includes("강행")));
+test("음주운전 멤버를 탈퇴시키면 팀 인원과 장면 속 멤버가 한 명 줄어든다", () => {
+  const c = idol(3);
+  c.lineup = { members: 4, leader: true, center: false, maknae: false, parts: ["메인보컬"], memberAvatars: [10, 9, 7] };
+  const removed = resolveChoice(give(c, "member-dui"), "remove");
+  assert.equal(removed.lineup!.members, 3);
+  assert.equal(removed.lineup!.memberAvatars!.length, 2);
+  const paused = resolveChoice(give(c, "member-dui"), "pause");
+  assert.equal(paused.lineup!.members, 4, "활동 중단만이면 팀은 그대로");
+});
+
+test("논란은 덜 잦고, 팀 케미가 낮을수록 멤버 음주운전·학폭이 잘 터진다", async () => {
+  const { incidentChance, incidentWeight } = await import("../lib/game/metrics-model.ts");
+  const c = idol(3);
+  c.popularity = 60; c.loyalty = 60; c.chemistry = 60;
+  assert.ok(incidentChance(c) < 0.2, `보통 인기 ${incidentChance(c)}`);
+  c.popularity = 100;
+  assert.ok(incidentChance(c) <= 0.28, "최상위 스타도 시즌당 28% 이하");
+  const low = structuredClone(c); low.chemistry = 20;
+  assert.ok(incidentChance(low) > incidentChance(c), "케미가 낮으면 사고가 잦다");
+  assert.equal(incidentWeight(low, "member-dui"), 3);
+  assert.equal(incidentWeight(low, "injury"), 1);
+  const tight = structuredClone(c); tight.chemistry = 85;
+  assert.ok(incidentWeight(tight, "member-bullying") < 0.5);
+  // 자숙 중에는 새 사건도, 공개 활동 제안(광고·예능 등)도 오지 않는다
+  const quiet = idol(4); quiet.flags.scandalCooldown = quiet.turn + 3;
+  for (let i = 0; i < 30; i++) {
+    const n = advanceTurn({ ...structuredClone(quiet), rngState: i * 7919 + 1 }, "rest");
+    if (n.pending) assert.ok(!eventById(n.pending.id)?.public || ["fandom-unrest", "rep-backlash"].includes(n.pending.id), n.pending.id);
+  }
+});
+
+test("팬덤 결속·평판이 극단이면 버프·디버프 이벤트가 온다", () => {
+  const unrest = eventById("fandom-unrest")!, support = eventById("fandom-support")!, backlash = eventById("rep-backlash")!, praise = eventById("rep-praise")!;
+  const c = idol(6);
+  c.loyalty = 25; assert.equal(unrest.when!(c), true); assert.equal(support.when!(c), false);
+  c.loyalty = 85; assert.equal(support.when!(c), true); assert.equal(unrest.when!(c), false);
+  c.reputation = -30; assert.equal(backlash.when!(c), true); assert.equal(praise.when!(c), false);
+  c.reputation = 70; assert.equal(praise.when!(c), true);
+  // 버프는 결속·평판을 더 올리고, 디버프를 잘 넘기면 회복된다
+  const base = idol(6); base.loyalty = 85; base.reputation = 70;
+  assert.ok(resolveChoice(give(base, "fandom-support"), "video").loyalty > base.loyalty);
+  assert.ok(resolveChoice(give(base, "rep-praise"), "campaign").popularity > base.popularity);
+  const low = idol(6); low.loyalty = 20; low.reputation = -30;
+  assert.ok(resolveChoice(give(low, "fandom-unrest"), "letter").loyalty >= low.loyalty + 10);
+  assert.ok(resolveChoice(give(low, "rep-backlash"), "settle").reputation > low.reputation);
+  // 결속이 낮은 상태로 시즌을 보내면 언젠가 성명문이 온다
+  let seen = false;
+  for (let i = 0; i < 20 && !seen; i++) {
+    const n = advanceTurn({ ...structuredClone(low), rngState: i * 104729 + 3, lastReleaseTurn: low.turn }, "rest"); // 팬미팅은 결속을 올려서 조건을 벗어난다
+    seen = n.pending?.id === "fandom-unrest";
+  }
+  assert.ok(seen, "결속이 낮으면 팬덤 성명문 이벤트가 온다");
 });
 
 // ───────── 2. 열애설 · 악플 ─────────

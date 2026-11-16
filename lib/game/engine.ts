@@ -9,7 +9,7 @@ import { actName, ageOf, ageText, conditionOf, displayName, eraScale, fanText, i
 const hasBatchim = (w: string) => { const ch = w.charCodeAt(w.length - 1); return ch >= 0xac00 && ch <= 0xd7a3 && (ch - 0xac00) % 28 !== 0; };
 import { rng, between, pick } from "./rng.ts";
 import { applyEffects, addReputation, diff, log, snapshot, type Snapshot } from "./effects.ts";
-import { CONCEPTS, DANGER_LOCK, MAIN_STAT, TRAIN_AMOUNT, trainPicks, inCooldown, isPublicFocus, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
+import { CONCEPTS, COOLDOWN_LOCK, DANGER_LOCK, MAIN_STAT, SCANDAL_COOLDOWN_TURNS, SCANDAL_IDS, TRAIN_AMOUNT, cooldownCovers, trainPicks, inCooldown, isPublicFocus, focusLabel, lowestStat, soloChance, soloStat, SOLO_LABELS, SOLO_UNLOCK_TURNS, type SoloKind } from "./focus.ts";
 import { makeAlbum, albumSummary, addShowWin, ALBUM_NAME_PATTERN, DEFAULT_PRODUCTION } from "./album.ts";
 import { MUSIC_SHOWS, winChance, addBuzz, BUZZ_DECAY, INCIDENT_IDS } from "./metrics-model.ts";
 import { PRODUCERS, PROMOS } from "./focus.ts";
@@ -93,7 +93,7 @@ function popularityTarget(c: Career): number {
 }
 
 /** 결과 장면에서 웃지 않는 사건들: 논란·사고·건강·불화·탈락·폐업 */
-const TROUBLE_EVENTS = ["member-bullying", "dating", "member-dui", "live-controversy", "chartfraud", "hate", "hiatus-health", "injury", "feud", "debut-cut", "agency-bankrupt", "trainee-dismiss", "warning", "agency-closed", "member-leave"];
+const TROUBLE_EVENTS = ["fandom-unrest", "rep-backlash", "member-bullying", "dating", "member-dui", "live-controversy", "chartfraud", "hate", "hiatus-health", "injury", "feud", "debut-cut", "agency-bankrupt", "trainee-dismiss", "warning", "agency-closed", "member-leave"];
 
 function buildResult(c: Career, before: Snapshot, headline: string, text: string, tone: Tone, opts: { scene?: string; notes?: string[]; comments?: Comment[]; milestones?: MilestoneId[]; awards?: Award[]; celebrate?: TurnResult["celebrate"]; spotlight?: TurnResult["spotlight"]; mood?: TurnResult["mood"] } = {}): TurnResult {
   const after = snapshot(c);
@@ -192,6 +192,7 @@ export function advanceTurn(original: Career, focusId: string): Career {
   if (production.promo === "global" && c.popularity < 55) throw new GameError("해외 집중 프로모션은 인기도 55 이상부터예요.");
   const albumName = nameParts.length ? decodeURIComponent(nameParts.join(":")) : "";
   if (albumName && !ALBUM_NAME_PATTERN.test(albumName)) throw new GameError("앨범 이름은 1~20자로 입력해주세요.");
+  if (c.stage === "idol" && inCooldown(c) && isPublicFocus(kind)) throw new GameError(COOLDOWN_LOCK + ".");
   let headline = focusLabel(kind === "train" && !arg ? "train:all" : focusId);
   let text = "";
   const period = periodLabel(c);
@@ -344,27 +345,6 @@ export function advanceTurn(original: Career, focusId: string): Career {
       const used: StatKey[] = kind === "comeback" ? [...concept, MAIN_STAT[c.position]] : kind === "promo" ? ["variety", "visual"] : kind === "fanmeet" ? ["variety"] : kind === "overseas" ? ["dance", "vocal"] : kind === "solo" ? [soloStat(c, arg as SoloKind)] : STAT_KEYS;
       applyRust(c, used, RUST_CHANCE_IDOL);
     }
-
-    // ── 자숙 기간: 논란이 가라앉기 전에 공개 활동을 하면 여론이 돌아선다 ──
-    if (inCooldown({ flags: c.flags, turn: c.turn })) {
-      if (isPublicFocus(kind)) {
-        if (rng(c) < 0.8) {
-          c.popularity = Math.max(0, c.popularity - 6);
-          c.loyalty = Math.max(0, c.loyalty - 8);
-          addReputation(c, -5);
-          c.buzz = Math.max(0, (c.buzz ?? 0) - 10);
-          notes.push("논란이 가라앉기 전에 활동을 강행했어요. 여론이 더 나빠졌어요.");
-          tone = "bad";
-        } else {
-          addBuzz(c, 25);
-          addReputation(c, 6);
-          notes.push("정면 돌파가 통했어요. 여론이 돌아섰어요.");
-          delete c.flags.scandalCooldown;
-        }
-      } else if (kind === "rest" || kind === "fanmeet") {
-        c.flags.scandalCooldown = (c.flags.scandalCooldown ?? 0) - 1; // 조용히 지내면 자숙이 한 시즌 더 빨리 끝난다
-      }
-    }
   }
 
   // ── 시간이 흐른다 ──
@@ -441,14 +421,14 @@ export function advanceTurn(original: Career, focusId: string): Career {
     const won = yearEndAwards(c, year, [c.turn - 2, c.turn - 1]);
     const releasedThisYear = c.albums.some((a) => a.turn === c.turn - 2 || a.turn === c.turn - 1);
     // 음원·음반 활동이 있던 해만 초청된다. 논란 뒤 자숙 중이면 초청도 없다
-    if (releasedThisYear && !inCooldown(c)) {
+    if (releasedThisYear && !cooldownCovers(c)) {
       // 수상은 시상식에 참석해 호명될 때 확정된다. 초청장을 먼저 받는다
       const show = won[0]?.show ?? (c.popularity >= 60 ? "MAMA" : c.popularity >= 45 ? "MMA" : "골든디스크");
       const stages = YEAR_END_STAGES.slice(0, c.popularity >= 70 ? 3 : c.popularity >= 55 ? 2 : 1);
       c.ceremony = { year, show, awards: won, stages };
       c.flags.ceremonyDue = c.turn;
       notes.push(`${year} 연말 시상식 초청장이 도착했어요.`);
-    } else notes.push(inCooldown(c) ? `${year} 연말 시상식: 자숙 중이라 참석하지 않았어요.` : `${year} 연말 시상식: 올해 낸 앨범이 없어 초청받지 못했어요.`);
+    } else notes.push(cooldownCovers(c) ? `${year} 연말 시상식: 자숙 중이라 참석하지 않았어요.` : `${year} 연말 시상식: 올해 낸 앨범이 없어 초청받지 못했어요.`);
   }
 
   // ── 데뷔 평가 ──
@@ -729,17 +709,19 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
   if (event.id === "dating") c.flags.datingCount = (c.flags.datingCount ?? 0) + 1;
   if (event.id === "hate") c.flags.hateCount = (c.flags.hateCount ?? 0) + 1;
   // 멤버가 탈퇴하면 팀이 실제로 줄어든다
-  if (event.id === "member-leave" && c.lineup) {
+  if ((event.id === "member-leave" || (event.id === "member-dui" && choice.id === "remove")) && c.lineup) {
     c.lineup.members = Math.max(2, c.lineup.members - 1);
     if (c.lineup.memberAvatars?.length) c.lineup.memberAvatars.pop();
   }
-  // 논란 뒤에는 두 시즌 자숙 기간: 이 동안 공개 활동은 역효과가 난다
+  // 논란이 터지면 1년 자숙: 공개 활동·연말 시상식이 막힌다. 의혹이 풀리면(확률 선택 성공) 자숙하지 않는다.
+  // 열애설은 인정했거나 대응이 실패했을 때만 자숙한다
   {
-    const incident = INCIDENT_IDS.includes(event.id);
-    const failedChance = choice.chance !== undefined && tone === "bad";
-    const badEffects = choice.chance === undefined && (choice.effects?.reputation ?? 0) <= -8;
-    if ((incident && (failedChance || badEffects || (event.id === "dating" && choice.id === "admit"))) || (op === "scandal" && (choice.chance === undefined || failedChance))) {
-      c.flags.scandalCooldown = c.turn + 2;
+    const scandal = SCANDAL_IDS.includes(event.id) || op === "scandal";
+    const cleared = choice.chance !== undefined && tone === "good";
+    const datingQuiet = event.id === "dating" && choice.id !== "admit" && choice.chance === undefined;
+    if (scandal && !cleared && !datingQuiet) {
+      c.flags.scandalCooldown = Math.max(c.flags.scandalCooldown ?? 0, c.turn + SCANDAL_COOLDOWN_TURNS);
+      notes.push(`1년 동안 자숙해요. 컴백·방송·해외·개인 활동을 할 수 없고, 올해 연말 시상식에도 나가지 않아요.`);
     }
   }
 

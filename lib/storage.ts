@@ -3,6 +3,7 @@ import { GameError } from "./game/types.ts";
 import { scoreOf } from "./game/endings.ts";
 import { overall } from "./game/stats.ts";
 import { FEMALE_AVATARS, LEGACY_AVATAR, MALE_AVATARS } from "./art/index.ts";
+import { cooldownCovers } from "./game/focus.ts";
 
 export const KEYS = { career: "encore2:career", records: "encore2:records", settings: "encore2:settings" } as const;
 
@@ -76,6 +77,12 @@ export function parseCareer(text: string): Career {
       used.add(pick);
       return pick;
     });
+  }
+  // 예전 규칙에서는 상반기 논란의 자숙이 연말 결산 직전에 끝나 시상식 초청이 왔다: 자숙에 걸린 시상식은 취소한다
+  const pending = c.pending as { id?: string } | null | undefined;
+  if (pending?.id === "ceremony" && cooldownCovers(c as unknown as Career)) {
+    c.pending = null;
+    c.ceremony = null;
   }
   // 예전 솔로 전향은 그룹명을 내 이름으로 덮어썼다: 데뷔 기록에서 되찾는다
   if (c.groupName === c.name && Array.isArray(c.history)) {

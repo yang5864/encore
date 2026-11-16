@@ -100,7 +100,9 @@ test("이야기 이벤트는 커리어당 한 번, repeatable만 4턴 뒤 재등
   c.schoolId = "general";
   const seenTurns: Record<string, number[]> = {};
   for (let i = 0; i < 40 && c.stage !== "retired"; i++) {
-    c = advanceTurn(c, conditionOf(c).level === "danger" ? "rest" : c.stage === "idol" ? (c.lastReleaseTurn === c.turn || i % 2 ? "promo" : "comeback:fresh") : "train:all");
+    // 논란 뒤 자숙 중에는 공개 활동이 막혀서 팬 소통을 고른다
+    const quiet = c.stage === "idol" && (c.flags.scandalCooldown ?? 0) > c.turn;
+    c = advanceTurn(c, conditionOf(c).level === "danger" ? "rest" : quiet ? "fanmeet" : c.stage === "idol" ? (c.lastReleaseTurn === c.turn || i % 2 ? "promo" : "comeback:fresh") : "train:all");
     if (c.pending) {
       const id = c.pending.id;
       (seenTurns[id] ??= []).push(c.turn);

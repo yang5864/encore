@@ -90,10 +90,16 @@ function lockWhenDanger(c: Career, options: FocusOption[]): FocusOption[] {
   return options.map((o) => (o.id === "rest" ? { ...o, disabledReason: undefined, hint: "컨디션이 위험해서 이번 시즌은 쉬어야 해요. 몸과 마음을 크게 회복해요" } : { ...o, disabledReason: DANGER_LOCK }));
 }
 
-/** 논란 직후 자숙 기간인지 (사건 후 2시즌). 이 동안 공개 활동은 역효과가 날 가능성이 높다. */
+/** 논란이 터지면 1년(2시즌) 자숙한다: 이 동안 공개 활동은 할 수 없다. 이 값은 자숙이 끝나는 턴 */
+export const SCANDAL_COOLDOWN_TURNS = 2;
+/** 논란으로 치는 사건: 결과가 해명(확률 성공)이 아니면 자숙이 시작된다 */
+export const SCANDAL_IDS = ["member-bullying", "member-dui", "live-controversy", "chartfraud", "dating"];
+/** 지금 자숙 중인지 */
 export const inCooldown = (c: Pick<Career, "flags" | "turn">) => (c.flags?.scandalCooldown ?? 0) > c.turn;
-export const COOLDOWN_HINT = "⚠ 논란 직후 · 역효과 80%";
-/** 자숙 중 역효과가 나는 공개 활동인지 (휴식·팬미팅·훈련은 제외) */
+/** 자숙이 이 턴까지 이어지는지 (연말 결산은 해가 바뀌는 턴에 보므로 끝나는 턴도 포함한다) */
+export const cooldownCovers = (c: Pick<Career, "flags" | "turn">) => (c.flags?.scandalCooldown ?? 0) >= c.turn;
+export const COOLDOWN_LOCK = "자숙 중이라 공개 활동을 할 수 없어요";
+/** 자숙 중 막히는 공개 활동 (휴식·팬 소통은 된다) */
 export const isPublicFocus = (focusId: string) => {
   const kind = focusId.split(":")[0];
   return kind === "comeback" || kind === "overseas" || kind === "solo" || kind === "promo";
@@ -102,7 +108,8 @@ export const isPublicFocus = (focusId: string) => {
 export function focusOptions(c: Career): FocusOption[] {
   let options = baseOptions(c);
   if (c.stage === "idol" && inCooldown(c)) {
-    options = options.map((o) => (isPublicFocus(o.id) ? { ...o, hint: `${COOLDOWN_HINT} · ${o.hint}` } : o));
+    const left = Math.max(1, (c.flags.scandalCooldown ?? 0) - c.turn);
+    options = options.map((o) => (isPublicFocus(o.id) ? { ...o, disabledReason: `${COOLDOWN_LOCK} (${left * 6}개월 남음)` } : o.id === "fanmeet" ? { ...o, hint: "자숙 중에도 할 수 있어요. 팬들에게 조용히 마음을 전해요" } : o));
   }
   return lockWhenDanger(c, options);
 }

@@ -37,3 +37,19 @@ test("기록은 점수순, 최대 50개", () => {
   assert.ok(list[0].score >= list[1].score);
   assert.equal(list[0].name, "n54");
 });
+
+test("예전 규칙으로 자숙 중에 받은 연말 시상식 초청은 불러올 때 취소된다", async () => {
+  const { parseCareer } = await import("../lib/storage.ts");
+  const { createCareer } = await import("../lib/game/create.ts");
+  const { DEFAULT_ALLOCATION } = await import("../lib/game/stats.ts");
+  const c = createCareer({ name: "하린", gender: "female", avatar: 8, position: "vocal", stats: DEFAULT_ALLOCATION.vocal }, 3);
+  Object.assign(c, { stage: "idol", turn: 22, debutTurn: 8 });
+  c.flags.scandalCooldown = 22; // 상반기(20턴) 논란 → 예전엔 22턴에 끝나 초청이 왔다
+  c.ceremony = { year: 2016, show: "MAMA", awards: [], stages: ["SBS 가요대전"], attended: true };
+  c.pending = { id: "ceremony", title: "", text: "", scene: "awards", choices: [{ id: "x", label: "", hint: "", risk: "safe" }] };
+  const loaded = parseCareer(JSON.stringify(c));
+  assert.equal(loaded.pending, null);
+  assert.equal(loaded.ceremony, null);
+  c.flags.scandalCooldown = 10; // 오래전 논란이면 그대로
+  assert.equal(parseCareer(JSON.stringify(c)).pending?.id, "ceremony");
+});
