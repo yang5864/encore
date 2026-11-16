@@ -41,6 +41,11 @@ export function kpiMet(c: Career, k: Kpi, since: number): boolean {
 }
 
 /** 회사 목표에 가장 잘 맞는 프로모션: 초동·팬은 음반, 멜론·음방은 음원, 빌보드는 해외 */
+/** 회사 목표와 같은 방향의 홍보 예산 배분: 초동은 화제성, 멜론·음방 1위는 음원 차트, 팬덤은 팬 콘텐츠, 빌보드는 해외 */
+export function kpiBudget(k: Pick<Kpi, "kind">): string {
+  return k.kind === "sales" ? "buzz" : k.kind === "melon" || k.kind === "wins" ? "chart" : k.kind === "fans" ? "fandom" : "global";
+}
+
 export function kpiPromo(k: Pick<Kpi, "kind">): Promo {
   return k.kind === "sales" || k.kind === "fans" ? "physical" : k.kind === "billboard" ? "global" : "digital";
 }

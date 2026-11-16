@@ -49,6 +49,8 @@ export type ChoiceDef = {
   op?: string;
   /** opens the contract sheet with signature before resolving */
   sign?: boolean;
+  /** 회사 목표와 맞는 선택지: 강조하고 "추천" 문구를 붙인다 */
+  recommended?: boolean;
 };
 
 export type EventKind = "story" | "scheduled" | "state" | "hidden";

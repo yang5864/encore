@@ -14,6 +14,7 @@ import { AwardShow } from "./AwardShow";
 import { ArtsAudition } from "./ArtsAudition";
 import { suggestAlbumName } from "@/lib/game/album";
 import { artGroupFor, SAD_EVENTS } from "@/lib/game/format";
+import { kpiBudget } from "@/lib/game/kpi";
 
 type Props = {
   career: Career;
@@ -85,12 +86,14 @@ export function EventSheet({ career, open, onChoose }: Props) {
             {event.choices.map((ch, i) => {
               const locked = choiceLock(career, ch);
               const active = selected === ch.id;
+              // 회사 목표와 맞는 선택지. 이전 버전에서 만들어진 예산 이벤트도 지금 목표로 계산해 표시한다
+              const recommended = !locked && (ch.recommended || (event.id === "budget" && !!career.kpi && kpiBudget(career.kpi) === ch.id));
               return (
                 <button
                   key={ch.id}
                   disabled={!!locked}
                   onClick={() => setSelected(ch.id)}
-                  className={cn("press fade-in w-full text-left rounded-2xl border-2 p-4", active ? "border-primary bg-primary-soft/50" : "border-transparent bg-sub", locked && "opacity-45")}
+                  className={cn("press fade-in w-full text-left rounded-2xl border-2 p-4", active ? "border-primary bg-primary-soft/50" : recommended ? "border-transparent bg-primary-soft ring-2 ring-primary" : "border-transparent bg-sub", locked && "opacity-45")}
                   style={{ animationDelay: `${i * 60}ms` }}
                 >
                   <div className="flex items-center justify-between gap-2">
@@ -101,6 +104,7 @@ export function EventSheet({ career, open, onChoose }: Props) {
                     </div>
                   </div>
                   <p className="text-[13px] text-ink-2 mt-1">{locked ?? ch.hint}</p>
+                  {recommended && <p className="text-[13px] font-bold text-primary mt-1.5">회사 목표와 맞아 추천해요</p>}
                   {ch.op === "debut" && career.lineup && (
                     <div className="flex flex-wrap gap-1.5 mt-3">
                       {[`${career.lineup.members}인조`, ...lineupRoles(career.lineup)].map((r) => (

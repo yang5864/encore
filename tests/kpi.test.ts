@@ -32,3 +32,13 @@ test("KPI: 연속 두 번 미달하면 페널티 안내가 나온다", () => {
   assert.equal(missTwice.flags.kpiMissStreak, 2);
   assert.ok(notesOf(missTwice).includes(STREAK_NOTE));
 });
+
+test("홍보 예산 배분: 회사 목표와 맞는 전략 하나만 추천으로 표시한다", async () => {
+  const { kpiBudget } = await import("../lib/game/kpi.ts");
+  const { BUDGET_PRESETS } = await import("../lib/game/team.ts");
+  const ids = BUDGET_PRESETS.map((p) => p.id);
+  for (const kind of ["sales", "melon", "wins", "fans", "billboard"] as const) assert.ok(ids.includes(kpiBudget({ kind })), kind);
+  assert.equal(kpiBudget({ kind: "wins" }), "chart");
+  assert.equal(kpiBudget({ kind: "fans" }), "fandom");
+  assert.equal(kpiBudget({ kind: "billboard" }), "global");
+});

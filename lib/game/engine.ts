@@ -13,7 +13,7 @@ import { CONCEPTS, DANGER_LOCK, MAIN_STAT, TRAIN_AMOUNT, trainPicks, inCooldown,
 import { makeAlbum, albumSummary, addShowWin, ALBUM_NAME_PATTERN, DEFAULT_PRODUCTION } from "./album.ts";
 import { MUSIC_SHOWS, winChance, addBuzz, BUZZ_DECAY, INCIDENT_IDS } from "./metrics-model.ts";
 import { PRODUCERS, PROMOS } from "./focus.ts";
-import { makeKpi, kpiMet } from "./kpi.ts";
+import { makeKpi, kpiBudget, kpiMet } from "./kpi.ts";
 import { BUDGET_PRESETS, budgetOf, rivalFor } from "./team.ts";
 import type { Production } from "./types.ts";
 import type { Award } from "./types.ts";
@@ -646,7 +646,7 @@ function budgetEvent(c: Career): ActiveEvent {
     title: `${yearOf(c)}년 홍보 예산 배분`,
     text: `회사가 올해 홍보 예산 ${pool}억원을 배정했어요. 어디에 집중할지 정해요. 회사 목표${c.kpi ? `(${c.kpi.label})` : ""}와 맞추면 좋아요.`,
     scene: "contract",
-    choices: BUDGET_PRESETS.map((p) => ({ id: p.id, label: p.name, hint: p.hint, risk: "safe" as const, op: `budget:${p.id}` })),
+    choices: BUDGET_PRESETS.map((p) => ({ id: p.id, label: p.name, hint: p.hint, risk: "safe" as const, op: `budget:${p.id}`, recommended: !!c.kpi && kpiBudget(c.kpi) === p.id })),
   };
 }
 
