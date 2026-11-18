@@ -1194,12 +1194,10 @@ export function applyToAgency(original: Career, agencyId: string): Career {
   if (last !== undefined && c.turn - last < 2) throw new GameError("같은 회사에는 1년 뒤 다시 지원할 수 있어요.");
   const gate = applyGate(c, agencyId);
   if (gate) throw new GameError(`${a.name}: ${gate}.`);
-  if (a.tier === "major" && c.flags.majorApplyTurn === c.turn) throw new GameError("대형 기획사 공개 오디션은 시즌에 한 곳만 볼 수 있어요.");
   if (appliedThisSeason(c) >= APPLY_PER_SEASON) throw new GameError(`기획사 지원은 시즌마다 ${APPLY_PER_SEASON}곳까지예요. 다음 시즌에 다시 지원해주세요.`);
   c.result = null;
   const before = snapshot(c);
   c.flags[`apply:${agencyId}`] = c.turn;
-  if (a.tier === "major") c.flags.majorApplyTurn = c.turn;
   c.flags.appliedCount = appliedThisSeason(c) + 1;
   c.flags.appliedTurn = c.turn;
   const p = auditionChance(c, agencyId);

@@ -26,7 +26,7 @@ export function AgencySheet({ career, open, onClose, onApply }: { career: Career
           </button>
         ))}
       </div>
-      <p className="t-cap mt-3">{TIERS[tier].description}{TIER_GATE[tier] ? ` · 지원 자격 OVR ${TIER_GATE[tier]}${tier === "major" ? " · 시즌에 한 곳만" : ""}` : " · 지원 자격 없음"}</p>
+      <p className="t-cap mt-3">{TIERS[tier].description}{TIER_GATE[tier] ? ` · 지원 자격 OVR ${TIER_GATE[tier]}` : " · 지원 자격 없음"}</p>
       <div className="flex flex-col gap-2 mt-3">
         {AGENCIES.filter((a) => a.tier === tier).map((a, i) => {
           const p = auditionChance(career, a.id);
@@ -34,7 +34,6 @@ export function AgencySheet({ career, open, onClose, onApply }: { career: Career
           const cooldown = career.flags[`apply:${a.id}`] !== undefined && career.turn - career.flags[`apply:${a.id}`] < 2;
           const mine = career.agencyId === a.id;
           const gate = applyGate(career, a.id);
-          const majorUsed = a.tier === "major" && career.flags.majorApplyTurn === career.turn && !appliedNow(a.id);
           return (
             <div key={a.id} className="fade-up rounded-2xl bg-sub p-4 flex items-center gap-3" style={{ animationDelay: `${i * 50}ms` }}>
               <Logo id={a.logo} label={a.name} color={a.color} size={44} />
@@ -44,11 +43,11 @@ export function AgencySheet({ career, open, onClose, onApply }: { career: Career
                 {!locked && !mine && (gate ? <Chip tone="neutral" className="mt-1.5 h-6 px-2 text-[13px]">{gate}</Chip> : <Chip tone={TONE[label]} className="mt-1.5 h-6 px-2 text-[13px]">합격 가능성 {label}</Chip>)}
               </div>
               <button
-                disabled={locked || mine || cooldown || usedThisSeason || !!gate || majorUsed}
+                disabled={locked || mine || cooldown || usedThisSeason || !!gate}
                 onClick={() => onApply(a.id)}
                 className="press shrink-0 h-10 px-3.5 rounded-xl bg-primary text-white text-[13px] font-bold disabled:bg-chip disabled:text-ink-3"
               >
-                {mine ? "소속" : appliedNow(a.id) ? "지원 완료" : gate ? "자격 미달" : usedThisSeason || majorUsed ? "마감" : cooldown ? "대기" : "지원"}
+                {mine ? "소속" : appliedNow(a.id) ? "지원 완료" : gate ? "자격 미달" : usedThisSeason ? "마감" : cooldown ? "대기" : "지원"}
               </button>
             </div>
           );

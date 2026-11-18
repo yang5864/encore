@@ -96,7 +96,7 @@ test("예술고는 전공을 골라 실기 오디션에 붙어야 간다", () =>
   assert.equal(passed.pending, null);
 });
 
-test("대형 기획사는 OVR 58부터, 시즌에 한 곳만. 19살 하반기까지 무소속이면 반드시 계약한다", () => {
+test("대형 기획사는 OVR 58부터, 대형 포함 시즌에 세 곳까지. 19살 하반기까지 무소속이면 반드시 계약한다", () => {
   const c = createCareer(base, 12);
   assert.throws(() => applyToAgency(c, "hybe"), /OVR 58부터/);
   const good = structuredClone(c);
@@ -104,8 +104,12 @@ test("대형 기획사는 OVR 58부터, 시즌에 한 곳만. 19살 하반기까
   assert.ok(overall(good.stats, good.position) >= 58);
   let a = applyToAgency(good, "hybe");
   if (a.pending) a = resolveChoice(a, "decline");
-  assert.throws(() => applyToAgency(settle(a), "sm"), /시즌에 한 곳/);
-  assert.doesNotThrow(() => applyToAgency(settle(a), "starship"), "중견은 같은 시즌에 더 지원할 수 있다");
+  // 대형에 떨어져도 같은 시즌에 다른 대형·중견에 계속 지원할 수 있다 (세 곳까지)
+  let b = applyToAgency(settle(a), "sm");
+  if (b.pending) b = resolveChoice(b, "decline");
+  let d = applyToAgency(settle(b), "jyp");
+  if (d.pending) d = resolveChoice(d, "decline");
+  assert.throws(() => applyToAgency(settle(d), "starship"), /3곳까지/);
   // 무소속으로 버티면 19살 하반기(고3)에 마지막 오디션이 온다. 거절 선택지가 없다
   let free = createCareer(base, 13);
   free.schoolId = "general";
