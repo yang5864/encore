@@ -214,7 +214,7 @@ export default function PlayPage() {
           if (!career.pending && career.stage !== "idol" && appliedThisSeason(career) < APPLY_PER_SEASON) setAgencyOpen(true);
         }
       }} ctaLabel={career.pending ? "다음 선택 보기" : afterApply && !career.pending && career.stage !== "idol" && appliedThisSeason(career) < APPLY_PER_SEASON ? "다른 기획사 지원하기" : "확인"} />}
-      <EventSheet key={career.pending?.id ?? "none"} career={career} open={showEvent} onChoose={(id, extra) => { resultFromChoice.current = true; choose(id, extra); }} />
+      <EventSheet key={career.pending?.id ?? "none"} career={career} open={showEvent} error={error} onChoose={(id, extra) => { resultFromChoice.current = true; choose(id, extra); }} />
       <Sheet open={detail === "settlement"} onOpenChange={(o) => !o && setDetail(null)} title="정산 현황">
         <SettlementBody career={career} />
       </Sheet>

@@ -229,3 +229,18 @@ test("능력치는 항상 정수다", () => {
     for (const v of Object.values(c.stats)) assert.ok(Number.isInteger(v), `${JSON.stringify(c.stats)}`);
   }
 });
+
+test("그룹 이름: 실제 그룹명에 쓰는 기호는 되고, 안 되는 이름은 서명 전에 이유를 알려준다", async () => {
+  const { groupNameError } = await import("../lib/game/engine.ts");
+  for (const ok of ["엄...", "B.A.P", "f(x)", "&TEAM", "IZ*ONE", "NCT 127", "LUMINA", "엄지!"]) assert.equal(groupNameError(ok), null, ok);
+  assert.match(groupNameError("") ?? "", /입력/);
+  assert.match(groupNameError("😀엄지") ?? "", /이모지/);
+  assert.match(groupNameError("...") ?? "", /글자나 숫자/);
+  assert.match(groupNameError("가".repeat(21)) ?? "", /20자/);
+  const c = trainee(7);
+  c.turn = 7; c.lineup = { members: 5, leader: true, center: true, maknae: false, parts: ["메인댄서"], memberAvatars: [12, 14, 15, 16] };
+  c.pending = { id: "debut-offer", title: "", text: "", scene: "debut", choices: [{ id: "accept", label: "", hint: "", risk: "bold", op: "debut", sign: true }] };
+  const debuted = resolveChoice(c, "accept", { groupName: "엄..." });
+  assert.equal(debuted.stage, "idol");
+  assert.equal(debuted.groupName, "엄...");
+});

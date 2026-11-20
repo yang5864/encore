@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
 import { cn } from "@/lib/cn";
 import { lineupRoles } from "@/lib/game/debut";
-import { choiceLock } from "@/lib/game/engine";
+import { choiceLock, groupNameError } from "@/lib/game/engine";
 import { EventArt } from "@/components/EventArt";
 import type { Career, Signature } from "@/lib/game/types";
 import { ContractView } from "./ContractView";
@@ -19,10 +19,12 @@ import { kpiBudget } from "@/lib/game/kpi";
 type Props = {
   career: Career;
   open: boolean;
+  /** 선택을 처리하다 난 오류: 장면 안에 보여준다 (아래 진행 버튼 영역은 장면에 가려 보이지 않는다) */
+  error?: string | null;
   onChoose: (choiceId: string, extra?: { groupName?: string; signature?: Signature; albumName?: string; reaction?: string; score?: number }) => void;
 };
 
-export function EventSheet({ career, open, onChoose }: Props) {
+export function EventSheet({ career, open, error, onChoose }: Props) {
   const event = career.pending;
   const [selected, setSelected] = useState<string | null>(null);
   const [groupName, setGroupName] = useState("");
@@ -37,7 +39,8 @@ export function EventSheet({ career, open, onChoose }: Props) {
   const isAlbum = event.id === "debut-concept";
   const choice = event.choices.find((c) => c.id === selected) ?? null;
   const needsName = choice?.op === "debut" && !choice.sign;
-  const canSubmit = !!choice && (!needsName || groupName.trim().length > 0) && (!isAlbum || !customAlbum || albumName.trim().length > 0);
+  const nameError = needsName && groupName.trim() ? groupNameError(groupName) : null;
+  const canSubmit = !!choice && (!needsName || (groupName.trim().length > 0 && !nameError)) && (!isAlbum || !customAlbum || albumName.trim().length > 0);
   const declineChoice = event.choices.find((c) => c.op === "decline") ?? null;
 
   const submit = () => {
@@ -55,6 +58,7 @@ export function EventSheet({ career, open, onChoose }: Props) {
 
   return (
     <Sheet open={open} dismissible={false} variant="page" footer={contract && choice ? undefined : <Button disabled={!canSubmit} onClick={submit}>{choice ? (choice.sign ? "계약서 보기" : "이 선택으로 진행") : "선택지를 골라주세요"}</Button>}>
+      {error && <p className="mb-3 rounded-xl bg-danger-soft text-danger text-[13px] font-bold py-2.5 px-3" role="alert">{error}</p>}
       {contract && choice ? (
         <ContractView
           career={career}
@@ -127,6 +131,7 @@ export function EventSheet({ career, open, onChoose }: Props) {
             <div className="mt-4 fade-up">
               <label className="t-cap block mb-1.5" htmlFor="group-name">그룹 이름</label>
               <input id="group-name" value={groupName} onChange={(e) => setGroupName(e.target.value)} maxLength={20} placeholder="예: LUMINA" className="w-full h-14 rounded-2xl bg-chip px-4 text-[16px] font-bold outline-none focus:ring-2 focus:ring-primary" />
+              {nameError && <p className="text-[13px] font-bold text-danger mt-1.5" role="alert">{nameError}</p>}
             </div>
           )}
 

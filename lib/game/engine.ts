@@ -60,7 +60,17 @@ const SERVICE_PATHS: Record<number, { discharge: string }> = {
 };
 
 const DEBUT_FANS: Record<string, number> = { major: 350000, mid: 70000, indie: 5000, global: 50000 };
-export const GROUP_NAME_PATTERN = /^[\p{L}\p{N} _·!-]{1,20}$/u;
+/** 그룹 이름에 쓸 수 있는 글자: 글자·숫자·공백과 실제 그룹명에 쓰이는 문장부호 (B.A.P · f(x) · &TEAM · IZ*ONE · NCT 127) */
+export const GROUP_NAME_PATTERN = /^[\p{L}\p{N} _·!.&()*'+:#?/-]{1,20}$/u;
+/** 그룹 이름이 안 되는 이유. 되면 null. 계약 화면이 서명 전에 먼저 보여준다 */
+export function groupNameError(raw: string): string | null {
+  const name = raw.trim();
+  if (!name) return "그룹 이름을 입력해주세요.";
+  if (name.length > 20) return "그룹 이름은 20자까지예요.";
+  if (!GROUP_NAME_PATTERN.test(name)) return "글자·숫자와 . & ( ) * ' + : # ? / - _ ! · 만 쓸 수 있어요. 이모지는 안 돼요.";
+  if (!/[\p{L}\p{N}]/u.test(name)) return "글자나 숫자를 하나 이상 넣어주세요.";
+  return null;
+}
 
 const clone = (c: Career): Career => structuredClone(c);
 
@@ -764,7 +774,8 @@ export function resolveChoice(original: Career, choiceId: string, extra: { group
   } else if (op === "debut") {
     const name = (extra.groupName ?? "").trim();
     if (c.stage !== "trainee" || c.debutTurn !== null) throw new GameError("이미 데뷔한 커리어예요.");
-    if (!GROUP_NAME_PATTERN.test(name)) throw new GameError("그룹 이름을 1~20자로 입력해주세요.");
+    const nameError = groupNameError(name);
+    if (nameError) throw new GameError(nameError);
     const a = agencyById(c.agencyId)!;
     c.groupName = name;
     c.stage = "idol";

@@ -1,4 +1,5 @@
 "use client";
+import { groupNameError } from "@/lib/game/engine";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/Logo";
@@ -22,7 +23,9 @@ export function ContractView({ career, event, choice, onSign, onDecline }: Props
   const [drawn, setDrawn] = useState<Signature | null>(null);
   const [groupName, setGroupName] = useState("");
   const [playing, setPlaying] = useState(false);
-  const nameOk = !terms.needsGroupName || groupName.trim().length > 0;
+  // 서명하기 전에 이름부터 확인한다: 안 되는 이름으로 서명하면 오류가 화면 뒤에 떠서 계약이 안 되는 것처럼 보였다
+  const nameError = terms.needsGroupName && groupName.trim() ? groupNameError(groupName) : null;
+  const nameOk = !terms.needsGroupName || (groupName.trim().length > 0 && !nameError);
   const canSign = nameOk && (saved ? !playing : !!drawn);
 
   const finish = useCallback(() => {
@@ -80,7 +83,7 @@ export function ContractView({ career, event, choice, onSign, onDecline }: Props
             placeholder="예: LUMINA"
             className="w-full h-14 rounded-2xl bg-chip px-4 text-[16px] font-bold outline-none focus:ring-2 focus:ring-primary"
           />
-          <p className="text-[13px] text-ink-3 mt-1.5">1~20자 · 글자와 숫자</p>
+          {nameError ? <p className="text-[13px] font-bold text-danger mt-1.5" role="alert">{nameError}</p> : <p className="text-[13px] text-ink-3 mt-1.5">1~20자 · 글자, 숫자, 공백과 . & ( ) * 같은 기호</p>}
         </div>
       )}
 
