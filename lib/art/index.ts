@@ -127,3 +127,10 @@ export function artUrlsFor(avatars: number[], gender: "female" | "male", first: 
   for (const f of eventArt("awards-announce", presenterAvatar(gender, 0), gender === "female" ? "male" : "female").frames) out.add(webSrc(f.url));
   return [...out];
 }
+
+/** 리듬 게임에서 춤출 때 바꿔 끼우는 포즈: 서 있기 · 눈 감기 · 노래 · 춤 · 활짝 · 울상 */
+export type Pose = "idle" | "blink" | "sing" | "dance" | "happy" | "sad";
+export function poseFrames(index: number): Record<Pose, ArtFrame> {
+  const a = catalog.avatars[avatarIndex(index)] as { idle: ArtFrame[]; sing: ArtFrame[]; dance: ArtFrame[]; mood?: Record<string, ArtFrame> };
+  return { idle: a.idle[0], blink: a.idle[1] ?? a.idle[0], sing: a.sing[0], dance: a.dance[0], happy: a.mood?.happy ?? a.dance[0], sad: a.mood?.sad ?? a.idle[0] };
+}

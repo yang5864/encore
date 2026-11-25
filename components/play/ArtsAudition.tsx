@@ -1,110 +1,26 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
 import { cn } from "@/lib/cn";
 import { STAT_NAMES } from "@/lib/game/stats";
 import { ARTS_MAJORS, ARTS_PASS, artsNeeded, artsTotal, majorAbility, type ArtsMajor } from "@/lib/game/school";
 import type { ActiveEvent, Career } from "@/lib/game/types";
+import { RhythmStage } from "./rhythm/RhythmStage";
+import { createAudio } from "./rhythm/music";
+import { makeChart, BPM, SONG_LENGTH } from "@/lib/game/rhythm";
 
 /**
- * 예술고 실기 오디션: 전공을 고르고 3레인 리듬 게임을 한 번 본다.
- * 노트가 판정선에 닿을 때 아래 패드를 누른다. 정확도(0~100)가 실기 점수가 된다.
+ * 예술고 실기 오디션: 전공을 고르고 리듬 게임 실기(RhythmStage)를 한 번 본다.
+ * 정확도(0~100)가 실기 점수가 된다. 규칙은 lib/game/rhythm.ts.
  */
-const LANES = 3;
-const TRAVEL = 1500; // 노트가 위에서 판정선까지 내려오는 시간(ms)
-const BEAT = 520;
-const NOTES = 24;
-const PERFECT = 80; // ms
-const GOOD = 170;
-const LEAD = 1800; // 첫 노트 전 준비 시간
-const LANE_COLORS = ["var(--primary)", "var(--up)", "var(--warn)"];
-
-type Note = { t: number; lane: number; hit?: "perfect" | "good" | "miss" };
-
-/** 시드로 정해지는 악보: 같은 레인이 세 번 이어지지 않고, 가끔 반 박자가 낀다 */
-function makeChart(seed: number): Note[] {
-  let s = (seed >>> 0) || 1;
-  const rnd = () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
-  const notes: Note[] = [];
-  let t = LEAD;
-  for (let i = 0; i < NOTES; i++) {
-    let lane = Math.floor(rnd() * LANES);
-    if (i >= 2 && notes[i - 1].lane === lane && notes[i - 2].lane === lane) lane = (lane + 1) % LANES;
-    notes.push({ t, lane });
-    t += i > 6 && rnd() < 0.3 ? BEAT / 2 : BEAT;
-  }
-  return notes;
-}
-
 export function ArtsAudition({ career, event, onChoose }: { career: Career; event: ActiveEvent; onChoose: (choiceId: string, extra?: { score?: number }) => void }) {
   const [major, setMajor] = useState<ArtsMajor | null>(null);
   const [phase, setPhase] = useState<"pick" | "ready" | "play" | "done">("pick");
   const [score, setScore] = useState(0);
-  const [judge, setJudge] = useState<{ text: string; key: number } | null>(null);
-  const [combo, setCombo] = useState(0);
-  const chart = useMemo(() => makeChart(career.seed + career.turn * 31), [career.seed, career.turn]);
-  const notes = useRef<Note[]>([]);
-  const started = useRef(0);
-  const stray = useRef(0);
-  const noteEls = useRef<(HTMLSpanElement | null)[]>([]);
-  const field = useRef<HTMLDivElement>(null);
-  const [pressed, setPressed] = useState<number | null>(null);
-
-  // 노트 위치는 React 상태가 아니라 프레임마다 직접 옮긴다 (60fps, 리렌더 없음)
-  useEffect(() => {
-    if (phase !== "play") return;
-    notes.current = chart.map((n) => ({ ...n }));
-    stray.current = 0;
-    started.current = performance.now();
-    let raf = 0;
-    const tick = () => {
-      const now = performance.now() - started.current;
-      const h = field.current?.clientHeight ?? 0;
-      const line = h * 0.86;
-      notes.current.forEach((n, i) => {
-        const el = noteEls.current[i];
-        if (!el) return;
-        const p = 1 - (n.t - now) / TRAVEL; // 0 = 맨 위, 1 = 판정선
-        const visible = !n.hit && p > 0 && p < 1.18;
-        el.style.opacity = visible ? "1" : "0";
-        if (visible) el.style.transform = `translate3d(0, ${p * line}px, 0)`;
-        if (!n.hit && now - n.t > GOOD) { n.hit = "miss"; setCombo(0); setJudge({ text: "놓침", key: now }); }
-      });
-      if (now > chart[chart.length - 1].t + GOOD + 400) {
-        const got = notes.current.reduce((sum, n) => sum + (n.hit === "perfect" ? 1 : n.hit === "good" ? 0.6 : 0), 0);
-        // 아무 때나 두드리면 깎인다: 빈 탭 하나에 노트 1/4개
-        setScore(Math.max(0, Math.min(100, Math.round(((got - stray.current * 0.25) / chart.length) * 100))));
-        setPhase("done");
-        return;
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [phase, chart]);
-
-  const tap = (lane: number) => {
-    if (phase !== "play") return;
-    setPressed(lane);
-    window.setTimeout(() => setPressed((p) => (p === lane ? null : p)), 90);
-    const now = performance.now() - started.current;
-    const target = notes.current.filter((n) => !n.hit && n.lane === lane && Math.abs(n.t - now) <= GOOD).sort((a, b) => Math.abs(a.t - now) - Math.abs(b.t - now))[0];
-    if (!target) { stray.current += 1; setCombo(0); setJudge({ text: "빈 박자", key: now }); return; }
-    target.hit = Math.abs(target.t - now) <= PERFECT ? "perfect" : "good";
-    setCombo((c) => c + 1);
-    setJudge({ text: target.hit === "perfect" ? "완벽" : "좋아요", key: now });
-  };
-
-  // 키보드: ← ↓ → 또는 A S D
-  useEffect(() => {
-    if (phase !== "play") return;
-    const map: Record<string, number> = { ArrowLeft: 0, ArrowDown: 1, ArrowRight: 2, a: 0, s: 1, d: 2 };
-    const onKey = (e: KeyboardEvent) => { const lane = map[e.key]; if (lane !== undefined && !e.repeat) { e.preventDefault(); tap(lane); } };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase]);
+  // 시작 버튼을 누를 때 만든 오디오 (iOS는 탭 안에서 만들어야 소리가 난다)
+  const [audio, setAudio] = useState<AudioContext | null>(null);
+  const seed = career.seed + career.turn * 31;
 
   const need = major ? artsNeeded(career, major) : 0;
   const total = major ? artsTotal(career, major, score) : 0;
@@ -139,7 +55,7 @@ export function ArtsAudition({ career, event, onChoose }: { career: Career; even
           <div className="flex-1 flex flex-col justify-center">
             <p className="t-cap text-primary">{major.name} 실기</p>
             <h2 className="t-title mt-1">박자에 맞춰 눌러요</h2>
-            <p className="t-body text-ink-2 mt-3">노트가 아래 선에 닿는 순간, 같은 줄의 버튼을 눌러요. 노트는 {NOTES}개, 20초쯤 걸려요.</p>
+            <p className="t-body text-ink-2 mt-3">반주에 맞춰 노트가 내려와요. 노트가 아래 선에 닿는 순간 같은 줄의 버튼을 누르면, 내 캐릭터가 무대에서 그 박자에 맞춰 춤춰요. {BPM}BPM, 노트 {makeChart(seed).length}개, {Math.round(SONG_LENGTH / 1000)}초예요. 소리를 켜면 더 쉬워요.</p>
             <ul className="mt-5 rounded-2xl bg-card p-4 flex flex-col gap-1.5 text-[13px] text-ink-2">
               <li>· 선에 딱 맞추면 완벽, 조금 어긋나면 좋아요, 지나가면 놓침이에요.</li>
               <li>· 노트가 없을 때 누르면 점수가 깎여요.</li>
@@ -149,30 +65,15 @@ export function ArtsAudition({ career, event, onChoose }: { career: Career; even
           </div>
         )}
 
-        {phase === "play" && (
-          <div className="flex-1 min-h-0 flex flex-col pb-3">
-            <div className="flex items-center justify-between h-10 shrink-0">
-              <span className="t-cap">{major?.name} 실기</span>
-              <span className="t-cap tabular-nums" aria-live="off">{combo > 1 ? `${combo} 콤보` : ""}</span>
-            </div>
-            <div ref={field} className="relative flex-1 min-h-0 rounded-2xl bg-card overflow-hidden" aria-hidden>
-              {Array.from({ length: LANES - 1 }, (_, i) => (
-                <span key={i} className="absolute top-0 bottom-0 w-px bg-line" style={{ left: `${((i + 1) / LANES) * 100}%` }} />
-              ))}
-              <span className="absolute left-0 right-0 h-[3px] bg-ink/70" style={{ top: "86%" }} />
-              {chart.map((n, i) => (
-                <span key={i} ref={(el) => { noteEls.current[i] = el; }} className="absolute top-0 h-0 opacity-0 will-change-transform" style={{ left: `${(n.lane / LANES) * 100}%`, width: `${100 / LANES}%` }}>
-                  <span className="absolute left-[14%] right-[14%] -top-[9px] h-[18px] rounded-full" style={{ background: LANE_COLORS[n.lane] }} />
-                </span>
-              ))}
-              {judge && <span key={judge.key} className="fade-in absolute left-0 right-0 text-center text-[16px] font-extrabold" style={{ top: "70%" }}>{judge.text}</span>}
-            </div>
-            <div className="grid grid-cols-3 gap-2 mt-3 shrink-0">
-              {Array.from({ length: LANES }, (_, lane) => (
-                <button key={lane} aria-label={`${lane + 1}번 줄`} onPointerDown={(e) => { e.preventDefault(); tap(lane); }} className="h-20 rounded-2xl touch-none select-none" style={{ background: LANE_COLORS[lane], opacity: pressed === lane ? 1 : 0.55 }} />
-              ))}
-            </div>
-          </div>
+        {phase === "play" && major && (
+          <RhythmStage
+            avatar={career.avatar}
+            gender={career.gender}
+            seed={seed}
+            label={`${major.name} 실기`}
+            audio={audio}
+            onFinish={(sc) => { setScore(sc); setPhase("done"); setAudio(null); }}
+          />
         )}
 
         {phase === "done" && major && (
@@ -194,7 +95,7 @@ export function ArtsAudition({ career, event, onChoose }: { career: Career; even
           {phase === "pick" && <Button disabled={!major} onClick={() => setPhase("ready")}>{major ? `${major.name} 실기 보러 가기` : "전공을 골라주세요"}</Button>}
           {phase === "ready" && major && (
             <>
-              <Button onClick={() => setPhase("play")}>실기 시작</Button>
+              <Button onClick={() => { setAudio(createAudio()); setPhase("play"); }}>실기 시작</Button>
               <Button variant="ghost" className="mt-2" onClick={() => onChoose(major.id)}>실기 건너뛰기 (그날 컨디션에 맡겨요)</Button>
             </>
           )}

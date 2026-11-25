@@ -353,3 +353,12 @@ html, body { overflow-x: clip; }
 @keyframes sheet-fade-in { from { opacity: 0; } to { opacity: 1; } }
 /* 장면 안에서 순서대로 나타나는 요소: 위치는 그대로, 투명도만 */
 .fade-in { animation: sheet-fade-in 0.2s ease-out both; }
+
+/* 리듬 게임: 판정 글자·카운트가 톡 튀어나왔다 사라지고, 맞힌 자리에 고리가 퍼진다 */
+.judge-pop { animation: judge-pop 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+@keyframes judge-pop { 0% { opacity: 0; transform: scale(0.6); } 30% { opacity: 1; transform: scale(1.12); } 100% { opacity: 1; transform: scale(1); } }
+.hit-burst { animation: hit-burst 0.38s ease-out both; pointer-events: none; }
+@keyframes hit-burst { from { opacity: 1; transform: translateY(-50%) scale(0.7); } to { opacity: 0; transform: translateY(-50%) scale(1.6); } }
+.rhythm-pad { opacity: 0.55; transition: opacity 90ms ease-out, transform 90ms ease-out; }
+.rhythm-pad[data-pressed] { opacity: 1; transform: translateY(2px); }
+@media (prefers-reduced-motion: reduce) { .judge-pop, .hit-burst { animation: none; } .hit-burst { display: none; } }
